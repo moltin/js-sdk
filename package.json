@@ -1,0 +1,31 @@
+{
+  "name": "moltin-sdk",
+  "description": "SDK for the Moltin eCommerce API",
+  "version": "0.1.0",
+  "homepage": "https://github.com/moltin/js-sdk",
+  "author": {
+    "name": "Moltin Team",
+    "url": "https://molt.in/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/moltin/js-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moltin/js-sdk/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/moltin/js-sdk/blob/master/LICENSE"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-coffee": "~0.10.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-karma": "~0.8.3"
+  }
+}
