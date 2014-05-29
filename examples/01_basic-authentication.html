@@ -32,7 +32,14 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#basic">Basic</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Basic <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="01_basic-authentication.html" class="active">Authentication</a></li>
+                <li><a href="02_basic-requests.html">Your First Request</a></li>
+                <li><a href="03_basic-using-your-data.html">Using Your Data</a></li>
+              </ul>
+            </li>
             <li><a href="#intermediate">Intermediate</a></li>
             <li><a href="#advanced">Advanced</a></li>
           </ul>
@@ -47,6 +54,11 @@
         <p>A quick guide to authenticating your app with the Moltin API.</p>
         <p>All you need is your Public Key and this will give access to GET methods as well as selected PUT &amp; POST methods (eg. cart)</p>
 
+        <h3>Code</h3>
+        <code>var _moltin = new Moltin({publicId: '&lt;your public key&gt;'});
+_moltin.Authenticate();</code>
+
+        <h3>Response</h3>
         <pre class="pre-scrollable" id="sample"></pre>
 
       </div>
@@ -68,7 +80,7 @@
           // Show our tokens
           $('#sample').html(JSON.stringify(_moltin.options.auth, null, '\t'));
 
-        }, false);
+        });
 
       })();
     </script>
