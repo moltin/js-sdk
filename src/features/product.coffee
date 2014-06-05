@@ -2,58 +2,52 @@
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'product/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'product', 'GET', terms, callback
+			data = @m.Request 'product', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			_args =
-				offset: offset
-				limit:  limit
+			data = @m.Request 'products', 'GET', terms, callback
 
-			data = @m.Request 'products', 'GET', _args, callback
-
-			if callback != null
+			if callback?
 				return data.result
 
-		Search: (terms, offset = 0, limit = 10, callback = null) ->
+		Search: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'products/search', 'GET', terms, callback
+			data = @m.Request 'products/search', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Modifiers: (id, callback = null) ->
+		Modifiers: (id, callback) ->
 
 			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Variations: (id, callack = null) ->
+		Variations: (id, callack) ->
 
 			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result

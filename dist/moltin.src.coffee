@@ -14,6 +14,7 @@ class Moltin
 	constructor: (overrides) ->
 
 		@options = @Merge @options, overrides
+		@Storage = new Storage
 
 		@Product    = new Product @
 		@Category   = new Category @
@@ -102,10 +103,24 @@ class Moltin
 
 		request.send @Serialize args.data
 
-	Authenticate: (callback = null)->
+	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
+
+		if @Storage.get 'atoken' != null and @Storage.get 'aexpires' != null
+			
+			@options.auth
+				token:   @Storage.get 'atoken'
+				expires: @Storage.get 'aexpires'
+
+			if callback != null
+				callback @options.auth
+
+			_e = new CustomEvent 'MoltinReady', r
+			window.dispatchEvent _e
+
+			return
 
 		@Ajax
 			type: 'POST'
@@ -121,7 +136,10 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
-				if callback?
+				@Storage.set 'atoken', r.access_token
+				@Storage.set 'aexpires', r.expires
+
+				if callback != null
 					callback r
 
 				_e = new CustomEvent 'MoltinReady', r
@@ -163,171 +181,191 @@ class Moltin
 		if callback == null
 			return _data;
 
+	class Storage
+
+		constructor: () ->
+
+		set: (key, value, days) ->
+
+			expires = ""
+
+			if days
+				date = new Date
+				date.setTime(date.getTime() + (days*24*60*60*1000))
+				expires = "; expires=" + date.toGMTString()
+
+			document.cookie = key + "=" + value + expires + "; path=/"
+
+		get: (key) ->
+
+			key = key + "="
+			
+			for c in document.cookie.split(';')
+				c = c.substring(1, c.length) while c.charAt(0) is ' '
+				return c.substring(key.length, c.length) if c.indexOf(key) == 0
+			
+			return null
+
+		remove: (key) ->
+
+			@set key, '', -1
+
 	class Brand
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'brand/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'brand', 'GET', terms, callback
+			data = @m.Request 'brand', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			data  = @m.Request 'brands', 'GET', {@offset, @limit}, callback
+			data = @m.Request 'brands', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
 	class Category
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'category/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'category', 'GET', terms, callback
+			data = @m.Request 'category', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			data  = @m.Request 'categories', 'GET', {@offset, @limit}, callback
+			data  = @m.Request 'categories', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Tree: (callback = null) ->
+		Tree: (callback) ->
 
 			data = @m.Request 'category/tree', 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
 	class Collection
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'collection/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'collection', 'GET', terms, callback
+			data = @m.Request 'collection', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			data  = @m.Request 'collections', 'GET', {@offset, @limit}, callback
+			data  = @m.Request 'collections', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
 	class Product
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'product/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'product', 'GET', terms, callback
+			data = @m.Request 'product', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			_args =
-				offset: offset
-				limit:  limit
+			data = @m.Request 'products', 'GET', terms, callback
 
-			data = @m.Request 'products', 'GET', _args, callback
-
-			if callback != null
+			if callback?
 				return data.result
 
-		Search: (terms, offset = 0, limit = 10, callback = null) ->
+		Search: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'products/search', 'GET', terms, callback
+			data = @m.Request 'products/search', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Modifiers: (id, callback = null) ->
+		Modifiers: (id, callback) ->
 
 			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Variations: (id, callack = null) ->
+		Variations: (id, callack) ->
 
 			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result

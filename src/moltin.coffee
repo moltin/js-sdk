@@ -14,6 +14,7 @@ class Moltin
 	constructor: (overrides) ->
 
 		@options = @Merge @options, overrides
+		@Storage = new Storage
 
 		@Product    = new Product @
 		@Category   = new Category @
@@ -102,10 +103,24 @@ class Moltin
 
 		request.send @Serialize args.data
 
-	Authenticate: (callback = null)->
+	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
+
+		if @Storage.get 'atoken' != null and @Storage.get 'aexpires' != null
+			
+			@options.auth
+				token:   @Storage.get 'atoken'
+				expires: @Storage.get 'aexpires'
+
+			if callback != null
+				callback @options.auth
+
+			_e = new CustomEvent 'MoltinReady', r
+			window.dispatchEvent _e
+
+			return
 
 		@Ajax
 			type: 'POST'
@@ -121,7 +136,10 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
-				if callback?
+				@Storage.set 'atoken', r.access_token
+				@Storage.set 'aexpires', r.expires
+
+				if callback != null
 					callback r
 
 				_e = new CustomEvent 'MoltinReady', r

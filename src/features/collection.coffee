@@ -2,32 +2,31 @@
 
 		constructor: (@m) ->
 
-		Get: (id, callback = null) ->
+		Get: (id, callback) ->
 
 			data = @m.Request 'collection/'+id, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Find: (terms, callback = null) ->
+		Find: (terms, callback) ->
 
-			terms = @.Merge terms {@offset, @limit}
-			data  = @m.Request 'collection', 'GET', terms, callback
+			data = @m.Request 'collection', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		List: (offset = 0, limit = 10, callback = null) ->
+		List: (terms, callback) ->
 
-			data  = @m.Request 'collections', 'GET', {@offset, @limit}, callback
+			data  = @m.Request 'collections', 'GET', terms, callback
 
-			if callback != null
+			if callback?
 				return data.result
 
-		Fields: (id = 0, callback = null) ->
+		Fields: (id = 0, callback) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback != null
+			if callback?
 				return data.result
