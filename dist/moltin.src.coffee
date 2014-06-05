@@ -152,11 +152,11 @@ class Moltin
 
 		_data = {}
 
-		#if typeof @options.auth.token != 'undefined'
-		#	return @options.notice 'error', 'You much authenticate first'
+		if @options.auth.token == null
+			return @options.notice 'error', 'You much authenticate first'
 
-		#if not @InArray method, @options.methods
-		#	return @options.notice 'error', 'Invalid request method ('+method+')'
+		if not @InArray method, @options.methods
+			return @options.notice 'error', 'Invalid request method ('+method+')'
 
 		@Ajax 
 			type: method

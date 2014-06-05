@@ -190,6 +190,12 @@ Moltin = (function() {
       callback = null;
     }
     _data = {};
+    if (this.options.auth.token === null) {
+      return this.options.notice('error', 'You much authenticate first');
+    }
+    if (!this.InArray(method, this.options.methods)) {
+      return this.options.notice('error', 'Invalid request method (' + method + ')');
+    }
     this.Ajax({
       type: method,
       url: this.options.url + this.options.version + '/' + uri,
