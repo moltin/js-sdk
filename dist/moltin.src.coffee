@@ -108,16 +108,16 @@ class Moltin
 		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
 
-		if @Storage.get 'atoken' != null and @Storage.get 'aexpires' != null
+		if @Storage.get('mtoken') != null and @Storage.get('mexpires') > new Date/1e3|0
 			
-			@options.auth
-				token:   @Storage.get 'atoken'
-				expires: @Storage.get 'aexpires'
+			@options.auth =
+				token:   @Storage.get 'mtoken'
+				expires: @Storage.get 'mexpires'
 
 			if callback != null
 				callback @options.auth
 
-			_e = new CustomEvent 'MoltinReady', r
+			_e = new CustomEvent 'MoltinReady', @options.auth
 			window.dispatchEvent _e
 
 			return
@@ -136,8 +136,8 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
-				@Storage.set 'atoken', r.access_token
-				@Storage.set 'aexpires', r.expires
+				@Storage.set 'mtoken', r.access_token
+				@Storage.set 'mexpires', r.expires
 
 				if callback != null
 					callback r
@@ -218,21 +218,21 @@ class Moltin
 
 			data = @m.Request 'brand/'+id, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Find: (terms, callback) ->
 
 			data = @m.Request 'brand', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		List: (terms, callback) ->
 
 			data = @m.Request 'brands', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Fields: (id = 0, callback) ->
@@ -240,7 +240,7 @@ class Moltin
 			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 	class Category
@@ -251,28 +251,28 @@ class Moltin
 
 			data = @m.Request 'category/'+id, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Find: (terms, callback) ->
 
 			data = @m.Request 'category', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		List: (terms, callback) ->
 
 			data  = @m.Request 'categories', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Tree: (callback) ->
 
 			data = @m.Request 'category/tree', 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Fields: (id = 0, callback) ->
@@ -280,7 +280,7 @@ class Moltin
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 	class Collection
@@ -291,21 +291,21 @@ class Moltin
 
 			data = @m.Request 'collection/'+id, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Find: (terms, callback) ->
 
 			data = @m.Request 'collection', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		List: (terms, callback) ->
 
 			data  = @m.Request 'collections', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Fields: (id = 0, callback) ->
@@ -313,7 +313,7 @@ class Moltin
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 	class Product
@@ -324,28 +324,28 @@ class Moltin
 
 			data = @m.Request 'product/'+id, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Find: (terms, callback) ->
 
 			data = @m.Request 'product', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		List: (terms, callback) ->
 
 			data = @m.Request 'products', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Search: (terms, callback) ->
 
 			data = @m.Request 'products/search', 'GET', terms, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Fields: (id = 0, callback) ->
@@ -353,19 +353,19 @@ class Moltin
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
 			data = @m.Requst uri, 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Modifiers: (id, callback) ->
 
 			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result
 
 		Variations: (id, callack) ->
 
 			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
 
-			if callback?
+			if callback == null
 				return data.result

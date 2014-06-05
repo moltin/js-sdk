@@ -108,16 +108,16 @@ class Moltin
 		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
 
-		if @Storage.get 'atoken' != null and @Storage.get 'aexpires' != null
+		if @Storage.get('mtoken') != null and @Storage.get('mexpires') > new Date/1e3|0
 			
-			@options.auth
-				token:   @Storage.get 'atoken'
-				expires: @Storage.get 'aexpires'
+			@options.auth =
+				token:   @Storage.get 'mtoken'
+				expires: @Storage.get 'mexpires'
 
 			if callback != null
 				callback @options.auth
 
-			_e = new CustomEvent 'MoltinReady', r
+			_e = new CustomEvent 'MoltinReady', @options.auth
 			window.dispatchEvent _e
 
 			return
@@ -136,8 +136,8 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
-				@Storage.set 'atoken', r.access_token
-				@Storage.set 'aexpires', r.expires
+				@Storage.set 'mtoken', r.access_token
+				@Storage.set 'mexpires', r.expires
 
 				if callback != null
 					callback r
