@@ -1,10 +1,10 @@
 class Moltin
 
 	options:
+
 		publicId: ''
-		userId:   ''
 		auth:     {}
-		url:      'http://api.dev.molt.in/'
+		url:      'https://api.molt.in/'
 		version:  'beta'
 		debug:    false
 		notice:   (type, msg) ->
@@ -15,12 +15,24 @@ class Moltin
 
 		@options = @Merge @options, overrides
 
+		@Product    = new Product @
+		@Category   = new Category @
+		@Brand      = new Brand @
+		@Collection = new Collection @
+
 	Merge: (o1, o2) ->
 
 		o3 = {}
 		o3[k] = v for k, v of o1
 		o3[k] = v for k, v of o2
 		return o3
+
+	InArray: (key, arr) ->
+
+		if key not in arr
+  			return false
+
+  		return true
 
 	Serialize: (obj, prefix = null) ->
 
@@ -69,7 +81,7 @@ class Moltin
 
 		timeout = setTimeout =>
 			request.abort()
-			args.error @options.notice 'error', 'Request timed out'
+			args.error @options.notice 'error', 'Your request timed out'
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
@@ -90,9 +102,9 @@ class Moltin
 
 		request.send @Serialize args.data
 
-	Authenticate: ->
+	Authenticate: (callback = null)->
 
-		if @options.publicId.length <= 0 or @options.userId.length <= 0
+		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
 
 		@Ajax
@@ -100,7 +112,6 @@ class Moltin
 			url: @options.url+'oauth/access_token'
 			data:
 				grant_type: 'implicit',
-				user_id:    @options.userId,
 				client_id:  @options.publicId
 			async: true
 			headers:
@@ -110,32 +121,35 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
+				if callback?
+					callback r
+
 				_e = new CustomEvent 'MoltinReady', r
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
-	Request: (uri, method = 'GET', data = null) ->
+	Request: (uri, method = 'GET', data = null, callback = null) ->
 
 		_data = {}
 
-		# if typeof @options.auth.token != 'undefined'
+		#if typeof @options.auth.token != 'undefined'
 		#	return @options.notice 'error', 'You much authenticate first'
 
-		# if not @inArray method, @options.methods
-		#    return @options.notice 'error', 'Invalid request method ('+method+')'
+		#if not @InArray method, @options.methods
+		#	return @options.notice 'error', 'Invalid request method ('+method+')'
 
-		@Ajax
+		@Ajax 
 			type: method
 			url: @options.url+@options.version+'/'+uri
 			data: data
-			async: false
+			async: if callback != null then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 				'Authorization': 'Bearer '+@options.auth.token
 			success: (r, c, e) =>
-				_data = r;
+				if callback != null then callback r.result else _data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
@@ -146,28 +160,174 @@ class Moltin
 					@options.notice 'error', error
 				_data = r;
 
-		return _data;
+		if callback == null
+			return _data;
 
-	Product: ->
+	class Brand
 
-		_data:  {}
+		constructor: (@m) ->
 
-		Data: ->
+		Get: (id, callback = null) ->
 
-			return _data.result;
+			data = @m.Request 'brand/'+id, 'GET', null, callback
 
-		Get: (id) =>
+			if callback != null
+				return data.result
 
-			data = @Request 'product/'+id
+		Find: (terms, callback = null) ->
 
-			return data.result
+			terms = @.Merge terms {@offset, @limit}
+			data  = @m.Request 'brand', 'GET', terms, callback
 
-		List: (offset = 0, limit = 10) =>
+			if callback != null
+				return data.result
+
+		List: (offset = 0, limit = 10, callback = null) ->
+
+			data  = @m.Request 'brands', 'GET', {@offset, @limit}, callback
+
+			if callback != null
+				return data.result
+
+		Fields: (id = 0, callback = null) ->
+
+			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
+			data = @m.Requst uri, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+	class Category
+
+		constructor: (@m) ->
+
+		Get: (id, callback = null) ->
+
+			data = @m.Request 'category/'+id, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Find: (terms, callback = null) ->
+
+			terms = @.Merge terms {@offset, @limit}
+			data  = @m.Request 'category', 'GET', terms, callback
+
+			if callback != null
+				return data.result
+
+		List: (offset = 0, limit = 10, callback = null) ->
+
+			data  = @m.Request 'categories', 'GET', {@offset, @limit}, callback
+
+			if callback != null
+				return data.result
+
+		Tree: (callback = null) ->
+
+			data = @m.Request 'category/tree', 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Fields: (id = 0, callback = null) ->
+
+			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
+			data = @m.Requst uri, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+	class Collection
+
+		constructor: (@m) ->
+
+		Get: (id, callback = null) ->
+
+			data = @m.Request 'collection/'+id, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Find: (terms, callback = null) ->
+
+			terms = @.Merge terms {@offset, @limit}
+			data  = @m.Request 'collection', 'GET', terms, callback
+
+			if callback != null
+				return data.result
+
+		List: (offset = 0, limit = 10, callback = null) ->
+
+			data  = @m.Request 'collections', 'GET', {@offset, @limit}, callback
+
+			if callback != null
+				return data.result
+
+		Fields: (id = 0, callback = null) ->
+
+			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
+			data = @m.Requst uri, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+	class Product
+
+		constructor: (@m) ->
+
+		Get: (id, callback = null) ->
+
+			data = @m.Request 'product/'+id, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Find: (terms, callback = null) ->
+
+			terms = @.Merge terms {@offset, @limit}
+			data  = @m.Request 'product', 'GET', terms, callback
+
+			if callback != null
+				return data.result
+
+		List: (offset = 0, limit = 10, callback = null) ->
 
 			_args =
 				offset: offset
 				limit:  limit
 
-			data = @Request 'products', 'GET', _args
+			data = @m.Request 'products', 'GET', _args, callback
 
-			return data.result
+			if callback != null
+				return data.result
+
+		Search: (terms, offset = 0, limit = 10, callback = null) ->
+
+			terms = @.Merge terms {@offset, @limit}
+			data  = @m.Request 'products/search', 'GET', terms, callback
+
+			if callback != null
+				return data.result
+
+		Fields: (id = 0, callback = null) ->
+
+			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
+			data = @m.Requst uri, 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Modifiers: (id, callback = null) ->
+
+			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
+
+			if callback != null
+				return data.result
+
+		Variations: (id, callack = null) ->
+
+			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
+
+			if callback != null
+				return data.result

@@ -1,10 +1,10 @@
 class Moltin
 
 	options:
+
 		publicId: ''
-		userId:   ''
 		auth:     {}
-		url:      'http://api.dev.molt.in/'
+		url:      'https://api.molt.in/'
 		version:  'beta'
 		debug:    false
 		notice:   (type, msg) ->
@@ -15,12 +15,24 @@ class Moltin
 
 		@options = @Merge @options, overrides
 
+		@Product    = new Product @
+		@Category   = new Category @
+		@Brand      = new Brand @
+		@Collection = new Collection @
+
 	Merge: (o1, o2) ->
 
 		o3 = {}
 		o3[k] = v for k, v of o1
 		o3[k] = v for k, v of o2
 		return o3
+
+	InArray: (key, arr) ->
+
+		if key not in arr
+  			return false
+
+  		return true
 
 	Serialize: (obj, prefix = null) ->
 
@@ -69,7 +81,7 @@ class Moltin
 
 		timeout = setTimeout =>
 			request.abort()
-			args.error @options.notice 'error', 'Request timed out'
+			args.error @options.notice 'error', 'Your request timed out'
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
@@ -90,9 +102,9 @@ class Moltin
 
 		request.send @Serialize args.data
 
-	Authenticate: ->
+	Authenticate: (callback = null)->
 
-		if @options.publicId.length <= 0 or @options.userId.length <= 0
+		if @options.publicId.length <= 0
 		 	return @options.notice 'error', 'Public ID and User ID must be set'
 
 		@Ajax
@@ -100,7 +112,6 @@ class Moltin
 			url: @options.url+'oauth/access_token'
 			data:
 				grant_type: 'implicit',
-				user_id:    @options.userId,
 				client_id:  @options.publicId
 			async: true
 			headers:
@@ -110,32 +121,35 @@ class Moltin
 					token:   r.access_token
 					expires: r.expires
 
+				if callback?
+					callback r
+
 				_e = new CustomEvent 'MoltinReady', r
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
-	Request: (uri, method = 'GET', data = null) ->
+	Request: (uri, method = 'GET', data = null, callback = null) ->
 
 		_data = {}
 
-		# if typeof @options.auth.token != 'undefined'
+		#if typeof @options.auth.token != 'undefined'
 		#	return @options.notice 'error', 'You much authenticate first'
 
-		# if not @inArray method, @options.methods
-		#    return @options.notice 'error', 'Invalid request method ('+method+')'
+		#if not @InArray method, @options.methods
+		#	return @options.notice 'error', 'Invalid request method ('+method+')'
 
-		@Ajax
+		@Ajax 
 			type: method
 			url: @options.url+@options.version+'/'+uri
 			data: data
-			async: false
+			async: if callback != null then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 				'Authorization': 'Bearer '+@options.auth.token
 			success: (r, c, e) =>
-				_data = r;
+				if callback != null then callback r.result else _data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
@@ -146,4 +160,5 @@ class Moltin
 					@options.notice 'error', error
 				_data = r;
 
-		return _data;
+		if callback == null
+			return _data;

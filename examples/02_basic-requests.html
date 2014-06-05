@@ -55,17 +55,7 @@
         <p>We're going to presume you've already created a product, select one below and we'll move on</p>
 
         <h3>Code</h3>
-        <code>// Authenticate
-var _moltin = new Moltin({publicId: '&lt;your public key&gt;'});
-_moltin.Authenticate();
-
-// Listen for authentication
-window.addEventListener('MoltinReady', function() {
-
-  // Get your first product
-  var _product = _moltin.Product().Get(&lt;your product id&gt;);
-
-});</code>
+        <code id="code"></code>
 
         <h3>Response</h3>
         <pre class="pre-scrollable" id="sample"></pre>
@@ -80,16 +70,18 @@ window.addEventListener('MoltinReady', function() {
       (function() {
 
         // Authenticate
-        var _moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk', userId: '1'});
+        var _moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
         _moltin.Authenticate();
 
         // Listen for authentication
         window.addEventListener('MoltinReady', function() {
 
           // Get your first product
-          var _products = _moltin.Product().Get(6);
+          _moltin.Product.Get(6, function(product) {
 
-          $('#sample').html(JSON.stringify(_products, null, '\t'));
+            $('#sample').html(JSON.stringify(product, null, '\t'));
+
+          });
 
         });
 

@@ -10,7 +10,7 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapDir: 'dist/'
         files:
-          'dist/moltin.js': 'src/*.coffee'
+          'dist/moltin.js': ['src/*.coffee', 'src/features/*.coffee']
     karma:
       unit:
         options:
@@ -30,7 +30,7 @@ module.exports = (grunt) ->
         files:
           'dist/moltin.min.js': 'dist/moltin.js'
     watch:
-      files: 'src/*.coffee'
+      files: ['src/*.coffee', 'src/features/*.coffee']
       tasks: ['coffee', 'karma', 'uglify']
 
   # These plugins provide necessary tasks.

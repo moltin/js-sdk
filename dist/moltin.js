@@ -1,11 +1,13 @@
-var Moltin;
+var Moltin,
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
+  var Brand, Category, Collection, Product;
+
   Moltin.prototype.options = {
     publicId: '',
-    userId: '',
     auth: {},
-    url: 'http://api.dev.molt.in/',
+    url: 'https://api.molt.in/',
     version: 'beta',
     debug: false,
     notice: function(type, msg) {
@@ -16,6 +18,10 @@ Moltin = (function() {
 
   function Moltin(overrides) {
     this.options = this.Merge(this.options, overrides);
+    this.Product = new Product(this);
+    this.Category = new Category(this);
+    this.Brand = new Brand(this);
+    this.Collection = new Collection(this);
   }
 
   Moltin.prototype.Merge = function(o1, o2) {
@@ -30,6 +36,13 @@ Moltin = (function() {
       o3[k] = v;
     }
     return o3;
+  };
+
+  Moltin.prototype.InArray = function(key, arr) {
+    if (__indexOf.call(arr, key) < 0) {
+      return false;
+    }
+    return true;
   };
 
   Moltin.prototype.Serialize = function(obj, prefix) {
@@ -89,7 +102,7 @@ Moltin = (function() {
     timeout = setTimeout((function(_this) {
       return function() {
         request.abort();
-        return args.error(_this.options.notice('error', 'Request timed out'));
+        return args.error(_this.options.notice('error', 'Your request timed out'));
       };
     })(this), args.timeout);
     _ref = args.headers;
@@ -113,8 +126,11 @@ Moltin = (function() {
     return request.send(this.Serialize(args.data));
   };
 
-  Moltin.prototype.Authenticate = function() {
-    if (this.options.publicId.length <= 0 || this.options.userId.length <= 0) {
+  Moltin.prototype.Authenticate = function(callback) {
+    if (callback == null) {
+      callback = null;
+    }
+    if (this.options.publicId.length <= 0) {
       return this.options.notice('error', 'Public ID and User ID must be set');
     }
     return this.Ajax({
@@ -122,7 +138,6 @@ Moltin = (function() {
       url: this.options.url + 'oauth/access_token',
       data: {
         grant_type: 'implicit',
-        user_id: this.options.userId,
         client_id: this.options.publicId
       },
       async: true,
@@ -136,6 +151,9 @@ Moltin = (function() {
             token: r.access_token,
             expires: r.expires
           };
+          if (callback != null) {
+            callback(r);
+          }
           _e = new CustomEvent('MoltinReady', r);
           return window.dispatchEvent(_e);
         };
@@ -148,7 +166,7 @@ Moltin = (function() {
     });
   };
 
-  Moltin.prototype.Request = function(uri, method, data) {
+  Moltin.prototype.Request = function(uri, method, data, callback) {
     var _data;
     if (method == null) {
       method = 'GET';
@@ -156,19 +174,26 @@ Moltin = (function() {
     if (data == null) {
       data = null;
     }
+    if (callback == null) {
+      callback = null;
+    }
     _data = {};
     this.Ajax({
       type: method,
       url: this.options.url + this.options.version + '/' + uri,
       data: data,
-      async: false,
+      async: callback !== null ? true : false,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + this.options.auth.token
       },
       success: (function(_this) {
         return function(r, c, e) {
-          return _data = r;
+          if (callback !== null) {
+            return callback(r.result);
+          } else {
+            return _data = r;
+          }
         };
       })(this),
       error: (function(_this) {
@@ -191,41 +216,345 @@ Moltin = (function() {
         };
       })(this)
     });
-    return _data;
+    if (callback === null) {
+      return _data;
+    }
   };
 
-  Moltin.prototype.Product = function() {
-    return {
-      _data: {},
-      Data: function() {
-        return _data.result;
-      },
-      Get: (function(_this) {
-        return function(id) {
-          var data;
-          data = _this.Request('product/' + id);
-          return data.result;
-        };
-      })(this),
-      List: (function(_this) {
-        return function(offset, limit) {
-          var data, _args;
-          if (offset == null) {
-            offset = 0;
-          }
-          if (limit == null) {
-            limit = 10;
-          }
-          _args = {
-            offset: offset,
-            limit: limit
-          };
-          data = _this.Request('products', 'GET', _args);
-          return data.result;
-        };
-      })(this)
+  Brand = (function() {
+    function Brand(m) {
+      this.m = m;
+    }
+
+    Brand.prototype.Get = function(id, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('brand/' + id, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
     };
-  };
+
+    Brand.prototype.Find = function(terms, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      terms = this.Merge(terms({
+        offset: this.offset,
+        limit: this.limit
+      }));
+      data = this.m.Request('brand', 'GET', terms, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Brand.prototype.List = function(offset, limit, callback) {
+      var data;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (limit == null) {
+        limit = 10;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('brands', 'GET', {
+        offset: this.offset,
+        limit: this.limit
+      }, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Brand.prototype.Fields = function(id, callback) {
+      var data, uri;
+      if (id == null) {
+        id = 0;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      uri = 'brand/' + (id !== 0 ? id + '/fields' : 'fields');
+      data = this.m.Requst(uri, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    return Brand;
+
+  })();
+
+  Category = (function() {
+    function Category(m) {
+      this.m = m;
+    }
+
+    Category.prototype.Get = function(id, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('category/' + id, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Category.prototype.Find = function(terms, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      terms = this.Merge(terms({
+        offset: this.offset,
+        limit: this.limit
+      }));
+      data = this.m.Request('category', 'GET', terms, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Category.prototype.List = function(offset, limit, callback) {
+      var data;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (limit == null) {
+        limit = 10;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('categories', 'GET', {
+        offset: this.offset,
+        limit: this.limit
+      }, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Category.prototype.Tree = function(callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('category/tree', 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Category.prototype.Fields = function(id, callback) {
+      var data, uri;
+      if (id == null) {
+        id = 0;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      uri = 'category/' + (id !== 0 ? id + '/fields' : 'fields');
+      data = this.m.Requst(uri, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    return Category;
+
+  })();
+
+  Collection = (function() {
+    function Collection(m) {
+      this.m = m;
+    }
+
+    Collection.prototype.Get = function(id, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('collection/' + id, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Collection.prototype.Find = function(terms, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      terms = this.Merge(terms({
+        offset: this.offset,
+        limit: this.limit
+      }));
+      data = this.m.Request('collection', 'GET', terms, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Collection.prototype.List = function(offset, limit, callback) {
+      var data;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (limit == null) {
+        limit = 10;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('collections', 'GET', {
+        offset: this.offset,
+        limit: this.limit
+      }, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Collection.prototype.Fields = function(id, callback) {
+      var data, uri;
+      if (id == null) {
+        id = 0;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      uri = 'collection/' + (id !== 0 ? id + '/fields' : 'fields');
+      data = this.m.Requst(uri, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    return Collection;
+
+  })();
+
+  Product = (function() {
+    function Product(m) {
+      this.m = m;
+    }
+
+    Product.prototype.Get = function(id, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('product/' + id, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.Find = function(terms, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      terms = this.Merge(terms({
+        offset: this.offset,
+        limit: this.limit
+      }));
+      data = this.m.Request('product', 'GET', terms, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.List = function(offset, limit, callback) {
+      var data, _args;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (limit == null) {
+        limit = 10;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      _args = {
+        offset: offset,
+        limit: limit
+      };
+      data = this.m.Request('products', 'GET', _args, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.Search = function(terms, offset, limit, callback) {
+      var data;
+      if (offset == null) {
+        offset = 0;
+      }
+      if (limit == null) {
+        limit = 10;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      terms = this.Merge(terms({
+        offset: this.offset,
+        limit: this.limit
+      }));
+      data = this.m.Request('products/search', 'GET', terms, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.Fields = function(id, callback) {
+      var data, uri;
+      if (id == null) {
+        id = 0;
+      }
+      if (callback == null) {
+        callback = null;
+      }
+      uri = 'product/' + (id !== 0 ? id + '/fields' : 'fields');
+      data = this.m.Requst(uri, 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.Modifiers = function(id, callback) {
+      var data;
+      if (callback == null) {
+        callback = null;
+      }
+      data = this.m.Request('product/' + id + '/modifiers', 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    Product.prototype.Variations = function(id, callack) {
+      var data;
+      if (callack == null) {
+        callack = null;
+      }
+      data = this.m.Request('product/' + id + '/variations', 'GET', null, callback);
+      if (callback !== null) {
+        return data.result;
+      }
+    };
+
+    return Product;
+
+  })();
 
   return Moltin;
 
