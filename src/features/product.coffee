@@ -33,7 +33,7 @@
 		Fields: (id = 0, callback) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Requst uri, 'GET', null, callback
+			data = @m.Request uri, 'GET', null, callback
 
 			if callback == null
 				return data.result

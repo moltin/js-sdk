@@ -25,7 +25,7 @@
 
 		Tree: (callback) ->
 
-			data = @m.Request 'category/tree', 'GET', null, callback
+			data = @m.Request 'categories/tree', 'GET', null, callback
 
 			if callback == null
 				return data.result
@@ -33,7 +33,7 @@
 		Fields: (id = 0, callback) ->
 
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Requst uri, 'GET', null, callback
+			data = @m.Request uri, 'GET', null, callback
 
 			if callback == null
 				return data.result

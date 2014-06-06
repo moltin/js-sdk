@@ -312,7 +312,7 @@ Moltin = (function() {
         id = 0;
       }
       uri = 'brand/' + (id !== 0 ? id + '/fields' : 'fields');
-      data = this.m.Requst(uri, 'GET', null, callback);
+      data = this.m.Request(uri, 'GET', null, callback);
       if (callback === null) {
         return data.result;
       }
@@ -353,7 +353,7 @@ Moltin = (function() {
 
     Category.prototype.Tree = function(callback) {
       var data;
-      data = this.m.Request('category/tree', 'GET', null, callback);
+      data = this.m.Request('categories/tree', 'GET', null, callback);
       if (callback === null) {
         return data.result;
       }
@@ -365,7 +365,7 @@ Moltin = (function() {
         id = 0;
       }
       uri = 'category/' + (id !== 0 ? id + '/fields' : 'fields');
-      data = this.m.Requst(uri, 'GET', null, callback);
+      data = this.m.Request(uri, 'GET', null, callback);
       if (callback === null) {
         return data.result;
       }
@@ -410,7 +410,7 @@ Moltin = (function() {
         id = 0;
       }
       uri = 'collection/' + (id !== 0 ? id + '/fields' : 'fields');
-      data = this.m.Requst(uri, 'GET', null, callback);
+      data = this.m.Request(uri, 'GET', null, callback);
       if (callback === null) {
         return data.result;
       }
@@ -463,7 +463,7 @@ Moltin = (function() {
         id = 0;
       }
       uri = 'product/' + (id !== 0 ? id + '/fields' : 'fields');
-      data = this.m.Requst(uri, 'GET', null, callback);
+      data = this.m.Request(uri, 'GET', null, callback);
       if (callback === null) {
         return data.result;
       }

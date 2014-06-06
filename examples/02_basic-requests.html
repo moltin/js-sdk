@@ -8,7 +8,7 @@
 
     <title>02. Your First Request | Moltin SDK</title>
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
 
     <!--[if lt IE 9]>
@@ -63,18 +63,15 @@
       </div>
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
     <script src="../dist/moltin.js"></script>
     <script type="text/javascript">
       (function() {
 
         // Authenticate
         var _moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-        _moltin.Authenticate();
-
-        // Listen for authentication
-        window.addEventListener('MoltinReady', function() {
+        _moltin.Authenticate(function() {
 
           // Get your first product
           _moltin.Product.Get(6, function(product) {
