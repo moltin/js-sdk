@@ -71,14 +71,14 @@
       (function() {
 
         // Authenticate
-        var _moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-        _moltin.Authenticate();
+        var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
+        moltin.Authenticate();
 
         // Listen for authentication
         window.addEventListener('MoltinReady', function() {
 
           // Show our tokens
-          $('#sample').html(JSON.stringify(_moltin.options.auth, null, '\t'));
+          $('#sample').html(JSON.stringify(moltin.options.auth, null, '\t'));
 
         });
 

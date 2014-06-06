@@ -70,11 +70,11 @@
       (function() {
 
         // Authenticate
-        var _moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-        _moltin.Authenticate(function() {
+        var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
+        moltin.Authenticate(function() {
 
           // Get your first product
-          _moltin.Product.Get(6, function(product) {
+          moltin.Product.Get(6, function(product) {
 
             $('#sample').html(JSON.stringify(product, null, '\t'));
 

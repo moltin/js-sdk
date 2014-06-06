@@ -92,7 +92,7 @@
         moltin.Authenticate(function() {
 
           // Get your first product
-          /*moltin.Product.Get(6, function(product) {
+          moltin.Product.Get(6, function(product) {
 
             // Update our listing
             var item = $('#example .item');
@@ -104,10 +104,6 @@
 
             $('#sample').html(JSON.stringify(product, null, '\t'));
 
-          });*/
-
-          moltin.Category.Fields(60, function(category) {
-            $('#sample').html(JSON.stringify(category, null, '\t'));
           });
 
         });
