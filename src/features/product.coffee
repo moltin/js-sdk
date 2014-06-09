@@ -4,50 +4,30 @@
 
 		Get: (id, callback) ->
 
-			data = @m.Request 'product/'+id, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id, 'GET', null, callback
 
 		Find: (terms, callback) ->
 
-			data = @m.Request 'product', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product', 'GET', terms, callback
 
 		List: (terms, callback) ->
 
-			data = @m.Request 'products', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'products', 'GET', terms, callback
 
 		Search: (terms, callback) ->
 
-			data = @m.Request 'products/search', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'products/search', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Request uri, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			
+			return @m.Request uri, 'GET', null, callback
 
 		Modifiers: (id, callback) ->
 
-			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
 
 		Variations: (id, callack) ->
 
-			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id+'/variations', 'GET', null, callback

@@ -106,7 +106,7 @@ class Moltin
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
-		 	return @options.notice 'error', 'Public ID and User ID must be set'
+		 	return @options.notice 'error', 'Public ID must be set'
 
 		if @Storage.get('mtoken') != null and @Storage.get('mexpires') > new Date/1e3|0
 			
@@ -114,7 +114,7 @@ class Moltin
 				token:   @Storage.get 'mtoken'
 				expires: @Storage.get 'mexpires'
 
-			if callback != null
+			if typeof callback == 'function'
 				callback @options.auth
 
 			_e = new CustomEvent 'MoltinReady', @options.auth
@@ -139,7 +139,7 @@ class Moltin
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', r.expires
 
-				if callback != null
+				if typeof callback == 'function'
 					callback r
 
 				_e = new CustomEvent 'MoltinReady', r
@@ -148,7 +148,7 @@ class Moltin
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
-	Request: (uri, method = 'GET', data = null, callback = null) ->
+	Request: (uri, method = 'GET', data = null, callback) ->
 
 		_data = {}
 
@@ -162,12 +162,12 @@ class Moltin
 			type: method
 			url: @options.url+@options.version+'/'+uri
 			data: data
-			async: if callback != null then true else false
+			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 				'Authorization': 'Bearer '+@options.auth.token
 			success: (r, c, e) =>
-				if callback != null then callback r.result else _data = r
+				if typeof callback == 'function' then callback r.result else _data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
@@ -216,32 +216,21 @@ class Moltin
 
 		Get: (id, callback) ->
 
-			data = @m.Request 'brand/'+id, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'brand/'+id, 'GET', null, callback
 
 		Find: (terms, callback) ->
 
-			data = @m.Request 'brand', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'brand', 'GET', terms, callback
 
 		List: (terms, callback) ->
 
-			data = @m.Request 'brands', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'brands', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Request uri, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			
+			return @m.Request uri, 'GET', null, callback
 
 	class Category
 
@@ -249,39 +238,25 @@ class Moltin
 
 		Get: (id, callback) ->
 
-			data = @m.Request 'category/'+id, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'category/'+id, 'GET', null, callback
 
 		Find: (terms, callback) ->
 
-			data = @m.Request 'category', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'category', 'GET', terms, callback
 
 		List: (terms, callback) ->
 
-			data  = @m.Request 'categories', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'categories', 'GET', terms, callback
 
 		Tree: (callback) ->
 
-			data = @m.Request 'categories/tree', 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'categories/tree', 'GET', null, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Request uri, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			
+			return @m.Request uri, 'GET', null, callback
 
 	class Collection
 
@@ -289,32 +264,21 @@ class Moltin
 
 		Get: (id, callback) ->
 
-			data = @m.Request 'collection/'+id, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'collection/'+id, 'GET', null, callback
 
 		Find: (terms, callback) ->
 
-			data = @m.Request 'collection', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'collection', 'GET', terms, callback
 
 		List: (terms, callback) ->
 
-			data  = @m.Request 'collections', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'collections', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Request uri, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			
+			return @m.Request uri, 'GET', null, callback
 
 	class Product
 
@@ -322,50 +286,30 @@ class Moltin
 
 		Get: (id, callback) ->
 
-			data = @m.Request 'product/'+id, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id, 'GET', null, callback
 
 		Find: (terms, callback) ->
 
-			data = @m.Request 'product', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product', 'GET', terms, callback
 
 		List: (terms, callback) ->
 
-			data = @m.Request 'products', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'products', 'GET', terms, callback
 
 		Search: (terms, callback) ->
 
-			data = @m.Request 'products/search', 'GET', terms, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'products/search', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
-			data = @m.Request uri, 'GET', null, callback
-
-			if callback == null
-				return data.result
+			
+			return @m.Request uri, 'GET', null, callback
 
 		Modifiers: (id, callback) ->
 
-			data = @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
 
 		Variations: (id, callack) ->
 
-			data = @m.Request 'product/'+id+'/variations', 'GET', null, callback
-
-			if callback == null
-				return data.result
+			return @m.Request 'product/'+id+'/variations', 'GET', null, callback

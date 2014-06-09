@@ -106,7 +106,7 @@ class Moltin
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
-		 	return @options.notice 'error', 'Public ID and User ID must be set'
+		 	return @options.notice 'error', 'Public ID must be set'
 
 		if @Storage.get('mtoken') != null and @Storage.get('mexpires') > new Date/1e3|0
 			
@@ -114,7 +114,7 @@ class Moltin
 				token:   @Storage.get 'mtoken'
 				expires: @Storage.get 'mexpires'
 
-			if callback != null
+			if typeof callback == 'function'
 				callback @options.auth
 
 			_e = new CustomEvent 'MoltinReady', @options.auth
@@ -139,7 +139,7 @@ class Moltin
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', r.expires
 
-				if callback != null
+				if typeof callback == 'function'
 					callback r
 
 				_e = new CustomEvent 'MoltinReady', r
@@ -148,7 +148,7 @@ class Moltin
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
-	Request: (uri, method = 'GET', data = null, callback = null) ->
+	Request: (uri, method = 'GET', data = null, callback) ->
 
 		_data = {}
 
@@ -162,12 +162,12 @@ class Moltin
 			type: method
 			url: @options.url+@options.version+'/'+uri
 			data: data
-			async: if callback != null then true else false
+			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 				'Authorization': 'Bearer '+@options.auth.token
 			success: (r, c, e) =>
-				if callback != null then callback r.result else _data = r
+				if typeof callback == 'function' then callback r.result else _data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
