@@ -65,24 +65,27 @@
 
     <script src="assets/jquery.min.js"></script>
     <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/examples.js"></script>
     <script src="../dist/moltin.js"></script>
     <script type="text/javascript">
-      (function() {
+(function() {
 
-        // Authenticate
-        var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-        moltin.Authenticate(function() {
+  // Authenticate
+  var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
+  moltin.Authenticate(function() {
 
-          // Get your first product
-          moltin.Product.Get(6, function(product) {
+    // Get your first product
+    moltin.Product.Get(6, function(response) {
 
-            $('#sample').html(JSON.stringify(product, null, '\t'));
+      // Your code here...
 
-          });
+      $('#sample').html(JSON.stringify(response, null, '\t'));
 
-        });
+    });
 
-      })();
+  });
+
+})();
     </script>
 
   </body>
