@@ -2,7 +2,7 @@ var Moltin,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
-  var Brand, Category, Collection, Product, Storage;
+  var Brand, Category, Collection, Gateway, Product, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -23,6 +23,8 @@ Moltin = (function() {
     this.Category = new Category(this);
     this.Brand = new Brand(this);
     this.Collection = new Collection(this);
+    this.Gateway = new Gateway(this);
+    this.Tax = new Tax(this);
   }
 
   Moltin.prototype.Merge = function(o1, o2) {
@@ -368,6 +370,23 @@ Moltin = (function() {
 
   })();
 
+  Gateway = (function() {
+    function Gateway(m) {
+      this.m = m;
+    }
+
+    Gateway.prototype.Get = function(slug, callback) {
+      return this.m.Request('gateway/' + slug, 'GET', null, callback);
+    };
+
+    Gateway.prototype.List = function(terms, callback) {
+      return this.m.Request('gateways', 'GET', terms, callback);
+    };
+
+    return Gateway;
+
+  })();
+
   Product = (function() {
     function Product(m) {
       this.m = m;
@@ -407,6 +426,36 @@ Moltin = (function() {
     };
 
     return Product;
+
+  })();
+
+  Tax = (function() {
+    function Tax(m) {
+      this.m = m;
+    }
+
+    Tax.prototype.Get = function(id, callback) {
+      return this.m.Request('tax/' + id, 'GET', null, callback);
+    };
+
+    Tax.prototype.Find = function(terms, callback) {
+      return this.m.Request('tax', 'GET', terms, callback);
+    };
+
+    Tax.prototype.List = function(terms, callback) {
+      return this.m.Request('taxes', 'GET', terms, callback);
+    };
+
+    Tax.prototype.Fields = function(id, callback) {
+      var uri;
+      if (id == null) {
+        id = 0;
+      }
+      uri = 'tax/' + (id !== 0 ? id + '/fields' : 'fields');
+      return this.m.Request(uri, 'GET', null, callback);
+    };
+
+    return Tax;
 
   })();
 

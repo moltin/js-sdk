@@ -20,6 +20,8 @@ class Moltin
 		@Category   = new Category @
 		@Brand      = new Brand @
 		@Collection = new Collection @
+		@Gateway    = new Gateway @
+		@Tax        = new Tax @
 
 	Merge: (o1, o2) ->
 

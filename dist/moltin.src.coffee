@@ -20,6 +20,8 @@ class Moltin
 		@Category   = new Category @
 		@Brand      = new Brand @
 		@Collection = new Collection @
+		@Gateway    = new Gateway @
+		@Tax        = new Tax @
 
 	Merge: (o1, o2) ->
 
@@ -280,6 +282,18 @@ class Moltin
 			
 			return @m.Request uri, 'GET', null, callback
 
+	class Gateway
+
+		constructor: (@m) ->
+
+		Get: (slug, callback) ->
+
+			return @m.Request 'gateway/'+slug, 'GET', null, callback
+
+		List: (terms, callback) ->
+
+			return @m.Request 'gateways', 'GET', terms, callback
+
 	class Product
 
 		constructor: (@m) ->
@@ -313,3 +327,25 @@ class Moltin
 		Variations: (id, callack) ->
 
 			return @m.Request 'product/'+id+'/variations', 'GET', null, callback
+
+	class Tax
+
+		constructor: (@m) ->
+
+		Get: (id, callback) ->
+
+			return @m.Request 'tax/'+id, 'GET', null, callback
+
+		Find: (terms, callback) ->
+
+			return @m.Request 'tax', 'GET', terms, callback
+
+		List: (terms, callback) ->
+
+			return @m.Request 'taxes', 'GET', terms, callback
+
+		Fields: (id = 0, callback) ->
+
+			uri  = 'tax/'+ if id != 0 then id+'/fields' else 'fields'
+			
+			return @m.Request uri, 'GET', null, callback
