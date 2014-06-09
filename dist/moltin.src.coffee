@@ -7,6 +7,7 @@ class Moltin
 		url:      'https://api.molt.in/'
 		version:  'beta'
 		debug:    false
+		currency: false
 		notice:   (type, msg) ->
 			alert type+': '+msg
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
@@ -21,7 +22,11 @@ class Moltin
 		@Brand      = new Brand @
 		@Collection = new Collection @
 		@Gateway    = new Gateway @
+		@Currency   = new Currency @
 		@Tax        = new Tax @
+
+		if @Storage.get 'mcurrency'
+			@options.currency = @Storage.get 'mcurrency'
 
 	Merge: (o1, o2) ->
 
@@ -88,6 +93,9 @@ class Moltin
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
+
+		if @options.currency
+			request.setRequestHeader 'X-Currency', @options.currency
 
 		request.onreadystatechange = ->
 
@@ -279,6 +287,36 @@ class Moltin
 		Fields: (id = 0, callback) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
+			
+			return @m.Request uri, 'GET', null, callback
+
+	class Currency
+
+		constructor: (@m) ->
+
+		Get: (id, callback) ->
+
+			return @m.Request 'currency/'+id, 'GET', null, callback
+
+		Set: (code, callback) ->
+
+			@m.Storage.set 'mcurrency', code
+			@m.options.currency = code
+
+			if typeof callback == 'function'
+				callback code
+
+		Find: (terms, callback) ->
+
+			return @m.Request 'currency', 'GET', terms, callback
+
+		List: (terms, callback) ->
+
+			return @m.Request 'currencies', 'GET', terms, callback
+
+		Fields: (id = 0, callback) ->
+
+			uri  = 'currency/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback
 

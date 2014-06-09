@@ -1,7 +1,7 @@
-$(function() {
+// Helpers
+function first(obj) { return obj[Object.keys(obj)[0]]; }
 
-	// Helpers
-	Object.prototype.firstItem = function() { return this[Object.keys(this)[0]]; }
+$(function() {
 	
 	// Get example code
 	var str = $('script[type="text/javascript"]').html();

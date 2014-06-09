@@ -2,7 +2,7 @@ var Moltin,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
-  var Brand, Category, Collection, Gateway, Product, Storage, Tax;
+  var Brand, Category, Collection, Currency, Gateway, Product, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -10,6 +10,7 @@ Moltin = (function() {
     url: 'https://api.molt.in/',
     version: 'beta',
     debug: false,
+    currency: false,
     notice: function(type, msg) {
       return alert(type + ': ' + msg);
     },
@@ -24,7 +25,11 @@ Moltin = (function() {
     this.Brand = new Brand(this);
     this.Collection = new Collection(this);
     this.Gateway = new Gateway(this);
+    this.Currency = new Currency(this);
     this.Tax = new Tax(this);
+    if (this.Storage.get('mcurrency')) {
+      this.options.currency = this.Storage.get('mcurrency');
+    }
   }
 
   Moltin.prototype.Merge = function(o1, o2) {
@@ -112,6 +117,9 @@ Moltin = (function() {
     for (k in _ref) {
       v = _ref[k];
       request.setRequestHeader(k, v);
+    }
+    if (this.options.currency) {
+      request.setRequestHeader('X-Currency', this.options.currency);
     }
     request.onreadystatechange = function() {
       var response;
@@ -367,6 +375,44 @@ Moltin = (function() {
     };
 
     return Collection;
+
+  })();
+
+  Currency = (function() {
+    function Currency(m) {
+      this.m = m;
+    }
+
+    Currency.prototype.Get = function(id, callback) {
+      return this.m.Request('currency/' + id, 'GET', null, callback);
+    };
+
+    Currency.prototype.Set = function(code, callback) {
+      this.m.Storage.set('mcurrency', code);
+      this.m.options.currency = code;
+      if (typeof callback === 'function') {
+        return callback(code);
+      }
+    };
+
+    Currency.prototype.Find = function(terms, callback) {
+      return this.m.Request('currency', 'GET', terms, callback);
+    };
+
+    Currency.prototype.List = function(terms, callback) {
+      return this.m.Request('currencies', 'GET', terms, callback);
+    };
+
+    Currency.prototype.Fields = function(id, callback) {
+      var uri;
+      if (id == null) {
+        id = 0;
+      }
+      uri = 'currency/' + (id !== 0 ? id + '/fields' : 'fields');
+      return this.m.Request(uri, 'GET', null, callback);
+    };
+
+    return Currency;
 
   })();
 
