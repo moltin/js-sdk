@@ -94,9 +94,6 @@ class Moltin
 
 		request.setRequestHeader k, v for k,v of args.headers
 
-		if @options.currency
-			request.setRequestHeader 'X-Currency', @options.currency
-
 		request.onreadystatechange = ->
 
 			if request.readyState != 4
@@ -116,9 +113,9 @@ class Moltin
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
-		 	return @options.notice 'error', 'Public ID must be set'
+			return @options.notice 'error', 'Public ID must be set'
 
-		if @Storage.get('mtoken') != null and @Storage.get('mexpires') > new Date/1e3|0
+		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > new Date/1e3|0
 			
 			@options.auth =
 				token:   @Storage.get 'mtoken'
@@ -144,7 +141,7 @@ class Moltin
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
-					expires: r.expires
+					expires: parseInt r.expires
 
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', r.expires
@@ -160,7 +157,10 @@ class Moltin
 
 	Request: (uri, method = 'GET', data = null, callback) ->
 
-		_data = {}
+		_data    = {}
+		_headers =
+			'Content-Type': 'application/x-www-form-urlencoded'
+			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
 			return @options.notice 'error', 'You much authenticate first'
@@ -168,14 +168,15 @@ class Moltin
 		if not @InArray method, @options.methods
 			return @options.notice 'error', 'Invalid request method ('+method+')'
 
+		if @options.currency
+			_headers['X-Currency'] = @options.currency
+
 		@Ajax 
 			type: method
 			url: @options.url+@options.version+'/'+uri
 			data: data
 			async: if typeof callback == 'function' then true else false
-			headers:
-				'Content-Type': 'application/x-www-form-urlencoded'
-				'Authorization': 'Bearer '+@options.auth.token
+			headers: _headers
 			success: (r, c, e) =>
 				if typeof callback == 'function' then callback r.result else _data = r
 			error: (e, c, m) =>

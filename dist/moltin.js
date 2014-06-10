@@ -118,9 +118,6 @@ Moltin = (function() {
       v = _ref[k];
       request.setRequestHeader(k, v);
     }
-    if (this.options.currency) {
-      request.setRequestHeader('X-Currency', this.options.currency);
-    }
     request.onreadystatechange = function() {
       var response;
       if (request.readyState !== 4) {
@@ -142,7 +139,7 @@ Moltin = (function() {
     if (this.options.publicId.length <= 0) {
       return this.options.notice('error', 'Public ID must be set');
     }
-    if (this.Storage.get('mtoken') !== null && this.Storage.get('mexpires') > new Date / 1e3 | 0) {
+    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > new Date / 1e3 | 0) {
       this.options.auth = {
         token: this.Storage.get('mtoken'),
         expires: this.Storage.get('mexpires')
@@ -169,7 +166,7 @@ Moltin = (function() {
         return function(r, c, e) {
           _this.options.auth = {
             token: r.access_token,
-            expires: r.expires
+            expires: parseInt(r.expires)
           };
           _this.Storage.set('mtoken', r.access_token);
           _this.Storage.set('mexpires', r.expires);
@@ -189,7 +186,7 @@ Moltin = (function() {
   };
 
   Moltin.prototype.Request = function(uri, method, data, callback) {
-    var _data;
+    var _data, _headers;
     if (method == null) {
       method = 'GET';
     }
@@ -197,21 +194,25 @@ Moltin = (function() {
       data = null;
     }
     _data = {};
+    _headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + this.options.auth.token
+    };
     if (this.options.auth.token === null) {
       return this.options.notice('error', 'You much authenticate first');
     }
     if (!this.InArray(method, this.options.methods)) {
       return this.options.notice('error', 'Invalid request method (' + method + ')');
     }
+    if (this.options.currency) {
+      _headers['X-Currency'] = this.options.currency;
+    }
     this.Ajax({
       type: method,
       url: this.options.url + this.options.version + '/' + uri,
       data: data,
       async: typeof callback === 'function' ? true : false,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer ' + this.options.auth.token
-      },
+      headers: _headers,
       success: (function(_this) {
         return function(r, c, e) {
           if (typeof callback === 'function') {
