@@ -91,7 +91,7 @@
   var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
   moltin.Authenticate(function() {
 
-    moltin.Currency.Set('EUR');
+    moltin.Currency.Set('GBP');
 
     // Get your first product
     moltin.Product.Get(6, function(response) {
@@ -102,7 +102,17 @@
       item.find('.list-group-item-heading').html(response.title);
       item.find('.list-group-item-text').html(response.description);
       item.find('.lead').html(response.pricing.formatted.without_tax);
-      item.find('.btn-success').on('click', function(e) { alert(response.title+' added to cart!'); });
+      item.find('.btn-success').on('click', function(e) {
+
+        moltin.Cart.Insert(response.id, 1, function() {
+          moltin.Cart.Contents(function(cart) {
+            console.log(cart);
+          });
+        });
+
+        alert(response.title+' added to cart!');
+
+      });
 
       $('#sample').html(JSON.stringify(response, null, '\t'));
 

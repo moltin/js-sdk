@@ -17,12 +17,14 @@ class Moltin
 		@options = @Merge @options, overrides
 		@Storage = new Storage
 
-		@Product    = new Product @
-		@Category   = new Category @
 		@Brand      = new Brand @
+		@Cart       = new Cart @
+		@Category   = new Category @
 		@Collection = new Collection @
-		@Gateway    = new Gateway @
 		@Currency   = new Currency @
+		@Gateway    = new Gateway @
+		@Product    = new Product @
+		@Shipping   = new Shipping @
 		@Tax        = new Tax @
 
 		if @Storage.get 'mcurrency'
@@ -243,6 +245,50 @@ class Moltin
 			
 			return @m.Request uri, 'GET', null, callback
 
+	class Cart
+
+		constructor: (@m) ->
+
+			@identifier = @GetIdentifier()
+
+		GetIdentifier: () ->
+
+			if @m.Storage.get 'mcart' != null
+				return @m.Storage.get 'mcart'
+
+			# id = 'xxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
+			# 	return ( Math.random()*16|0 ).toString(16);
+
+			id = 'iusdbfusdbfusdbfusdfbsdfs';
+
+			@m.Storage.set 'mcart', id
+
+			return id
+
+		Contents: (callback) ->
+
+			return @m.Request 'cart/'+@identifier, 'GET', null, callback
+
+		Insert: (id, qty = 1, callback) ->
+
+			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty}, callback
+
+		Update: (id, qty = 1, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', {id: id, quantity: qty}, callback
+
+		Remove: (id, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback
+
+		Item: (id, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback
+
+		InCart: (id, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback
+
 	class Category
 
 		constructor: (@m) ->
@@ -366,6 +412,18 @@ class Moltin
 		Variations: (id, callack) ->
 
 			return @m.Request 'product/'+id+'/variations', 'GET', null, callback
+
+	class Shippibg
+
+		constructor: (@m) ->
+
+		Get: (id, callback) ->
+
+			return @m.Request 'shipping/'+id, 'GET', null, callback
+
+		List: (terms, callback) ->
+
+			return @m.Request 'shipping', 'GET', terms, callback
 
 	class Tax
 

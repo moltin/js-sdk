@@ -17,12 +17,14 @@ class Moltin
 		@options = @Merge @options, overrides
 		@Storage = new Storage
 
-		@Product    = new Product @
-		@Category   = new Category @
 		@Brand      = new Brand @
+		@Cart       = new Cart @
+		@Category   = new Category @
 		@Collection = new Collection @
-		@Gateway    = new Gateway @
 		@Currency   = new Currency @
+		@Gateway    = new Gateway @
+		@Product    = new Product @
+		@Shipping   = new Shipping @
 		@Tax        = new Tax @
 
 		if @Storage.get 'mcurrency'

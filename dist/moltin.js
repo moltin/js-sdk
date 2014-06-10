@@ -2,7 +2,7 @@ var Moltin,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
-  var Brand, Category, Collection, Currency, Gateway, Product, Storage, Tax;
+  var Brand, Cart, Category, Collection, Currency, Gateway, Product, Shippibg, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -20,12 +20,14 @@ Moltin = (function() {
   function Moltin(overrides) {
     this.options = this.Merge(this.options, overrides);
     this.Storage = new Storage;
-    this.Product = new Product(this);
-    this.Category = new Category(this);
     this.Brand = new Brand(this);
+    this.Cart = new Cart(this);
+    this.Category = new Category(this);
     this.Collection = new Collection(this);
-    this.Gateway = new Gateway(this);
     this.Currency = new Currency(this);
+    this.Gateway = new Gateway(this);
+    this.Product = new Product(this);
+    this.Shipping = new Shipping(this);
     this.Tax = new Tax(this);
     if (this.Storage.get('mcurrency')) {
       this.options.currency = this.Storage.get('mcurrency');
@@ -315,6 +317,62 @@ Moltin = (function() {
 
   })();
 
+  Cart = (function() {
+    function Cart(m) {
+      this.m = m;
+      this.identifier = this.GetIdentifier();
+    }
+
+    Cart.prototype.GetIdentifier = function() {
+      var id;
+      if (this.m.Storage.get('mcart' !== null)) {
+        return this.m.Storage.get('mcart');
+      }
+      id = 'iusdbfusdbfusdbfusdfbsdfs';
+      this.m.Storage.set('mcart', id);
+      return id;
+    };
+
+    Cart.prototype.Contents = function(callback) {
+      return this.m.Request('cart/' + this.identifier, 'GET', null, callback);
+    };
+
+    Cart.prototype.Insert = function(id, qty, callback) {
+      if (qty == null) {
+        qty = 1;
+      }
+      return this.m.Request('cart/' + this.identifier, 'POST', {
+        id: id,
+        quantity: qty
+      }, callback);
+    };
+
+    Cart.prototype.Update = function(id, qty, callback) {
+      if (qty == null) {
+        qty = 1;
+      }
+      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', {
+        id: id,
+        quantity: qty
+      }, callback);
+    };
+
+    Cart.prototype.Remove = function(id, callback) {
+      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'DELETE', null, callback);
+    };
+
+    Cart.prototype.Item = function(id, callback) {
+      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'GET', null, callback);
+    };
+
+    Cart.prototype.InCart = function(id, callback) {
+      return this.m.Request('cart/' + this.identifier + '/has/' + id, 'GET', null, callback);
+    };
+
+    return Cart;
+
+  })();
+
   Category = (function() {
     function Category(m) {
       this.m = m;
@@ -473,6 +531,23 @@ Moltin = (function() {
     };
 
     return Product;
+
+  })();
+
+  Shippibg = (function() {
+    function Shippibg(m) {
+      this.m = m;
+    }
+
+    Shippibg.prototype.Get = function(id, callback) {
+      return this.m.Request('shipping/' + id, 'GET', null, callback);
+    };
+
+    Shippibg.prototype.List = function(terms, callback) {
+      return this.m.Request('shipping', 'GET', terms, callback);
+    };
+
+    return Shippibg;
 
   })();
 
