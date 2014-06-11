@@ -10,7 +10,7 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapDir: 'dist/'
         files:
-          'dist/moltin.js': ['src/*.coffee', 'src/features/*.coffee']
+          'dist/moltin.js': ['src/moltin.coffee', 'src/*.coffee', 'src/features/*.coffee']
     karma:
       unit:
         options:

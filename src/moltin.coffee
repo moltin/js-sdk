@@ -146,7 +146,7 @@ class Moltin
 					expires: parseInt r.expires
 
 				@Storage.set 'mtoken', r.access_token
-				@Storage.set 'mexpires', r.expires
+				@Storage.set 'mexpires', new Date/1e3|0 - parseInt(r.expires_in) - 300
 
 				if typeof callback == 'function'
 					callback r

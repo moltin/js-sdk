@@ -1,0 +1,4 @@
+	class Form
+
+		constructor: (fields) ->
+

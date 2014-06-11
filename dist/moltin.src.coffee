@@ -146,7 +146,7 @@ class Moltin
 					expires: parseInt r.expires
 
 				@Storage.set 'mtoken', r.access_token
-				@Storage.set 'mexpires', r.expires
+				@Storage.set 'mexpires', new Date/1e3|0 - parseInt(r.expires_in) - 300
 
 				if typeof callback == 'function'
 					callback r
@@ -193,6 +193,11 @@ class Moltin
 
 		if callback == null
 			return _data;
+
+	class Form
+
+		constructor: (fields) ->
+
 
 	class Storage
 
@@ -256,10 +261,8 @@ class Moltin
 			if @m.Storage.get 'mcart' != null
 				return @m.Storage.get 'mcart'
 
-			# id = 'xxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
-			# 	return ( Math.random()*16|0 ).toString(16);
-
-			id = 'iusdbfusdbfusdbfusdfbsdfs';
+			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
+				return ( Math.random()*16|0 ).toString(16);
 
 			@m.Storage.set 'mcart', id
 
@@ -413,7 +416,7 @@ class Moltin
 
 			return @m.Request 'product/'+id+'/variations', 'GET', null, callback
 
-	class Shippibg
+	class Shipping
 
 		constructor: (@m) ->
 

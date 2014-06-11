@@ -2,7 +2,7 @@ var Moltin,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
-  var Brand, Cart, Category, Collection, Currency, Gateway, Product, Shippibg, Storage, Tax;
+  var Brand, Cart, Category, Collection, Currency, Form, Gateway, Product, Shipping, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -171,7 +171,7 @@ Moltin = (function() {
             expires: parseInt(r.expires)
           };
           _this.Storage.set('mtoken', r.access_token);
-          _this.Storage.set('mexpires', r.expires);
+          _this.Storage.set('mexpires', new Date / 1e3 | 0 - parseInt(r.expires_in) - 300);
           if (typeof callback === 'function') {
             callback(r);
           }
@@ -248,6 +248,13 @@ Moltin = (function() {
       return _data;
     }
   };
+
+  Form = (function() {
+    function Form(fields) {}
+
+    return Form;
+
+  })();
 
   Storage = (function() {
     function Storage() {}
@@ -328,7 +335,9 @@ Moltin = (function() {
       if (this.m.Storage.get('mcart' !== null)) {
         return this.m.Storage.get('mcart');
       }
-      id = 'iusdbfusdbfusdbfusdfbsdfs';
+      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
+        return (Math.random() * 16 | 0).toString(16);
+      });
       this.m.Storage.set('mcart', id);
       return id;
     };
@@ -534,20 +543,20 @@ Moltin = (function() {
 
   })();
 
-  Shippibg = (function() {
-    function Shippibg(m) {
+  Shipping = (function() {
+    function Shipping(m) {
       this.m = m;
     }
 
-    Shippibg.prototype.Get = function(id, callback) {
+    Shipping.prototype.Get = function(id, callback) {
       return this.m.Request('shipping/' + id, 'GET', null, callback);
     };
 
-    Shippibg.prototype.List = function(terms, callback) {
+    Shipping.prototype.List = function(terms, callback) {
       return this.m.Request('shipping', 'GET', terms, callback);
     };
 
-    return Shippibg;
+    return Shipping;
 
   })();
 

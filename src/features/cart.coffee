@@ -9,10 +9,8 @@
 			if @m.Storage.get 'mcart' != null
 				return @m.Storage.get 'mcart'
 
-			# id = 'xxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
-			# 	return ( Math.random()*16|0 ).toString(16);
-
-			id = 'iusdbfusdbfusdbfusdfbsdfs';
+			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
+				return ( Math.random()*16|0 ).toString(16);
 
 			@m.Storage.set 'mcart', id
 
