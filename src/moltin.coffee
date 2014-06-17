@@ -1,5 +1,7 @@
 class Moltin
 
+	"use strict"
+
 	options:
 
 		publicId: ''
@@ -146,7 +148,7 @@ class Moltin
 					expires: parseInt r.expires
 
 				@Storage.set 'mtoken', r.access_token
-				@Storage.set 'mexpires', new Date/1e3|0 - parseInt(r.expires_in) - 300
+				@Storage.set 'mexpires', @options.auth.expires
 
 				if typeof callback == 'function'
 					callback r

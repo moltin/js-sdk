@@ -2,6 +2,7 @@ var Moltin,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
+  "use strict";
   var Brand, Cart, Category, Collection, Currency, Form, Gateway, Product, Shipping, Storage, Tax;
 
   Moltin.prototype.options = {
@@ -171,7 +172,7 @@ Moltin = (function() {
             expires: parseInt(r.expires)
           };
           _this.Storage.set('mtoken', r.access_token);
-          _this.Storage.set('mexpires', new Date / 1e3 | 0 - parseInt(r.expires_in) - 300);
+          _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
           }

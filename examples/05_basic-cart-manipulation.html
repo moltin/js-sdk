@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>01. Autentication | Moltin SDK</title>
+    <title>05. Cart Manipulation | Moltin SDK</title>
 
     <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
@@ -35,11 +35,11 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Basic <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="01_basic-authentication.html" class="active">Authentication</a></li>
+                <li><a href="01_basic-authentication.html">Authentication</a></li>
                 <li><a href="02_basic-requests.html">Your First Request</a></li>
                 <li><a href="03_basic-using-your-data.html">Using Your Data</a></li>
                 <li><a href="04_basic-listing-your-products.html">Listing Your Products</a></li>
-                <li><a href="05_basic-cart-manipulation.html">Cart Manipulation</a></li>
+                <li><a href="05_basic-cart-manipulation.html" class="active">Cart Manipulation</a></li>
                 <li><a href="06_basic-parameters.html">Listing Parameters</a></li>
               </ul>
             </li>
@@ -53,15 +53,32 @@
     <div class="container">
       <div id="main">
 
-        <h1>01. Authentication</h1>
-        <p>A quick guide to authenticating your app with the Moltin API.</p>
-        <p>All you need is your Public Key and this will give access to GET methods as well as selected PUT &amp; POST methods (eg. cart)</p>
+        <h1>05. Cart Manipulation</h1>
+        <p>Now that we've got the product out, we need to do something with it!</p>
+        <p>With this example we'll create a really basic product listing.</p>
 
         <h3>Code</h3>
         <code id="code"></code>
 
         <h3>Response</h3>
         <pre class="pre-scrollable" id="sample"></pre>
+
+        <h3>Example</h3>
+        <div id="example" class="row">
+          <div class="item col-xs-3 col-lg-3">
+            <div class="thumbnail">
+              <img class="group list-group-image" src="" alt="" />
+              <div class="caption">
+                <h4 class="group inner list-group-item-heading"></h4>
+                <p class="group inner list-group-item-text"></p>
+                <div class="row" style="padding: 0">
+                  <div class="col-xs-12 col-md-6"><span class="lead"></span></div>
+                  <div class="col-xs-12 col-md-6"><a class="btn btn-success pull-right" href="#">Add to cart</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -75,14 +92,14 @@
 
   // Authenticate
   var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-  moltin.Authenticate();
+  moltin.Authenticate(function() {
 
-  // Listen for authentication
-  window.addEventListener('MoltinReady', function(response) {
+    // Get featured products
+    moltin.Product.Search({category: 'featured', limit: 12}, function(response) {
 
-    // Your code here...
+      $('#sample').html(JSON.stringify(response, null, '\t'));
 
-    $('#sample').html(JSON.stringify(response, null, '\t'));
+    });
 
   });
 
