@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>05. Cart Manipulation | Moltin SDK</title>
+    <title>03. Using Your Data | Moltin SDK</title>
 
-    <link rel="stylesheet" href="assets/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,12 +35,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Basic <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="01_basic-authentication.html">Authentication</a></li>
-                <li><a href="02_basic-requests.html">Your First Request</a></li>
-                <li><a href="03_basic-using-your-data.html">Using Your Data</a></li>
-                <li><a href="04_basic-listing-your-products.html">Listing Your Products</a></li>
-                <li><a href="05_basic-cart-manipulation.html" class="active">Cart Manipulation</a></li>
-                <li><a href="06_basic-parameters.html">Listing Parameters</a></li>
+                <li><a href="../basic/01_authentication.html">Authentication</a></li>
+                <li><a href="../basic/02_requests.html">Your First Request</a></li>
+                <li><a href="../basic/03_using-your-data.html" class="active">Using Your Data</a></li>
+                <li><a href="../basic/04_listing-your-products.html">Listing Your Products</a></li>
+                <li><a href="../basic/05_cart-manipulation.html">Cart Manipulation</a></li>
+                <li><a href="../basic/06_error-handling.html">Error Handling</a></li>
               </ul>
             </li>
             <li><a href="#intermediate">Intermediate</a></li>
@@ -53,7 +53,7 @@
     <div class="container">
       <div id="main">
 
-        <h1>05. Cart Manipulation</h1>
+        <h1>03. Using Your Data</h1>
         <p>Now that we've got the product out, we need to do something with it!</p>
         <p>With this example we'll create a really basic product listing.</p>
 
@@ -65,7 +65,7 @@
 
         <h3>Example</h3>
         <div id="example" class="row">
-          <div class="item col-xs-3 col-lg-3">
+          <div class="item col-xs-4 col-lg-4">
             <div class="thumbnail">
               <img class="group list-group-image" src="" alt="" />
               <div class="caption">
@@ -83,10 +83,10 @@
       </div>
     </div>
 
-    <script src="assets/jquery.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-    <script src="assets/examples.js"></script>
-    <script src="../dist/moltin.js"></script>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/bootstrap.min.js"></script>
+    <script src="../assets/examples.js"></script>
+    <script src="../../dist/moltin.js"></script>
     <script type="text/javascript">
 (function() {
 
@@ -94,8 +94,16 @@
   var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
   moltin.Authenticate(function() {
 
-    // Get featured products
-    moltin.Product.Search({category: 'featured', limit: 12}, function(response) {
+    // Get your first product
+    moltin.Product.Get(6, function(response) {
+
+      // Update our listing
+      var item = $('#example .item');
+      item.find('.list-group-image').attr('src', first(response.images).url.http).attr('alt', response.title);
+      item.find('.list-group-item-heading').html(response.title);
+      item.find('.list-group-item-text').html(response.description);
+      item.find('.lead').html(response.pricing.formatted.without_tax);
+      item.find('.btn-success').on('click', function(e) { alert(response.title+' added to cart!'); });
 
       $('#sample').html(JSON.stringify(response, null, '\t'));
 

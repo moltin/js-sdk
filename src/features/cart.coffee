@@ -6,7 +6,7 @@
 
 		GetIdentifier: () ->
 
-			if @m.Storage.get 'mcart' != null
+			if @m.Storage.get('mcart') != null
 				return @m.Storage.get 'mcart'
 
 			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
@@ -24,9 +24,9 @@
 
 			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty}, callback
 
-		Update: (id, qty = 1, callback) ->
+		Update: (id, data, callback) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', {id: id, quantity: qty}, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback
 
 		Remove: (id, callback) ->
 

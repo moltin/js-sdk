@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>01. Autentication | Moltin SDK</title>
+    <title>02. Your First Request | Moltin SDK</title>
 
-    <link rel="stylesheet" href="assets/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="../assets/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/style.css">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -35,12 +35,12 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle active" data-toggle="dropdown">Basic <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="01_basic-authentication.html" class="active">Authentication</a></li>
-                <li><a href="02_basic-requests.html">Your First Request</a></li>
-                <li><a href="03_basic-using-your-data.html">Using Your Data</a></li>
-                <li><a href="04_basic-listing-your-products.html">Listing Your Products</a></li>
-                <li><a href="05_basic-cart-manipulation.html">Cart Manipulation</a></li>
-                <li><a href="06_basic-parameters.html">Listing Parameters</a></li>
+                <li><a href="../basic/01_authentication.html">Authentication</a></li>
+                <li><a href="../basic/02_requests.html" class="active">Your First Request</a></li>
+                <li><a href="../basic/03_using-your-data.html">Using Your Data</a></li>
+                <li><a href="../basic/04_listing-your-products.html">Listing Your Products</a></li>
+                <li><a href="../basic/05_cart-manipulation.html">Cart Manipulation</a></li>
+                <li><a href="../basic/06_error-handling.html">Error Handling</a></li>
               </ul>
             </li>
             <li><a href="#intermediate">Intermediate</a></li>
@@ -53,9 +53,9 @@
     <div class="container">
       <div id="main">
 
-        <h1>01. Authentication</h1>
-        <p>A quick guide to authenticating your app with the Moltin API.</p>
-        <p>All you need is your Public Key and this will give access to GET methods as well as selected PUT &amp; POST methods (eg. cart)</p>
+        <h1>02. Your First Request</h1>
+        <p>Now that you're authenticated and you've got your token it's time to GET some data</p>
+        <p>We're going to presume you've already created a product, select one below and we'll move on</p>
 
         <h3>Code</h3>
         <code id="code"></code>
@@ -66,23 +66,27 @@
       </div>
     </div>
 
-    <script src="assets/jquery.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-    <script src="assets/examples.js"></script>
-    <script src="../dist/moltin.js"></script>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/bootstrap.min.js"></script>
+    <script src="../assets/examples.js"></script>
+    <script src="../../dist/moltin.js"></script>
     <script type="text/javascript">
 (function() {
 
   // Authenticate
   var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-  moltin.Authenticate();
+  moltin.Authenticate(function() {
 
-  // Listen for authentication
-  window.addEventListener('MoltinReady', function(response) {
+    // Get your first product
+    moltin.Product.Get(6, function(response) {
 
-    // Your code here...
+      // Your code here...
 
-    $('#sample').html(JSON.stringify(response, null, '\t'));
+      console.log(response);
+
+      $('#sample').html(JSON.stringify(response, null, '\t'));
+
+    });
 
   });
 

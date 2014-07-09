@@ -3,7 +3,7 @@ var Moltin,
 
 Moltin = (function() {
   "use strict";
-  var Brand, Cart, Category, Collection, Currency, Form, Gateway, Product, Shipping, Storage, Tax;
+  var Brand, Cart, Category, Collection, Currency, Gateway, Product, Shipping, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -142,7 +142,7 @@ Moltin = (function() {
     if (this.options.publicId.length <= 0) {
       return this.options.notice('error', 'Public ID must be set');
     }
-    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > new Date / 1e3 | 0) {
+    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > new Date) {
       this.options.auth = {
         token: this.Storage.get('mtoken'),
         expires: this.Storage.get('mexpires')
@@ -150,7 +150,9 @@ Moltin = (function() {
       if (typeof callback === 'function') {
         callback(this.options.auth);
       }
-      _e = new CustomEvent('MoltinReady', this.options.auth);
+      _e = new CustomEvent('MoltinReady', {
+        detail: this
+      });
       window.dispatchEvent(_e);
       return;
     }
@@ -169,14 +171,16 @@ Moltin = (function() {
         return function(r, c, e) {
           _this.options.auth = {
             token: r.access_token,
-            expires: parseInt(r.expires)
+            expires: new Date + (parseInt(r.expires_in) - 300) * 1000
           };
           _this.Storage.set('mtoken', r.access_token);
           _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
           }
-          _e = new CustomEvent('MoltinReady', r);
+          _e = new CustomEvent('MoltinReady', {
+            detail: _this
+          });
           return window.dispatchEvent(_e);
         };
       })(this),
@@ -219,7 +223,11 @@ Moltin = (function() {
       success: (function(_this) {
         return function(r, c, e) {
           if (typeof callback === 'function') {
-            return callback(r.result);
+            if (typeof r.item !== 'undefined') {
+              return callback(r.item);
+            } else {
+              return callback(r.result);
+            }
           } else {
             return _data = r;
           }
@@ -245,17 +253,10 @@ Moltin = (function() {
         };
       })(this)
     });
-    if (callback === null) {
-      return _data;
+    if (typeof callback === 'undefined') {
+      return _data.result;
     }
   };
-
-  Form = (function() {
-    function Form(fields) {}
-
-    return Form;
-
-  })();
 
   Storage = (function() {
     function Storage() {}
@@ -333,7 +334,7 @@ Moltin = (function() {
 
     Cart.prototype.GetIdentifier = function() {
       var id;
-      if (this.m.Storage.get('mcart' !== null)) {
+      if (this.m.Storage.get('mcart') !== null) {
         return this.m.Storage.get('mcart');
       }
       id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
@@ -357,14 +358,8 @@ Moltin = (function() {
       }, callback);
     };
 
-    Cart.prototype.Update = function(id, qty, callback) {
-      if (qty == null) {
-        qty = 1;
-      }
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', {
-        id: id,
-        quantity: qty
-      }, callback);
+    Cart.prototype.Update = function(id, data, callback) {
+      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback);
     };
 
     Cart.prototype.Remove = function(id, callback) {

@@ -42,9 +42,9 @@ class Moltin
 	InArray: (key, arr) ->
 
 		if key not in arr
-  			return false
+			return false
 
-  		return true
+		return true
 
 	Serialize: (obj, prefix = null) ->
 
@@ -119,7 +119,7 @@ class Moltin
 		if @options.publicId.length <= 0
 			return @options.notice 'error', 'Public ID must be set'
 
-		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > new Date/1e3|0
+		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > new Date
 			
 			@options.auth =
 				token:   @Storage.get 'mtoken'
@@ -128,7 +128,7 @@ class Moltin
 			if typeof callback == 'function'
 				callback @options.auth
 
-			_e = new CustomEvent 'MoltinReady', @options.auth
+			_e = new CustomEvent 'MoltinReady', {detail: @}
 			window.dispatchEvent _e
 
 			return
@@ -145,7 +145,7 @@ class Moltin
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
-					expires: parseInt r.expires
+					expires: new Date + ( parseInt(r.expires_in) - 300 ) * 1000
 
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', @options.auth.expires
@@ -153,7 +153,7 @@ class Moltin
 				if typeof callback == 'function'
 					callback r
 
-				_e = new CustomEvent 'MoltinReady', r
+				_e = new CustomEvent 'MoltinReady', {detail: @}
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
@@ -182,7 +182,13 @@ class Moltin
 			async: if typeof callback == 'function' then true else false
 			headers: _headers
 			success: (r, c, e) =>
-				if typeof callback == 'function' then callback r.result else _data = r
+				if typeof callback == 'function'
+					if typeof r.item != 'undefined'
+						callback r.item
+					else
+						callback r.result
+				else 
+					_data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
@@ -193,13 +199,8 @@ class Moltin
 					@options.notice 'error', error
 				_data = r;
 
-		if callback == null
-			return _data;
-
-	class Form
-
-		constructor: (fields) ->
-
+		if typeof callback == 'undefined'
+			return _data.result
 
 	class Storage
 
@@ -260,7 +261,7 @@ class Moltin
 
 		GetIdentifier: () ->
 
-			if @m.Storage.get 'mcart' != null
+			if @m.Storage.get('mcart') != null
 				return @m.Storage.get 'mcart'
 
 			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
@@ -278,9 +279,9 @@ class Moltin
 
 			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty}, callback
 
-		Update: (id, qty = 1, callback) ->
+		Update: (id, data, callback) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', {id: id, quantity: qty}, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback
 
 		Remove: (id, callback) ->
 
