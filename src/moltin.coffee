@@ -80,6 +80,7 @@ class Moltin
 			error:   (response, status, request) ->
 
 		args = @Merge args, options
+		args.type = args.type.toUpperCase()
 
 		try
 			request = new XMLHttpRequest()
@@ -89,7 +90,14 @@ class Moltin
 			catch e
 				return false;
 
-		request.open args.type.toUpperCase(), args.url, args.async
+		post_data = null
+
+		if args.type == "GET"
+			args.url += '?' + @Serialize args.data
+		else
+			post_data = @Serialize args.data
+
+		request.open args.type, args.url, args.async
 
 		timeout = setTimeout =>
 			request.abort()
@@ -112,7 +120,7 @@ class Moltin
 			else
 				args.success response, request.status, request
 
-		request.send @Serialize args.data
+		request.send post_data
 
 	Authenticate: (callback)->
 

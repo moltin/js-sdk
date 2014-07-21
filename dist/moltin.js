@@ -3,8 +3,6 @@ var Moltin,
 
 Moltin = (function() {
   "use strict";
-  var Brand, Cart, Category, Collection, Currency, Gateway, Product, Shipping, Storage, Tax;
-
   Moltin.prototype.options = {
     publicId: '',
     auth: {},
@@ -86,7 +84,7 @@ Moltin = (function() {
   };
 
   Moltin.prototype.Ajax = function(options) {
-    var args, e, k, request, timeout, v, _ref;
+    var args, e, k, post_data, request, timeout, v, _ref;
     args = {
       type: 'GET',
       async: false,
@@ -98,6 +96,7 @@ Moltin = (function() {
       error: function(response, status, request) {}
     };
     args = this.Merge(args, options);
+    args.type = args.type.toUpperCase();
     try {
       request = new XMLHttpRequest();
     } catch (_error) {
@@ -109,7 +108,13 @@ Moltin = (function() {
         return false;
       }
     }
-    request.open(args.type.toUpperCase(), args.url, args.async);
+    post_data = null;
+    if (args.type === "GET") {
+      args.url += '?' + this.Serialize(args.data);
+    } else {
+      post_data = this.Serialize(args.data);
+    }
+    request.open(args.type, args.url, args.async);
     timeout = setTimeout((function(_this) {
       return function() {
         request.abort();
@@ -134,7 +139,7 @@ Moltin = (function() {
         return args.success(response, request.status, request);
       }
     };
-    return request.send(this.Serialize(args.data));
+    return request.send(post_data);
   };
 
   Moltin.prototype.Authenticate = function(callback) {
@@ -258,336 +263,354 @@ Moltin = (function() {
     }
   };
 
-  Storage = (function() {
-    function Storage() {}
-
-    Storage.prototype.set = function(key, value, days) {
-      var date, expires;
-      expires = "";
-      if (days) {
-        date = new Date;
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      return document.cookie = key + "=" + value + expires + "; path=/";
-    };
-
-    Storage.prototype.get = function(key) {
-      var c, _i, _len, _ref;
-      key = key + "=";
-      _ref = document.cookie.split(';');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        c = _ref[_i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(key) === 0) {
-          return c.substring(key.length, c.length);
-        }
-      }
-      return null;
-    };
-
-    Storage.prototype.remove = function(key) {
-      return this.set(key, '', -1);
-    };
-
-    return Storage;
-
-  })();
-
-  Brand = (function() {
-    function Brand(m) {
-      this.m = m;
-    }
-
-    Brand.prototype.Get = function(id, callback) {
-      return this.m.Request('brand/' + id, 'GET', null, callback);
-    };
-
-    Brand.prototype.Find = function(terms, callback) {
-      return this.m.Request('brand', 'GET', terms, callback);
-    };
-
-    Brand.prototype.List = function(terms, callback) {
-      return this.m.Request('brands', 'GET', terms, callback);
-    };
-
-    Brand.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'brand/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    return Brand;
-
-  })();
-
-  Cart = (function() {
-    function Cart(m) {
-      this.m = m;
-      this.identifier = this.GetIdentifier();
-    }
-
-    Cart.prototype.GetIdentifier = function() {
-      var id;
-      if (this.m.Storage.get('mcart') !== null) {
-        return this.m.Storage.get('mcart');
-      }
-      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
-        return (Math.random() * 16 | 0).toString(16);
-      });
-      this.m.Storage.set('mcart', id);
-      return id;
-    };
-
-    Cart.prototype.Contents = function(callback) {
-      return this.m.Request('cart/' + this.identifier, 'GET', null, callback);
-    };
-
-    Cart.prototype.Insert = function(id, qty, callback) {
-      if (qty == null) {
-        qty = 1;
-      }
-      return this.m.Request('cart/' + this.identifier, 'POST', {
-        id: id,
-        quantity: qty
-      }, callback);
-    };
-
-    Cart.prototype.Update = function(id, data, callback) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback);
-    };
-
-    Cart.prototype.Remove = function(id, callback) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'DELETE', null, callback);
-    };
-
-    Cart.prototype.Item = function(id, callback) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'GET', null, callback);
-    };
-
-    Cart.prototype.InCart = function(id, callback) {
-      return this.m.Request('cart/' + this.identifier + '/has/' + id, 'GET', null, callback);
-    };
-
-    return Cart;
-
-  })();
-
-  Category = (function() {
-    function Category(m) {
-      this.m = m;
-    }
-
-    Category.prototype.Get = function(id, callback) {
-      return this.m.Request('category/' + id, 'GET', null, callback);
-    };
-
-    Category.prototype.Find = function(terms, callback) {
-      return this.m.Request('category', 'GET', terms, callback);
-    };
-
-    Category.prototype.List = function(terms, callback) {
-      return this.m.Request('categories', 'GET', terms, callback);
-    };
-
-    Category.prototype.Tree = function(callback) {
-      return this.m.Request('categories/tree', 'GET', null, callback);
-    };
-
-    Category.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'category/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    return Category;
-
-  })();
-
-  Collection = (function() {
-    function Collection(m) {
-      this.m = m;
-    }
-
-    Collection.prototype.Get = function(id, callback) {
-      return this.m.Request('collection/' + id, 'GET', null, callback);
-    };
-
-    Collection.prototype.Find = function(terms, callback) {
-      return this.m.Request('collection', 'GET', terms, callback);
-    };
-
-    Collection.prototype.List = function(terms, callback) {
-      return this.m.Request('collections', 'GET', terms, callback);
-    };
-
-    Collection.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'collection/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    return Collection;
-
-  })();
-
-  Currency = (function() {
-    function Currency(m) {
-      this.m = m;
-    }
-
-    Currency.prototype.Get = function(id, callback) {
-      return this.m.Request('currency/' + id, 'GET', null, callback);
-    };
-
-    Currency.prototype.Set = function(code, callback) {
-      this.m.Storage.set('mcurrency', code);
-      this.m.options.currency = code;
-      if (typeof callback === 'function') {
-        return callback(code);
-      }
-    };
-
-    Currency.prototype.Find = function(terms, callback) {
-      return this.m.Request('currency', 'GET', terms, callback);
-    };
-
-    Currency.prototype.List = function(terms, callback) {
-      return this.m.Request('currencies', 'GET', terms, callback);
-    };
-
-    Currency.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'currency/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    return Currency;
-
-  })();
-
-  Gateway = (function() {
-    function Gateway(m) {
-      this.m = m;
-    }
-
-    Gateway.prototype.Get = function(slug, callback) {
-      return this.m.Request('gateway/' + slug, 'GET', null, callback);
-    };
-
-    Gateway.prototype.List = function(terms, callback) {
-      return this.m.Request('gateways', 'GET', terms, callback);
-    };
-
-    return Gateway;
-
-  })();
-
-  Product = (function() {
-    function Product(m) {
-      this.m = m;
-    }
-
-    Product.prototype.Get = function(id, callback) {
-      return this.m.Request('product/' + id, 'GET', null, callback);
-    };
-
-    Product.prototype.Find = function(terms, callback) {
-      return this.m.Request('product', 'GET', terms, callback);
-    };
-
-    Product.prototype.List = function(terms, callback) {
-      return this.m.Request('products', 'GET', terms, callback);
-    };
-
-    Product.prototype.Search = function(terms, callback) {
-      return this.m.Request('products/search', 'GET', terms, callback);
-    };
-
-    Product.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'product/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    Product.prototype.Modifiers = function(id, callback) {
-      return this.m.Request('product/' + id + '/modifiers', 'GET', null, callback);
-    };
-
-    Product.prototype.Variations = function(id, callack) {
-      return this.m.Request('product/' + id + '/variations', 'GET', null, callback);
-    };
-
-    return Product;
-
-  })();
-
-  Shipping = (function() {
-    function Shipping(m) {
-      this.m = m;
-    }
-
-    Shipping.prototype.Get = function(id, callback) {
-      return this.m.Request('shipping/' + id, 'GET', null, callback);
-    };
-
-    Shipping.prototype.List = function(terms, callback) {
-      return this.m.Request('shipping', 'GET', terms, callback);
-    };
-
-    return Shipping;
-
-  })();
-
-  Tax = (function() {
-    function Tax(m) {
-      this.m = m;
-    }
-
-    Tax.prototype.Get = function(id, callback) {
-      return this.m.Request('tax/' + id, 'GET', null, callback);
-    };
-
-    Tax.prototype.Find = function(terms, callback) {
-      return this.m.Request('tax', 'GET', terms, callback);
-    };
-
-    Tax.prototype.List = function(terms, callback) {
-      return this.m.Request('taxes', 'GET', terms, callback);
-    };
-
-    Tax.prototype.Fields = function(id, callback) {
-      var uri;
-      if (id == null) {
-        id = 0;
-      }
-      uri = 'tax/' + (id !== 0 ? id + '/fields' : 'fields');
-      return this.m.Request(uri, 'GET', null, callback);
-    };
-
-    return Tax;
-
-  })();
-
   return Moltin;
 
 })();
 
-//# sourceMappingURL=moltin.js.map
+var Storage;
+
+Storage = (function() {
+  function Storage() {}
+
+  Storage.prototype.set = function(key, value, days) {
+    var date, expires;
+    expires = "";
+    if (days) {
+      date = new Date;
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toGMTString();
+    }
+    return document.cookie = key + "=" + value + expires + "; path=/";
+  };
+
+  Storage.prototype.get = function(key) {
+    var c, _i, _len, _ref;
+    key = key + "=";
+    _ref = document.cookie.split(';');
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      c = _ref[_i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(key) === 0) {
+        return c.substring(key.length, c.length);
+      }
+    }
+    return null;
+  };
+
+  Storage.prototype.remove = function(key) {
+    return this.set(key, '', -1);
+  };
+
+  return Storage;
+
+})();
+
+var Brand;
+
+Brand = (function() {
+  function Brand(m) {
+    this.m = m;
+  }
+
+  Brand.prototype.Get = function(id, callback) {
+    return this.m.Request('brand/' + id, 'GET', null, callback);
+  };
+
+  Brand.prototype.Find = function(terms, callback) {
+    return this.m.Request('brand', 'GET', terms, callback);
+  };
+
+  Brand.prototype.List = function(terms, callback) {
+    return this.m.Request('brands', 'GET', terms, callback);
+  };
+
+  Brand.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'brand/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  return Brand;
+
+})();
+
+var Cart;
+
+Cart = (function() {
+  function Cart(m) {
+    this.m = m;
+    this.identifier = this.GetIdentifier();
+  }
+
+  Cart.prototype.GetIdentifier = function() {
+    var id;
+    if (this.m.Storage.get('mcart') !== null) {
+      return this.m.Storage.get('mcart');
+    }
+    id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
+      return (Math.random() * 16 | 0).toString(16);
+    });
+    this.m.Storage.set('mcart', id);
+    return id;
+  };
+
+  Cart.prototype.Contents = function(callback) {
+    return this.m.Request('cart/' + this.identifier, 'GET', null, callback);
+  };
+
+  Cart.prototype.Insert = function(id, qty, callback) {
+    if (qty == null) {
+      qty = 1;
+    }
+    return this.m.Request('cart/' + this.identifier, 'POST', {
+      id: id,
+      quantity: qty
+    }, callback);
+  };
+
+  Cart.prototype.Update = function(id, data, callback) {
+    return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback);
+  };
+
+  Cart.prototype.Remove = function(id, callback) {
+    return this.m.Request('cart/' + this.identifier + '/item/' + id, 'DELETE', null, callback);
+  };
+
+  Cart.prototype.Item = function(id, callback) {
+    return this.m.Request('cart/' + this.identifier + '/item/' + id, 'GET', null, callback);
+  };
+
+  Cart.prototype.InCart = function(id, callback) {
+    return this.m.Request('cart/' + this.identifier + '/has/' + id, 'GET', null, callback);
+  };
+
+  return Cart;
+
+})();
+
+var Category;
+
+Category = (function() {
+  function Category(m) {
+    this.m = m;
+  }
+
+  Category.prototype.Get = function(id, callback) {
+    return this.m.Request('category/' + id, 'GET', null, callback);
+  };
+
+  Category.prototype.Find = function(terms, callback) {
+    return this.m.Request('category', 'GET', terms, callback);
+  };
+
+  Category.prototype.List = function(terms, callback) {
+    return this.m.Request('categories', 'GET', terms, callback);
+  };
+
+  Category.prototype.Tree = function(callback) {
+    return this.m.Request('categories/tree', 'GET', null, callback);
+  };
+
+  Category.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'category/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  return Category;
+
+})();
+
+var Collection;
+
+Collection = (function() {
+  function Collection(m) {
+    this.m = m;
+  }
+
+  Collection.prototype.Get = function(id, callback) {
+    return this.m.Request('collection/' + id, 'GET', null, callback);
+  };
+
+  Collection.prototype.Find = function(terms, callback) {
+    return this.m.Request('collection', 'GET', terms, callback);
+  };
+
+  Collection.prototype.List = function(terms, callback) {
+    return this.m.Request('collections', 'GET', terms, callback);
+  };
+
+  Collection.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'collection/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  return Collection;
+
+})();
+
+var Currency;
+
+Currency = (function() {
+  function Currency(m) {
+    this.m = m;
+  }
+
+  Currency.prototype.Get = function(id, callback) {
+    return this.m.Request('currency/' + id, 'GET', null, callback);
+  };
+
+  Currency.prototype.Set = function(code, callback) {
+    this.m.Storage.set('mcurrency', code);
+    this.m.options.currency = code;
+    if (typeof callback === 'function') {
+      return callback(code);
+    }
+  };
+
+  Currency.prototype.Find = function(terms, callback) {
+    return this.m.Request('currency', 'GET', terms, callback);
+  };
+
+  Currency.prototype.List = function(terms, callback) {
+    return this.m.Request('currencies', 'GET', terms, callback);
+  };
+
+  Currency.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'currency/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  return Currency;
+
+})();
+
+var Gateway;
+
+Gateway = (function() {
+  function Gateway(m) {
+    this.m = m;
+  }
+
+  Gateway.prototype.Get = function(slug, callback) {
+    return this.m.Request('gateway/' + slug, 'GET', null, callback);
+  };
+
+  Gateway.prototype.List = function(terms, callback) {
+    return this.m.Request('gateways', 'GET', terms, callback);
+  };
+
+  return Gateway;
+
+})();
+
+var Product;
+
+Product = (function() {
+  function Product(m) {
+    this.m = m;
+  }
+
+  Product.prototype.Get = function(id, callback) {
+    return this.m.Request('product/' + id, 'GET', null, callback);
+  };
+
+  Product.prototype.Find = function(terms, callback) {
+    return this.m.Request('product', 'GET', terms, callback);
+  };
+
+  Product.prototype.List = function(terms, callback) {
+    return this.m.Request('products', 'GET', terms, callback);
+  };
+
+  Product.prototype.Search = function(terms, callback) {
+    return this.m.Request('products/search', 'GET', terms, callback);
+  };
+
+  Product.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'product/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  Product.prototype.Modifiers = function(id, callback) {
+    return this.m.Request('product/' + id + '/modifiers', 'GET', null, callback);
+  };
+
+  Product.prototype.Variations = function(id, callack) {
+    return this.m.Request('product/' + id + '/variations', 'GET', null, callback);
+  };
+
+  return Product;
+
+})();
+
+var Shipping;
+
+Shipping = (function() {
+  function Shipping(m) {
+    this.m = m;
+  }
+
+  Shipping.prototype.Get = function(id, callback) {
+    return this.m.Request('shipping/' + id, 'GET', null, callback);
+  };
+
+  Shipping.prototype.List = function(terms, callback) {
+    return this.m.Request('shipping', 'GET', terms, callback);
+  };
+
+  return Shipping;
+
+})();
+
+var Tax;
+
+Tax = (function() {
+  function Tax(m) {
+    this.m = m;
+  }
+
+  Tax.prototype.Get = function(id, callback) {
+    return this.m.Request('tax/' + id, 'GET', null, callback);
+  };
+
+  Tax.prototype.Find = function(terms, callback) {
+    return this.m.Request('tax', 'GET', terms, callback);
+  };
+
+  Tax.prototype.List = function(terms, callback) {
+    return this.m.Request('taxes', 'GET', terms, callback);
+  };
+
+  Tax.prototype.Fields = function(id, callback) {
+    var uri;
+    if (id == null) {
+      id = 0;
+    }
+    uri = 'tax/' + (id !== 0 ? id + '/fields' : 'fields');
+    return this.m.Request(uri, 'GET', null, callback);
+  };
+
+  return Tax;
+
+})();
