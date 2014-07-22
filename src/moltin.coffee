@@ -28,6 +28,7 @@ class Moltin
 		@Currency   = new Currency @
 		@Entry      = new Entry @
 		@Gateway    = new Gateway @
+		@Order      = new Order @
 		@Product    = new Product @
 		@Shipping   = new Shipping @
 		@Tax        = new Tax @

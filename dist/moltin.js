@@ -30,6 +30,7 @@ Moltin = (function() {
     this.Currency = new Currency(this);
     this.Entry = new Entry(this);
     this.Gateway = new Gateway(this);
+    this.Order = new Order(this);
     this.Product = new Product(this);
     this.Shipping = new Shipping(this);
     this.Tax = new Tax(this);
