@@ -52,7 +52,7 @@ class Moltin
 
 		for k,v of obj
 			k = if prefix != null then prefix+'['+k+']' else k
-			str.push if typeof v == 'object' then @Serialize v k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+			str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
 
 		return str.join '&'
 
@@ -80,6 +80,7 @@ class Moltin
 			error:   (response, status, request) ->
 
 		args = @Merge args, options
+		args.type = args.type.toUpperCase()
 
 		try
 			request = new XMLHttpRequest()
@@ -89,7 +90,13 @@ class Moltin
 			catch e
 				return false;
 
-		request.open args.type.toUpperCase(), args.url, args.async
+		if args.type == "GET"
+			args.url += '?' + @Serialize args.data
+			data.data = null
+		else
+			args.data = @Serialize args.data
+
+		request.open args.type, args.url, args.async
 
 		timeout = setTimeout =>
 			request.abort()
@@ -107,19 +114,19 @@ class Moltin
 
 			response = JSON.parse request.responseText
 
-			if request.status != 200
+			if request.status.toString().charAt(0) != '2'
 				args.error request, request.status, response
 			else
 				args.success response, request.status, request
 
-		request.send @Serialize args.data
+		request.send args.data
 
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
 			return @options.notice 'error', 'Public ID must be set'
 
-		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > new Date
+		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
 			@options.auth =
 				token:   @Storage.get 'mtoken'
@@ -131,7 +138,7 @@ class Moltin
 			_e = new CustomEvent 'MoltinReady', {detail: @}
 			window.dispatchEvent _e
 
-			return
+			return @
 
 		@Ajax
 			type: 'POST'
@@ -139,13 +146,13 @@ class Moltin
 			data:
 				grant_type: 'implicit',
 				client_id:  @options.publicId
-			async: true
+			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
-					expires: new Date + ( parseInt(r.expires_in) - 300 ) * 1000
+					expires: parseInt(r.expires) * 1000
 
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', @options.auth.expires
@@ -159,6 +166,8 @@ class Moltin
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
+		return @
+
 	Request: (uri, method = 'GET', data = null, callback) ->
 
 		_data    = {}
@@ -168,6 +177,9 @@ class Moltin
 
 		if @options.auth.token == null
 			return @options.notice 'error', 'You much authenticate first'
+
+		if Date.now() > parseInt(@Storage.get('mexpires'))
+			@Authenticate()
 
 		if not @InArray method, @options.methods
 			return @options.notice 'error', 'Invalid request method ('+method+')'
@@ -183,20 +195,13 @@ class Moltin
 			headers: _headers
 			success: (r, c, e) =>
 				if typeof callback == 'function'
-					if typeof r.item != 'undefined'
-						callback r.item
-					else
-						callback r.result
+						callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
 				else 
 					_data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					if r.errors?
-						error += v+"\n" for k,v of r.errors
-					else
-						error = r.error
-					@options.notice 'error', error
+					@options.notice 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
 				_data = r;
 
 		if typeof callback == 'undefined'
@@ -230,6 +235,37 @@ class Moltin
 		remove: (key) ->
 
 			@set key, '', -1
+
+	class Address
+
+		constructor: (@m) ->
+
+		Get: (customer, id, callback) ->
+
+			return @m.Request 'customer/'+customer+'/address/'+id, 'GET', null, callback
+
+		Find: (customer, terms, callback) ->
+
+			return @m.Request 'customer/'+customer+'/address', 'GET', terms, callback
+
+		List: (customer, terms, callback) ->
+
+			return @m.Request 'customer/'+customer+'/addresses', 'GET', terms, callback
+
+		Create: (customer, data, callback) ->
+
+			return @m.Request 'customer/'+customer+'/address', 'POST', data, callback
+
+		Fields: (customer = 0, id = 0, callback) ->
+
+			if customer > 0 and id <= 0
+				uri = 'customer/'+customer+'/address/fields'
+			else if customer > 0 and id > 0
+				uri = 'customer/'+customer+'/address/'+id+'/fields'
+			else
+				uri = 'address/fields'
+			
+			return @m.Request uri, 'GET', null, callback
 
 	class Brand
 
@@ -275,9 +311,9 @@ class Moltin
 
 			return @m.Request 'cart/'+@identifier, 'GET', null, callback
 
-		Insert: (id, qty = 1, callback) ->
+		Insert: (id, qty = 1, mods = null, callback) ->
 
-			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty}, callback
+			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback
 
 		Update: (id, data, callback) ->
 
@@ -295,6 +331,14 @@ class Moltin
 
 			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback
 
+		Checkout: (callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback
+
+		Complete: (data, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback
+
 	class Category
 
 		constructor: (@m) ->
@@ -311,15 +355,23 @@ class Moltin
 
 			return @m.Request 'categories', 'GET', terms, callback
 
-		Tree: (callback) ->
+		Tree: (terms, callback) ->
 
-			return @m.Request 'categories/tree', 'GET', null, callback
+			return @m.Request 'categories/tree', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback
+
+	class Checkout
+
+		constructor: (@m) ->
+
+		Payment: (method, order, data, callback) ->
+
+			return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback
 
 	class Collection
 
@@ -373,6 +425,22 @@ class Moltin
 			
 			return @m.Request uri, 'GET', null, callback
 
+	class Entry
+
+		constructor: (@m) ->
+
+		Get: (flow, id, callback) ->
+
+			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback
+
+		Find: (flow, terms, callback) ->
+
+			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback
+
+		List: (flow, terms, callback) ->
+
+			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback
+
 	class Gateway
 
 		constructor: (@m) ->
@@ -384,6 +452,26 @@ class Moltin
 		List: (terms, callback) ->
 
 			return @m.Request 'gateways', 'GET', terms, callback
+
+	class Order
+
+		constructor: (@m) ->
+
+		Get: (id, callback) ->
+
+			return @m.Request 'order/'+id, 'GET', null, callback
+
+		Find: (terms, callback) ->
+
+			return @m.Request 'order', 'GET', terms, callback
+
+		List: (terms, callback) ->
+
+			return @m.Request 'orders', 'GET', terms, callback
+
+		Create: (data, callback) ->
+
+			return @m.Request 'order', 'POST', data, callback
 
 	class Product
 

@@ -20,9 +20,9 @@
 
 			return @m.Request 'cart/'+@identifier, 'GET', null, callback
 
-		Insert: (id, qty = 1, callback) ->
+		Insert: (id, qty = 1, mods = null, callback) ->
 
-			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty}, callback
+			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback
 
 		Update: (id, data, callback) ->
 
@@ -39,3 +39,11 @@
 		InCart: (id, callback) ->
 
 			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback
+
+		Checkout: (callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback
+
+		Complete: (data, callback) ->
+
+			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback

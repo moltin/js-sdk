@@ -14,9 +14,9 @@
 
 			return @m.Request 'categories', 'GET', terms, callback
 
-		Tree: (callback) ->
+		Tree: (terms, callback) ->
 
-			return @m.Request 'categories/tree', 'GET', null, callback
+			return @m.Request 'categories/tree', 'GET', terms, callback
 
 		Fields: (id = 0, callback) ->
 

@@ -52,7 +52,7 @@ class Moltin
 
 		for k,v of obj
 			k = if prefix != null then prefix+'['+k+']' else k
-			str.push if typeof v == 'object' then @Serialize v k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+			str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
 
 		return str.join '&'
 
@@ -90,12 +90,11 @@ class Moltin
 			catch e
 				return false;
 
-		post_data = null
-
 		if args.type == "GET"
 			args.url += '?' + @Serialize args.data
+			data.data = null
 		else
-			post_data = @Serialize args.data
+			args.data = @Serialize args.data
 
 		request.open args.type, args.url, args.async
 
@@ -115,19 +114,19 @@ class Moltin
 
 			response = JSON.parse request.responseText
 
-			if request.status != 200
+			if request.status.toString().charAt(0) != '2'
 				args.error request, request.status, response
 			else
 				args.success response, request.status, request
 
-		request.send post_data
+		request.send args.data
 
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
 			return @options.notice 'error', 'Public ID must be set'
 
-		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > new Date
+		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
 			@options.auth =
 				token:   @Storage.get 'mtoken'
@@ -139,7 +138,7 @@ class Moltin
 			_e = new CustomEvent 'MoltinReady', {detail: @}
 			window.dispatchEvent _e
 
-			return
+			return @
 
 		@Ajax
 			type: 'POST'
@@ -147,13 +146,13 @@ class Moltin
 			data:
 				grant_type: 'implicit',
 				client_id:  @options.publicId
-			async: true
+			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
-					expires: new Date + ( parseInt(r.expires_in) - 300 ) * 1000
+					expires: parseInt(r.expires) * 1000
 
 				@Storage.set 'mtoken', r.access_token
 				@Storage.set 'mexpires', @options.auth.expires
@@ -167,6 +166,8 @@ class Moltin
 			error: (e, c, r) =>
 				@options.notice 'error', 'Authorization failed'
 
+		return @
+
 	Request: (uri, method = 'GET', data = null, callback) ->
 
 		_data    = {}
@@ -176,6 +177,9 @@ class Moltin
 
 		if @options.auth.token == null
 			return @options.notice 'error', 'You much authenticate first'
+
+		if Date.now() > parseInt(@Storage.get('mexpires'))
+			@Authenticate()
 
 		if not @InArray method, @options.methods
 			return @options.notice 'error', 'Invalid request method ('+method+')'
@@ -191,20 +195,13 @@ class Moltin
 			headers: _headers
 			success: (r, c, e) =>
 				if typeof callback == 'function'
-					if typeof r.item != 'undefined'
-						callback r.item
-					else
-						callback r.result
+						callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
 				else 
 					_data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					if r.errors?
-						error += v+"\n" for k,v of r.errors
-					else
-						error = r.error
-					@options.notice 'error', error
+					@options.notice 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
 				_data = r;
 
 		if typeof callback == 'undefined'
