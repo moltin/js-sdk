@@ -23,6 +23,7 @@ class Moltin
 		@Brand      = new Brand @
 		@Cart       = new Cart @
 		@Category   = new Category @
+		@Checkout   = new Checkout @
 		@Collection = new Collection @
 		@Currency   = new Currency @
 		@Gateway    = new Gateway @

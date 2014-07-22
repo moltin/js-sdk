@@ -25,6 +25,7 @@ Moltin = (function() {
     this.Brand = new Brand(this);
     this.Cart = new Cart(this);
     this.Category = new Category(this);
+    this.Checkout = new Checkout(this);
     this.Collection = new Collection(this);
     this.Currency = new Currency(this);
     this.Gateway = new Gateway(this);
