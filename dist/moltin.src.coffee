@@ -94,9 +94,9 @@ class Moltin
 			catch e
 				return false;
 
-		if args.type == "GET"
+		if args.type == 'GET'
 			args.url += '?' + @Serialize args.data
-			data.data = null
+			args.data = null
 		else
 			args.data = @Serialize args.data
 
