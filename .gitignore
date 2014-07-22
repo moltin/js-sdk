@@ -1,1 +1,4 @@
 node_modules/*
+dist/*builder*
+examples/builder/*
+src/builder*
