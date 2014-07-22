@@ -28,6 +28,10 @@
 
 			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback
 
+    Delete: (callback) ->
+
+      return @m.Request 'cart/'+@identifier, 'DELETE', null, callback
+
 		Remove: (id, callback) ->
 
 			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback
