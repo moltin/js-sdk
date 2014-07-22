@@ -21,6 +21,7 @@ Moltin = (function() {
   function Moltin(overrides) {
     this.options = this.Merge(this.options, overrides);
     this.Storage = new Storage;
+    this.Address = new Address(this);
     this.Brand = new Brand(this);
     this.Cart = new Cart(this);
     this.Category = new Category(this);

@@ -19,6 +19,7 @@ class Moltin
 		@options = @Merge @options, overrides
 		@Storage = new Storage
 
+		@Address    = new Address @
 		@Brand      = new Brand @
 		@Cart       = new Cart @
 		@Category   = new Category @
