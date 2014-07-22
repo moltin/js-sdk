@@ -28,6 +28,7 @@ Moltin = (function() {
     this.Checkout = new Checkout(this);
     this.Collection = new Collection(this);
     this.Currency = new Currency(this);
+    this.Entry = new Entry(this);
     this.Gateway = new Gateway(this);
     this.Product = new Product(this);
     this.Shipping = new Shipping(this);

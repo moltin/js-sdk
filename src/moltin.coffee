@@ -26,6 +26,7 @@ class Moltin
 		@Checkout   = new Checkout @
 		@Collection = new Collection @
 		@Currency   = new Currency @
+		@Entry      = new Entry @
 		@Gateway    = new Gateway @
 		@Product    = new Product @
 		@Shipping   = new Shipping @
