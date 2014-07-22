@@ -408,11 +408,11 @@ Moltin = (function() {
     };
 
     Cart.prototype.Update = function(id, data, callback) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback({
-        Delete: function(callback) {
-          return this.m.Request('cart/' + this.identifier, 'DELETE', null, callback);
-        }
-      }));
+      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback);
+    };
+
+    Cart.prototype.Delete = function(callback) {
+      return this.m.Request('cart/' + this.identifier, 'DELETE', null, callback);
     };
 
     Cart.prototype.Remove = function(id, callback) {
