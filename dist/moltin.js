@@ -124,7 +124,7 @@ Moltin = (function() {
     timeout = setTimeout((function(_this) {
       return function() {
         request.abort();
-        return args.error(_this.options.notice('error', 'Your request timed out'));
+        return args.error(_this.options.notice('error', 'Your request timed out', 408));
       };
     })(this), args.timeout);
     _ref = args.headers;
@@ -151,7 +151,7 @@ Moltin = (function() {
   Moltin.prototype.Authenticate = function(callback) {
     var _e;
     if (this.options.publicId.length <= 0) {
-      return this.options.notice('error', 'Public ID must be set');
+      return this.options.notice('error', 'Public ID must be set', 401);
     }
     if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
@@ -197,7 +197,7 @@ Moltin = (function() {
       })(this),
       error: (function(_this) {
         return function(e, c, r) {
-          return _this.options.notice('error', 'Authorization failed');
+          return _this.options.notice('error', 'Authorization failed', 401);
         };
       })(this)
     });
@@ -218,13 +218,13 @@ Moltin = (function() {
       'Authorization': 'Bearer ' + this.options.auth.token
     };
     if (this.options.auth.token === null) {
-      return this.options.notice('error', 'You much authenticate first');
+      return this.options.notice('error', 'You much authenticate first', 401);
     }
     if (Date.now() > parseInt(this.Storage.get('mexpires'))) {
       this.Authenticate();
     }
     if (!this.InArray(method, this.options.methods)) {
-      return this.options.notice('error', 'Invalid request method (' + method + ')');
+      return this.options.notice('error', 'Invalid request method (' + method + ')', 400);
     }
     if (this.options.currency) {
       _headers['X-Currency'] = this.options.currency;

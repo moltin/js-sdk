@@ -104,7 +104,7 @@ class Moltin
 
 		timeout = setTimeout =>
 			request.abort()
-			args.error @options.notice 'error', 'Your request timed out'
+			args.error @options.notice 'error', 'Your request timed out', 408
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
@@ -128,7 +128,7 @@ class Moltin
 	Authenticate: (callback)->
 
 		if @options.publicId.length <= 0
-			return @options.notice 'error', 'Public ID must be set'
+			return @options.notice 'error', 'Public ID must be set', 401
 
 		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
@@ -168,7 +168,7 @@ class Moltin
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
-				@options.notice 'error', 'Authorization failed'
+				@options.notice 'error', 'Authorization failed', 401
 
 		return @
 
@@ -180,13 +180,13 @@ class Moltin
 			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
-			return @options.notice 'error', 'You much authenticate first'
+			return @options.notice 'error', 'You much authenticate first', 401
 
 		if Date.now() > parseInt(@Storage.get('mexpires'))
 			@Authenticate()
 
 		if not @InArray method, @options.methods
-			return @options.notice 'error', 'Invalid request method ('+method+')'
+			return @options.notice 'error', 'Invalid request method ('+method+')', 400
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
