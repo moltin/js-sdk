@@ -2,20 +2,20 @@
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'collection/'+id, 'GET', null, callback
+			return @m.Request 'collection/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'collection', 'GET', terms, callback
+			return @m.Request 'collection', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'collections', 'GET', terms, callback
+			return @m.Request 'collections', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error

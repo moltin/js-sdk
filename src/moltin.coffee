@@ -10,8 +10,6 @@ class Moltin
 		version:  'beta'
 		debug:    false
 		currency: false
-		notice:   (type, msg) ->
-			alert type+': '+msg
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
 
 	constructor: (overrides) ->
@@ -104,7 +102,7 @@ class Moltin
 
 		timeout = setTimeout =>
 			request.abort()
-			args.error @options.notice 'error', 'Your request timed out', 408
+			args.error request, 408, 'Your request timed out'
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
@@ -125,10 +123,11 @@ class Moltin
 
 		request.send args.data
 
-	Authenticate: (callback)->
+	Authenticate: (callback, error)->
 
 		if @options.publicId.length <= 0
-			return @options.notice 'error', 'Public ID must be set', 401
+			if typeof error == 'function'
+				error 'error', 'Public ID must be set', 401
 
 		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
@@ -168,11 +167,12 @@ class Moltin
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
-				@options.notice 'error', 'Authorization failed', 401
+				if typeof error == 'function'
+					error 'error', 'Authorization failed', 401
 
 		return @
 
-	Request: (uri, method = 'GET', data = null, callback) ->
+	Request: (uri, method = 'GET', data = null, callback, error) ->
 
 		_data    = {}
 		_headers =
@@ -180,13 +180,13 @@ class Moltin
 			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
-			return @options.notice 'error', 'You much authenticate first', 401
+			error 'error', 'You much authenticate first', 401
 
 		if Date.now() > parseInt(@Storage.get('mexpires'))
-			@Authenticate()
+			@Authenticate null, error
 
 		if not @InArray method, @options.methods
-			return @options.notice 'error', 'Invalid request method ('+method+')', 400
+			error 'error', 'Invalid request method ('+method+')', 400
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
@@ -205,7 +205,7 @@ class Moltin
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					@options.notice 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					error 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
 				_data = r;
 
 		if typeof callback == 'undefined'

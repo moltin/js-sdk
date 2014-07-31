@@ -16,38 +16,38 @@
 
 			return id
 
-		Contents: (callback) ->
+		Contents: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier, 'GET', null, callback, error
 
-		Insert: (id, qty = 1, mods = null, callback) ->
+		Insert: (id, qty = 1, mods = null, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback
+			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
 
-		Update: (id, data, callback) ->
+		Update: (id, data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback, error
 
-		Delete: (callback) ->
+		Delete: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'DELETE', null, callback
+			return @m.Request 'cart/'+@identifier, 'DELETE', null, callback, error
 
-		Remove: (id, callback) ->
+		Remove: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
 
-		Item: (id, callback) ->
+		Item: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback, error
 
-		InCart: (id, callback) ->
+		InCart: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback, error
 
-		Checkout: (callback) ->
+		Checkout: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback, error
 
-		Complete: (data, callback) ->
+		Complete: (data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback
+			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback, error

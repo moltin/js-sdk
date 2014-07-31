@@ -2,14 +2,14 @@
 
 		constructor: (@m) ->
 
-		Get: (flow, id, callback) ->
+		Get: (flow, id, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback
+			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback, error
 
-		Find: (flow, terms, callback) ->
+		Find: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback
+			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback, error
 
-		List: (flow, terms, callback) ->
+		List: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback
+			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback, error

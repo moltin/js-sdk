@@ -10,8 +10,6 @@ class Moltin
 		version:  'beta'
 		debug:    false
 		currency: false
-		notice:   (type, msg) ->
-			alert type+': '+msg
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
 
 	constructor: (overrides) ->
@@ -104,7 +102,7 @@ class Moltin
 
 		timeout = setTimeout =>
 			request.abort()
-			args.error @options.notice 'error', 'Your request timed out', 408
+			args.error request, 408, 'Your request timed out'
 		, args.timeout
 
 		request.setRequestHeader k, v for k,v of args.headers
@@ -125,10 +123,11 @@ class Moltin
 
 		request.send args.data
 
-	Authenticate: (callback)->
+	Authenticate: (callback, error)->
 
 		if @options.publicId.length <= 0
-			return @options.notice 'error', 'Public ID must be set', 401
+			if typeof error == 'function'
+				error 'error', 'Public ID must be set', 401
 
 		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
@@ -168,11 +167,12 @@ class Moltin
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>
-				@options.notice 'error', 'Authorization failed', 401
+				if typeof error == 'function'
+					error 'error', 'Authorization failed', 401
 
 		return @
 
-	Request: (uri, method = 'GET', data = null, callback) ->
+	Request: (uri, method = 'GET', data = null, callback, error) ->
 
 		_data    = {}
 		_headers =
@@ -180,13 +180,13 @@ class Moltin
 			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
-			return @options.notice 'error', 'You much authenticate first', 401
+			error 'error', 'You much authenticate first', 401
 
 		if Date.now() > parseInt(@Storage.get('mexpires'))
-			@Authenticate()
+			@Authenticate null, error
 
 		if not @InArray method, @options.methods
-			return @options.notice 'error', 'Invalid request method ('+method+')', 400
+			error 'error', 'Invalid request method ('+method+')', 400
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
@@ -205,7 +205,7 @@ class Moltin
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					@options.notice 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					error 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
 				_data = r;
 
 		if typeof callback == 'undefined'
@@ -244,23 +244,23 @@ class Moltin
 
 		constructor: (@m) ->
 
-		Get: (customer, id, callback) ->
+		Get: (customer, id, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address/'+id, 'GET', null, callback
+			return @m.Request 'customer/'+customer+'/address/'+id, 'GET', null, callback, error
 
-		Find: (customer, terms, callback) ->
+		Find: (customer, terms, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address', 'GET', terms, callback
+			return @m.Request 'customer/'+customer+'/address', 'GET', terms, callback, error
 
-		List: (customer, terms, callback) ->
+		List: (customer, terms, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/addresses', 'GET', terms, callback
+			return @m.Request 'customer/'+customer+'/addresses', 'GET', terms, callback, error
 
-		Create: (customer, data, callback) ->
+		Create: (customer, data, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address', 'POST', data, callback
+			return @m.Request 'customer/'+customer+'/address', 'POST', data, callback, error
 
-		Fields: (customer = 0, id = 0, callback) ->
+		Fields: (customer = 0, id = 0, callback, error) ->
 
 			if customer > 0 and id <= 0
 				uri = 'customer/'+customer+'/address/fields'
@@ -269,29 +269,29 @@ class Moltin
 			else
 				uri = 'address/fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
 	class Brand
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'brand/'+id, 'GET', null, callback
+			return @m.Request 'brand/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'brand', 'GET', terms, callback
+			return @m.Request 'brand', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'brands', 'GET', terms, callback
+			return @m.Request 'brands', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
 	class Cart
 
@@ -311,107 +311,107 @@ class Moltin
 
 			return id
 
-		Contents: (callback) ->
+		Contents: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier, 'GET', null, callback, error
 
-		Insert: (id, qty = 1, mods = null, callback) ->
+		Insert: (id, qty = 1, mods = null, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback
+			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
 
-		Update: (id, data, callback) ->
+		Update: (id, data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback, error
 
-		Delete: (callback) ->
+		Delete: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'DELETE', null, callback
+			return @m.Request 'cart/'+@identifier, 'DELETE', null, callback, error
 
-		Remove: (id, callback) ->
+		Remove: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
 
-		Item: (id, callback) ->
+		Item: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback, error
 
-		InCart: (id, callback) ->
+		InCart: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback, error
 
-		Checkout: (callback) ->
+		Checkout: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback
+			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback, error
 
-		Complete: (data, callback) ->
+		Complete: (data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback
+			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback, error
 
 	class Category
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'category/'+id, 'GET', null, callback
+			return @m.Request 'category/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'category', 'GET', terms, callback
+			return @m.Request 'category', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'categories', 'GET', terms, callback
+			return @m.Request 'categories', 'GET', terms, callback, error
 
-		Tree: (terms, callback) ->
+		Tree: (terms, callback, error) ->
 
-			return @m.Request 'categories/tree', 'GET', terms, callback
+			return @m.Request 'categories/tree', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
 	class Checkout
 
 		constructor: (@m) ->
 
-		Payment: (method, order, data, callback) ->
+		Payment: (method, order, data, callback, error) ->
 
-			return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback
+			return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback, error
 
 	class Collection
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'collection/'+id, 'GET', null, callback
+			return @m.Request 'collection/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'collection', 'GET', terms, callback
+			return @m.Request 'collection', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'collections', 'GET', terms, callback
+			return @m.Request 'collections', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
 	class Currency
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'currency/'+id, 'GET', null, callback
+			return @m.Request 'currency/'+id, 'GET', null, callback, error
 
-		Set: (code, callback) ->
+		Set: (code, callback, error) ->
 
 			@m.Storage.set 'mcurrency', code
 			@m.options.currency = code
@@ -419,132 +419,132 @@ class Moltin
 			if typeof callback == 'function'
 				callback code
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'currency', 'GET', terms, callback
+			return @m.Request 'currency', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'currencies', 'GET', terms, callback
+			return @m.Request 'currencies', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'currency/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
 	class Entry
 
 		constructor: (@m) ->
 
-		Get: (flow, id, callback) ->
+		Get: (flow, id, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback
+			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback, error
 
-		Find: (flow, terms, callback) ->
+		Find: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback
+			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback, error
 
-		List: (flow, terms, callback) ->
+		List: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback
+			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback, error
 
 	class Gateway
 
 		constructor: (@m) ->
 
-		Get: (slug, callback) ->
+		Get: (slug, callback, error) ->
 
-			return @m.Request 'gateway/'+slug, 'GET', null, callback
+			return @m.Request 'gateway/'+slug, 'GET', null, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'gateways', 'GET', terms, callback
+			return @m.Request 'gateways', 'GET', terms, callback, error
 
 	class Order
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'order/'+id, 'GET', null, callback
+			return @m.Request 'order/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'order', 'GET', terms, callback
+			return @m.Request 'order', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'orders', 'GET', terms, callback
+			return @m.Request 'orders', 'GET', terms, callback, error
 
-		Create: (data, callback) ->
+		Create: (data, callback, error) ->
 
-			return @m.Request 'order', 'POST', data, callback
+			return @m.Request 'order', 'POST', data, callback, error
 
 	class Product
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'product/'+id, 'GET', null, callback
+			return @m.Request 'product/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'product', 'GET', terms, callback
+			return @m.Request 'product', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'products', 'GET', terms, callback
+			return @m.Request 'products', 'GET', terms, callback, error
 
-		Search: (terms, callback) ->
+		Search: (terms, callback, error) ->
 
-			return @m.Request 'products/search', 'GET', terms, callback
+			return @m.Request 'products/search', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
 
-		Modifiers: (id, callback) ->
+		Modifiers: (id, callback, error) ->
 
-			return @m.Request 'product/'+id+'/modifiers', 'GET', null, callback
+			return @m.Request 'product/'+id+'/modifiers', 'GET', null, callback, error
 
 		Variations: (id, callack) ->
 
-			return @m.Request 'product/'+id+'/variations', 'GET', null, callback
+			return @m.Request 'product/'+id+'/variations', 'GET', null, callback, error
 
 	class Shipping
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (id, callback, error) ->
 
-			return @m.Request 'shipping/'+id, 'GET', null, callback
+			return @m.Request 'shipping/'+id, 'GET', null, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'shipping', 'GET', terms, callback
+			return @m.Request 'shipping', 'GET', terms, callback, error
 
 	class Tax
 
 		constructor: (@m) ->
 
-		Get: (id, callback) ->
+		Get: (callback, error) ->
 
-			return @m.Request 'tax/'+id, 'GET', null, callback
+			return @m.Request 'tax/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback) ->
+		Find: (terms, callback, error) ->
 
-			return @m.Request 'tax', 'GET', terms, callback
+			return @m.Request 'tax', 'GET', terms, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'taxes', 'GET', terms, callback
+			return @m.Request 'taxes', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback) ->
+		Fields: (id = 0, callback, error) ->
 
 			uri  = 'tax/'+ if id != 0 then id+'/fields' else 'fields'
 			
-			return @m.Request uri, 'GET', null, callback
+			return @m.Request uri, 'GET', null, callback, error
