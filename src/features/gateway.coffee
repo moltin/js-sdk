@@ -2,10 +2,10 @@
 
 		constructor: (@m) ->
 
-		Get: (slug, callback) ->
+		Get: (slug, callback, error) ->
 
-			return @m.Request 'gateway/'+slug, 'GET', null, callback
+			return @m.Request 'gateway/'+slug, 'GET', null, callback, error
 
-		List: (terms, callback) ->
+		List: (terms, callback, error) ->
 
-			return @m.Request 'gateways', 'GET', terms, callback
+			return @m.Request 'gateways', 'GET', terms, callback, error
