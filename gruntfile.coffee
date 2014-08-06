@@ -10,7 +10,6 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapDir: 'dist/'
         files:
-          'dist/moltin.builder.js': ['src/builder.coffee', 'src/builder/loader.coffee', 'src/builder/*.coffee']
           'dist/moltin.js': ['src/moltin.coffee', 'src/features/storage.coffee', 'src/features/*.coffee']
     karma:
       unit:
@@ -29,10 +28,9 @@ module.exports = (grunt) ->
           banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */'
         files:
-          'dist/moltin.builder.min.js': 'dist/moltin.builder.js'
           'dist/moltin.min.js': 'dist/moltin.js'
     watch:
-      files: ['src/*.coffee', 'src/features/*.coffee', 'src/builder/*.coffee']
+      files: ['src/*.coffee', 'src/features/*.coffee']
       tasks: ['coffee', 'karma', 'uglify']
 
   # These plugins provide necessary tasks.
