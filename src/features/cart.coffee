@@ -51,3 +51,10 @@
 		Complete: (data, callback, error) ->
 
 			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback, error
+		
+		Discount: (code, callback) ->
+
+			if ( code == null or code == false )
+				return @m.Request 'cart/'+@identifier+'/discount', 'DELETE', null, callback
+
+			return @m.Request 'cart/'+@identifier+'/discount', 'POST', {code: code}, callback
