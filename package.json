@@ -1,7 +1,7 @@
 {
   "name": "moltin-sdk",
   "description": "SDK for the Moltin eCommerce API",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "homepage": "https://github.com/moltin/js-sdk",
   "author": {
     "name": "Moltin Team",
@@ -26,6 +26,9 @@
     "grunt-contrib-watch": "~0.2.0",
     "grunt-contrib-coffee": "~0.10.0",
     "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-concat": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.11.0",
+    "grunt-contrib-compress": "~0.13.0",
     "grunt-karma": "~0.8.3"
   }
 }
