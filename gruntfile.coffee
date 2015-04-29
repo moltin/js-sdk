@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
 
   # Project configuration.
-  grunt.initConfig
+  config =
     pkg: grunt.file.readJSON 'package.json'
     coffee:
       compile:
@@ -59,11 +59,14 @@ module.exports = (grunt) ->
       files: ['src/*.coffee', 'src/features/*.coffee', 'src/builder/*.coffee', 'src/css/*.css']
       tasks: ['coffee', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
 
+  # Do we have credentials?
+  if grunt.file.exists('aws-credentials.json')
+
     # Load aws credentials,
-    aws: grunt.file.readJSON 'aws-credentials.json'
+    config.aws = grunt.file.readJSON 'aws-credentials.json'
 
     # Rename files.
-    copy:
+    config.copy =
       aws:
         files: [
           {flatten: true, src: 'dist/gzip/moltin.min.js', dest: 'dist/gzip/v1', filter: 'isFile'}
@@ -71,7 +74,7 @@ module.exports = (grunt) ->
         ]
 
     # Upload files to s3.
-    aws_s3:
+    config.aws_s3 =
       options:
         accessKeyId: '<%= aws.access %>'
         secretAccessKey: '<%= aws.secret %>'
@@ -90,6 +93,9 @@ module.exports = (grunt) ->
           {src: 'moltin.min.css', dest: 'v1/', action: 'copy'}
           {dest: '/', exclude: 'builder', flipExclude: true, action: 'delete'}
         ]
+
+  # Initialize grunt.
+  grunt.initConfig config
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-coffee'
