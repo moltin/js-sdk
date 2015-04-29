@@ -84,6 +84,9 @@ module.exports = (grunt) ->
         downloadConcurrency: 5
         params:
           ContentEncoding: 'gzip'
+        mime:
+          'dist/gzip/v1': 'application/javascript; charset=utf-8',
+          'dist/gzip/builder': 'application/javascript; charset=utf-8'
       production:
         files: [
           {expand: true, cwd: 'dist/gzip/', src: ['**'], dest: '/'}
