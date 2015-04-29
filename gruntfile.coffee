@@ -59,6 +59,38 @@ module.exports = (grunt) ->
       files: ['src/*.coffee', 'src/features/*.coffee', 'src/builder/*.coffee', 'src/css/*.css']
       tasks: ['coffee', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
 
+    # Load aws credentials,
+    aws: grunt.file.readJSON 'aws-credentials.json'
+
+    # Rename files.
+    copy:
+      aws:
+        files: [
+          {flatten: true, src: 'dist/gzip/moltin.min.js', dest: 'dist/gzip/v1', filter: 'isFile'}
+          {flatten: true, src: 'dist/gzip/moltin.builder.min.js', dest: 'dist/gzip/builder', filter: 'isFile'}
+        ]
+
+    # Upload files to s3.
+    aws_s3:
+      options:
+        accessKeyId: '<%= aws.access %>'
+        secretAccessKey: '<%= aws.secret %>'
+        region: '<%= aws.region %>'
+        bucket: '<%= aws.bucket %>'
+        uploadConcurrency: 5
+        downloadConcurrency: 5
+        params:
+          ContentEncoding: 'gzip'
+      production:
+        files: [
+          {expand: true, cwd: 'dist/gzip/', src: ['**'], dest: '/'}
+          {src: 'builder', dest: 'v1/', action: 'copy'}
+          {src: 'moltin.builder.min.js', dest: 'v1/', action: 'copy'}
+          {src: 'moltin.builder.min.map', dest: 'v1/', action: 'copy'}
+          {src: 'moltin.min.css', dest: 'v1/', action: 'copy'}
+          {dest: '/', exclude: 'builder', flipExclude: true, action: 'delete'}
+        ]
+
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -67,6 +99,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-compress'
   grunt.loadNpmTasks 'grunt-karma'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-aws-s3'
+  grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # Default task.
-  grunt.registerTask 'default', ['coffee']
+  grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
