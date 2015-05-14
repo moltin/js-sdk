@@ -26,7 +26,7 @@
 
 		Update: (id, data, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'PUT', data, callback, error
+			return @m.Request 'carts/'+@identifier+'/items/'+id, 'PUT', data, callback, error
 
 		Delete: (callback, error) ->
 
@@ -34,11 +34,11 @@
 
 		Remove: (id, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/items/'+id, 'DELETE', null, callback, error
 
 		Item: (id, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'GET', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/items/'+id, 'GET', null, callback, error
 
 		InCart: (id, callback, error) ->
 
