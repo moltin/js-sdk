@@ -4,7 +4,7 @@
 
 		Get: (slug, callback, error) ->
 
-			return @m.Request 'gateway/'+slug, 'GET', null, callback, error
+			return @m.Request 'gateways/'+slug, 'GET', null, callback, error
 
 		List: (terms, callback, error) ->
 

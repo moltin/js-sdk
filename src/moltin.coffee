@@ -7,7 +7,7 @@ class Moltin
 		publicId: ''
 		auth:     {}
 		url:      'https://api.molt.in/'
-		version:  'beta'
+		version:  'v1'
 		debug:    false
 		currency: false
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']

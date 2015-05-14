@@ -4,7 +4,7 @@
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'currency/'+id, 'GET', null, callback, error
+			return @m.Request 'currencies/'+id, 'GET', null, callback, error
 
 		Set: (code, callback, error) ->
 
@@ -16,7 +16,7 @@
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'currency', 'GET', terms, callback, error
+			return @m.Request 'currencies', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -24,6 +24,6 @@
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'currency/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
