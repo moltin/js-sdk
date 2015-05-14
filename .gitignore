@@ -1,8 +1,6 @@
 node_modules/*
 dist/*builder*
-dist/gzip/v1
-dist/gzip/builder
-dist/gzip/*builder*
+dist/gzip/*
 examples/builder/*
 src/builder*
 aws-credentials.json
