@@ -1,6 +1,6 @@
 {
-  "name": "MoltinSDK",
-  "version": "0.6.0",
+  "name": "moltin",
+  "version": "1.0.0",
   "main": "dist/moltin.js",
   "ignore": [
     "examples",
