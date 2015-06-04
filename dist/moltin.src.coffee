@@ -526,7 +526,7 @@ class Moltin
 
 			return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
 
-		Variations: (id, callback) ->
+		Variations: (id, callback, error) ->
 
 			return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error
 
