@@ -672,7 +672,7 @@ Moltin = (function() {
       return this.m.Request('products/' + id + '/modifiers', 'GET', null, callback, error);
     };
 
-    Product.prototype.Variations = function(id, callack) {
+    Product.prototype.Variations = function(id, callback) {
       return this.m.Request('products/' + id + '/variations', 'GET', null, callback, error);
     };
 
