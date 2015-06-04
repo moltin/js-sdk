@@ -11,6 +11,9 @@ class Moltin
 		debug:    false
 		currency: false
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
+		notice:   (type, msg) ->
+
+			console.log type + ": " + msg
 
 	constructor: (overrides) ->
 
@@ -180,13 +183,15 @@ class Moltin
 			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
-			error 'error', 'You much authenticate first', 401
+			if typeof error == 'function'
+				error 'error', 'You much authenticate first', 401
 
 		if Date.now() > parseInt(@Storage.get('mexpires'))
 			@Authenticate null, error
 
 		if not @InArray method, @options.methods
-			error 'error', 'Invalid request method ('+method+')', 400
+			if typeof error == 'function'
+				error 'error', 'Invalid request method ('+method+')', 400
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
@@ -199,13 +204,16 @@ class Moltin
 			headers: _headers
 			success: (r, c, e) =>
 				if typeof callback == 'function'
-						callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
+					callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
 				else 
 					_data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					error 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					if typeof error == 'function'
+						error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					else
+						@Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
 				_data = r;
 
 		if typeof callback == 'undefined'

@@ -9,10 +9,13 @@ Moltin = (function() {
     publicId: '',
     auth: {},
     url: 'https://api.molt.in/',
-    version: 'beta',
+    version: 'v1',
     debug: false,
     currency: false,
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    notice: function(type, msg) {
+      return console.log(type + ": " + msg);
+    }
   };
 
   function Moltin(overrides) {
@@ -219,13 +222,17 @@ Moltin = (function() {
       'Authorization': 'Bearer ' + this.options.auth.token
     };
     if (this.options.auth.token === null) {
-      error('error', 'You much authenticate first', 401);
+      if (typeof error === 'function') {
+        error('error', 'You much authenticate first', 401);
+      }
     }
     if (Date.now() > parseInt(this.Storage.get('mexpires'))) {
       this.Authenticate(null, error);
     }
     if (!this.InArray(method, this.options.methods)) {
-      error('error', 'Invalid request method (' + method + ')', 400);
+      if (typeof error === 'function') {
+        error('error', 'Invalid request method (' + method + ')', 400);
+      }
     }
     if (this.options.currency) {
       _headers['X-Currency'] = this.options.currency;
@@ -250,7 +257,11 @@ Moltin = (function() {
           var r;
           r = JSON.parse(e.responseText);
           if (r.status === false) {
-            error('error', (typeof r.errors !== 'undefined' ? r.errors : r.error), c);
+            if (typeof error === 'function') {
+              error('error', (typeof r.errors !== 'undefined' ? r.errors : r.error), c);
+            } else {
+              _this.Error((typeof r.errors !== 'undefined' ? r.errors : r.error));
+            }
           }
           return _data = r;
         };
@@ -305,19 +316,19 @@ Moltin = (function() {
     }
 
     Address.prototype.Get = function(customer, id, callback, error) {
-      return this.m.Request('customer/' + customer + '/address/' + id, 'GET', null, callback, error);
+      return this.m.Request('customers/' + customer + '/addresses/' + id, 'GET', null, callback, error);
     };
 
     Address.prototype.Find = function(customer, terms, callback, error) {
-      return this.m.Request('customer/' + customer + '/address', 'GET', terms, callback, error);
+      return this.m.Request('customers/' + customer + '/addresses', 'GET', terms, callback, error);
     };
 
     Address.prototype.List = function(customer, terms, callback, error) {
-      return this.m.Request('customer/' + customer + '/addresses', 'GET', terms, callback, error);
+      return this.m.Request('customers/' + customer + '/addresses', 'GET', terms, callback, error);
     };
 
     Address.prototype.Create = function(customer, data, callback, error) {
-      return this.m.Request('customer/' + customer + '/address', 'POST', data, callback, error);
+      return this.m.Request('customers/' + customer + '/addresses', 'POST', data, callback, error);
     };
 
     Address.prototype.Fields = function(customer, id, callback, error) {
@@ -329,11 +340,11 @@ Moltin = (function() {
         id = 0;
       }
       if (customer > 0 && id <= 0) {
-        uri = 'customer/' + customer + '/address/fields';
+        uri = 'customers/' + customer + '/addresses/fields';
       } else if (customer > 0 && id > 0) {
-        uri = 'customer/' + customer + '/address/' + id + '/fields';
+        uri = 'customers/' + customer + '/addresses/' + id + '/fields';
       } else {
-        uri = 'address/fields';
+        uri = 'addresses/fields';
       }
       return this.m.Request(uri, 'GET', null, callback, error);
     };
@@ -348,11 +359,11 @@ Moltin = (function() {
     }
 
     Brand.prototype.Get = function(id, callback, error) {
-      return this.m.Request('brand/' + id, 'GET', null, callback, error);
+      return this.m.Request('brands/' + id, 'GET', null, callback, error);
     };
 
     Brand.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('brand', 'GET', terms, callback, error);
+      return this.m.Request('brands', 'GET', terms, callback, error);
     };
 
     Brand.prototype.List = function(terms, callback, error) {
@@ -364,7 +375,7 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'brand/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'brands/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
@@ -391,7 +402,7 @@ Moltin = (function() {
     };
 
     Cart.prototype.Contents = function(callback, error) {
-      return this.m.Request('cart/' + this.identifier, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.identifier, 'GET', null, callback, error);
     };
 
     Cart.prototype.Insert = function(id, qty, mods, callback, error) {
@@ -401,7 +412,7 @@ Moltin = (function() {
       if (mods == null) {
         mods = null;
       }
-      return this.m.Request('cart/' + this.identifier, 'POST', {
+      return this.m.Request('carts/' + this.identifier, 'POST', {
         id: id,
         quantity: qty,
         modifier: mods
@@ -409,38 +420,38 @@ Moltin = (function() {
     };
 
     Cart.prototype.Update = function(id, data, callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'PUT', data, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'PUT', data, callback, error);
     };
 
     Cart.prototype.Delete = function(callback, error) {
-      return this.m.Request('cart/' + this.identifier, 'DELETE', null, callback, error);
+      return this.m.Request('carts/' + this.identifier, 'DELETE', null, callback, error);
     };
 
     Cart.prototype.Remove = function(id, callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'DELETE', null, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'DELETE', null, callback, error);
     };
 
     Cart.prototype.Item = function(id, callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/item/' + id, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'GET', null, callback, error);
     };
 
     Cart.prototype.InCart = function(id, callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/has/' + id, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/has/' + id, 'GET', null, callback, error);
     };
 
     Cart.prototype.Checkout = function(callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/checkout', 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/checkout', 'GET', null, callback, error);
     };
 
     Cart.prototype.Complete = function(data, callback, error) {
-      return this.m.Request('cart/' + this.identifier + '/checkout', 'POST', data, callback, error);
+      return this.m.Request('carts/' + this.identifier + '/checkout', 'POST', data, callback, error);
     };
 
     Cart.prototype.Discount = function(code, callback) {
       if (code === null || code === false) {
-        return this.m.Request('cart/' + this.identifier + '/discount', 'DELETE', null, callback);
+        return this.m.Request('carts/' + this.identifier + '/discount', 'DELETE', null, callback);
       }
-      return this.m.Request('cart/' + this.identifier + '/discount', 'POST', {
+      return this.m.Request('carts/' + this.identifier + '/discount', 'POST', {
         code: code
       }, callback);
     };
@@ -455,11 +466,11 @@ Moltin = (function() {
     }
 
     Category.prototype.Get = function(id, callback, error) {
-      return this.m.Request('category/' + id, 'GET', null, callback, error);
+      return this.m.Request('categories/' + id, 'GET', null, callback, error);
     };
 
     Category.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('category', 'GET', terms, callback, error);
+      return this.m.Request('categories', 'GET', terms, callback, error);
     };
 
     Category.prototype.List = function(terms, callback, error) {
@@ -475,7 +486,7 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'category/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'categories/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
@@ -502,11 +513,11 @@ Moltin = (function() {
     }
 
     Collection.prototype.Get = function(id, callback, error) {
-      return this.m.Request('collection/' + id, 'GET', null, callback, error);
+      return this.m.Request('collections/' + id, 'GET', null, callback, error);
     };
 
     Collection.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('collection', 'GET', terms, callback, error);
+      return this.m.Request('collections', 'GET', terms, callback, error);
     };
 
     Collection.prototype.List = function(terms, callback, error) {
@@ -518,7 +529,7 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'collection/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'collections/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
@@ -532,7 +543,7 @@ Moltin = (function() {
     }
 
     Currency.prototype.Get = function(id, callback, error) {
-      return this.m.Request('currency/' + id, 'GET', null, callback, error);
+      return this.m.Request('currencies/' + id, 'GET', null, callback, error);
     };
 
     Currency.prototype.Set = function(code, callback, error) {
@@ -544,7 +555,7 @@ Moltin = (function() {
     };
 
     Currency.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('currency', 'GET', terms, callback, error);
+      return this.m.Request('currencies', 'GET', terms, callback, error);
     };
 
     Currency.prototype.List = function(terms, callback, error) {
@@ -556,7 +567,7 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'currency/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'currencies/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
@@ -570,15 +581,15 @@ Moltin = (function() {
     }
 
     Entry.prototype.Get = function(flow, id, callback, error) {
-      return this.m.Request('flow/' + flow + '/entry/' + id, 'GET', null, callback, error);
+      return this.m.Request('flows/' + flow + '/entries/' + id, 'GET', null, callback, error);
     };
 
     Entry.prototype.Find = function(flow, terms, callback, error) {
-      return this.m.Request('flow/' + flow + '/entry', 'GET', terms, callback, error);
+      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
     };
 
     Entry.prototype.List = function(flow, terms, callback, error) {
-      return this.m.Request('flow/' + flow + '/entries', 'GET', terms, callback, error);
+      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
     };
 
     return Entry;
@@ -591,7 +602,7 @@ Moltin = (function() {
     }
 
     Gateway.prototype.Get = function(slug, callback, error) {
-      return this.m.Request('gateway/' + slug, 'GET', null, callback, error);
+      return this.m.Request('gateways/' + slug, 'GET', null, callback, error);
     };
 
     Gateway.prototype.List = function(terms, callback, error) {
@@ -608,11 +619,11 @@ Moltin = (function() {
     }
 
     Order.prototype.Get = function(id, callback, error) {
-      return this.m.Request('order/' + id, 'GET', null, callback, error);
+      return this.m.Request('orders/' + id, 'GET', null, callback, error);
     };
 
     Order.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('order', 'GET', terms, callback, error);
+      return this.m.Request('orders', 'GET', terms, callback, error);
     };
 
     Order.prototype.List = function(terms, callback, error) {
@@ -620,7 +631,7 @@ Moltin = (function() {
     };
 
     Order.prototype.Create = function(data, callback, error) {
-      return this.m.Request('order', 'POST', data, callback, error);
+      return this.m.Request('orders', 'POST', data, callback, error);
     };
 
     return Order;
@@ -633,11 +644,11 @@ Moltin = (function() {
     }
 
     Product.prototype.Get = function(id, callback, error) {
-      return this.m.Request('product/' + id, 'GET', null, callback, error);
+      return this.m.Request('products/' + id, 'GET', null, callback, error);
     };
 
     Product.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('product', 'GET', terms, callback, error);
+      return this.m.Request('products', 'GET', terms, callback, error);
     };
 
     Product.prototype.List = function(terms, callback, error) {
@@ -653,16 +664,16 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'product/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'products/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
     Product.prototype.Modifiers = function(id, callback, error) {
-      return this.m.Request('product/' + id + '/modifiers', 'GET', null, callback, error);
+      return this.m.Request('products/' + id + '/modifiers', 'GET', null, callback, error);
     };
 
-    Product.prototype.Variations = function(id, callack) {
-      return this.m.Request('product/' + id + '/variations', 'GET', null, callback, error);
+    Product.prototype.Variations = function(id, callback) {
+      return this.m.Request('products/' + id + '/variations', 'GET', null, callback, error);
     };
 
     return Product;
@@ -692,11 +703,11 @@ Moltin = (function() {
     }
 
     Tax.prototype.Get = function(callback, error) {
-      return this.m.Request('tax/' + id, 'GET', null, callback, error);
+      return this.m.Request('taxes/' + id, 'GET', null, callback, error);
     };
 
     Tax.prototype.Find = function(terms, callback, error) {
-      return this.m.Request('tax', 'GET', terms, callback, error);
+      return this.m.Request('taxes', 'GET', terms, callback, error);
     };
 
     Tax.prototype.List = function(terms, callback, error) {
@@ -708,7 +719,7 @@ Moltin = (function() {
       if (id == null) {
         id = 0;
       }
-      uri = 'tax/' + (id !== 0 ? id + '/fields' : 'fields');
+      uri = 'taxes/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 

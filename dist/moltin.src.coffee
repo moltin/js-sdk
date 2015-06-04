@@ -7,10 +7,13 @@ class Moltin
 		publicId: ''
 		auth:     {}
 		url:      'https://api.molt.in/'
-		version:  'beta'
+		version:  'v1'
 		debug:    false
 		currency: false
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
+		notice:   (type, msg) ->
+
+			console.log type + ": " + msg
 
 	constructor: (overrides) ->
 
@@ -180,13 +183,15 @@ class Moltin
 			'Authorization': 'Bearer '+@options.auth.token
 
 		if @options.auth.token == null
-			error 'error', 'You much authenticate first', 401
+			if typeof error == 'function'
+				error 'error', 'You much authenticate first', 401
 
 		if Date.now() > parseInt(@Storage.get('mexpires'))
 			@Authenticate null, error
 
 		if not @InArray method, @options.methods
-			error 'error', 'Invalid request method ('+method+')', 400
+			if typeof error == 'function'
+				error 'error', 'Invalid request method ('+method+')', 400
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
@@ -199,13 +204,16 @@ class Moltin
 			headers: _headers
 			success: (r, c, e) =>
 				if typeof callback == 'function'
-						callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
+					callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
 				else 
 					_data = r
 			error: (e, c, m) =>
 				r = JSON.parse e.responseText
 				if r.status is false
-					error 'error',( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					if typeof error == 'function'
+						error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+					else
+						@Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
 				_data = r;
 
 		if typeof callback == 'undefined'
@@ -246,28 +254,28 @@ class Moltin
 
 		Get: (customer, id, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address/'+id, 'GET', null, callback, error
+			return @m.Request 'customers/'+customer+'/addresses/'+id, 'GET', null, callback, error
 
 		Find: (customer, terms, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address', 'GET', terms, callback, error
+			return @m.Request 'customers/'+customer+'/addresses', 'GET', terms, callback, error
 
 		List: (customer, terms, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/addresses', 'GET', terms, callback, error
+			return @m.Request 'customers/'+customer+'/addresses', 'GET', terms, callback, error
 
 		Create: (customer, data, callback, error) ->
 
-			return @m.Request 'customer/'+customer+'/address', 'POST', data, callback, error
+			return @m.Request 'customers/'+customer+'/addresses', 'POST', data, callback, error
 
 		Fields: (customer = 0, id = 0, callback, error) ->
 
 			if customer > 0 and id <= 0
-				uri = 'customer/'+customer+'/address/fields'
+				uri = 'customers/'+customer+'/addresses/fields'
 			else if customer > 0 and id > 0
-				uri = 'customer/'+customer+'/address/'+id+'/fields'
+				uri = 'customers/'+customer+'/addresses/'+id+'/fields'
 			else
-				uri = 'address/fields'
+				uri = 'addresses/fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
@@ -277,11 +285,11 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'brand/'+id, 'GET', null, callback, error
+			return @m.Request 'brands/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'brand', 'GET', terms, callback, error
+			return @m.Request 'brands', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -289,7 +297,7 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'brand/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'brands/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
@@ -313,46 +321,46 @@ class Moltin
 
 		Contents: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'GET', null, callback, error
+			return @m.Request 'carts/'+@identifier, 'GET', null, callback, error
 
 		Insert: (id, qty = 1, mods = null, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
+			return @m.Request 'carts/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
 
 		Update: (id, data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'PUT', data, callback, error
+			return @m.Request 'carts/'+@identifier+'/item/'+id, 'PUT', data, callback, error
 
 		Delete: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier, 'DELETE', null, callback, error
+			return @m.Request 'carts/'+@identifier, 'DELETE', null, callback, error
 
 		Remove: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
 
 		Item: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/item/'+id, 'GET', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/item/'+id, 'GET', null, callback, error
 
 		InCart: (id, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/has/'+id, 'GET', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/has/'+id, 'GET', null, callback, error
 
 		Checkout: (callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'GET', null, callback, error
+			return @m.Request 'carts/'+@identifier+'/checkout', 'GET', null, callback, error
 
 		Complete: (data, callback, error) ->
 
-			return @m.Request 'cart/'+@identifier+'/checkout', 'POST', data, callback, error
+			return @m.Request 'carts/'+@identifier+'/checkout', 'POST', data, callback, error
 		
 		Discount: (code, callback) ->
 
 			if ( code == null or code == false )
-				return @m.Request 'cart/'+@identifier+'/discount', 'DELETE', null, callback
+				return @m.Request 'carts/'+@identifier+'/discount', 'DELETE', null, callback
 
-			return @m.Request 'cart/'+@identifier+'/discount', 'POST', {code: code}, callback
+			return @m.Request 'carts/'+@identifier+'/discount', 'POST', {code: code}, callback
 
 	class Category
 
@@ -360,11 +368,11 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'category/'+id, 'GET', null, callback, error
+			return @m.Request 'categories/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'category', 'GET', terms, callback, error
+			return @m.Request 'categories', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -376,7 +384,7 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'category/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'categories/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
@@ -394,11 +402,11 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'collection/'+id, 'GET', null, callback, error
+			return @m.Request 'collections/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'collection', 'GET', terms, callback, error
+			return @m.Request 'collections', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -406,7 +414,7 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'collection/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'collections/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
@@ -416,7 +424,7 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'currency/'+id, 'GET', null, callback, error
+			return @m.Request 'currencies/'+id, 'GET', null, callback, error
 
 		Set: (code, callback, error) ->
 
@@ -428,7 +436,7 @@ class Moltin
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'currency', 'GET', terms, callback, error
+			return @m.Request 'currencies', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -436,7 +444,7 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'currency/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
@@ -446,15 +454,15 @@ class Moltin
 
 		Get: (flow, id, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry/'+id, 'GET', null, callback, error
+			return @m.Request 'flows/'+flow+'/entries/'+id, 'GET', null, callback, error
 
 		Find: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entry', 'GET', terms, callback, error
+			return @m.Request 'flows/'+flow+'/entries', 'GET', terms, callback, error
 
 		List: (flow, terms, callback, error) ->
 
-			return @m.Request 'flow/'+flow+'/entries', 'GET', terms, callback, error
+			return @m.Request 'flows/'+flow+'/entries', 'GET', terms, callback, error
 
 	class Gateway
 
@@ -462,7 +470,7 @@ class Moltin
 
 		Get: (slug, callback, error) ->
 
-			return @m.Request 'gateway/'+slug, 'GET', null, callback, error
+			return @m.Request 'gateways/'+slug, 'GET', null, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -474,11 +482,11 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'order/'+id, 'GET', null, callback, error
+			return @m.Request 'orders/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'order', 'GET', terms, callback, error
+			return @m.Request 'orders', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -486,7 +494,7 @@ class Moltin
 
 		Create: (data, callback, error) ->
 
-			return @m.Request 'order', 'POST', data, callback, error
+			return @m.Request 'orders', 'POST', data, callback, error
 
 	class Product
 
@@ -494,11 +502,11 @@ class Moltin
 
 		Get: (id, callback, error) ->
 
-			return @m.Request 'product/'+id, 'GET', null, callback, error
+			return @m.Request 'products/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'product', 'GET', terms, callback, error
+			return @m.Request 'products', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -510,17 +518,17 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'product/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'products/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
 
 		Modifiers: (id, callback, error) ->
 
-			return @m.Request 'product/'+id+'/modifiers', 'GET', null, callback, error
+			return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
 
-		Variations: (id, callack) ->
+		Variations: (id, callback) ->
 
-			return @m.Request 'product/'+id+'/variations', 'GET', null, callback, error
+			return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error
 
 	class Shipping
 
@@ -540,11 +548,11 @@ class Moltin
 
 		Get: (callback, error) ->
 
-			return @m.Request 'tax/'+id, 'GET', null, callback, error
+			return @m.Request 'taxes/'+id, 'GET', null, callback, error
 
 		Find: (terms, callback, error) ->
 
-			return @m.Request 'tax', 'GET', terms, callback, error
+			return @m.Request 'taxes', 'GET', terms, callback, error
 
 		List: (terms, callback, error) ->
 
@@ -552,6 +560,6 @@ class Moltin
 
 		Fields: (id = 0, callback, error) ->
 
-			uri  = 'tax/'+ if id != 0 then id+'/fields' else 'fields'
+			uri  = 'taxes/'+ if id != 0 then id+'/fields' else 'fields'
 			
 			return @m.Request uri, 'GET', null, callback, error

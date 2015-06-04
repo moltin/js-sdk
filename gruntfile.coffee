@@ -36,7 +36,7 @@ module.exports = (grunt) ->
           sourceMapIncludeSources: true
           drop_console: true
           banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
-          '<%= grunt.template.today("yyyy-mm-dd") %> */' + "\n"
+          '<%= grunt.template.today("yyyy-mm-dd") %> */'
         files:
           'dist/moltin.builder.min.js': ['dist/moltin.js', 'dist/moltin.builder.js']
           'dist/moltin.min.js': 'dist/moltin.js'

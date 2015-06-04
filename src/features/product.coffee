@@ -28,6 +28,6 @@
 
 			return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
 
-		Variations: (id, callack) ->
+		Variations: (id, callback) ->
 
 			return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error
