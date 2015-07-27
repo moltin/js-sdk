@@ -10,6 +10,7 @@ class Moltin
 		version:  'v1'
 		debug:    false
 		currency: false
+		language: false
 		methods:  ['GET', 'POST', 'PUT', 'DELETE']
 		notice:   (type, msg) ->
 
@@ -29,6 +30,7 @@ class Moltin
 		@Currency   = new Currency @
 		@Entry      = new Entry @
 		@Gateway    = new Gateway @
+		@Language   = new Language @
 		@Order      = new Order @
 		@Product    = new Product @
 		@Shipping   = new Shipping @
@@ -36,6 +38,9 @@ class Moltin
 
 		if @Storage.get 'mcurrency'
 			@options.currency = @Storage.get 'mcurrency'
+
+		if @Storage.get 'mlanguage'
+			@options.language = @Storage.get 'mlanguage'
 
 	Merge: (o1, o2) ->
 
@@ -195,6 +200,9 @@ class Moltin
 
 		if @options.currency
 			_headers['X-Currency'] = @options.currency
+
+		if @options.language
+			_headers['X-Language'] = @options.language
 
 		@Ajax 
 			type: method
