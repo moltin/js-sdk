@@ -12,6 +12,7 @@ Moltin = (function() {
     version: 'v1',
     debug: false,
     currency: false,
+    language: false,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     notice: function(type, msg) {
       return console.log(type + ": " + msg);
@@ -30,12 +31,16 @@ Moltin = (function() {
     this.Currency = new Currency(this);
     this.Entry = new Entry(this);
     this.Gateway = new Gateway(this);
+    this.Language = new Language(this);
     this.Order = new Order(this);
     this.Product = new Product(this);
     this.Shipping = new Shipping(this);
     this.Tax = new Tax(this);
     if (this.Storage.get('mcurrency')) {
       this.options.currency = this.Storage.get('mcurrency');
+    }
+    if (this.Storage.get('mlanguage')) {
+      this.options.language = this.Storage.get('mlanguage');
     }
   }
 
@@ -236,6 +241,9 @@ Moltin = (function() {
     }
     if (this.options.currency) {
       _headers['X-Currency'] = this.options.currency;
+    }
+    if (this.options.language) {
+      _headers['X-Language'] = this.options.language;
     }
     this.Ajax({
       type: method,
@@ -610,6 +618,23 @@ Moltin = (function() {
     };
 
     return Gateway;
+
+  })();
+
+  Currency = (function() {
+    function Currency(m) {
+      this.m = m;
+    }
+
+    Currency.prototype.Set = function(code, callback, error) {
+      this.m.Storage.set('mlanguage', code);
+      this.m.options.language = code;
+      if (typeof callback === 'function') {
+        return callback(code);
+      }
+    };
+
+    return Currency;
 
   })();
 
