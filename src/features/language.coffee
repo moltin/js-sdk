@@ -1,4 +1,4 @@
-	class Currency
+	class Language
 
 		constructor: (@m) ->
 
