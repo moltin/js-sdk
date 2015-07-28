@@ -3,7 +3,7 @@ var Moltin,
 
 Moltin = (function() {
   "use strict";
-  var Address, Brand, Cart, Category, Checkout, Collection, Currency, Entry, Gateway, Order, Product, Shipping, Storage, Tax;
+  var Address, Brand, Cart, Category, Checkout, Collection, Currency, Entry, Gateway, Language, Order, Product, Shipping, Storage, Tax;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -621,12 +621,12 @@ Moltin = (function() {
 
   })();
 
-  Currency = (function() {
-    function Currency(m) {
+  Language = (function() {
+    function Language(m) {
       this.m = m;
     }
 
-    Currency.prototype.Set = function(code, callback, error) {
+    Language.prototype.Set = function(code, callback, error) {
       this.m.Storage.set('mlanguage', code);
       this.m.options.language = code;
       if (typeof callback === 'function') {
@@ -634,7 +634,7 @@ Moltin = (function() {
       }
     };
 
-    return Currency;
+    return Language;
 
   })();
 

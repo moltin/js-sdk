@@ -484,7 +484,7 @@ class Moltin
 
 			return @m.Request 'gateways', 'GET', terms, callback, error
 
-	class Currency
+	class Language
 
 		constructor: (@m) ->
 
