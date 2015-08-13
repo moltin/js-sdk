@@ -363,12 +363,12 @@ class Moltin
 
 			return @m.Request 'carts/'+@identifier+'/checkout', 'POST', data, callback, error
 		
-		Discount: (code, callback) ->
+		Discount: (code, callback, error) ->
 
 			if ( code == null or code == false )
-				return @m.Request 'carts/'+@identifier+'/discount', 'DELETE', null, callback
+				return @m.Request 'carts/'+@identifier+'/discount', 'DELETE', null, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/discount', 'POST', {code: code}, callback
+			return @m.Request 'carts/'+@identifier+'/discount', 'POST', {code: code}, callback. error
 
 	class Category
 
@@ -495,6 +495,7 @@ class Moltin
 
 			if typeof callback == 'function'
 				callback code
+
 	class Order
 
 		constructor: (@m) ->

@@ -455,13 +455,13 @@ Moltin = (function() {
       return this.m.Request('carts/' + this.identifier + '/checkout', 'POST', data, callback, error);
     };
 
-    Cart.prototype.Discount = function(code, callback) {
+    Cart.prototype.Discount = function(code, callback, error) {
       if (code === null || code === false) {
-        return this.m.Request('carts/' + this.identifier + '/discount', 'DELETE', null, callback);
+        return this.m.Request('carts/' + this.identifier + '/discount', 'DELETE', null, callback, error);
       }
       return this.m.Request('carts/' + this.identifier + '/discount', 'POST', {
         code: code
-      }, callback);
+      }, callback.error);
     };
 
     return Cart;
