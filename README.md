@@ -74,3 +74,12 @@ var item = moltin.Cart.Insert(product.id, 1, null);
 You can find out how to use the JS SDK more here:
 
 http://docs.moltin.com/1.0/quickstart/js
+
+
+### Contributing
+
+ - Fork it the repository
+ - Create your feature branch (git checkout -b my-new-feature)
+ - Commit your changes (git commit -am 'Add some feature')
+ - Push to the branch (git push origin my-new-feature)
+ - Create a new Pull Request
