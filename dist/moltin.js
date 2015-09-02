@@ -100,7 +100,7 @@ Moltin = (function() {
       type: 'GET',
       async: false,
       data: null,
-      timeout: 5000,
+      timeout: 60000,
       headers: {},
       url: this.options.url + this.options.version,
       success: function(response, status, request) {},

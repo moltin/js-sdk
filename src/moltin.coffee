@@ -83,7 +83,7 @@ class Moltin
 			type:    'GET'
 			async:   false
 			data:    null
-			timeout: 5000
+			timeout: 60000
 			headers: {}
 			url:     @options.url+@options.version
 			success: (response, status, request) ->
