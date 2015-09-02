@@ -146,7 +146,8 @@ class Moltin
 			if typeof callback == 'function'
 				callback @options.auth
 
-			_e = new CustomEvent 'MoltinReady', {detail: @}
+			_e = document.createEvent 'CustomEvent'
+			_e.initCustomEvent 'MoltinReady', false, false, @
 			window.dispatchEvent _e
 
 			return @
@@ -171,7 +172,8 @@ class Moltin
 				if typeof callback == 'function'
 					callback r
 
-				_e = new CustomEvent 'MoltinReady', {detail: @}
+				_e = document.createEvent 'CustomEvent'
+				_e.initCustomEvent 'MoltinReady', false, false, @
 				window.dispatchEvent _e
 
 			error: (e, c, r) =>

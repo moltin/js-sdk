@@ -168,9 +168,8 @@ Moltin = (function() {
       if (typeof callback === 'function') {
         callback(this.options.auth);
       }
-      _e = new CustomEvent('MoltinReady', {
-        detail: this
-      });
+      _e = document.createEvent('CustomEvent');
+      _e.initCustomEvent('MoltinReady', false, false, this);
       window.dispatchEvent(_e);
       return this;
     }
@@ -196,9 +195,8 @@ Moltin = (function() {
           if (typeof callback === 'function') {
             callback(r);
           }
-          _e = new CustomEvent('MoltinReady', {
-            detail: _this
-          });
+          _e = document.createEvent('CustomEvent');
+          _e.initCustomEvent('MoltinReady', false, false, _this);
           return window.dispatchEvent(_e);
         };
       })(this),
