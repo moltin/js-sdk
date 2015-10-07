@@ -1,230 +1,230 @@
 class Moltin
 
-	"use strict"
+  "use strict"
 
-	options:
+  options:
 
-		publicId: ''
-		auth:     {}
-		url:      'https://api.molt.in/'
-		version:  'v1'
-		debug:    false
-		currency: false
-		language: false
-		methods:  ['GET', 'POST', 'PUT', 'DELETE']
-		notice:   (type, msg) ->
+    publicId: ''
+    auth:     {}
+    url:      'https://api.molt.in/'
+    version:  'v1'
+    debug:    false
+    currency: false
+    language: false
+    methods:  ['GET', 'POST', 'PUT', 'DELETE']
+    notice:   (type, msg) ->
 
-			console.log type + ": " + msg
+      console.log type + ": " + msg
 
-	constructor: (overrides) ->
+  constructor: (overrides) ->
 
-		@options = @Merge @options, overrides
-		@Storage = new Storage
+    @options = @Merge @options, overrides
+    @Storage = new Storage
 
-		@Address    = new Address @
-		@Brand      = new Brand @
-		@Cart       = new Cart @
-		@Category   = new Category @
-		@Checkout   = new Checkout @
-		@Collection = new Collection @
-		@Currency   = new Currency @
-		@Entry      = new Entry @
-		@Gateway    = new Gateway @
-		@Language   = new Language @
-		@Order      = new Order @
-		@Product    = new Product @
-		@Shipping   = new Shipping @
-		@Tax        = new Tax @
+    @Address    = new Address @
+    @Brand      = new Brand @
+    @Cart       = new Cart @
+    @Category   = new Category @
+    @Checkout   = new Checkout @
+    @Collection = new Collection @
+    @Currency   = new Currency @
+    @Entry      = new Entry @
+    @Gateway    = new Gateway @
+    @Language   = new Language @
+    @Order      = new Order @
+    @Product    = new Product @
+    @Shipping   = new Shipping @
+    @Tax        = new Tax @
 
-		if @Storage.get 'mcurrency'
-			@options.currency = @Storage.get 'mcurrency'
+    if @Storage.get 'mcurrency'
+      @options.currency = @Storage.get 'mcurrency'
 
-		if @Storage.get 'mlanguage'
-			@options.language = @Storage.get 'mlanguage'
+    if @Storage.get 'mlanguage'
+      @options.language = @Storage.get 'mlanguage'
 
-	Merge: (o1, o2) ->
+  Merge: (o1, o2) ->
 
-		o3 = {}
-		o3[k] = v for k, v of o1
-		o3[k] = v for k, v of o2
-		return o3
+    o3 = {}
+    o3[k] = v for k, v of o1
+    o3[k] = v for k, v of o2
+    return o3
 
-	InArray: (key, arr) ->
+  InArray: (key, arr) ->
 
-		if key not in arr
-			return false
+    if key not in arr
+      return false
 
-		return true
+    return true
 
-	Serialize: (obj, prefix = null) ->
+  Serialize: (obj, prefix = null) ->
 
-		str = []
+    str = []
 
-		for k,v of obj
-			k = if prefix != null then prefix+'['+k+']' else k
-			str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+    for k,v of obj
+      k = if prefix != null then prefix+'['+k+']' else k
+      str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
 
-		return str.join '&'
+    return str.join '&'
 
-	Error: (response) ->
+  Error: (response) ->
 
-		msg = ''
+    msg = ''
 
-		if typeof response.errors != 'undefind'
-			msg += v+'<br />' for k,v of response.errors
-		else
-			msg = response.error
+    if typeof response.errors != 'undefind'
+      msg += v+'<br />' for k,v of response.errors
+    else
+      msg = response.error
 
-		return @options.notice 'Error', msg
-	
-	Ajax: (options) ->
+    return @options.notice 'Error', msg
 
-		args =
-			type:    'GET'
-			async:   false
-			data:    null
-			timeout: 60000
-			headers: {}
-			url:     @options.url+@options.version
-			success: (response, status, request) ->
-			error:   (response, status, request) ->
+  Ajax: (options) ->
 
-		args = @Merge args, options
-		args.type = args.type.toUpperCase()
+    args =
+      type:    'GET'
+      async:   false
+      data:    null
+      timeout: 60000
+      headers: {}
+      url:     @options.url+@options.version
+      success: (response, status, request) ->
+      error:   (response, status, request) ->
 
-		try
-			request = new XMLHttpRequest()
-		catch e
-			try
-				request = new ActiveXObject("Msxml2.XMLHTTP")
-			catch e
-				return false;
+    args = @Merge args, options
+    args.type = args.type.toUpperCase()
 
-		if args.type == 'GET'
-			args.url += '?' + @Serialize args.data
-			args.data = null
-		else
-			args.data = @Serialize args.data
+    try
+      request = new XMLHttpRequest()
+    catch e
+      try
+        request = new ActiveXObject("Msxml2.XMLHTTP")
+      catch e
+        return false;
 
-		request.open args.type, args.url, args.async
+    if args.type == 'GET'
+      args.url += '?' + @Serialize args.data
+      args.data = null
+    else
+      args.data = @Serialize args.data
 
-		timeout = setTimeout =>
-			request.abort()
-			args.error request, 408, 'Your request timed out'
-		, args.timeout
+    request.open args.type, args.url, args.async
 
-		request.setRequestHeader k, v for k,v of args.headers
+    timeout = setTimeout =>
+      request.abort()
+      args.error request, 408, 'Your request timed out'
+    , args.timeout
 
-		request.onreadystatechange = ->
+    request.setRequestHeader k, v for k,v of args.headers
 
-			if request.readyState != 4
-				return null;
+    request.onreadystatechange = ->
 
-			clearTimeout timeout
+      if request.readyState != 4
+        return null;
 
-			response = JSON.parse request.responseText
+      clearTimeout timeout
 
-			if request.status.toString().charAt(0) != '2'
-				args.error request, request.status, response
-			else
-				args.success response, request.status, request
+      response = JSON.parse request.responseText
 
-		request.send args.data
+      if request.status.toString().charAt(0) != '2'
+        args.error request, request.status, response
+      else
+        args.success response, request.status, request
 
-	Authenticate: (callback, error)->
+    request.send args.data
 
-		if @options.publicId.length <= 0
-			if typeof error == 'function'
-				error 'error', 'Public ID must be set', 401
+  Authenticate: (callback, error)->
 
-		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
-			
-			@options.auth =
-				token:   @Storage.get 'mtoken'
-				expires: @Storage.get 'mexpires'
+    if @options.publicId.length <= 0
+      if typeof error == 'function'
+        error 'error', 'Public ID must be set', 401
 
-			if typeof callback == 'function'
-				callback @options.auth
+    if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 
-			_e = document.createEvent 'CustomEvent'
-			_e.initCustomEvent 'MoltinReady', false, false, @
-			window.dispatchEvent _e
+      @options.auth =
+        token:   @Storage.get 'mtoken'
+        expires: @Storage.get 'mexpires'
 
-			return @
+      if typeof callback == 'function'
+        callback @options.auth
 
-		@Ajax
-			type: 'POST'
-			url: @options.url+'oauth/access_token'
-			data:
-				grant_type: 'implicit',
-				client_id:  @options.publicId
-			async: if typeof callback == 'function' then true else false
-			headers:
-				'Content-Type': 'application/x-www-form-urlencoded'
-			success: (r, c, e) =>
-				@options.auth =
-					token:   r.access_token
-					expires: parseInt(r.expires) * 1000
+      _e = document.createEvent 'CustomEvent'
+      _e.initCustomEvent 'MoltinReady', false, false, @
+      window.dispatchEvent _e
 
-				@Storage.set 'mtoken', r.access_token
-				@Storage.set 'mexpires', @options.auth.expires
+      return @
 
-				if typeof callback == 'function'
-					callback r
+    @Ajax
+      type: 'POST'
+      url: @options.url+'oauth/access_token'
+      data:
+        grant_type: 'implicit',
+        client_id:  @options.publicId
+      async: if typeof callback == 'function' then true else false
+      headers:
+        'Content-Type': 'application/x-www-form-urlencoded'
+      success: (r, c, e) =>
+        @options.auth =
+          token:   r.access_token
+          expires: parseInt(r.expires) * 1000
 
-				_e = document.createEvent 'CustomEvent'
-				_e.initCustomEvent 'MoltinReady', false, false, @
-				window.dispatchEvent _e
+        @Storage.set 'mtoken', r.access_token
+        @Storage.set 'mexpires', @options.auth.expires
 
-			error: (e, c, r) =>
-				if typeof error == 'function'
-					error 'error', 'Authorization failed', 401
+        if typeof callback == 'function'
+          callback r
 
-		return @
+        _e = document.createEvent 'CustomEvent'
+        _e.initCustomEvent 'MoltinReady', false, false, @
+        window.dispatchEvent _e
 
-	Request: (uri, method = 'GET', data = null, callback, error) ->
+      error: (e, c, r) =>
+        if typeof error == 'function'
+          error 'error', 'Authorization failed', 401
 
-		_data    = {}
-		_headers =
-			'Content-Type': 'application/x-www-form-urlencoded'
-			'Authorization': 'Bearer '+@options.auth.token
+    return @
 
-		if @options.auth.token == null
-			if typeof error == 'function'
-				error 'error', 'You much authenticate first', 401
+  Request: (uri, method = 'GET', data = null, callback, error) ->
 
-		if Date.now() > parseInt(@Storage.get('mexpires'))
-			@Authenticate null, error
+    _data    = {}
+    _headers =
+      'Content-Type': 'application/x-www-form-urlencoded'
+      'Authorization': 'Bearer '+@options.auth.token
 
-		if not @InArray method, @options.methods
-			if typeof error == 'function'
-				error 'error', 'Invalid request method ('+method+')', 400
+    if @options.auth.token == null
+      if typeof error == 'function'
+        error 'error', 'You much authenticate first', 401
 
-		if @options.currency
-			_headers['X-Currency'] = @options.currency
+    if Date.now() > parseInt(@Storage.get('mexpires'))
+      @Authenticate null, error
 
-		if @options.language
-			_headers['X-Language'] = @options.language
+    if not @InArray method, @options.methods
+      if typeof error == 'function'
+        error 'error', 'Invalid request method ('+method+')', 400
 
-		@Ajax 
-			type: method
-			url: @options.url+@options.version+'/'+uri
-			data: data
-			async: if typeof callback == 'function' then true else false
-			headers: _headers
-			success: (r, c, e) =>
-				if typeof callback == 'function'
-					callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
-				else 
-					_data = r
-			error: (e, c, m) =>
-				r = JSON.parse e.responseText
-				if r.status is false
-					if typeof error == 'function'
-						error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
-					else
-						@Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
-				_data = r;
+    if @options.currency
+      _headers['X-Currency'] = @options.currency
 
-		if typeof callback == 'undefined'
-			return _data.result
+    if @options.language
+      _headers['X-Language'] = @options.language
+
+    @Ajax
+      type: method
+      url: @options.url+@options.version+'/'+uri
+      data: data
+      async: if typeof callback == 'function' then true else false
+      headers: _headers
+      success: (r, c, e) =>
+        if typeof callback == 'function'
+          callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
+        else
+          _data = r
+      error: (e, c, m) =>
+        r = JSON.parse e.responseText
+        if r.status is false
+          if typeof error == 'function'
+            error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+          else
+            @Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
+        _data = r
+
+    if typeof callback == 'undefined'
+      return _data.result

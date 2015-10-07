@@ -1,33 +1,33 @@
-	class Product
+class Product
 
-		constructor: (@m) ->
+  constructor: (@m) ->
 
-		Get: (id, callback, error) ->
+  Get: (id, callback, error) ->
 
-			return @m.Request 'products/'+id, 'GET', null, callback, error
+    return @m.Request 'products/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback, error) ->
+  Find: (terms, callback, error) ->
 
-			return @m.Request 'products', 'GET', terms, callback, error
+    return @m.Request 'products', 'GET', terms, callback, error
 
-		List: (terms, callback, error) ->
+  List: (terms, callback, error) ->
 
-			return @m.Request 'products', 'GET', terms, callback, error
+    return @m.Request 'products', 'GET', terms, callback, error
 
-		Search: (terms, callback, error) ->
+  Search: (terms, callback, error) ->
 
-			return @m.Request 'products/search', 'GET', terms, callback, error
+    return @m.Request 'products/search', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback, error) ->
+  Fields: (id = 0, callback, error) ->
 
-			uri  = 'products/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+    uri  = 'products/'+ if id != 0 then id+'/fields' else 'fields'
 
-		Modifiers: (id, callback, error) ->
+    return @m.Request uri, 'GET', null, callback, error
 
-			return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
+  Modifiers: (id, callback, error) ->
 
-		Variations: (id, callback, error) ->
+    return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
 
-			return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error
+  Variations: (id, callback, error) ->
+
+    return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error

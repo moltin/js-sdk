@@ -1,21 +1,21 @@
-	class Collection
+class Collection
 
-		constructor: (@m) ->
+  constructor: (@m) ->
 
-		Get: (id, callback, error) ->
+  Get: (id, callback, error) ->
 
-			return @m.Request 'collections/'+id, 'GET', null, callback, error
+    return @m.Request 'collections/'+id, 'GET', null, callback, error
 
-		Find: (terms, callback, error) ->
+  Find: (terms, callback, error) ->
 
-			return @m.Request 'collections', 'GET', terms, callback, error
+    return @m.Request 'collections', 'GET', terms, callback, error
 
-		List: (terms, callback, error) ->
+  List: (terms, callback, error) ->
 
-			return @m.Request 'collections', 'GET', terms, callback, error
+    return @m.Request 'collections', 'GET', terms, callback, error
 
-		Fields: (id = 0, callback, error) ->
+  Fields: (id = 0, callback, error) ->
 
-			uri  = 'collections/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+    uri  = 'collections/'+ if id != 0 then id+'/fields' else 'fields'
+
+    return @m.Request uri, 'GET', null, callback, error
