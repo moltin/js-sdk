@@ -2,7 +2,7 @@ class Currency
   constructor: (@m) ->
 
   Get: (id, callback, error) ->
-    @m.Request 'currencies/'+id, 'GET', null, callback, error
+    @m.Request "currencies/#{id}", 'GET', null, callback, error
 
   Set: (code, callback, error) ->
     @m.Storage.set 'mcurrency', code

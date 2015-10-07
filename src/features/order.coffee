@@ -2,7 +2,7 @@ class Order
   constructor: (@m) ->
 
   Get: (id, callback, error) ->
-    @m.Request 'orders/'+id, 'GET', null, callback, error
+    @m.Request "orders/#{id}", 'GET', null, callback, error
 
   Find: (terms, callback, error) ->
     @m.Request 'orders', 'GET', terms, callback, error

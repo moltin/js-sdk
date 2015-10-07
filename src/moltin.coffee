@@ -55,7 +55,7 @@ class Moltin
     str = []
 
     for k,v of obj
-      k = if prefix != null then prefix+'['+k+']' else k
+      k = if prefix != null then "#{prefix}[#{k}]" else k
 
       if typeof v == 'object'
         str.push @Serialize v, k
@@ -68,7 +68,7 @@ class Moltin
     msg = ''
 
     if typeof response.errors != 'undefind'
-      msg += v+'<br />' for k,v of response.errors
+      msg += "#{v}<br/>" for k,v of response.errors
     else
       msg = response.error
 
@@ -81,7 +81,7 @@ class Moltin
       data:    null
       timeout: 60000
       headers: {}
-      url:     @options.url+@options.version
+      url:     @options.url + @options.version
       success: (response, status, request) ->
       error:   (response, status, request) ->
 
@@ -150,7 +150,7 @@ class Moltin
 
     @Ajax
       type: 'POST'
-      url: @options.url+'oauth/access_token'
+      url: "#{@options.url}oauth/access_token"
       data:
         grant_type: 'implicit',
         client_id:  @options.publicId
@@ -182,7 +182,7 @@ class Moltin
     _data    = {}
     _headers =
       'Content-Type': 'application/x-www-form-urlencoded'
-      'Authorization': 'Bearer '+@options.auth.token
+      'Authorization': "Bearer #{@options.auth.token}"
 
     if @options.auth.token == null
       if typeof error == 'function'
@@ -193,7 +193,7 @@ class Moltin
 
     if not @InArray method, @options.methods
       if typeof error == 'function'
-        error 'error', 'Invalid request method ('+method+')', 400
+        error 'error', "Invalid request method (#{method})", 400
 
     if @options.currency
       _headers['X-Currency'] = @options.currency
@@ -203,7 +203,7 @@ class Moltin
 
     @Ajax
       type: method
-      url: @options.url+@options.version+'/'+uri
+      url: "#{@options.url + @options.version}/#{uri}"
       data: data
       async: if typeof callback == 'function' then true else false
       headers: _headers

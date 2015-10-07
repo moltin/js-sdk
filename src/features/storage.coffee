@@ -6,10 +6,10 @@ class Storage
 
     if days
       date = new Date
-      date.setTime(date.getTime() + (days*24*60*60*1000))
-      expires = "; expires=" + date.toGMTString()
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+      expires = "; expires=#{date.toGMTString()}"
 
-    document.cookie = key + "=" + value + expires + "; path=/"
+    document.cookie = "#{key}=#{value + expires}; path=/"
 
   get: (key) ->
     key = key + "="
