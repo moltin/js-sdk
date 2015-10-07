@@ -1,5 +1,4 @@
 class Cart
-
   constructor: (@m) ->
 
   @id = @GetIdentifier()
@@ -8,7 +7,6 @@ class Cart
     "carts/#{identifier}"
 
   GetIdentifier: () ->
-
     if @m.Storage.get('mcart') != null
       return @m.Storage.get 'mcart'
 
@@ -20,7 +18,6 @@ class Cart
     return id
 
   Contents: (callback, error) ->
-
     @m.Request @BasUrl(@id), 'GET', null, callback, error
 
   Insert: (id, qty = 1, mods = null, callback, error) ->
@@ -28,31 +25,24 @@ class Cart
     @m.Request @BasUrl(@id), 'POST', params, callback, error
 
   Update: (id, data, callback, error) ->
-
     @m.Request @BasUrl(@id)+'/item/'+id, 'PUT', data, callback, error
 
   Delete: (callback, error) ->
-
     @m.Request @BasUrl(@id), 'DELETE', null, callback, error
 
   Remove: (id, callback, error) ->
-
     @m.Request @BasUrl(@id)+'/item/'+id, 'DELETE', null, callback, error
 
   Item: (id, callback, error) ->
-
     @m.Request @BasUrl(@id)+'/item/'+id, 'GET', null, callback, error
 
   InCart: (id, callback, error) ->
-
     @m.Request @BasUrl(@id)+'/has/'+id, 'GET', null, callback, error
 
   Checkout: (callback, error) ->
-
     @m.Request @BasUrl(@id)+'/checkout', 'GET', null, callback, error
 
   Complete: (data, callback, error) ->
-
     @m.Request @BasUrl(@id)+'/checkout', 'POST', data, callback, error
 
   Discount: (code, callback, error) ->

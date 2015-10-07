@@ -1,9 +1,7 @@
 class Storage
-
   constructor: () ->
 
   set: (key, value, days) ->
-
     expires = ""
 
     if days
@@ -14,7 +12,6 @@ class Storage
     document.cookie = key + "=" + value + expires + "; path=/"
 
   get: (key) ->
-
     key = key + "="
 
     for c in document.cookie.split(';')
@@ -24,5 +21,4 @@ class Storage
     return null
 
   remove: (key) ->
-
     @set key, '', -1

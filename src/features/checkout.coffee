@@ -1,5 +1,4 @@
 class Checkout
-
   constructor: (@m) ->
 
   Payment: (method, order, data, callback, error) ->

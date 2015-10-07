@@ -3,7 +3,6 @@ class Moltin
   "use strict"
 
   options:
-
     publicId: ''
     auth:     {}
     url:      'https://api.molt.in/'
@@ -13,28 +12,26 @@ class Moltin
     language: false
     methods:  ['GET', 'POST', 'PUT', 'DELETE']
     notice:   (type, msg) ->
-
       console.log type + ": " + msg
 
   constructor: (overrides) ->
-
     @options = @Merge @options, overrides
     @Storage = new Storage
 
-    @Address    = new Address @
-    @Brand      = new Brand @
-    @Cart       = new Cart @
-    @Category   = new Category @
-    @Checkout   = new Checkout @
+    @Address = new Address @
+    @Brand = new Brand @
+    @Cart = new Cart @
+    @Category = new Category @
+    @Checkout = new Checkout @
     @Collection = new Collection @
-    @Currency   = new Currency @
-    @Entry      = new Entry @
-    @Gateway    = new Gateway @
-    @Language   = new Language @
-    @Order      = new Order @
-    @Product    = new Product @
-    @Shipping   = new Shipping @
-    @Tax        = new Tax @
+    @Currency = new Currency @
+    @Entry = new Entry @
+    @Gateway = new Gateway @
+    @Language = new Language @
+    @Order = new Order @
+    @Product = new Product @
+    @Shipping = new Shipping @
+    @Tax = new Tax @
 
     if @Storage.get 'mcurrency'
       @options.currency = @Storage.get 'mcurrency'
@@ -43,21 +40,18 @@ class Moltin
       @options.language = @Storage.get 'mlanguage'
 
   Merge: (o1, o2) ->
-
     o3 = {}
     o3[k] = v for k, v of o1
     o3[k] = v for k, v of o2
     return o3
 
   InArray: (key, arr) ->
-
     if key not in arr
       return false
 
     return true
 
   Serialize: (obj, prefix = null) ->
-
     str = []
 
     for k,v of obj
@@ -71,7 +65,6 @@ class Moltin
     return str.join '&'
 
   Error: (response) ->
-
     msg = ''
 
     if typeof response.errors != 'undefind'
@@ -82,7 +75,6 @@ class Moltin
     return @options.notice 'Error', msg
 
   Ajax: (options) ->
-
     args =
       type:    'GET'
       async:   false
@@ -120,7 +112,6 @@ class Moltin
     request.setRequestHeader k, v for k,v of args.headers
 
     request.onreadystatechange = ->
-
       if request.readyState != 4
         return null
 
@@ -188,7 +179,6 @@ class Moltin
     return @
 
   Request: (uri, method = 'GET', data = null, callback, error) ->
-
     _data    = {}
     _headers =
       'Content-Type': 'application/x-www-form-urlencoded'
