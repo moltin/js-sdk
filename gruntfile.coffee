@@ -99,6 +99,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-aws-s3'
   grunt.loadNpmTasks 'grunt-contrib-copy'
+  grunt.loadNpmTasks 'grunt-coffeelint'
 
   # Default task.
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']

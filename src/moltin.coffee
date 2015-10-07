@@ -62,7 +62,11 @@ class Moltin
 
     for k,v of obj
       k = if prefix != null then prefix+'['+k+']' else k
-      str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+
+      if typeof v == 'object'
+        str.push @Serialize v, k
+      else
+        str.push encodeURIComponent(k) + '=' + encodeURIComponent(v)
 
     return str.join '&'
 
@@ -98,7 +102,7 @@ class Moltin
       try
         request = new ActiveXObject("Msxml2.XMLHTTP")
       catch e
-        return false;
+        return false
 
     if args.type == 'GET'
       args.url += '?' + @Serialize args.data
@@ -108,7 +112,7 @@ class Moltin
 
     request.open args.type, args.url, args.async
 
-    timeout = setTimeout =>
+    timeout = setTimeout ->
       request.abort()
       args.error request, 408, 'Your request timed out'
     , args.timeout
@@ -118,7 +122,7 @@ class Moltin
     request.onreadystatechange = ->
 
       if request.readyState != 4
-        return null;
+        return null
 
       clearTimeout timeout
 
@@ -132,12 +136,13 @@ class Moltin
     request.send args.data
 
   Authenticate: (callback, error)->
+    isExpired = parseInt(@Storage.get('mexpires')) > Date.now()
 
     if @options.publicId.length <= 0
       if typeof error == 'function'
         error 'error', 'Public ID must be set', 401
 
-    if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
+    if @Storage.get('mtoken') != null and isExpired
 
       @options.auth =
         token:   @Storage.get 'mtoken'
@@ -176,7 +181,7 @@ class Moltin
         _e.initCustomEvent 'MoltinReady', false, false, @
         window.dispatchEvent _e
 
-      error: (e, c, r) =>
+      error: (e, c, r) ->
         if typeof error == 'function'
           error 'error', 'Authorization failed', 401
 
@@ -212,18 +217,29 @@ class Moltin
       data: data
       async: if typeof callback == 'function' then true else false
       headers: _headers
-      success: (r, c, e) =>
+      success: (r, c, e) ->
+        if typeof r.pagination != 'undefined'
+          pagination = r.pagination
+        else
+        pagination = null
+
         if typeof callback == 'function'
-          callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
+          callback r.result, pagination
         else
           _data = r
       error: (e, c, m) =>
         r = JSON.parse e.responseText
+
+        if typeof r.errors != 'undefined'
+          errors = r.errors
+        else
+          errors r.error
+
         if r.status is false
           if typeof error == 'function'
-            error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
+            error 'error', errors, c
           else
-            @Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
+            @Error errors
         _data = r
 
     if typeof callback == 'undefined'
