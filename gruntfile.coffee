@@ -10,16 +10,12 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapDir: 'dist/'
         files:
-          'dist/moltin.builder.js': ['src/builder.coffee', 'src/builder/loader.coffee', 'src/builder/*.coffee']
           'dist/moltin.js': ['src/moltin.coffee', 'src/features/storage.coffee', 'src/features/*.coffee']
     concat:
       options:
         separator: ';'
         banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */' + "\n"
-      builder:
-        src: ['dist/moltin.builder.js', 'src/dot.js']
-        dest: 'dist/moltin.builder.js'
       css:
         src: ['src/css/*.css']
         dest: 'dist/moltin.css'
@@ -38,7 +34,6 @@ module.exports = (grunt) ->
           banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */'
         files:
-          'dist/moltin.builder.min.js': ['dist/moltin.js', 'dist/moltin.builder.js']
           'dist/moltin.min.js': 'dist/moltin.js'
     cssmin:
       compress:
@@ -56,7 +51,7 @@ module.exports = (grunt) ->
         src: ['*.min.js', '*.min.css', '*.min.map']
         dest: 'dist/gzip/'
     watch:
-      files: ['src/*.coffee', 'src/features/*.coffee', 'src/builder/*.coffee', 'src/css/*.css']
+      files: ['src/*.coffee', 'src/features/*.coffee', 'src/css/*.css']
       tasks: ['coffee', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
 
   # Do we have credentials?
@@ -70,7 +65,6 @@ module.exports = (grunt) ->
       aws:
         files: [
           {flatten: true, src: 'dist/gzip/moltin.min.js', dest: 'dist/gzip/v1', filter: 'isFile'}
-          {flatten: true, src: 'dist/gzip/moltin.builder.min.js', dest: 'dist/gzip/builder', filter: 'isFile'}
         ]
 
     # Upload files to s3.
@@ -86,15 +80,10 @@ module.exports = (grunt) ->
           ContentEncoding: 'gzip'
         mime:
           'dist/gzip/v1': 'application/javascript; charset=utf-8',
-          'dist/gzip/builder': 'application/javascript; charset=utf-8'
       production:
         files: [
           {expand: true, cwd: 'dist/gzip/', src: ['**'], dest: '/'}
-          {src: 'builder', dest: 'v1/', action: 'copy'}
-          {src: 'moltin.builder.min.js', dest: 'v1/', action: 'copy'}
-          {src: 'moltin.builder.min.map', dest: 'v1/', action: 'copy'}
           {src: 'moltin.min.css', dest: 'v1/', action: 'copy'}
-          {dest: '/', exclude: 'builder', flipExclude: true, action: 'delete'}
         ]
 
   # Initialize grunt.
