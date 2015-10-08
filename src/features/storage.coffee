@@ -1,28 +1,24 @@
-	class Storage
+class Storage
+  constructor: () ->
 
-		constructor: () ->
+  set: (key, value, days) ->
+    expires = ""
 
-		set: (key, value, days) ->
+    if days
+      date = new Date
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+      expires = "; expires=#{date.toGMTString()}"
 
-			expires = ""
+    document.cookie = "#{key}=#{value + expires}; path=/"
 
-			if days
-				date = new Date
-				date.setTime(date.getTime() + (days*24*60*60*1000))
-				expires = "; expires=" + date.toGMTString()
+  get: (key) ->
+    key = key + "="
 
-			document.cookie = key + "=" + value + expires + "; path=/"
+    for c in document.cookie.split(';')
+      c = c.substring(1, c.length) while c.charAt(0) is ' '
+      return c.substring(key.length, c.length) if c.indexOf(key) == 0
 
-		get: (key) ->
+    return null
 
-			key = key + "="
-			
-			for c in document.cookie.split(';')
-				c = c.substring(1, c.length) while c.charAt(0) is ' '
-				return c.substring(key.length, c.length) if c.indexOf(key) == 0
-			
-			return null
-
-		remove: (key) ->
-
-			@set key, '', -1
+  remove: (key) ->
+    @set key, '', -1

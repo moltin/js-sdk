@@ -1,29 +1,23 @@
-	class Currency
+class Currency
+  constructor: (@m) ->
 
-		constructor: (@m) ->
+  Get: (id, callback, error) ->
+    @m.Request "currencies/#{id}", 'GET', null, callback, error
 
-		Get: (id, callback, error) ->
+  Set: (code, callback, error) ->
+    @m.Storage.set 'mcurrency', code
+    @m.options.currency = code
 
-			return @m.Request 'currencies/'+id, 'GET', null, callback, error
+    if typeof callback == 'function'
+      callback code
 
-		Set: (code, callback, error) ->
+  Find: (terms, callback, error) ->
+    @m.Request 'currencies', 'GET', terms, callback, error
 
-			@m.Storage.set 'mcurrency', code
-			@m.options.currency = code
+  List: (terms, callback, error) ->
+    @m.Request 'currencies', 'GET', terms, callback, error
 
-			if typeof callback == 'function'
-				callback code
+  Fields: (id = 0, callback, error) ->
+    uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
 
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+    @m.Request uri, 'GET', null, callback, error

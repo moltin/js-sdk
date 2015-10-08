@@ -1,19 +1,14 @@
-	class Order
+class Order
+  constructor: (@m) ->
 
-		constructor: (@m) ->
+  Get: (id, callback, error) ->
+    @m.Request "orders/#{id}", 'GET', null, callback, error
 
-		Get: (id, callback, error) ->
+  Find: (terms, callback, error) ->
+    @m.Request 'orders', 'GET', terms, callback, error
 
-			return @m.Request 'orders/'+id, 'GET', null, callback, error
+  List: (terms, callback, error) ->
+    @m.Request 'orders', 'GET', terms, callback, error
 
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'orders', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'orders', 'GET', terms, callback, error
-
-		Create: (data, callback, error) ->
-
-			return @m.Request 'orders', 'POST', data, callback, error
+  Create: (data, callback, error) ->
+    @m.Request 'orders', 'POST', data, callback, error
