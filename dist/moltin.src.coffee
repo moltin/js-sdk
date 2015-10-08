@@ -1,587 +1,528 @@
 class Moltin
 
-	"use strict"
-
-	options:
-
-		publicId: ''
-		auth:     {}
-		url:      'https://api.molt.in/'
-		version:  'v1'
-		debug:    false
-		currency: false
-		language: false
-		methods:  ['GET', 'POST', 'PUT', 'DELETE']
-		notice:   (type, msg) ->
-
-			console.log type + ": " + msg
+  "use strict"
+
+  options:
+    publicId: ''
+    auth:     {}
+    url:      'https://api.molt.in/'
+    version:  'v1'
+    debug:    false
+    currency: false
+    language: false
+    methods:  ['GET', 'POST', 'PUT', 'DELETE']
+    notice:   (type, msg) ->
+      console.log type + ": " + msg
+
+  constructor: (overrides) ->
+    @options = @Merge @options, overrides
+    @Storage = new Storage
+
+    @Address = new Address @
+    @Brand = new Brand @
+    @Cart = new Cart @
+    @Category = new Category @
+    @Checkout = new Checkout @
+    @Collection = new Collection @
+    @Currency = new Currency @
+    @Entry = new Entry @
+    @Gateway = new Gateway @
+    @Language = new Language @
+    @Order = new Order @
+    @Product = new Product @
+    @Shipping = new Shipping @
+    @Tax = new Tax @
+
+    if @Storage.get 'mcurrency'
+      @options.currency = @Storage.get 'mcurrency'
+
+    if @Storage.get 'mlanguage'
+      @options.language = @Storage.get 'mlanguage'
+
+  Merge: (o1, o2) ->
+    o3 = {}
+    o3[k] = v for k, v of o1
+    o3[k] = v for k, v of o2
+    return o3
+
+  InArray: (key, arr) ->
+    if key not in arr
+      return false
+
+    return true
+
+  Serialize: (obj, prefix = null) ->
+    str = []
+
+    for k,v of obj
+      k = if prefix != null then "#{prefix}[#{k}]" else k
+
+      if typeof v == 'object'
+        str.push @Serialize v, k
+      else
+        str.push encodeURIComponent(k) + '=' + encodeURIComponent(v)
+
+    return str.join '&'
+
+  Error: (response) ->
+    msg = ''
+
+    if typeof response.errors != 'undefind'
+      msg += "#{v}<br/>" for k,v of response.errors
+    else
+      msg = response.error
+
+    return @options.notice 'Error', msg
+
+  Ajax: (options) ->
+    args =
+      type:    'GET'
+      async:   false
+      data:    null
+      timeout: 60000
+      headers: {}
+      url:     @options.url + @options.version
+      success: (response, status, request) ->
+      error:   (response, status, request) ->
+
+    args = @Merge args, options
+    args.type = args.type.toUpperCase()
+
+    try
+      request = new XMLHttpRequest()
+    catch e
+      try
+        request = new ActiveXObject("Msxml2.XMLHTTP")
+      catch e
+        return false
+
+    if args.type == 'GET'
+      args.url += '?' + @Serialize args.data
+      args.data = null
+    else
+      args.data = @Serialize args.data
 
-	constructor: (overrides) ->
+    request.open args.type, args.url, args.async
 
-		@options = @Merge @options, overrides
-		@Storage = new Storage
+    timeout = setTimeout ->
+      request.abort()
+      args.error request, 408, 'Your request timed out'
+    , args.timeout
 
-		@Address    = new Address @
-		@Brand      = new Brand @
-		@Cart       = new Cart @
-		@Category   = new Category @
-		@Checkout   = new Checkout @
-		@Collection = new Collection @
-		@Currency   = new Currency @
-		@Entry      = new Entry @
-		@Gateway    = new Gateway @
-		@Language   = new Language @
-		@Order      = new Order @
-		@Product    = new Product @
-		@Shipping   = new Shipping @
-		@Tax        = new Tax @
+    request.setRequestHeader k, v for k,v of args.headers
 
-		if @Storage.get 'mcurrency'
-			@options.currency = @Storage.get 'mcurrency'
+    request.onreadystatechange = ->
+      if request.readyState != 4
+        return null
 
-		if @Storage.get 'mlanguage'
-			@options.language = @Storage.get 'mlanguage'
+      clearTimeout timeout
 
-	Merge: (o1, o2) ->
+      response = JSON.parse request.responseText
+
+      if request.status.toString().charAt(0) != '2'
+        args.error request, request.status, response
+      else
+        args.success response, request.status, request
+
+    request.send args.data
+
+  Authenticate: (callback, error)->
+    isExpired = parseInt(@Storage.get('mexpires')) > Date.now()
+
+    if @options.publicId.length <= 0
+      if typeof error == 'function'
+        error 'error', 'Public ID must be set', 401
+
+    if @Storage.get('mtoken') != null and isExpired
+
+      @options.auth =
+        token:   @Storage.get 'mtoken'
+        expires: @Storage.get 'mexpires'
+
+      if typeof callback == 'function'
+        callback @options.auth
+
+      _e = document.createEvent 'CustomEvent'
+      _e.initCustomEvent 'MoltinReady', false, false, @
+      window.dispatchEvent _e
+
+      return @
+
+    @Ajax
+      type: 'POST'
+      url: "#{@options.url}oauth/access_token"
+      data:
+        grant_type: 'implicit',
+        client_id:  @options.publicId
+      async: if typeof callback == 'function' then true else false
+      headers:
+        'Content-Type': 'application/x-www-form-urlencoded'
+      success: (r, c, e) =>
+        @options.auth =
+          token:   r.access_token
+          expires: parseInt(r.expires) * 1000
 
-		o3 = {}
-		o3[k] = v for k, v of o1
-		o3[k] = v for k, v of o2
-		return o3
+        @Storage.set 'mtoken', r.access_token
+        @Storage.set 'mexpires', @options.auth.expires
 
-	InArray: (key, arr) ->
+        if typeof callback == 'function'
+          callback r
 
-		if key not in arr
-			return false
+        _e = document.createEvent 'CustomEvent'
+        _e.initCustomEvent 'MoltinReady', false, false, @
+        window.dispatchEvent _e
 
-		return true
+      error: (e, c, r) ->
+        if typeof error == 'function'
+          error 'error', 'Authorization failed', 401
 
-	Serialize: (obj, prefix = null) ->
+    return @
 
-		str = []
+  Request: (uri, method = 'GET', data = null, callback, error) ->
+    _data    = {}
+    _headers =
+      'Content-Type': 'application/x-www-form-urlencoded'
+      'Authorization': "Bearer #{@options.auth.token}"
 
-		for k,v of obj
-			k = if prefix != null then prefix+'['+k+']' else k
-			str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+    if @options.auth.token == null
+      if typeof error == 'function'
+        error 'error', 'You much authenticate first', 401
 
-		return str.join '&'
-
-	Error: (response) ->
+    if Date.now() > parseInt(@Storage.get('mexpires'))
+      @Authenticate null, error
 
-		msg = ''
+    if not @InArray method, @options.methods
+      if typeof error == 'function'
+        error 'error', "Invalid request method (#{method})", 400
 
-		if typeof response.errors != 'undefind'
-			msg += v+'<br />' for k,v of response.errors
-		else
-			msg = response.error
+    if @options.currency
+      _headers['X-Currency'] = @options.currency
 
-		return @options.notice 'Error', msg
-	
-	Ajax: (options) ->
+    if @options.language
+      _headers['X-Language'] = @options.language
 
-		args =
-			type:    'GET'
-			async:   false
-			data:    null
-			timeout: 60000
-			headers: {}
-			url:     @options.url+@options.version
-			success: (response, status, request) ->
-			error:   (response, status, request) ->
+    @Ajax
+      type: method
+      url: "#{@options.url + @options.version}/#{uri}"
+      data: data
+      async: if typeof callback == 'function' then true else false
+      headers: _headers
+      success: (r, c, e) ->
+        if typeof r.pagination != 'undefined'
+          pagination = r.pagination
+        else
+        pagination = null
 
-		args = @Merge args, options
-		args.type = args.type.toUpperCase()
+        if typeof callback == 'function'
+          callback r.result, pagination
+        else
+          _data = r
+      error: (e, c, m) =>
+        r = JSON.parse e.responseText
 
-		try
-			request = new XMLHttpRequest()
-		catch e
-			try
-				request = new ActiveXObject("Msxml2.XMLHTTP")
-			catch e
-				return false;
+        if typeof r.errors != 'undefined'
+          errors = r.errors
+        else
+          errors r.error
 
-		if args.type == 'GET'
-			args.url += '?' + @Serialize args.data
-			args.data = null
-		else
-			args.data = @Serialize args.data
+        if r.status is false
+          if typeof error == 'function'
+            error 'error', errors, c
+          else
+            @Error errors
+        _data = r
 
-		request.open args.type, args.url, args.async
+    if typeof callback == 'undefined'
+      return _data.result
 
-		timeout = setTimeout =>
-			request.abort()
-			args.error request, 408, 'Your request timed out'
-		, args.timeout
+class Storage
+  constructor: () ->
 
-		request.setRequestHeader k, v for k,v of args.headers
+  set: (key, value, days) ->
+    expires = ""
 
-		request.onreadystatechange = ->
+    if days
+      date = new Date
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+      expires = "; expires=#{date.toGMTString()}"
 
-			if request.readyState != 4
-				return null;
-
-			clearTimeout timeout
-
-			response = JSON.parse request.responseText
-
-			if request.status.toString().charAt(0) != '2'
-				args.error request, request.status, response
-			else
-				args.success response, request.status, request
-
-		request.send args.data
-
-	Authenticate: (callback, error)->
-
-		if @options.publicId.length <= 0
-			if typeof error == 'function'
-				error 'error', 'Public ID must be set', 401
+    document.cookie = "#{key}=#{value + expires}; path=/"
 
-		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
-			
-			@options.auth =
-				token:   @Storage.get 'mtoken'
-				expires: @Storage.get 'mexpires'
+  get: (key) ->
+    key = key + "="
 
-			if typeof callback == 'function'
-				callback @options.auth
+    for c in document.cookie.split(';')
+      c = c.substring(1, c.length) while c.charAt(0) is ' '
+      return c.substring(key.length, c.length) if c.indexOf(key) == 0
 
-			_e = document.createEvent 'CustomEvent'
-			_e.initCustomEvent 'MoltinReady', false, false, @
-			window.dispatchEvent _e
+    return null
 
-			return @
+  remove: (key) ->
+    @set key, '', -1
 
-		@Ajax
-			type: 'POST'
-			url: @options.url+'oauth/access_token'
-			data:
-				grant_type: 'implicit',
-				client_id:  @options.publicId
-			async: if typeof callback == 'function' then true else false
-			headers:
-				'Content-Type': 'application/x-www-form-urlencoded'
-			success: (r, c, e) =>
-				@options.auth =
-					token:   r.access_token
-					expires: parseInt(r.expires) * 1000
+class Address
+  constructor: (@m) ->
 
-				@Storage.set 'mtoken', r.access_token
-				@Storage.set 'mexpires', @options.auth.expires
+  BaseUrl: (customer) ->
+    "customers/#{customer}/addresses/"
 
-				if typeof callback == 'function'
-					callback r
+  Get: (customer, id, callback, error) ->
+    @m.Request "#{@BaseUrl()}/#{id}", 'GET', null, callback, error
 
-				_e = document.createEvent 'CustomEvent'
-				_e.initCustomEvent 'MoltinReady', false, false, @
-				window.dispatchEvent _e
+  Find: (customer, terms, callback, error) ->
+    @m.Request @BaseUrl, 'GET', terms, callback, error
 
-			error: (e, c, r) =>
-				if typeof error == 'function'
-					error 'error', 'Authorization failed', 401
+  List: (customer, terms, callback, error) ->
+    @m.Request @BaseUrl, 'GET', terms, callback, error
 
-		return @
+  Create: (customer, data, callback, error) ->
+    @m.Request @BaseUrl, 'POST', data, callback, error
 
-	Request: (uri, method = 'GET', data = null, callback, error) ->
+  Fields: (customer = 0, id = 0, callback, error) ->
+    if customer > 0 and id <= 0
+      uri = "#{@BaseUrl}/fields"
+    else if customer > 0 and id > 0
+      uri = "#{@BaseUrl}/#{id}/fields"
+    else
+      uri = 'addresses/fields'
 
-		_data    = {}
-		_headers =
-			'Content-Type': 'application/x-www-form-urlencoded'
-			'Authorization': 'Bearer '+@options.auth.token
+    @m.Request uri, 'GET', null, callback, error
 
-		if @options.auth.token == null
-			if typeof error == 'function'
-				error 'error', 'You much authenticate first', 401
+class Brand
+  constructor: (@m) ->
 
-		if Date.now() > parseInt(@Storage.get('mexpires'))
-			@Authenticate null, error
+  Get: (id, callback, error) ->
+    @m.Request "brands/#{id}", 'GET', null, callback, error
 
-		if not @InArray method, @options.methods
-			if typeof error == 'function'
-				error 'error', 'Invalid request method ('+method+')', 400
+  Find: (terms, callback, error) ->
+    @m.Request 'brands', 'GET', terms, callback, error
 
-		if @options.currency
-			_headers['X-Currency'] = @options.currency
+  List: (terms, callback, error) ->
+    @m.Request 'brands', 'GET', terms, callback, error
 
-		if @options.language
-			_headers['X-Language'] = @options.language
+  Fields: (id = 0, callback, error) ->
+    uri  = 'brands/'+ if id != 0 then id + '/fields' else 'fields'
 
-		@Ajax 
-			type: method
-			url: @options.url+@options.version+'/'+uri
-			data: data
-			async: if typeof callback == 'function' then true else false
-			headers: _headers
-			success: (r, c, e) =>
-				if typeof callback == 'function'
-					callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
-				else 
-					_data = r
-			error: (e, c, m) =>
-				r = JSON.parse e.responseText
-				if r.status is false
-					if typeof error == 'function'
-						error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
-					else
-						@Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
-				_data = r;
+    @m.Request uri, 'GET', null, callback, error
 
-		if typeof callback == 'undefined'
-			return _data.result
+class Cart
+  constructor: (@m) ->
 
-	class Storage
+  @id = @GetIdentifier()
 
-		constructor: () ->
+  BaseUrl: (identifier) ->
+    "carts/#{identifier}"
 
-		set: (key, value, days) ->
+  GetIdentifier: () ->
+    if @m.Storage.get('mcart') != null
+      return @m.Storage.get 'mcart'
 
-			expires = ""
+    id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
+      return ( Math.random() * 16 | 0 ).toString(16)
 
-			if days
-				date = new Date
-				date.setTime(date.getTime() + (days*24*60*60*1000))
-				expires = "; expires=" + date.toGMTString()
+    @m.Storage.set 'mcart', id
 
-			document.cookie = key + "=" + value + expires + "; path=/"
+    return id
 
-		get: (key) ->
+  Contents: (callback, error) ->
+    @m.Request @BasUrl(@id), 'GET', null, callback, error
 
-			key = key + "="
-			
-			for c in document.cookie.split(';')
-				c = c.substring(1, c.length) while c.charAt(0) is ' '
-				return c.substring(key.length, c.length) if c.indexOf(key) == 0
-			
-			return null
+  Insert: (id, qty = 1, mods = null, callback, error) ->
+    params = {id: id, quantity: qty, modifier: mods}
+    @m.Request @BasUrl(@id), 'POST', params, callback, error
 
-		remove: (key) ->
+  Update: (id, data, callback, error) ->
+    @m.Request "#{@BasUrl(@id)}/item/#{id}", 'PUT', data, callback, error
 
-			@set key, '', -1
+  Delete: (callback, error) ->
+    @m.Request @BasUrl(@id), 'DELETE', null, callback, error
 
-	class Address
+  Remove: (id, callback, error) ->
+    @m.Request "#{@BaseUrl(@id)}/item/#{id}", 'DELETE', null, callback, error
 
-		constructor: (@m) ->
+  Item: (id, callback, error) ->
+    @m.Request "#{@BaseUrl(@id)}/item/#{id}", 'GET', null, callback, error
 
-		Get: (customer, id, callback, error) ->
+  InCart: (id, callback, error) ->
+    @m.Request "#{@BasUrl(@id)}/has/#{id}", 'GET', null, callback, error
 
-			return @m.Request 'customers/'+customer+'/addresses/'+id, 'GET', null, callback, error
+  Checkout: (callback, error) ->
+    @m.Request "#{@BasUrl(@id)}/checkout", 'GET', null, callback, error
 
-		Find: (customer, terms, callback, error) ->
+  Complete: (data, callback, error) ->
+    @m.Request "#{@BasUrl(@id)}/checkout", 'POST', data, callback, error
 
-			return @m.Request 'customers/'+customer+'/addresses', 'GET', terms, callback, error
+  Discount: (code, callback, error) ->
+    params = {code: code}
 
-		List: (customer, terms, callback, error) ->
+    if ( code == null or code == false )
+      @m.Request "#{@BasUrl(@id)}/discount", 'DELETE', null, callback, error
 
-			return @m.Request 'customers/'+customer+'/addresses', 'GET', terms, callback, error
+    @m.Request "#{@BasUrl(@id)}/discount", 'POST', params, callback. error
 
-		Create: (customer, data, callback, error) ->
+class Category
+  constructor: (@m) ->
 
-			return @m.Request 'customers/'+customer+'/addresses', 'POST', data, callback, error
+  Get: (id, callback, error) ->
+    @m.Request "categories/#{id}", 'GET', null, callback, error
 
-		Fields: (customer = 0, id = 0, callback, error) ->
+  Find: (terms, callback, error) ->
+    @m.Request 'categories', 'GET', terms, callback, error
 
-			if customer > 0 and id <= 0
-				uri = 'customers/'+customer+'/addresses/fields'
-			else if customer > 0 and id > 0
-				uri = 'customers/'+customer+'/addresses/'+id+'/fields'
-			else
-				uri = 'addresses/fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+  List: (terms, callback, error) ->
+    @m.Request 'categories', 'GET', terms, callback, error
 
-	class Brand
+  Tree: (terms, callback, error) ->
+    @m.Request 'categories/tree', 'GET', terms, callback, error
 
-		constructor: (@m) ->
+  Fields: (id = 0, callback, error) ->
+    uri  = 'categories/' + if id != 0 then id + '/fields' else 'fields'
 
-		Get: (id, callback, error) ->
+    @m.Request uri, 'GET', null, callback, error
 
-			return @m.Request 'brands/'+id, 'GET', null, callback, error
+class Checkout
+  constructor: (@m) ->
 
-		Find: (terms, callback, error) ->
+  Payment: (method, order, data, callback, error) ->
+    url = "checkout/payment/#{method}/#{order}"
 
-			return @m.Request 'brands', 'GET', terms, callback, error
+    @m.Request url, 'POST', data, callback, error
 
-		List: (terms, callback, error) ->
+class Collection
+  constructor: (@m) ->
 
-			return @m.Request 'brands', 'GET', terms, callback, error
+  Get: (id, callback, error) ->
+    @m.Request "collections/#{id}", 'GET', null, callback, error
 
-		Fields: (id = 0, callback, error) ->
+  Find: (terms, callback, error) ->
+    @m.Request 'collections', 'GET', terms, callback, error
 
-			uri  = 'brands/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+  List: (terms, callback, error) ->
+    @m.Request 'collections', 'GET', terms, callback, error
 
-	class Cart
+  Fields: (id = 0, callback, error) ->
+    uri  = 'collections/' + if id != 0 then id + '/fields' else 'fields'
 
-		constructor: (@m) ->
+    @m.Request uri, 'GET', null, callback, error
 
-			@identifier = @GetIdentifier()
+class Currency
+  constructor: (@m) ->
 
-		GetIdentifier: () ->
+  Get: (id, callback, error) ->
+    @m.Request "currencies/#{id}", 'GET', null, callback, error
 
-			if @m.Storage.get('mcart') != null
-				return @m.Storage.get 'mcart'
+  Set: (code, callback, error) ->
+    @m.Storage.set 'mcurrency', code
+    @m.options.currency = code
 
-			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
-				return ( Math.random()*16|0 ).toString(16);
+    if typeof callback == 'function'
+      callback code
 
-			@m.Storage.set 'mcart', id
+  Find: (terms, callback, error) ->
+    @m.Request 'currencies', 'GET', terms, callback, error
 
-			return id
+  List: (terms, callback, error) ->
+    @m.Request 'currencies', 'GET', terms, callback, error
 
-		Contents: (callback, error) ->
+  Fields: (id = 0, callback, error) ->
+    uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
 
-			return @m.Request 'carts/'+@identifier, 'GET', null, callback, error
+    @m.Request uri, 'GET', null, callback, error
 
-		Insert: (id, qty = 1, mods = null, callback, error) ->
+class Entry
+  constructor: (@m) ->
 
-			return @m.Request 'carts/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
+  Get: (flow, id, callback, error) ->
+    @m.Request "flows/#{flow}/entries/#{id}", 'GET', null, callback, error
 
-		Update: (id, data, callback, error) ->
+  Find: (flow, terms, callback, error) ->
+    @m.Request "flows/#{flow}/entries", 'GET', terms, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'PUT', data, callback, error
+  List: (flow, terms, callback, error) ->
+    @m.Request "flows/#{flow}/entries", 'GET', terms, callback, error
 
-		Delete: (callback, error) ->
+class Gateway
+  constructor: (@m) ->
 
-			return @m.Request 'carts/'+@identifier, 'DELETE', null, callback, error
+  Get: (slug, callback, error) ->
+    @m.Request "gateways/#{slug}", 'GET', null, callback, error
 
-		Remove: (id, callback, error) ->
+  List: (terms, callback, error) ->
+    @m.Request 'gateways', 'GET', terms, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
+class Language
+  constructor: (@m) ->
 
-		Item: (id, callback, error) ->
+  Set: (code, callback, error) ->
+    @m.Storage.set 'mlanguage', code
+    @m.options.language = code
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'GET', null, callback, error
+    if typeof callback == 'function'
+      callback code
 
-		InCart: (id, callback, error) ->
+class Order
+  constructor: (@m) ->
 
-			return @m.Request 'carts/'+@identifier+'/has/'+id, 'GET', null, callback, error
+  Get: (id, callback, error) ->
+    @m.Request "orders/#{id}", 'GET', null, callback, error
 
-		Checkout: (callback, error) ->
+  Find: (terms, callback, error) ->
+    @m.Request 'orders', 'GET', terms, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/checkout', 'GET', null, callback, error
+  List: (terms, callback, error) ->
+    @m.Request 'orders', 'GET', terms, callback, error
 
-		Complete: (data, callback, error) ->
+  Create: (data, callback, error) ->
+    @m.Request 'orders', 'POST', data, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/checkout', 'POST', data, callback, error
-		
-		Discount: (code, callback, error) ->
+class Product
+  constructor: (@m) ->
 
-			if ( code == null or code == false )
-				return @m.Request 'carts/'+@identifier+'/discount', 'DELETE', null, callback, error
+  Get: (id, callback, error) ->
+    @m.Request "products/#{id}", 'GET', null, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/discount', 'POST', {code: code}, callback. error
+  Find: (terms, callback, error) ->
+    @m.Request 'products', 'GET', terms, callback, error
 
-	class Category
+  List: (terms, callback, error) ->
+    @m.Request 'products', 'GET', terms, callback, error
 
-		constructor: (@m) ->
+  Search: (terms, callback, error) ->
+    @m.Request 'products/search', 'GET', terms, callback, error
 
-		Get: (id, callback, error) ->
+  Fields: (id = 0, callback, error) ->
+    uri  = 'products/' + if id != 0 then id + '/fields' else 'fields'
 
-			return @m.Request 'categories/'+id, 'GET', null, callback, error
+    @m.Request uri, 'GET', null, callback, error
 
-		Find: (terms, callback, error) ->
+  Modifiers: (id, callback, error) ->
+    @m.Request "products/#{id}/modifiers", 'GET', null, callback, error
 
-			return @m.Request 'categories', 'GET', terms, callback, error
+  Variations: (id, callback, error) ->
+    @m.Request "products/#{id}/variations", 'GET', null, callback, error
 
-		List: (terms, callback, error) ->
+class Shipping
+  constructor: (@m) ->
 
-			return @m.Request 'categories', 'GET', terms, callback, error
+  Get: (id, callback, error) ->
+    @m.Request "shipping/#{id}", 'GET', null, callback, error
 
-		Tree: (terms, callback, error) ->
+  List: (terms, callback, error) ->
+    @m.Request 'shipping', 'GET', terms, callback, error
 
-			return @m.Request 'categories/tree', 'GET', terms, callback, error
+class Tax
+  constructor: (@m) ->
 
-		Fields: (id = 0, callback, error) ->
+  Get: (callback, error) ->
+    @m.Request "taxes/#{id}", 'GET', null, callback, error
 
-			uri  = 'categories/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+  Find: (terms, callback, error) ->
+    @m.Request 'taxes', 'GET', terms, callback, error
 
-	class Checkout
+  List: (terms, callback, error) ->
+    @m.Request 'taxes', 'GET', terms, callback, error
 
-		constructor: (@m) ->
+  Fields: (id = 0, callback, error) ->
+    uri  = 'taxes/' + if id != 0 then id + '/fields' else 'fields'
 
-		Payment: (method, order, data, callback, error) ->
-
-			return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback, error
-
-	class Collection
-
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'collections/'+id, 'GET', null, callback, error
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'collections', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'collections', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'collections/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
-
-	class Currency
-
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'currencies/'+id, 'GET', null, callback, error
-
-		Set: (code, callback, error) ->
-
-			@m.Storage.set 'mcurrency', code
-			@m.options.currency = code
-
-			if typeof callback == 'function'
-				callback code
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
-
-	class Entry
-
-		constructor: (@m) ->
-
-		Get: (flow, id, callback, error) ->
-
-			return @m.Request 'flows/'+flow+'/entries/'+id, 'GET', null, callback, error
-
-		Find: (flow, terms, callback, error) ->
-
-			return @m.Request 'flows/'+flow+'/entries', 'GET', terms, callback, error
-
-		List: (flow, terms, callback, error) ->
-
-			return @m.Request 'flows/'+flow+'/entries', 'GET', terms, callback, error
-
-	class Gateway
-
-		constructor: (@m) ->
-
-		Get: (slug, callback, error) ->
-
-			return @m.Request 'gateways/'+slug, 'GET', null, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'gateways', 'GET', terms, callback, error
-
-	class Language
-
-		constructor: (@m) ->
-
-		Set: (code, callback, error) ->
-
-			@m.Storage.set 'mlanguage', code
-			@m.options.language = code
-
-			if typeof callback == 'function'
-				callback code
-
-	class Order
-
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'orders/'+id, 'GET', null, callback, error
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'orders', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'orders', 'GET', terms, callback, error
-
-		Create: (data, callback, error) ->
-
-			return @m.Request 'orders', 'POST', data, callback, error
-
-	class Product
-
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'products/'+id, 'GET', null, callback, error
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'products', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'products', 'GET', terms, callback, error
-
-		Search: (terms, callback, error) ->
-
-			return @m.Request 'products/search', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'products/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
-
-		Modifiers: (id, callback, error) ->
-
-			return @m.Request 'products/'+id+'/modifiers', 'GET', null, callback, error
-
-		Variations: (id, callback, error) ->
-
-			return @m.Request 'products/'+id+'/variations', 'GET', null, callback, error
-
-	class Shipping
-
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'shipping/'+id, 'GET', null, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'shipping', 'GET', terms, callback, error
-
-	class Tax
-
-		constructor: (@m) ->
-
-		Get: (callback, error) ->
-
-			return @m.Request 'taxes/'+id, 'GET', null, callback, error
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'taxes', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'taxes', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'taxes/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
+    @m.Request uri, 'GET', null, callback, error
