@@ -315,62 +315,65 @@ class Moltin
 
 		constructor: (@m) ->
 
-			@identifier = @GetIdentifier()
+			@Identifier()
 
-		GetIdentifier: () ->
+		Identifier: (reset = false, id = false) ->
 
-			if @m.Storage.get('mcart') != null
+			if not reset and not id and @m.Storage.get('mcart') != null
 				return @m.Storage.get 'mcart'
 
-			id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
-				return ( Math.random()*16|0 ).toString(16);
+			if not id
+				id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace /[x]/g, (c) ->
+					return ( Math.random()*16|0 ).toString(16);
 
 			@m.Storage.set 'mcart', id
+
+			@cartId = id
 
 			return id
 
 		Contents: (callback, error) ->
 
-			return @m.Request 'carts/'+@identifier, 'GET', null, callback, error
+			return @m.Request 'carts/'+@cartId, 'GET', null, callback, error
 
 		Insert: (id, qty = 1, mods = null, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
+			return @m.Request 'carts/'+@cartId, 'POST', {id: id, quantity: qty, modifier: mods}, callback, error
 
 		Update: (id, data, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'PUT', data, callback, error
+			return @m.Request 'carts/'+@cartId+'/item/'+id, 'PUT', data, callback, error
 
 		Delete: (callback, error) ->
 
-			return @m.Request 'carts/'+@identifier, 'DELETE', null, callback, error
+			return @m.Request 'carts/'+@cartId, 'DELETE', null, callback, error
 
 		Remove: (id, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'DELETE', null, callback, error
+			return @m.Request 'carts/'+@cartId+'/item/'+id, 'DELETE', null, callback, error
 
 		Item: (id, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/item/'+id, 'GET', null, callback, error
+			return @m.Request 'carts/'+@cartId+'/item/'+id, 'GET', null, callback, error
 
 		InCart: (id, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/has/'+id, 'GET', null, callback, error
+			return @m.Request 'carts/'+@cartId+'/has/'+id, 'GET', null, callback, error
 
 		Checkout: (callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/checkout', 'GET', null, callback, error
+			return @m.Request 'carts/'+@cartId+'/checkout', 'GET', null, callback, error
 
 		Complete: (data, callback, error) ->
 
-			return @m.Request 'carts/'+@identifier+'/checkout', 'POST', data, callback, error
+			return @m.Request 'carts/'+@cartId+'/checkout', 'POST', data, callback, error
 		
 		Discount: (code, callback, error) ->
 
 			if ( code == null or code == false )
-				return @m.Request 'carts/'+@identifier+'/discount', 'DELETE', null, callback, error
+				return @m.Request 'carts/'+@cartId+'/discount', 'DELETE', null, callback, error
 
-			return @m.Request 'carts/'+@identifier+'/discount', 'POST', {code: code}, callback. error
+			return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback. error
 
 	class Category
 

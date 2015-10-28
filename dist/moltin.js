@@ -392,23 +392,31 @@ Moltin = (function() {
   Cart = (function() {
     function Cart(m) {
       this.m = m;
-      this.identifier = this.GetIdentifier();
+      this.Identifier();
     }
 
-    Cart.prototype.GetIdentifier = function() {
-      var id;
-      if (this.m.Storage.get('mcart') !== null) {
+    Cart.prototype.Identifier = function(reset, id) {
+      if (reset == null) {
+        reset = false;
+      }
+      if (id == null) {
+        id = false;
+      }
+      if (!reset && !id && this.m.Storage.get('mcart') !== null) {
         return this.m.Storage.get('mcart');
       }
-      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
-        return (Math.random() * 16 | 0).toString(16);
-      });
+      if (!id) {
+        id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
+          return (Math.random() * 16 | 0).toString(16);
+        });
+      }
       this.m.Storage.set('mcart', id);
+      this.cartId = id;
       return id;
     };
 
     Cart.prototype.Contents = function(callback, error) {
-      return this.m.Request('carts/' + this.identifier, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.cartId, 'GET', null, callback, error);
     };
 
     Cart.prototype.Insert = function(id, qty, mods, callback, error) {
@@ -418,7 +426,7 @@ Moltin = (function() {
       if (mods == null) {
         mods = null;
       }
-      return this.m.Request('carts/' + this.identifier, 'POST', {
+      return this.m.Request('carts/' + this.cartId, 'POST', {
         id: id,
         quantity: qty,
         modifier: mods
@@ -426,38 +434,38 @@ Moltin = (function() {
     };
 
     Cart.prototype.Update = function(id, data, callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'PUT', data, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'PUT', data, callback, error);
     };
 
     Cart.prototype.Delete = function(callback, error) {
-      return this.m.Request('carts/' + this.identifier, 'DELETE', null, callback, error);
+      return this.m.Request('carts/' + this.cartId, 'DELETE', null, callback, error);
     };
 
     Cart.prototype.Remove = function(id, callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'DELETE', null, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'DELETE', null, callback, error);
     };
 
     Cart.prototype.Item = function(id, callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/item/' + id, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'GET', null, callback, error);
     };
 
     Cart.prototype.InCart = function(id, callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/has/' + id, 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/has/' + id, 'GET', null, callback, error);
     };
 
     Cart.prototype.Checkout = function(callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/checkout', 'GET', null, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/checkout', 'GET', null, callback, error);
     };
 
     Cart.prototype.Complete = function(data, callback, error) {
-      return this.m.Request('carts/' + this.identifier + '/checkout', 'POST', data, callback, error);
+      return this.m.Request('carts/' + this.cartId + '/checkout', 'POST', data, callback, error);
     };
 
     Cart.prototype.Discount = function(code, callback, error) {
       if (code === null || code === false) {
-        return this.m.Request('carts/' + this.identifier + '/discount', 'DELETE', null, callback, error);
+        return this.m.Request('carts/' + this.cartId + '/discount', 'DELETE', null, callback, error);
       }
-      return this.m.Request('carts/' + this.identifier + '/discount', 'POST', {
+      return this.m.Request('carts/' + this.cartId + '/discount', 'POST', {
         code: code
       }, callback.error);
     };
