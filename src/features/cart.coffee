@@ -2,7 +2,7 @@
 
 		constructor: (@m) ->
 
-			@Identifier()
+			@cartId = @Identifier()
 
 		Identifier: (reset = false, id = false) ->
 
