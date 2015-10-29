@@ -392,7 +392,7 @@ Moltin = (function() {
   Cart = (function() {
     function Cart(m) {
       this.m = m;
-      this.Identifier();
+      this.cartId = this.Identifier();
     }
 
     Cart.prototype.Identifier = function(reset, id) {
