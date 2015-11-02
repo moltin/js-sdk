@@ -146,9 +146,13 @@ class Moltin
 			if typeof callback == 'function'
 				callback @options.auth
 
+			`// @if TARGET!='tvjs'
+			`
 			_e = document.createEvent 'CustomEvent'
 			_e.initCustomEvent 'MoltinReady', false, false, @
 			window.dispatchEvent _e
+			`// @endif
+			`
 
 			return @
 
@@ -172,9 +176,13 @@ class Moltin
 				if typeof callback == 'function'
 					callback r
 
+				`// @if TARGET!='tvjs'
+				`
 				_e = document.createEvent 'CustomEvent'
 				_e.initCustomEvent 'MoltinReady', false, false, @
 				window.dispatchEvent _e
+				`// @endif
+				`
 
 			error: (e, c, r) =>
 				if typeof error == 'function'
@@ -229,6 +237,8 @@ class Moltin
 		if typeof callback == 'undefined'
 			return _data.result
 
+	`// @if TARGET!='tvjs'
+	`
 	class Storage
 
 		constructor: () ->
@@ -257,7 +267,27 @@ class Moltin
 		remove: (key) ->
 
 			@set key, '', -1
+	`// @endif
+	`
+	`// @if TARGET='tvjs'
+	`
+	class Storage
 
+		constructor: () ->
+
+		set: (key, value) ->
+
+			return sessionStorage.setItem key, value
+
+		get: (key) ->
+
+			return sessionStorage.getItem key
+
+		remove: (key) ->
+
+			return sessionStorage.removeItem key
+	`// @endif
+	`
 	class Address
 
 		constructor: (@m) ->

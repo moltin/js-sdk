@@ -10,7 +10,19 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapDir: 'dist/'
         files:
-          'dist/moltin.js': ['src/moltin.coffee', 'src/features/storage.coffee', 'src/features/*.coffee']
+          'dist/moltin.js': [
+            'src/moltin.coffee',
+            'src/features/storage.coffee',
+            'src/features/storage.tvjs.coffee',
+            'src/features/*.coffee'
+          ]
+    preprocess:
+      inline:
+        options:
+          context:
+            TARGET: grunt.option('target') || 'js'
+          inline: true
+        src: 'dist/moltin.js'
     concat:
       options:
         separator: ';'
@@ -52,7 +64,7 @@ module.exports = (grunt) ->
         dest: 'dist/gzip/'
     watch:
       files: ['src/*.coffee', 'src/features/*.coffee', 'src/css/*.css']
-      tasks: ['coffee', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
+      tasks: ['coffee', 'preprocess:inline', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
 
   # Do we have credentials?
   if grunt.file.exists('aws-credentials.json')
@@ -95,6 +107,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-cssmin'
   grunt.loadNpmTasks 'grunt-contrib-compress'
+  grunt.loadNpmTasks 'grunt-preprocess'
   grunt.loadNpmTasks 'grunt-karma'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-aws-s3'

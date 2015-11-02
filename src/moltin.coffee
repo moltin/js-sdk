@@ -146,9 +146,13 @@ class Moltin
 			if typeof callback == 'function'
 				callback @options.auth
 
+			`// @if TARGET!='tvjs'
+			`
 			_e = document.createEvent 'CustomEvent'
 			_e.initCustomEvent 'MoltinReady', false, false, @
 			window.dispatchEvent _e
+			`// @endif
+			`
 
 			return @
 
@@ -172,9 +176,13 @@ class Moltin
 				if typeof callback == 'function'
 					callback r
 
+				`// @if TARGET!='tvjs'
+				`
 				_e = document.createEvent 'CustomEvent'
 				_e.initCustomEvent 'MoltinReady', false, false, @
 				window.dispatchEvent _e
+				`// @endif
+				`
 
 			error: (e, c, r) =>
 				if typeof error == 'function'

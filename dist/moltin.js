@@ -168,9 +168,7 @@ Moltin = (function() {
       if (typeof callback === 'function') {
         callback(this.options.auth);
       }
-      _e = document.createEvent('CustomEvent');
-      _e.initCustomEvent('MoltinReady', false, false, this);
-      window.dispatchEvent(_e);
+			;
       return this;
     }
     this.Ajax({
@@ -195,9 +193,7 @@ Moltin = (function() {
           if (typeof callback === 'function') {
             callback(r);
           }
-          _e = document.createEvent('CustomEvent');
-          _e.initCustomEvent('MoltinReady', false, false, _this);
-          return window.dispatchEvent(_e);
+				;
         };
       })(this),
       error: (function(_this) {
@@ -278,43 +274,30 @@ Moltin = (function() {
     }
   };
 
+	;
+
+	;
+
   Storage = (function() {
     function Storage() {}
 
-    Storage.prototype.set = function(key, value, days) {
-      var date, expires;
-      expires = "";
-      if (days) {
-        date = new Date;
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      return document.cookie = key + "=" + value + expires + "; path=/";
+    Storage.prototype.set = function(key, value) {
+      return sessionStorage.setItem(key, value);
     };
 
     Storage.prototype.get = function(key) {
-      var c, _i, _len, _ref;
-      key = key + "=";
-      _ref = document.cookie.split(';');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        c = _ref[_i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(key) === 0) {
-          return c.substring(key.length, c.length);
-        }
-      }
-      return null;
+      return sessionStorage.getItem(key);
     };
 
     Storage.prototype.remove = function(key) {
-      return this.set(key, '', -1);
+      return sessionStorage.removeItem(key);
     };
 
     return Storage;
 
   })();
+
+	;
 
   Address = (function() {
     function Address(m) {
