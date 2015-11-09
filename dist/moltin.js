@@ -169,6 +169,10 @@ Moltin = (function() {
         callback(this.options.auth);
       }
 			;
+      _e = document.createEvent('CustomEvent');
+      _e.initCustomEvent('MoltinReady', false, false, this);
+      window.dispatchEvent(_e);
+			;
       return this;
     }
     this.Ajax({
@@ -180,7 +184,8 @@ Moltin = (function() {
       },
       async: typeof callback === 'function' ? true : false,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-SDK': 'js'
       },
       success: (function(_this) {
         return function(r, c, e) {
@@ -194,6 +199,10 @@ Moltin = (function() {
             callback(r);
           }
 				;
+          _e = document.createEvent('CustomEvent');
+          _e.initCustomEvent('MoltinReady', false, false, _this);
+          window.dispatchEvent(_e);
+          return				;
         };
       })(this),
       error: (function(_this) {
@@ -218,7 +227,8 @@ Moltin = (function() {
     _data = {};
     _headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + this.options.auth.token
+      'Authorization': 'Bearer ' + this.options.auth.token,
+      'X-SDK': 'js'
     };
     if (this.options.auth.token === null) {
       if (typeof error === 'function') {
@@ -276,26 +286,45 @@ Moltin = (function() {
 
 	;
 
-	;
-
   Storage = (function() {
     function Storage() {}
 
-    Storage.prototype.set = function(key, value) {
-      return sessionStorage.setItem(key, value);
+    Storage.prototype.set = function(key, value, days) {
+      var date, expires;
+      expires = "";
+      if (days) {
+        date = new Date;
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+      }
+      return document.cookie = key + "=" + value + expires + "; path=/";
     };
 
     Storage.prototype.get = function(key) {
-      return sessionStorage.getItem(key);
+      var c, _i, _len, _ref;
+      key = key + "=";
+      _ref = document.cookie.split(';');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        c = _ref[_i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1, c.length);
+        }
+        if (c.indexOf(key) === 0) {
+          return c.substring(key.length, c.length);
+        }
+      }
+      return null;
     };
 
     Storage.prototype.remove = function(key) {
-      return sessionStorage.removeItem(key);
+      return this.set(key, '', -1);
     };
 
     return Storage;
 
   })();
+
+	;
 
 	;
 

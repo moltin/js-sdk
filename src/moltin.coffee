@@ -165,6 +165,7 @@ class Moltin
 			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
+				'X-SDK': 'js'
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
@@ -196,6 +197,7 @@ class Moltin
 		_headers =
 			'Content-Type': 'application/x-www-form-urlencoded'
 			'Authorization': 'Bearer '+@options.auth.token
+			'X-SDK': 'js'
 
 		if @options.auth.token == null
 			if typeof error == 'function'
