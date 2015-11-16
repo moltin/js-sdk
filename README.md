@@ -160,6 +160,7 @@ moltin.Cart.Complete({
 }, function(error) {
     // Something went wrong...
 });
+```
 
 #### Process payment for an order
 ``` javascript
