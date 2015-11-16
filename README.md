@@ -123,6 +123,7 @@ moltin.Cart.Insert(product.id, 1, null, function(item) {
 }, function(error) {
     // Something went wrong...
 });
+```
 
 #### Get a list of items in the cart
 ``` javascript
