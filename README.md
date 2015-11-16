@@ -78,7 +78,7 @@ npm install moltin@1.0.0
 This will install the SDK into `node_modules/moltin`.
 
 ### Initialise
-Once you have the dependancy installed you'll need to add it your project, o achieve that you'll need a [Moltin](https://moltin.com#signup) account and your stores `public_id` and `client_secret`. Once you have these add it with your other `require` tags at the start of your project:
+Once you have the dependancy installed you'll need to add it your project, to achieve that you'll need a [Moltin](https://moltin.com#signup) account and your stores `public_id` and `client_secret`. Once you have these add it with your other `require` tags at the start of your project:
 
 ``` javascript
 var moltin = require('moltin')({
