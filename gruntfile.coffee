@@ -1,5 +1,8 @@
 module.exports = (grunt) ->
 
+  # Build target.
+  target = grunt.option('target') || 'js'
+
   # Project configuration.
   config =
     pkg: grunt.file.readJSON 'package.json'
@@ -9,28 +12,44 @@ module.exports = (grunt) ->
           bare: true
           sourceMap: true
           sourceMapDir: 'dist/'
-        files:
-          'dist/moltin.js': [
-            'src/moltin.coffee',
-            'src/features/storage.coffee',
-            'src/features/storage.tvjs.coffee',
-            'src/features/*.coffee'
-          ]
+        files: [
+          {
+            dest: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
+            src: [
+              'src/moltin.coffee',
+              'src/' + target + '/ajax.coffee',
+              'src/' + target + '/storage.coffee',
+              'src/abstract.coffee',
+              'src/features/*.coffee'
+              'src/' + target + '/export.coffee'
+            ]
+          }
+        ]
     preprocess:
       inline:
         options:
           context:
-            TARGET: grunt.option('target') || 'js'
+            TARGET: target
           inline: true
-        src: 'dist/moltin.js'
-    concat:
-      options:
-        separator: ';'
-        banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
-          '<%= grunt.template.today("yyyy-mm-dd") %> */' + "\n"
-      css:
-        src: ['src/css/*.css']
-        dest: 'dist/moltin.css'
+        src: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
+    replace:
+      dist:
+        options:
+          patterns: [
+            {
+              match: /[\t]+;\n/g,
+              replacement: () ->
+                return ''
+            }
+          ]
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'],
+            dest: 'dist/'
+          }
+        ]
     karma:
       unit:
         options:
@@ -43,17 +62,14 @@ module.exports = (grunt) ->
           sourceMap: true
           sourceMapIncludeSources: true
           drop_console: true
-          banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
+          banner: '/*! <%= pkg.name %> (' + target + ') minified - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */'
-        files:
-          'dist/moltin.min.js': 'dist/moltin.js'
-    cssmin:
-      compress:
-        options:
-          banner: '/*! <%= pkg.name %> minified - v<%= pkg.version %> - ' +
-          '<%= grunt.template.today("yyyy-mm-dd") %> */' + "\n"
-        files:
-          'dist/moltin.min.css': ['dist/moltin.css']
+        files: [
+          {
+            dest: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'min.js'
+            src: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
+          }
+        ]
     compress:
       main:
         options:
@@ -63,8 +79,8 @@ module.exports = (grunt) ->
         src: ['*.min.js', '*.min.css', '*.min.map']
         dest: 'dist/gzip/'
     watch:
-      files: ['src/*.coffee', 'src/features/*.coffee', 'src/css/*.css']
-      tasks: ['coffee', 'preprocess:inline', 'concat', 'karma', 'uglify', 'cssmin', 'compress']
+      files: ['src/*.coffee', 'src/**/*.coffee']
+      tasks: ['coffee', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
 
   # Do we have credentials?
   if grunt.file.exists('aws-credentials.json')
@@ -104,14 +120,14 @@ module.exports = (grunt) ->
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
-  grunt.loadNpmTasks 'grunt-contrib-concat'
-  grunt.loadNpmTasks 'grunt-contrib-cssmin'
   grunt.loadNpmTasks 'grunt-contrib-compress'
+  grunt.loadNpmTasks 'grunt-replace'
   grunt.loadNpmTasks 'grunt-preprocess'
   grunt.loadNpmTasks 'grunt-karma'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-aws-s3'
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
-  # Default task.
+  # Tasks.
+  grunt.registerTask 'build', ['coffee', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
