@@ -8,16 +8,16 @@ The JS SDK is available in three flavours:
 * [TVJS (AppleTV)](#tvjs)
 
 ## Building
-We keep a built version of all SDKs in this repository within the `dist` folders and gziped versions within `dist/gzip`. If you make any changes to the `src` files you'll need to rebuild your copy of it which requires `node` and `npm`. If you don't already have these you can follow [this](https://docs.npmjs.com/getting-started/installing-node) guide.
+We keep a compiled version of all SDKs in this repository within the `dist` folders and gziped versions within `dist/gzip`. If you make any changes to the `src` files you'll need to rebuild your copy of it which requires `node` and `npm`. If you don't already have these you can follow [this](https://docs.npmjs.com/getting-started/installing-node) guide.
 
 Once you have these installed you will need to install our dependencies. To do this open terminal and navigate to your directory and run:
-```
+``` bash
 npm install
 ```
 
 ### Once
 To build the SDK you want to use, again open a terminal window, navigate to the root of your directory and run one of the following:
-```
+``` bash
 # JavaScript
 grunt build
 
@@ -32,7 +32,7 @@ This will then update all of the usable file versions within `dist` and `dist/gz
 
 ### On Change
 If you're planning on making a number of changes you can use the watch script to repeatedly build the SDKs each time you save a file. Open another terminal window, navigate to your directory and run one of the following:
-```
+``` bash
 # JavaScript
 grunt watch
 
@@ -61,7 +61,7 @@ To install the JavaScript SDK you can either use our CDN hosted version or inclu
 #### Initialise
 Once you have the SDK added to your page you can start it up, to achieve that you'll need a [Moltin](https://moltin.com#signup) account and your stores `public_id`.
 
-```
+``` javascript
 var moltin = new Moltin({publicId: 'XXXX'});
 ```
 
@@ -71,7 +71,7 @@ The Node.js SDK allows you to build complete server-side applications, with comp
 ### Installation
 To install the Node.js SDK you can use `npm` to manage the dependancy. Open terminal and navigate to your project directory and run:
 
-```
+``` bash
 npm install moltin@1.0.0
 ```
 
@@ -80,7 +80,7 @@ This will install the SDK into `node_modules/moltin`.
 ### Initialise
 Once you have the dependancy installed you'll need to add it your project, o achieve that you'll need a [Moltin](https://moltin.com#signup) account and your stores `public_id` and `client_secret`. Once you have these add it with your other `require` tags at the start of your project:
 
-```
+``` javascript
 var moltin = require('moltin')({
   publicId: 'XXXX',
   secretKey: 'XXXX'
