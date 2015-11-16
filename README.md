@@ -69,7 +69,7 @@ var moltin = new Moltin({publicId: 'XXXX'});
 The Node.js SDK allows you to build complete server-side applications, with complete access to the Moltin APIs.
 
 ### Installation
-To install the Node.js SDK you can use `npm` to manage the dependancy. Open terminal and navigate to your project directory and run:
+To install the Node.js SDK you can use `npm` to manage the dependency. Open terminal and navigate to your project directory and run:
 
 ``` bash
 npm install moltin@1.0.0
@@ -94,7 +94,7 @@ var moltin = require('moltin')({
 All of the JavaScript SDKs work in the same way after the initial installation has been completed.
 
 ### Authentication
-To get started you'll need an access token, to get this you'll need to call the authentication method. We recommend wrapping your applications entry point inside the authentication method, this will attempt to authetnicate every time your script is called but will not make the call until your token has expired.
+To get started you'll need an access token, to get this you'll need to call the authentication method. We recommend wrapping your application's entry point inside the authentication method, this will attempt to authenticate every time your script is called but will not make the call until your token has expired.
 
 ``` javascript
 moltin.Authenticate(function() {
@@ -186,3 +186,4 @@ moltin.Checkout.Payment('purchase', order.id, {
  - Commit your changes (git commit -am 'Add some feature')
  - Push to the branch (git push origin my-new-feature)
  - Create a new Pull Request
+
