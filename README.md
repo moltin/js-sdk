@@ -49,7 +49,7 @@ While the usage of all of our JavaScript SDKs are the same, the installation dif
 ### JavaScript
 The JavaScript SDK allows you to develop entirely client-side eCommerce websites quickly and easily.
 
->>> **Note**: Due to the security involved with client-side applications we lock down the resources you and your customers can access with this method.
+> **Note**: Due to the security involved with client-side applications we lock down the resources you and your customers can access with this method.
 
 #### Installation
 To install the JavaScript SDK you can either use our CDN hosted version or include it yourself. To use our CDN copy simply add the following to your website:
@@ -177,7 +177,7 @@ moltin.Checkout.Payment('purchase', order.id, {
 });
 ```
 
->> **Note**: You can find more information about the features and available endpoints in the [Documentation](https://moltin.github.io/documentation).
+> **Note**: You can find more information about the features and available endpoints in the [Documentation](https://moltin.github.io/documentation).
 
 ### Contributing
  - Fork it the repository
