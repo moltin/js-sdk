@@ -1,12 +1,13 @@
 {
-  "name": "moltin-sdk",
+  "name": "moltin",
   "description": "SDK for the Moltin eCommerce API",
   "version": "1.0.0",
   "homepage": "https://github.com/moltin/js-sdk",
   "author": {
     "name": "Moltin Team",
-    "url": "https://molt.in/"
+    "url": "https://moltin.com/"
   },
+  "main": "dist/moltin.nodejs.min.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/moltin/js-sdk.git"
@@ -25,13 +26,12 @@
     "grunt-aws-s3": "^0.13.0",
     "grunt-contrib-coffee": "~0.10.0",
     "grunt-contrib-compress": "~0.13.0",
-    "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-cssmin": "~0.11.0",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.2.0",
     "grunt-preprocess": "~5.0.0",
+    "grunt-replace": "~0.11.0",
     "grunt-karma": "~0.8.3",
     "grunt-rename": "^0.1.4"
   }
