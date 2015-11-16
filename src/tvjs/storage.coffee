@@ -1,5 +1,3 @@
-	`// @if TARGET='tvjs'
-	`
 	class Storage
 
 		constructor: () ->
@@ -15,5 +13,3 @@
 		remove: (key) ->
 
 			return sessionStorage.removeItem key
-	`// @endif
-	`
