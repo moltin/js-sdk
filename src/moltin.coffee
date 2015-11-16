@@ -3,16 +3,16 @@ class Moltin
 	"use strict"
 
 	options:
-
-		publicId: ''
-		auth:     {}
-		url:      'https://api.molt.in/'
-		version:  'v1'
-		debug:    false
-		currency: false
-		language: false
-		methods:  ['GET', 'POST', 'PUT', 'DELETE']
-		notice:   (type, msg) ->
+		publicId:  ''
+		secretKey: ''
+		auth:      {}
+		url:       'api.molt.in'
+		version:   'v1'
+		debug:     false
+		currency:  false
+		language:  false
+		methods:   ['GET', 'POST', 'PUT', 'DELETE']
+		notice:    (type, msg) ->
 
 			console.log type + ": " + msg
 
@@ -21,20 +21,36 @@ class Moltin
 		@options = @Merge @options, overrides
 		@Storage = new Storage
 
-		@Address    = new Address @
-		@Brand      = new Brand @
-		@Cart       = new Cart @
-		@Category   = new Category @
-		@Checkout   = new Checkout @
-		@Collection = new Collection @
-		@Currency   = new Currency @
-		@Entry      = new Entry @
-		@Gateway    = new Gateway @
-		@Language   = new Language @
-		@Order      = new Order @
-		@Product    = new Product @
-		@Shipping   = new Shipping @
-		@Tax        = new Tax @
+		@Address       = new Address @
+		@Brand         = new Brand @
+		@Cart          = new Cart @
+		@Category      = new Category @
+		@Checkout      = new Checkout @
+		@Collection    = new Collection @
+		@Currency      = new Currency @
+		@Entry         = new Entry @
+		@Gateway       = new Gateway @
+		@Language      = new Language @
+		@Order         = new Order @
+		@Product       = new Product @
+		@Shipping      = new Shipping @
+		@Tax           = new Tax @
+		`// @if TARGET=='nodejs'
+		`
+		@Cache         = new Cache @
+		@Customer      = new Customer @
+		@CustomerGroup = new CustomerGroup @
+		@Email         = new Email @
+		@Field         = new Field @
+		@Flow          = new Flow @
+		@Payment       = new Payment @
+		@Promotion     = new Promotion @
+		@Stats         = new Stats @
+		@Transaction   = new Transaction @
+		@Variation     = new Variation @
+		@Webhook       = new Webhook @
+		`// @endif
+		`
 
 		if @Storage.get 'mcurrency'
 			@options.currency = @Storage.get 'mcurrency'
@@ -76,66 +92,20 @@ class Moltin
 			msg = response.error
 
 		return @options.notice 'Error', msg
-	
-	Ajax: (options) ->
-
-		args =
-			type:    'GET'
-			async:   false
-			data:    null
-			timeout: 60000
-			headers: {}
-			url:     @options.url+@options.version
-			success: (response, status, request) ->
-			error:   (response, status, request) ->
-
-		args = @Merge args, options
-		args.type = args.type.toUpperCase()
-
-		try
-			request = new XMLHttpRequest()
-		catch e
-			try
-				request = new ActiveXObject("Msxml2.XMLHTTP")
-			catch e
-				return false;
-
-		if args.type == 'GET'
-			args.url += '?' + @Serialize args.data
-			args.data = null
-		else
-			args.data = @Serialize args.data
-
-		request.open args.type, args.url, args.async
-
-		timeout = setTimeout =>
-			request.abort()
-			args.error request, 408, 'Your request timed out'
-		, args.timeout
-
-		request.setRequestHeader k, v for k,v of args.headers
-
-		request.onreadystatechange = ->
-
-			if request.readyState != 4
-				return null;
-
-			clearTimeout timeout
-
-			response = JSON.parse request.responseText
-
-			if request.status.toString().charAt(0) != '2'
-				args.error request, request.status, response
-			else
-				args.success response, request.status, request
-
-		request.send args.data
 
 	Authenticate: (callback, error)->
 
 		if @options.publicId.length <= 0
 			if typeof error == 'function'
 				error 'error', 'Public ID must be set', 401
+
+		`// @if TARGET=='nodejs'
+		`
+		if @options.secretKey.length <= 0
+			if typeof error == 'function'
+				error 'error', 'Secret Key must be set', 401
+		`// @endif
+		`
 
 		if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 			
@@ -146,7 +116,7 @@ class Moltin
 			if typeof callback == 'function'
 				callback @options.auth
 
-			`// @if TARGET!='tvjs'
+			`// @if TARGET=='js'
 			`
 			_e = document.createEvent 'CustomEvent'
 			_e.initCustomEvent 'MoltinReady', false, false, @
@@ -156,16 +126,30 @@ class Moltin
 
 			return @
 
+		`// @if TARGET!='nodejs'
+		`
+		data =
+			grant_type: 'implicit',
+			client_id:  @options.publicId
+		`// @endif
+		`
+
+		`// @if TARGET=='nodejs'
+		`
+		data =
+			grant_type:   'client_credentials',
+			client_id:     @options.publicId
+			client_secret: @options.secretKey
+		`// @endif
+		`
+
 		@Ajax
-			type: 'POST'
-			url: @options.url+'oauth/access_token'
-			data:
-				grant_type: 'implicit',
-				client_id:  @options.publicId
+			method: 'POST'
+			path: '/oauth/access_token'
+			data: data
 			async: if typeof callback == 'function' then true else false
 			headers:
 				'Content-Type': 'application/x-www-form-urlencoded'
-				'X-SDK': 'js'
 			success: (r, c, e) =>
 				@options.auth =
 					token:   r.access_token
@@ -177,7 +161,7 @@ class Moltin
 				if typeof callback == 'function'
 					callback r
 
-				`// @if TARGET!='tvjs'
+				`// @if TARGET=='js'
 				`
 				_e = document.createEvent 'CustomEvent'
 				_e.initCustomEvent 'MoltinReady', false, false, @
@@ -197,7 +181,6 @@ class Moltin
 		_headers =
 			'Content-Type': 'application/x-www-form-urlencoded'
 			'Authorization': 'Bearer '+@options.auth.token
-			'X-SDK': 'js'
 
 		if @options.auth.token == null
 			if typeof error == 'function'
@@ -217,8 +200,8 @@ class Moltin
 			_headers['X-Language'] = @options.language
 
 		@Ajax 
-			type: method
-			url: @options.url+@options.version+'/'+uri
+			method: method
+			path: uri
 			data: data
 			async: if typeof callback == 'function' then true else false
 			headers: _headers
@@ -227,8 +210,7 @@ class Moltin
 					callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
 				else 
 					_data = r
-			error: (e, c, m) =>
-				r = JSON.parse e.responseText
+			error: (r, c, e) =>
 				if r.status is false
 					if typeof error == 'function'
 						error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
