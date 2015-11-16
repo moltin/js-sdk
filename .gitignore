@@ -4,3 +4,4 @@ dist/gzip/*
 examples/builder/*
 src/builder*
 aws-credentials.json
+test/server.js
