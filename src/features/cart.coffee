@@ -61,3 +61,11 @@
 				return @m.Request 'carts/'+@cartId+'/discount', 'DELETE', null, callback, error
 
 			return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback. error
+
+		`// @if TARGET=='nodejs'
+		`
+		List: (terms, callback, error) ->
+
+			return @m.Request 'carts', 'GET', terms, callback, error
+		`// @endif
+		`
