@@ -1,10 +1,6 @@
-	class Currency
+	class Currency extends Abstract
 
-		constructor: (@m) ->
-
-		Get: (id, callback, error) ->
-
-			return @m.Request 'currencies/'+id, 'GET', null, callback, error
+		endpoint: 'currencies'
 
 		Set: (code, callback, error) ->
 
@@ -13,17 +9,3 @@
 
 			if typeof callback == 'function'
 				callback code
-
-		Find: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		List: (terms, callback, error) ->
-
-			return @m.Request 'currencies', 'GET', terms, callback, error
-
-		Fields: (id = 0, callback, error) ->
-
-			uri  = 'currencies/'+ if id != 0 then id+'/fields' else 'fields'
-			
-			return @m.Request uri, 'GET', null, callback, error
