@@ -1,19 +1,24 @@
-	class Order
+	class Order extends Abstract
 
 		constructor: (@m) ->
 
-		Get: (id, callback, error) ->
+		`// @if TARGET=='nodejs'
+		`
+		Items: (id, callback, error) ->
 
-			return @m.Request 'orders/'+id, 'GET', null, callback, error
+			return @m.Request 'orders/'+id+'/items', 'GET', null, callback, error
 
-		Find: (terms, callback, error) ->
+		AddItem: (id, data, callback, error) ->
 
-			return @m.Request 'orders', 'GET', terms, callback, error
+			return @m.Request 'orders/'+id+'/items', 'POST', data, callback, error
 
-		List: (terms, callback, error) ->
+		UpdateItem: (id, data, callback, error) ->
 
-			return @m.Request 'orders', 'GET', terms, callback, error
+			return @m.Request 'orders/'+id+'/items', 'PUT', data, callback, error
 
-		Create: (data, callback, error) ->
+		RemoveItem: (order, id, callback, error) ->
 
-			return @m.Request 'orders', 'POST', data, callback, error
+			return @m.Request 'orders/'+order+'/items/'+id, 'DELETE', null, callback, error
+
+		`// @endif
+		`
