@@ -28,3 +28,12 @@
 				uri = 'addresses/fields'
 			
 			return @m.Request uri, 'GET', null, callback, error
+
+		`// @if TARGET=='nodejs'
+		`
+		Update: (customer, id, data, callback, error) ->
+
+			return @m.Request 'customers/'+customer+'/addresses/'+id, 'PUT', data, callback, error
+
+		`// @endif
+		`
