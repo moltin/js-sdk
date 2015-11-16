@@ -1,5 +1,3 @@
-	`// @if TARGET!='tvjs'
-	`
 	class Storage
 
 		constructor: () ->
@@ -28,5 +26,3 @@
 		remove: (key) ->
 
 			@set key, '', -1
-	`// @endif
-	`
