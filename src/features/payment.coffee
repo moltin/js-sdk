@@ -1,40 +1,40 @@
-	`// @if TARGET=='nodejs'
-	`
-	class Payment
+  `// @if TARGET=='nodejs'
+  `
+  class Payment
 
-		constructor: (@m) ->
+    constructor: (@m) ->
 
-		Authorize: (order, data) ->
+    Authorize: (order, data) ->
 
-			return @Process 'authorize', order, data
+      return @Process 'authorize', order, data
 
-		CompleteAuthorize: (order, data) ->
+    CompleteAuthorize: (order, data) ->
 
-			return @Process 'complete_authorize', order, data
+      return @Process 'complete_authorize', order, data
 
-		Capture: (order, data) ->
+    Capture: (order, data) ->
 
-			return @Process 'capture', order, data
+      return @Process 'capture', order, data
 
-		Purchase: (order, data) ->
+    Purchase: (order, data) ->
 
-			return @Process 'purchase', order, data
+      return @Process 'purchase', order, data
 
-		CompletePurchase: (order, data) ->
+    CompletePurchase: (order, data) ->
 
-			return @Process 'complete_purchase', order, data
+      return @Process 'complete_purchase', order, data
 
-		Refund: (order, data) ->
+    Refund: (order, data) ->
 
-			return @Process 'refund', order, data
+      return @Process 'refund', order, data
 
-		Void: (order, data) ->
+    Void: (order, data) ->
 
-			return @Process 'void', order, data
+      return @Process 'void', order, data
 
-		Process: (method, order, data, callback, error) ->
+    Process: (method, order, data, callback, error) ->
 
-			return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback, error
+      return @m.Request 'checkout/payment/'+method+'/'+order, 'POST', data, callback, error
 
-	`// @endif
-	`
+  `// @endif
+  `

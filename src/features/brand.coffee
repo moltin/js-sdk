@@ -1,3 +1,3 @@
-	class Brand extends Abstract
+  class Brand extends Abstract
 
-		endpoint: 'brands'
+    endpoint: 'brands'

@@ -1,3 +1,3 @@
 module.exports = (options) ->
 
-	return new Moltin(options)
+  return new Moltin(options)

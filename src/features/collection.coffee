@@ -1,3 +1,3 @@
-	class Collection extends Abstract
+  class Collection extends Abstract
 
-		endpoint: 'collections'
+    endpoint: 'collections'

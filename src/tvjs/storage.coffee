@@ -1,15 +1,15 @@
-	class Storage
+  class Storage
 
-		constructor: () ->
+    constructor: () ->
 
-		set: (key, value) ->
+    set: (key, value) ->
 
-			return sessionStorage.setItem key, value
+      return sessionStorage.setItem key, value
 
-		get: (key) ->
+    get: (key) ->
 
-			return sessionStorage.getItem key
+      return sessionStorage.getItem key
 
-		remove: (key) ->
+    remove: (key) ->
 
-			return sessionStorage.removeItem key
+      return sessionStorage.removeItem key

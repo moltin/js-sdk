@@ -1,15 +1,15 @@
-	class Category extends Abstract
+  class Category extends Abstract
 
-		endpoint: 'categories'
+    endpoint: 'categories'
 
-		Tree: (terms, callback, error) ->
+    Tree: (terms, callback, error) ->
 
-			return @m.Request @endpoint+'/tree', 'GET', terms, callback, error
+      return @m.Request @endpoint+'/tree', 'GET', terms, callback, error
 
-		`// @if TARGET=='nodejs'
-		`
-		Order: (data, callback, error) ->
+    `// @if TARGET=='nodejs'
+    `
+    Order: (data, callback, error) ->
 
-			return @m.Request @endpoint+'/order', 'PUT', data, callback, error
-		`// @endif
-		`
+      return @m.Request @endpoint+'/order', 'PUT', data, callback, error
+    `// @endif
+    `

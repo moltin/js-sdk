@@ -1,3 +1,3 @@
-	class Tax extends Abstract
+  class Tax extends Abstract
 
-		endpoint: 'taxes'
+    endpoint: 'taxes'

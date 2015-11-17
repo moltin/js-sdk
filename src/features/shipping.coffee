@@ -1,3 +1,3 @@
-	class Shipping extends Abstract
+  class Shipping extends Abstract
 
-		endpoint: 'shipping'
+    endpoint: 'shipping'

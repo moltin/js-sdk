@@ -1,16 +1,16 @@
-	`// @if TARGET=='nodejs'
-	`
-	class Transaction
+  `// @if TARGET=='nodejs'
+  `
+  class Transaction
 
-		constructor: (@m) ->
+    constructor: (@m) ->
 
-		Get: (slug, callback, error) ->
+    Get: (slug, callback, error) ->
 
-			return @m.Request 'transactions/'+slug, 'GET', null, callback, error
+      return @m.Request 'transactions/'+slug, 'GET', null, callback, error
 
-		Listing: (terms, callback, error) ->
+    Listing: (terms, callback, error) ->
 
-			return @m.Request 'transactions', 'GET', terms, callback, error
-		
-	`// @endif
-	`
+      return @m.Request 'transactions', 'GET', terms, callback, error
+    
+  `// @endif
+  `

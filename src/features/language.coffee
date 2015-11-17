@@ -1,11 +1,11 @@
-	class Language
+  class Language
 
-		constructor: (@m) ->
+    constructor: (@m) ->
 
-		Set: (code, callback, error) ->
+    Set: (code, callback, error) ->
 
-			@m.Storage.set 'mlanguage', code
-			@m.options.language = code
+      @m.Storage.set 'mlanguage', code
+      @m.options.language = code
 
-			if typeof callback == 'function'
-				callback code
+      if typeof callback == 'function'
+        callback code

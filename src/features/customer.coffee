@@ -1,8 +1,8 @@
-	`// @if TARGET=='nodejs'
-	`
-	class Customer extends Abstract
+  `// @if TARGET=='nodejs'
+  `
+  class Customer extends Abstract
 
-		endpoint: 'customers'
+    endpoint: 'customers'
 
-	`// @endif
-	`
+  `// @endif
+  `

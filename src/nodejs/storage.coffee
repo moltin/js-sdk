@@ -1,18 +1,18 @@
-	class Storage
+  class Storage
 
-		data: {}
+    data: {}
 
-		constructor: () ->
+    constructor: () ->
 
-		set: (key, value) ->
+    set: (key, value) ->
 
-			@data[key] = value
-			return value
+      @data[key] = value
+      return value
 
-		get: (key) ->
+    get: (key) ->
 
-			return if @data[key]? then @data[key] else null
+      return if @data[key]? then @data[key] else null
 
-		remove: (key) ->
+    remove: (key) ->
 
-			return if @data[key]? then delete @data[key] else false
+      return if @data[key]? then delete @data[key] else false
