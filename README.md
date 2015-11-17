@@ -88,7 +88,25 @@ var moltin = require('moltin')({
 ```
 
 ### TVJS
-**Documentation coming soon.**
+The TVJS SDK is designed to run specifically in AppleTV's new client-server application model. Much like the JavaScript SDK it also uses a limited subset of the API for security purposes.
+
+### Installation
+To install the TVJS SDK drop a copy of the SDK into your project along side your other libararies and add it to your `resourceLoader`:
+
+``` javascript
+var javascriptFiles = [
+    "${options.BASEURL}js/ResourceLoader.js",
+    "${options.BASEURL}js/Presenter.js",
+    "${options.BASEURL}js/moltin.tvjs.min.js"
+];
+```
+
+### Initialise
+Once you have the dependancy added to your project, you'll need a [Moltin](https://moltin.com#signup) account and your stores `public_id`. With this in hand you can start the SDK in the same way you do the JavaScript SDK.
+
+``` javascript
+var moltin = new Moltin({publicId: 'XXXX'});
+```
 
 ## Usage
 All of the JavaScript SDKs work in the same way after the initial installation has been completed.
