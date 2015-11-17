@@ -38,8 +38,7 @@ Moltin = (function() {
     this.Order = new Order(this);
     this.Product = new Product(this);
     this.Shipping = new Shipping(this);
-    this.Tax = new Tax(this);
-    if (this.Storage.get('mcurrency')) {
+    this.Tax = new Tax(this);    if (this.Storage.get('mcurrency')) {
       this.options.currency = this.Storage.get('mcurrency');
     }
     if (this.Storage.get('mlanguage')) {
@@ -103,22 +102,18 @@ Moltin = (function() {
       if (typeof error === 'function') {
         error('error', 'Public ID must be set', 401);
       }
-    }
-    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
+    }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
         token: this.Storage.get('mtoken'),
         expires: this.Storage.get('mexpires')
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
-      }
-      return this;
-    }
-    data = {
+      }      return this;
+    }    data = {
       grant_type: 'implicit',
       client_id: this.options.publicId
-    };
-    this.Ajax({
+    };    this.Ajax({
       method: 'POST',
       path: '/oauth/access_token',
       data: data,
@@ -136,8 +131,7 @@ Moltin = (function() {
           _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
-          }
-        };
+          }        };
       })(this),
       error: (function(_this) {
         return function(e, c, r) {
@@ -311,8 +305,6 @@ Moltin = (function() {
       uri = this.endpoint + '/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
-
-
     return Abstract;
 
   })();
@@ -355,8 +347,6 @@ Moltin = (function() {
       }
       return this.m.Request(uri, 'GET', null, callback, error);
     };
-
-
     return Address;
 
   })();
@@ -373,8 +363,6 @@ Moltin = (function() {
     return Brand;
 
   })(Abstract);
-
-
   Cart = (function() {
     function Cart(m) {
       this.m = m;
@@ -455,8 +443,6 @@ Moltin = (function() {
         code: code
       }, callback.error);
     };
-
-
     return Cart;
 
   })();
@@ -473,8 +459,6 @@ Moltin = (function() {
     Category.prototype.Tree = function(terms, callback, error) {
       return this.m.Request(this.endpoint + '/tree', 'GET', terms, callback, error);
     };
-
-
     return Category;
 
   })(Abstract);
@@ -525,10 +509,6 @@ Moltin = (function() {
     return Currency;
 
   })(Abstract);
-
-
-
-
   Entry = (function() {
     function Entry(m) {
       this.m = m;
@@ -539,20 +519,15 @@ Moltin = (function() {
     };
 
     Entry.prototype.Find = function(flow, terms, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
+      return this.m.Request('flows/' + flow + '/entries/search', 'GET', terms, callback, error);
     };
 
     Entry.prototype.List = function(flow, terms, callback, error) {
       return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
     };
-
-
     return Entry;
 
   })();
-
-
-
   Gateway = (function() {
     function Gateway(m) {
       this.m = m;
@@ -565,8 +540,6 @@ Moltin = (function() {
     Gateway.prototype.List = function(terms, callback, error) {
       return this.m.Request('gateways', 'GET', terms, callback, error);
     };
-
-
     return Gateway;
 
   })();
@@ -587,21 +560,15 @@ Moltin = (function() {
     return Language;
 
   })();
-
-
   Order = (function(_super) {
     __extends(Order, _super);
 
     function Order(m) {
       this.m = m;
     }
-
-
     return Order;
 
   })(Abstract);
-
-
   Product = (function(_super) {
     __extends(Product, _super);
 
@@ -626,8 +593,6 @@ Moltin = (function() {
     return Product;
 
   })(Abstract);
-
-
   Shipping = (function(_super) {
     __extends(Shipping, _super);
 
@@ -640,8 +605,6 @@ Moltin = (function() {
     return Shipping;
 
   })(Abstract);
-
-
   Tax = (function(_super) {
     __extends(Tax, _super);
 
@@ -654,10 +617,6 @@ Moltin = (function() {
     return Tax;
 
   })(Abstract);
-
-
-
-
   return Moltin;
 
 })();

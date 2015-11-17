@@ -38,8 +38,7 @@ Moltin = (function() {
     this.Order = new Order(this);
     this.Product = new Product(this);
     this.Shipping = new Shipping(this);
-    this.Tax = new Tax(this);
-    this.Cache = new Cache(this);
+    this.Tax = new Tax(this);    this.Cache = new Cache(this);
     this.Customer = new Customer(this);
     this.CustomerGroup = new CustomerGroup(this);
     this.Email = new Email(this);
@@ -50,8 +49,7 @@ Moltin = (function() {
     this.Stats = new Stats(this);
     this.Transaction = new Transaction(this);
     this.Variation = new Variation(this);
-    this.Webhook = new Webhook(this);
-    if (this.Storage.get('mcurrency')) {
+    this.Webhook = new Webhook(this);    if (this.Storage.get('mcurrency')) {
       this.options.currency = this.Storage.get('mcurrency');
     }
     if (this.Storage.get('mlanguage')) {
@@ -115,28 +113,23 @@ Moltin = (function() {
       if (typeof error === 'function') {
         error('error', 'Public ID must be set', 401);
       }
-    }
-    if (this.options.secretKey.length <= 0) {
+    }    if (this.options.secretKey.length <= 0) {
       if (typeof error === 'function') {
         error('error', 'Secret Key must be set', 401);
       }
-    }
-    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
+    }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
         token: this.Storage.get('mtoken'),
         expires: this.Storage.get('mexpires')
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
-      }
-      return this;
-    }
-    data = {
+      }      return this;
+    }    data = {
       grant_type: 'client_credentials',
       client_id: this.options.publicId,
       client_secret: this.options.secretKey
-    };
-    this.Ajax({
+    };    this.Ajax({
       method: 'POST',
       path: '/oauth/access_token',
       data: data,
@@ -154,8 +147,7 @@ Moltin = (function() {
           _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
-          }
-        };
+          }        };
       })(this),
       error: (function(_this) {
         return function(e, c, r) {
@@ -340,8 +332,6 @@ Moltin = (function() {
       uri = this.endpoint + '/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
-
-
     Abstract.prototype.Create = function(data, callback, error) {
       return this.m.Request(this.endpoint, 'POST', data, callback, error);
     };
@@ -353,8 +343,6 @@ Moltin = (function() {
     Abstract.prototype.Delete = function(id, callback, error) {
       return this.m.Request(this.endpoint + '/' + id, 'DELETE', null, callback, error);
     };
-
-
     return Abstract;
 
   })();
@@ -397,13 +385,9 @@ Moltin = (function() {
       }
       return this.m.Request(uri, 'GET', null, callback, error);
     };
-
-
     Address.prototype.Update = function(customer, id, data, callback, error) {
       return this.m.Request('customers/' + customer + '/addresses/' + id, 'PUT', data, callback, error);
     };
-
-
     return Address;
 
   })();
@@ -420,8 +404,6 @@ Moltin = (function() {
     return Brand;
 
   })(Abstract);
-
-
   Cache = (function() {
     function Cache(m) {
       this.m = m;
@@ -442,8 +424,6 @@ Moltin = (function() {
     return Cache;
 
   })();
-
-
   Cart = (function() {
     function Cart(m) {
       this.m = m;
@@ -524,13 +504,9 @@ Moltin = (function() {
         code: code
       }, callback.error);
     };
-
-
     Cart.prototype.List = function(terms, callback, error) {
       return this.m.Request('carts', 'GET', terms, callback, error);
     };
-
-
     return Cart;
 
   })();
@@ -547,13 +523,9 @@ Moltin = (function() {
     Category.prototype.Tree = function(terms, callback, error) {
       return this.m.Request(this.endpoint + '/tree', 'GET', terms, callback, error);
     };
-
-
     Category.prototype.Order = function(data, callback, error) {
       return this.m.Request(this.endpoint + '/order', 'PUT', data, callback, error);
     };
-
-
     return Category;
 
   })(Abstract);
@@ -604,8 +576,6 @@ Moltin = (function() {
     return Currency;
 
   })(Abstract);
-
-
   Customer = (function(_super) {
     __extends(Customer, _super);
 
@@ -618,9 +588,6 @@ Moltin = (function() {
     return Customer;
 
   })(Abstract);
-
-
-
   CustomerGroup = (function(_super) {
     __extends(CustomerGroup, _super);
 
@@ -633,9 +600,6 @@ Moltin = (function() {
     return CustomerGroup;
 
   })(Abstract);
-
-
-
   Email = (function() {
     function Email(m) {
       this.m = m;
@@ -664,8 +628,6 @@ Moltin = (function() {
     return Email;
 
   })();
-
-
   Entry = (function() {
     function Entry(m) {
       this.m = m;
@@ -676,14 +638,12 @@ Moltin = (function() {
     };
 
     Entry.prototype.Find = function(flow, terms, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
+      return this.m.Request('flows/' + flow + '/entries/search', 'GET', terms, callback, error);
     };
 
     Entry.prototype.List = function(flow, terms, callback, error) {
       return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
     };
-
-
     Entry.prototype.Fields = function(flow, id, callback, error) {
       var uri;
       if (id == null) {
@@ -704,13 +664,9 @@ Moltin = (function() {
     Entry.prototype.Delete = function(flow, id, callback, error) {
       return this.m.Request('flows/' + flow + '/entries/' + id, 'DELETE', null, callback, error);
     };
-
-
     return Entry;
 
   })();
-
-
   Field = (function() {
     function Field(m) {
       this.m = m;
@@ -756,9 +712,6 @@ Moltin = (function() {
     return Field;
 
   })();
-
-
-
   Flow = (function() {
     function Flow(m) {
       this.m = m;
@@ -804,8 +757,6 @@ Moltin = (function() {
     return Flow;
 
   })();
-
-
   Gateway = (function() {
     function Gateway(m) {
       this.m = m;
@@ -818,8 +769,6 @@ Moltin = (function() {
     Gateway.prototype.List = function(terms, callback, error) {
       return this.m.Request('gateways', 'GET', terms, callback, error);
     };
-
-
     Gateway.prototype.Fields = function(slug, callback, error) {
       var uri;
       if (slug == null) {
@@ -840,8 +789,6 @@ Moltin = (function() {
     Gateway.prototype.Disable = function(slug, callback, error) {
       return this.m.Request('gateways/' + slug + '/disable', 'GET', null, callback, error);
     };
-
-
     return Gateway;
 
   })();
@@ -862,8 +809,6 @@ Moltin = (function() {
     return Language;
 
   })();
-
-
   Modifier = (function() {
     function Modifier(m) {
       this.m = m;
@@ -897,16 +842,12 @@ Moltin = (function() {
     return Modifier;
 
   })();
-
-
   Order = (function(_super) {
     __extends(Order, _super);
 
     function Order(m) {
       this.m = m;
     }
-
-
     Order.prototype.Items = function(id, callback, error) {
       return this.m.Request('orders/' + id + '/items', 'GET', null, callback, error);
     };
@@ -922,13 +863,9 @@ Moltin = (function() {
     Order.prototype.RemoveItem = function(order, id, callback, error) {
       return this.m.Request('orders/' + order + '/items/' + id, 'DELETE', null, callback, error);
     };
-
-
     return Order;
 
   })(Abstract);
-
-
   Payment = (function() {
     function Payment(m) {
       this.m = m;
@@ -969,8 +906,6 @@ Moltin = (function() {
     return Payment;
 
   })();
-
-
   Product = (function(_super) {
     __extends(Product, _super);
 
@@ -995,8 +930,6 @@ Moltin = (function() {
     return Product;
 
   })(Abstract);
-
-
   Promotion = (function(_super) {
     __extends(Promotion, _super);
 
@@ -1013,8 +946,6 @@ Moltin = (function() {
     return Promotion;
 
   })(Abstract);
-
-
   Shipping = (function(_super) {
     __extends(Shipping, _super);
 
@@ -1027,8 +958,6 @@ Moltin = (function() {
     return Shipping;
 
   })(Abstract);
-
-
   Stats = (function() {
     Stats.prototype.available = ['24hours', '7days', '30days'];
 
@@ -1099,8 +1028,6 @@ Moltin = (function() {
     return Stats;
 
   })();
-
-
   Tax = (function(_super) {
     __extends(Tax, _super);
 
@@ -1113,8 +1040,6 @@ Moltin = (function() {
     return Tax;
 
   })(Abstract);
-
-
   Transaction = (function() {
     function Transaction(m) {
       this.m = m;
@@ -1131,9 +1056,6 @@ Moltin = (function() {
     return Transaction;
 
   })();
-
-
-
   Variation = (function() {
     function Variation(m) {
       this.m = m;
@@ -1167,9 +1089,6 @@ Moltin = (function() {
     return Variation;
 
   })();
-
-
-
   Webhook = (function() {
     function Webhook(m) {
       this.m = m;
@@ -1207,8 +1126,6 @@ Moltin = (function() {
     return Webhook;
 
   })();
-
-
   return Moltin;
 
 })();
