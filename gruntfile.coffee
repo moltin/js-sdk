@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         options:
           patterns: [
             {
-              match: /[\t]+;\n/g,
+              match: /[\s]{2,};\n/g,
               replacement: () ->
                 return ''
             }
