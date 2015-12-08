@@ -542,6 +542,7 @@ class Moltin
   class Customer
 
     endpoint: 'customers'
+
     constructor: (@m) ->
 
     Authenticate: (data, callback, error) ->
