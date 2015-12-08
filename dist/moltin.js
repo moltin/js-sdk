@@ -32,6 +32,7 @@ Moltin = (function() {
     this.Checkout = new Checkout(this);
     this.Collection = new Collection(this);
     this.Currency = new Currency(this);
+    this.Customer = new Customer(this);
     this.Entry = new Entry(this);
     this.Gateway = new Gateway(this);
     this.Language = new Language(this);
@@ -543,6 +544,24 @@ Moltin = (function() {
     return Currency;
 
   })(Abstract);
+  Customer = (function() {
+    Customer.prototype.endpoint = 'customers';
+
+    function Customer(m) {
+      this.m = m;
+    }
+
+    Customer.prototype.Authenticate = function(data, callback, error) {
+      return this.m.Request(this.endpoint + '/authenticate', 'POST', data, callback, error);
+    };
+
+    Customer.prototype.Update = function(token, data, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token, 'PUT', data, callback, error);
+    };
+
+    return Customer;
+
+  })();
   Entry = (function() {
     function Entry(m) {
       this.m = m;
@@ -600,6 +619,10 @@ Moltin = (function() {
     function Order(m) {
       this.m = m;
     }
+    Order.prototype.Find = function(terms, callback, error) {
+      return this.m.Request('orders', 'GET', terms, callback, error);
+    };
+
     return Order;
 
   })(Abstract);

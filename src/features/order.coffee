@@ -22,3 +22,7 @@
 
     `// @endif
     `
+
+    Find: (terms, callback, error) ->
+
+      return @m.Request 'orders', 'GET', terms, callback, error

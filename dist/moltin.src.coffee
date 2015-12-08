@@ -28,6 +28,7 @@ class Moltin
     @Checkout      = new Checkout @
     @Collection    = new Collection @
     @Currency      = new Currency @
+    @Customer      = new Customer @
     @Entry         = new Entry @
     @Gateway       = new Gateway @
     @Language      = new Language @
@@ -529,6 +530,29 @@ class Moltin
 
     endpoint: 'customers'
 
+    Authenticate: (data, callback, error) ->
+
+      return @m.Request @customers+'/authenticate', 'POST', data, callback, error
+
+  `// @endif
+  `
+
+  `// @if TARGET=='js'
+  `
+  class Customer
+
+    endpoint: 'customers'
+    constructor: (@m) ->
+
+    Authenticate: (data, callback, error) ->
+
+      return @m.Request @endpoint+'/authenticate', 'POST', data, callback, error
+
+    Update: (token, data, callback, error) ->
+
+      return @m.Request @endpoint+'/'+token, 'PUT', data, callback, error
+
+
   `// @endif
   `
 
@@ -795,6 +819,10 @@ class Moltin
 
     `// @endif
     `
+
+    Find: (terms, callback, error) ->
+
+      return @m.Request 'orders', 'GET', terms, callback, error
 
   `// @if TARGET=='nodejs'
   `
