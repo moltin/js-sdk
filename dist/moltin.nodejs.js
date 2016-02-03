@@ -249,7 +249,6 @@ Moltin = (function() {
       args.path += '?' + this.Serialize(args.data);
       args.data = null;
     }
-    console.log('[' + args.method + '] https://' + this.options.url + args.path);
     req = this.http.request(args, function(res) {
       var data;
       data = '';
@@ -271,7 +270,7 @@ Moltin = (function() {
         }
       });
     });
-    if (args.method === 'POST' && args.data !== null) {
+    if (this.InArray(args.method, ['POST', 'PUT']) && args.data !== null) {
       req.write(this.Serialize(args.data));
     }
     return req.end();

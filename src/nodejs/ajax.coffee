@@ -24,8 +24,6 @@
       args.path += '?' + @Serialize args.data
       args.data = null
 
-    console.log '['+args.method+'] https://'+@options.url+args.path
-
     req = @http.request args, (res) ->
 
       data = ''
@@ -45,7 +43,7 @@
         catch e
           args.error e.message, res.statusCode, req
 
-    if args.method == 'POST' and args.data != null
+    if @InArray(args.method, ['POST', 'PUT']) and args.data != null
       req.write @Serialize(args.data)
 
     req.end()    
