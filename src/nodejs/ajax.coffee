@@ -4,14 +4,15 @@
       @http = require('https')
 
     args =
-      method:   'GET'
-      async:    false
-      data:     null
-      timeout:  60000
-      headers:  {}
-      host:     @options.url
-      port:     443
-      path:     '/'
+      method:          'GET'
+      async:           false
+      data:            null
+      timeout:         60000
+      headers:         {}
+      host:            @options.url
+      port:            443
+      path:            '/'
+      withCredentials: false
       success:  (response, status, request) ->
       error:    (response, status, request) ->
 

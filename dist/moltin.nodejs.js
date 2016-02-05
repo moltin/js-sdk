@@ -239,6 +239,7 @@ Moltin = (function() {
       host: this.options.url,
       port: 443,
       path: '/',
+      withCredentials: false,
       success: function(response, status, request) {},
       error: function(response, status, request) {}
     };
