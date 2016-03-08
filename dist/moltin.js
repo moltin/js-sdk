@@ -32,6 +32,7 @@ Moltin = (function() {
     this.Checkout = new Checkout(this);
     this.Collection = new Collection(this);
     this.Currency = new Currency(this);
+    this.Customer = new Customer(this);
     this.Entry = new Entry(this);
     this.Gateway = new Gateway(this);
     this.Language = new Language(this);
@@ -543,6 +544,62 @@ Moltin = (function() {
     return Currency;
 
   })(Abstract);
+
+  Customer = (function(_super) {
+    __extends(Customer, _super);
+
+    function Customer(m) {
+      this.m = m;
+    }
+
+    Customer.prototype.Login = function(data, callback, error) {
+      return this.m.Request(this.endpoint + '/token', 'POST', data, callback, error);
+    };
+
+    Customer.prototype.Logout = function(token, callback, error) {
+      return this.m.Request(this.endpoint + '/token/' + token, 'DELETE', null, callback, error);
+    };
+
+    Customer.prototype.GetOrders = function(token, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/orders', 'GET', null, callback, error);
+    };
+
+    Customer.prototype.GetOrder = function(token, order, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/orders/' + order, 'GET', null, callback, error);
+    };
+
+    Customer.prototype.GetOrderItems = function(token, order, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/orders/' + order + '/items', 'GET', null, callback, error);
+    };
+
+    Customer.prototype.GetAddresses = function(token, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/addresses', 'GET', null, callback, error);
+    };
+
+    Customer.prototype.CreateAddress = function(token, data, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/addresses', 'POST', data, callback, error);
+    };
+
+    Customer.prototype.GetAddress = function(token, address, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/addresses/' + address, 'GET', null, callback, error);
+    };
+
+    Customer.prototype.UpdateAddress = function(token, address, data, callback, error) {
+      return this.m.Request(this.endpoint + '/' + token + '/addresses/' + address, 'PUT', data, callback, error);
+    };
+
+    Customer.prototype.GetAddressFields = function(token, address, callback, error) {
+      var uri;
+      if (address == null) {
+        address = 0;
+      }
+      uri = this.endpoint + '/' + token + '/addresses/' + (address !== 0 ? address + '/fields' : 'fields');
+      return this.m.Request(uri, 'GET', null, callback, error);
+    };
+
+    return Customer;
+
+  })(Abstract);
   Entry = (function() {
     function Entry(m) {
       this.m = m;
@@ -600,6 +657,10 @@ Moltin = (function() {
     function Order(m) {
       this.m = m;
     }
+    Order.prototype.Find = function(terms, callback, error) {
+      return this.m.Request('orders', 'GET', terms, callback, error);
+    };
+
     return Order;
 
   })(Abstract);
