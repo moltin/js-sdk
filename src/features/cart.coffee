@@ -60,7 +60,7 @@
       if ( code == null or code == false )
         return @m.Request 'carts/'+@cartId+'/discount', 'DELETE', null, callback, error
 
-      return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback. error
+      return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback, error
 
     `// @if TARGET=='nodejs'
     `
