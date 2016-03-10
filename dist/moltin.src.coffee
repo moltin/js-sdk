@@ -67,9 +67,7 @@ class Moltin
 
   InArray: (key, arr) ->
 
-    if key not in arr
-      return false
-
+    return false if not arr or key not in arr
     return true
 
   Serialize: (obj, prefix = null) ->
@@ -473,7 +471,7 @@ class Moltin
       if ( code == null or code == false )
         return @m.Request 'carts/'+@cartId+'/discount', 'DELETE', null, callback, error
 
-      return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback. error
+      return @m.Request 'carts/'+@cartId+'/discount', 'POST', {code: code}, callback, error
 
     `// @if TARGET=='nodejs'
     `

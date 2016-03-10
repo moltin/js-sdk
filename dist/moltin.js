@@ -61,7 +61,7 @@ Moltin = (function() {
   };
 
   Moltin.prototype.InArray = function(key, arr) {
-    if (__indexOf.call(arr, key) < 0) {
+    if (!arr || __indexOf.call(arr, key) < 0) {
       return false;
     }
     return true;
@@ -475,7 +475,7 @@ Moltin = (function() {
       }
       return this.m.Request('carts/' + this.cartId + '/discount', 'POST', {
         code: code
-      }, callback.error);
+      }, callback, error);
     };
     return Cart;
 
