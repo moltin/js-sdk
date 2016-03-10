@@ -67,9 +67,7 @@ class Moltin
 
   InArray: (key, arr) ->
 
-    if key not in arr
-      return false
-
+    return false if not arr or key not in arr
     return true
 
   Serialize: (obj, prefix = null) ->
