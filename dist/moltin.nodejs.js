@@ -638,7 +638,7 @@ Moltin = (function() {
     };
 
     Entry.prototype.Find = function(flow, terms, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries/search', 'GET', terms, callback, error);
+      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
     };
 
     Entry.prototype.List = function(flow, terms, callback, error) {
