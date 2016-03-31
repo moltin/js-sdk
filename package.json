@@ -34,5 +34,8 @@
     "grunt-replace": "~0.11.0",
     "grunt-karma": "~0.8.3",
     "grunt-rename": "^0.1.4"
+  },
+  "dependencies": {
+    "karma": "^0.13.22"
   }
 }
