@@ -76,6 +76,8 @@ class Moltin
 
     for k,v of obj
       k = if prefix != null then prefix+'['+k+']' else k
+      if not v?
+        continue
       str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
 
     return str.join '&'
