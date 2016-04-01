@@ -8,7 +8,7 @@
 
     Find: (flow, terms, callback, error) ->
 
-      return @m.Request 'flows/'+flow+'/entries/search', 'GET', terms, callback, error
+      return @m.Request 'flows/'+flow+'/entries', 'GET', terms, callback, error
 
     List: (flow, terms, callback, error) ->
 
