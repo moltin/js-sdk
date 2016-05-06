@@ -236,13 +236,7 @@ class Moltin
     args = @Merge args, options
     args.method = args.method.toUpperCase()
 
-    try
-      request = new XMLHttpRequest()
-    catch e
-      try
-        request = new ActiveXObject("Msxml2.XMLHTTP")
-      catch e
-        return false;
+    request = new XMLHttpRequest()
 
     args.url = ( if args.port == 443 then 'https://' else 'http://' ) + args.host +
            ( if args.path.substr(0, 1) != '/' then '/' + @options.version + '/' + args.path else args.path )
@@ -282,30 +276,17 @@ class Moltin
 
     constructor: () ->
 
-    set: (key, value, days) ->
+    set: (key, value) ->
 
-      expires = ""
-
-      if days
-        date = new Date
-        date.setTime(date.getTime() + (days*24*60*60*1000))
-        expires = "; expires=" + date.toGMTString()
-
-      document.cookie = key + "=" + value + expires + "; path=/"
+      return sessionStorage.setItem key, value
 
     get: (key) ->
 
-      key = key + "="
-      
-      for c in document.cookie.split(';')
-        c = c.substring(1, c.length) while c.charAt(0) is ' '
-        return c.substring(key.length, c.length) if c.indexOf(key) == 0
-      
-      return null
+      return sessionStorage.getItem key
 
     remove: (key) ->
 
-      @set key, '', -1
+      return sessionStorage.removeItem key
 
   class Abstract
 

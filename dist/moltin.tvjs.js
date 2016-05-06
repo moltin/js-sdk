@@ -109,9 +109,7 @@ Moltin = (function() {
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
-      }      _e = document.createEvent('CustomEvent');
-      _e.initCustomEvent('MoltinReady', false, false, this);
-      window.dispatchEvent(_e);      return this;
+      }      return this;
     }    data = {
       grant_type: 'implicit',
       client_id: this.options.publicId
@@ -133,10 +131,7 @@ Moltin = (function() {
           _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
-          }          _e = document.createEvent('CustomEvent');
-          _e.initCustomEvent('MoltinReady', false, false, _this);
-          window.dispatchEvent(_e);
-          return        };
+          }        };
       })(this),
       error: (function(_this) {
         return function(e, c, r) {
@@ -215,7 +210,7 @@ Moltin = (function() {
   };
 
   Moltin.prototype.Ajax = function(options) {
-    var args, e, k, request, timeout, v, _ref;
+    var args, k, request, timeout, v, _ref;
     args = {
       method: 'GET',
       async: false,
@@ -230,17 +225,7 @@ Moltin = (function() {
     };
     args = this.Merge(args, options);
     args.method = args.method.toUpperCase();
-    try {
-      request = new XMLHttpRequest();
-    } catch (_error) {
-      e = _error;
-      try {
-        request = new ActiveXObject("Msxml2.XMLHTTP");
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    }
+    request = new XMLHttpRequest();
     args.url = (args.port === 443 ? 'https://' : 'http://') + args.host + (args.path.substr(0, 1) !== '/' ? '/' + this.options.version + '/' + args.path : args.path);
     if (args.method === 'GET') {
       args.url += '?' + this.Serialize(args.data);
@@ -279,35 +264,16 @@ Moltin = (function() {
   Storage = (function() {
     function Storage() {}
 
-    Storage.prototype.set = function(key, value, days) {
-      var date, expires;
-      expires = "";
-      if (days) {
-        date = new Date;
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      return document.cookie = key + "=" + value + expires + "; path=/";
+    Storage.prototype.set = function(key, value) {
+      return sessionStorage.setItem(key, value);
     };
 
     Storage.prototype.get = function(key) {
-      var c, _i, _len, _ref;
-      key = key + "=";
-      _ref = document.cookie.split(';');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        c = _ref[_i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(key) === 0) {
-          return c.substring(key.length, c.length);
-        }
-      }
-      return null;
+      return sessionStorage.getItem(key);
     };
 
     Storage.prototype.remove = function(key) {
-      return this.set(key, '', -1);
+      return sessionStorage.removeItem(key);
     };
 
     return Storage;
@@ -657,4 +623,4 @@ Moltin = (function() {
 
 })();
 
-//# sourceMappingURL=moltin.js.map
+//# sourceMappingURL=moltin.tvjs.js.map

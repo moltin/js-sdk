@@ -221,91 +221,73 @@ class Moltin
 
   Ajax: (options) ->
 
+    if ! @http
+      @http = require('https')
+
     args =
-      method:   'GET'
-      async:    false
-      data:     null
-      timeout:  60000
-      headers:  {}
-      host:     @options.url
-      port:     443
-      path:     '/'
+      method:          'GET'
+      async:           false
+      data:            null
+      timeout:         60000
+      headers:         {}
+      host:            @options.url
+      port:            443
+      path:            '/'
+      withCredentials: false
       success:  (response, status, request) ->
       error:    (response, status, request) ->
 
     args = @Merge args, options
     args.method = args.method.toUpperCase()
 
-    try
-      request = new XMLHttpRequest()
-    catch e
-      try
-        request = new ActiveXObject("Msxml2.XMLHTTP")
-      catch e
-        return false;
+    args.path = if args.path.substr(0, 1) != '/' then '/' + @options.version + '/' + args.path else args.path
 
-    args.url = ( if args.port == 443 then 'https://' else 'http://' ) + args.host +
-           ( if args.path.substr(0, 1) != '/' then '/' + @options.version + '/' + args.path else args.path )
-
-    if args.method == 'GET'
-      args.url += '?' + @Serialize args.data
+    if args.method == 'GET' and args.data != null
+      args.path += '?' + @Serialize args.data
       args.data = null
-    else
-      args.data = @Serialize args.data
 
-    request.open args.method, args.url, args.async
+    req = @http.request args, (res) ->
 
-    timeout = setTimeout =>
-      request.abort()
-      args.error request, 408, 'Your request timed out'
-    , args.timeout
+      data = ''
 
-    request.setRequestHeader k, v for k,v of args.headers
+      res.on 'data', (chunk) ->
+        data += chunk
 
-    request.onreadystatechange = ->
+      res.on 'end', () ->
 
-      if request.readyState != 4
-        return null;
+        response = JSON.parse data
 
-      clearTimeout timeout
+        try
+          if res.statusCode.toString().charAt(0) != '2'
+            args.error response, res.statusCode, req
+          else
+            args.success response, res.statusCode, req
+        catch e
+          args.error e.message, res.statusCode, req
 
-      response = JSON.parse request.responseText
+    if @InArray(args.method, ['POST', 'PUT']) and args.data != null
+      req.write @Serialize(args.data)
 
-      if request.status.toString().charAt(0) != '2'
-        args.error response, request.status, request
-      else
-        args.success response, request.status, request
-
-    request.send args.data
+    req.end()    
 
   class Storage
 
+    data: {}
+
     constructor: () ->
 
-    set: (key, value, days) ->
+    set: (key, value) ->
 
-      expires = ""
-
-      if days
-        date = new Date
-        date.setTime(date.getTime() + (days*24*60*60*1000))
-        expires = "; expires=" + date.toGMTString()
-
-      document.cookie = key + "=" + value + expires + "; path=/"
+      @data[key] = value
+      return value
 
     get: (key) ->
 
-      key = key + "="
-      
-      for c in document.cookie.split(';')
-        c = c.substring(1, c.length) while c.charAt(0) is ' '
-        return c.substring(key.length, c.length) if c.indexOf(key) == 0
-      
-      return null
+      return if @data[key]? then @data[key] else null
 
     remove: (key) ->
 
-      @set key, '', -1
+      return if @data[key]? then delete @data[key] else false
 
   class Abstract
 
@@ -998,3 +980,7 @@ class Moltin
 
   `// @endif
   `
+
+module.exports = (options) ->
+
+  return new Moltin(options)
