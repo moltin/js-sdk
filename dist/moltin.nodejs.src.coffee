@@ -48,6 +48,7 @@ class Moltin
     @Stats         = new Stats @
     @Transaction   = new Transaction @
     @Variation     = new Variation @
+    @Modifier      = new Modifier @
     @Webhook       = new Webhook @
     `// @endif
     `

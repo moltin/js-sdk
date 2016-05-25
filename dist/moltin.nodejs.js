@@ -49,6 +49,7 @@ Moltin = (function() {
     this.Stats = new Stats(this);
     this.Transaction = new Transaction(this);
     this.Variation = new Variation(this);
+    this.Modifier = new Modifier(this);
     this.Webhook = new Webhook(this);    if (this.Storage.get('mcurrency')) {
       this.options.currency = this.Storage.get('mcurrency');
     }
