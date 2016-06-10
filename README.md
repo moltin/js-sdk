@@ -72,7 +72,7 @@ The Node.js SDK allows you to build complete server-side applications, with comp
 To install the Node.js SDK you can use `npm` to manage the dependency. Open terminal and navigate to your project directory and run:
 
 ``` bash
-npm install moltin@1.0.0
+npm install moltin@1.0.3
 ```
 
 This will install the SDK into `node_modules/moltin`.
