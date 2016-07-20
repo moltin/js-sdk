@@ -5,7 +5,7 @@ var Moltin,
 
 Moltin = (function() {
   "use strict";
-  var Abstract, Address, Brand, Cache, Cart, Category, Checkout, Collection, Currency, Customer, CustomerGroup, Email, Entry, Field, Flow, Gateway, Language, Modifier, Order, Payment, Product, Promotion, Shipping, Stats, Storage, Tax, Transaction, Variation, Webhook;
+  var Abstract, Address, Brand, Cache, Cart, Category, Checkout, Collection, Currency, Customer, CustomerGroup, Email, Entry, Field, Flow, Gateway, Language, Modifier, Order, Payment, Product, Promotion, Shipping, Stats, Tax, Transaction, Variation, Webhook;
 
   Moltin.prototype.options = {
     publicId: '',
@@ -217,77 +217,6 @@ Moltin = (function() {
       return _data.result;
     }
   };
-
-  Moltin.prototype.Ajax = function(options) {
-    var args, k, request, timeout, v, _ref;
-    args = {
-      method: 'GET',
-      async: false,
-      data: null,
-      timeout: 60000,
-      headers: {},
-      host: this.options.url,
-      port: 443,
-      path: '/',
-      success: function(response, status, request) {},
-      error: function(response, status, request) {}
-    };
-    args = this.Merge(args, options);
-    args.method = args.method.toUpperCase();
-    request = new XMLHttpRequest();
-    args.url = (args.port === 443 ? 'https://' : 'http://') + args.host + (args.path.substr(0, 1) !== '/' ? '/' + this.options.version + '/' + args.path : args.path);
-    if (args.method === 'GET') {
-      args.url += '?' + this.Serialize(args.data);
-      args.data = null;
-    } else {
-      args.data = this.Serialize(args.data);
-    }
-    request.open(args.method, args.url, args.async);
-    timeout = setTimeout((function(_this) {
-      return function() {
-        request.abort();
-        return args.error(request, 408, 'Your request timed out');
-      };
-    })(this), args.timeout);
-    _ref = args.headers;
-    for (k in _ref) {
-      v = _ref[k];
-      request.setRequestHeader(k, v);
-    }
-    request.onreadystatechange = function() {
-      var response;
-      if (request.readyState !== 4) {
-        return null;
-      }
-      clearTimeout(timeout);
-      response = JSON.parse(request.responseText);
-      if (request.status.toString().charAt(0) !== '2') {
-        return args.error(response, request.status, request);
-      } else {
-        return args.success(response, request.status, request);
-      }
-    };
-    return request.send(args.data);
-  };
-
-  Storage = (function() {
-    function Storage() {}
-
-    Storage.prototype.set = function(key, value) {
-      return sessionStorage.setItem(key, value);
-    };
-
-    Storage.prototype.get = function(key) {
-      return sessionStorage.getItem(key);
-    };
-
-    Storage.prototype.remove = function(key) {
-      return sessionStorage.removeItem(key);
-    };
-
-    return Storage;
-
-  })();
 
   Abstract = (function() {
     function Abstract(m) {
@@ -632,4 +561,4 @@ Moltin = (function() {
 
 })();
 
-//# sourceMappingURL=moltin.tvjs.js.map
+//# sourceMappingURL=moltin.node.js.map

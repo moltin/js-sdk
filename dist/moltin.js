@@ -104,8 +104,11 @@ Moltin = (function() {
       }
     }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
-        token: this.Storage.get('mtoken'),
-        expires: this.Storage.get('mexpires')
+        expires: this.Storage.get('mexpires'),
+        identifier: this.Storage.get('midentifier'),
+        expires_in: this.Storage.get('mexpires'),
+        access_token: this.Storage.get('mtoken'),
+        token_type: this.Storage.get('mtype')
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
@@ -126,11 +129,17 @@ Moltin = (function() {
       success: (function(_this) {
         return function(r, c, e) {
           _this.options.auth = {
-            token: r.access_token,
-            expires: parseInt(r.expires) * 1000
+            expires: r.expires,
+            identifier: r.identifier,
+            expires_in: r.expires_in,
+            access_token: r.access_token,
+            token_type: r.token_type
           };
+          _this.Storage.set('mexpires', r.expires);
+          _this.Storage.set('midentifier', r.identifier);
+          _this.Storage.set('mexpires', r.expires_in);
           _this.Storage.set('mtoken', r.access_token);
-          _this.Storage.set('mexpires', _this.options.auth.expires);
+          _this.Storage.set('mtype', r.token_type);
           if (typeof callback === 'function') {
             callback(r);
           }          _e = document.createEvent('CustomEvent');

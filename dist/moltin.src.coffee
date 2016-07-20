@@ -48,6 +48,7 @@ class Moltin
     @Stats         = new Stats @
     @Transaction   = new Transaction @
     @Variation     = new Variation @
+    @Modifier      = new Modifier @
     @Webhook       = new Webhook @
     `// @endif
     `
@@ -106,10 +107,13 @@ class Moltin
     `
 
     if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
-      
+
       @options.auth =
-        token:   @Storage.get 'mtoken'
-        expires: @Storage.get 'mexpires'
+        expires:   @Storage.get 'mexpires'
+        identifier: @Storage.get 'midentifier'
+        expires_in: @Storage.get 'mexpires'
+        access_token: @Storage.get 'mtoken'
+        token_type: @Storage.get 'mtype'
 
       if typeof callback == 'function'
         callback @options.auth
@@ -150,11 +154,17 @@ class Moltin
         'Content-Type': 'application/x-www-form-urlencoded'
       success: (r, c, e) =>
         @options.auth =
-          token:   r.access_token
-          expires: parseInt(r.expires) * 1000
+          expires: r.expires
+          identifier: r.identifier
+          expires_in: r.expires_in
+          access_token: r.access_token
+          token_type: r.token_type
 
+        @Storage.set 'mexpires', r.expires
+        @Storage.set 'midentifier', r.identifier
+        @Storage.set 'mexpires', r.expires_in
         @Storage.set 'mtoken', r.access_token
-        @Storage.set 'mexpires', @options.auth.expires
+        @Storage.set 'mtype', r.token_type
 
         if typeof callback == 'function'
           callback r
