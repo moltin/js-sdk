@@ -109,11 +109,8 @@ class Moltin
     if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 
       @options.auth =
-        expires:   @Storage.get 'mexpires'
-        identifier: @Storage.get 'midentifier'
-        expires_in: @Storage.get 'mexpires'
-        access_token: @Storage.get 'mtoken'
-        token_type: @Storage.get 'mtype'
+        expires: parseInt(@Storage.get('mexpires')) * 1000
+        token:   @Storage.get 'mtoken'
 
       if typeof callback == 'function'
         callback @options.auth
@@ -153,18 +150,13 @@ class Moltin
       headers:
         'Content-Type': 'application/x-www-form-urlencoded'
       success: (r, c, e) =>
-        @options.auth =
-          expires: r.expires
-          identifier: r.identifier
-          expires_in: r.expires_in
-          access_token: r.access_token
-          token_type: r.token_type
 
         @Storage.set 'mexpires', r.expires
-        @Storage.set 'midentifier', r.identifier
-        @Storage.set 'mexpires', r.expires_in
-        @Storage.set 'mtoken', r.access_token
-        @Storage.set 'mtype', r.token_type
+        @Storage.set 'mtoken', r.token_type+' '+r.access_token
+
+        @options.auth =
+          expires: parseInt(@Storage.get('mexpires')) * 1000
+          token:   @Storage.get 'mtoken'
 
         if typeof callback == 'function'
           callback r
@@ -188,13 +180,13 @@ class Moltin
     _data    = {}
     _headers =
       'Content-Type': 'application/x-www-form-urlencoded'
-      'Authorization': 'Bearer '+@options.auth.token
+      'Authorization': @options.auth.token
 
     if @options.auth.token == null
       if typeof error == 'function'
         error 'error', 'You much authenticate first', 401
 
-    if Date.now() > parseInt(@Storage.get('mexpires'))
+    if Date.now() >= @options.auth.expires
       @Authenticate null, error
 
     if not @InArray method, @options.methods

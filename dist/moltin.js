@@ -104,11 +104,8 @@ Moltin = (function() {
       }
     }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
-        expires: this.Storage.get('mexpires'),
-        identifier: this.Storage.get('midentifier'),
-        expires_in: this.Storage.get('mexpires'),
-        access_token: this.Storage.get('mtoken'),
-        token_type: this.Storage.get('mtype')
+        expires: parseInt(this.Storage.get('mexpires')) * 1000,
+        token: this.Storage.get('mtoken')
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
@@ -128,18 +125,12 @@ Moltin = (function() {
       },
       success: (function(_this) {
         return function(r, c, e) {
-          _this.options.auth = {
-            expires: r.expires,
-            identifier: r.identifier,
-            expires_in: r.expires_in,
-            access_token: r.access_token,
-            token_type: r.token_type
-          };
           _this.Storage.set('mexpires', r.expires);
-          _this.Storage.set('midentifier', r.identifier);
-          _this.Storage.set('mexpires', r.expires_in);
-          _this.Storage.set('mtoken', r.access_token);
-          _this.Storage.set('mtype', r.token_type);
+          _this.Storage.set('mtoken', r.token_type + ' ' + r.access_token);
+          _this.options.auth = {
+            expires: parseInt(_this.Storage.get('mexpires')) * 1000,
+            token: _this.Storage.get('mtoken')
+          };
           if (typeof callback === 'function') {
             callback(r);
           }          _e = document.createEvent('CustomEvent');
@@ -169,14 +160,14 @@ Moltin = (function() {
     _data = {};
     _headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + this.options.auth.token
+      'Authorization': this.options.auth.token
     };
     if (this.options.auth.token === null) {
       if (typeof error === 'function') {
         error('error', 'You much authenticate first', 401);
       }
     }
-    if (Date.now() > parseInt(this.Storage.get('mexpires'))) {
+    if (Date.now() >= this.options.auth.expires) {
       this.Authenticate(null, error);
     }
     if (!this.InArray(method, this.options.methods)) {
