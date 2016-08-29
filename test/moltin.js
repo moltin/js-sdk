@@ -9,6 +9,7 @@ var options = {
     debug: false
 }
 
+// Testing individual functions return the correct data
 describe('Moltin Unit Tests', function(){
 
   beforeEach(function() {
@@ -48,4 +49,29 @@ describe('Moltin Unit Tests', function(){
     expect(this.moltin.options.version).toMatch(options.version);
     expect(this.moltin.options.debug).toEqual(options.debug);
   });
+});
+
+// Testing functions perform as they should
+describe('Moltin Functional Tests', function(){
+
+    beforeEach(function() {
+        this.moltin = new Moltin(options);
+    });
+
+    // Test Storage
+    it("should set get and delete storage correctly", function() {
+        var key = "monkey";
+        var value = "balls";
+        var days = 1;
+
+        // Set and get
+        this.moltin.Storage.set(key, value, days);
+        expect(this.moltin.Storage.get(key)).toMatch(value);
+
+        // Delete and get
+        this.moltin.Storage.remove(key);
+        expect(this.moltin.Storage.get(key)).toBe(null);
+    });
+
+    //
 });
