@@ -19,7 +19,7 @@ class Moltin
       console.log type + ": " + msg
 
   constructor: (overrides) ->
-
+      
     @options = @Merge @options, overrides
     @Storage = new Storage
 
