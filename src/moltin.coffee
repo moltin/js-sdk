@@ -3,16 +3,18 @@ class Moltin
   "use strict"
 
   options:
-    publicId:  ''
-    secretKey: ''
-    auth:      {}
-    url:       'api.molt.in'
-    version:   'v1'
-    debug:     false
-    currency:  false
-    language:  false
-    methods:   ['GET', 'POST', 'PUT', 'DELETE']
-    notice:    (type, msg) ->
+    clientId: ''
+    clientSecret: ''
+    auth: {}
+    url: 'api.molt.in'
+    port: '443'
+    protocol: 'https'
+    version: 'v2'
+    debug: false
+    currency: false
+    language: false
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+    notice: (type, msg) ->
 
       console.log type + ": " + msg
 
@@ -35,23 +37,6 @@ class Moltin
     @Product       = new Product @
     @Shipping      = new Shipping @
     @Tax           = new Tax @
-    `// @if TARGET=='nodejs'
-    `
-    @Cache         = new Cache @
-    @Customer      = new Customer @
-    @CustomerGroup = new CustomerGroup @
-    @Email         = new Email @
-    @Field         = new Field @
-    @Flow          = new Flow @
-    @Payment       = new Payment @
-    @Promotion     = new Promotion @
-    @Stats         = new Stats @
-    @Transaction   = new Transaction @
-    @Variation     = new Variation @
-    @Modifier      = new Modifier @
-    @Webhook       = new Webhook @
-    `// @endif
-    `
 
     if @Storage.get 'mcurrency'
       @options.currency = @Storage.get 'mcurrency'
@@ -98,14 +83,6 @@ class Moltin
       if typeof error == 'function'
         error 'error', 'Public ID must be set', 401
 
-    `// @if TARGET=='nodejs'
-    `
-    if @options.secretKey.length <= 0
-      if typeof error == 'function'
-        error 'error', 'Secret Key must be set', 401
-    `// @endif
-    `
-
     if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
 
       @options.auth =
@@ -115,32 +92,11 @@ class Moltin
       if typeof callback == 'function'
         callback @options.auth
 
-      `// @if TARGET=='js'
-      `
       _e = document.createEvent 'CustomEvent'
       _e.initCustomEvent 'MoltinReady', false, false, @
       window.dispatchEvent _e
-      `// @endif
-      `
 
       return @
-
-    `// @if TARGET!='nodejs'
-    `
-    data =
-      grant_type: 'implicit',
-      client_id:  @options.publicId
-    `// @endif
-    `
-
-    `// @if TARGET=='nodejs'
-    `
-    data =
-      grant_type:   'client_credentials',
-      client_id:     @options.publicId
-      client_secret: @options.secretKey
-    `// @endif
-    `
 
     @Ajax
       method: 'POST'
@@ -161,13 +117,9 @@ class Moltin
         if typeof callback == 'function'
           callback r
 
-        `// @if TARGET=='js'
-        `
         _e = document.createEvent 'CustomEvent'
         _e.initCustomEvent 'MoltinReady', false, false, @
         window.dispatchEvent _e
-        `// @endif
-        `
 
       error: (e, c, r) =>
         if typeof error == 'function'
@@ -199,7 +151,7 @@ class Moltin
     if @options.language
       _headers['X-Language'] = @options.language
 
-    @Ajax 
+    @Ajax
       method: method
       path: uri
       data: data
@@ -208,7 +160,7 @@ class Moltin
       success: (r, c, e) =>
         if typeof callback == 'function'
           callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
-        else 
+        else
           _data = r
       error: (r, c, e) =>
         if r.status is false
