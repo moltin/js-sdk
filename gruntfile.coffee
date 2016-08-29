@@ -52,9 +52,10 @@ module.exports = (grunt) ->
         ]
     karma:
       unit:
+        configFile: 'karma.conf.js'
         options:
-          background: true
-          files: ['test/*.js']
+          background: false
+          files: ['src/*.coffee', 'src/features/*.coffee', 'test/*.js']
     uglify:
       postCompile:
         options:
