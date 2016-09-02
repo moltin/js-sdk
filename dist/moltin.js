@@ -1,318 +1,113 @@
 var Moltin,
-  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
   __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Moltin = (function() {
   "use strict";
-  var Abstract, Address, Brand, Cache, Cart, Category, Checkout, Collection, Currency, Customer, CustomerGroup, Email, Entry, Field, Flow, Gateway, Language, Modifier, Order, Payment, Product, Promotion, Shipping, Stats, Storage, Tax, Transaction, Variation, Webhook;
+  var Abstract, Address, Brand, Cache, Cart, Category, Checkout, Collection, Currency, Customer, CustomerGroup, Email, Entry, Field, Flow, Gateway, HelperFactory, Language, Modifier, Order, Payment, Products, Promotion, RequestFactory, Shipping, Stats, StorageFactory, Tax, Transaction, Variation, Webhook;
 
-  Moltin.prototype.options = {
-    publicId: '',
-    secretKey: '',
-    auth: {},
-    url: 'api.molt.in',
+  Moltin.prototype.config = {
+    clientId: '',
+    host: 'api.molt.in',
+    port: '443',
+    protocol: 'https',
     version: 'v1',
     debug: false,
     currency: false,
     language: false,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    notice: function(type, msg) {
-      return console.log(type + ": " + msg);
-    }
+    timeout: 60000,
+    contentType: 'application/json',
+    auth: {
+      expires: 3600,
+      uri: 'oauth/access_token'
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
   };
 
-  function Moltin(overrides) {
-    this.options = this.Merge(this.options, overrides);
-    this.Storage = new Storage;
-    this.Address = new Address(this);
-    this.Brand = new Brand(this);
-    this.Cart = new Cart(this);
-    this.Category = new Category(this);
-    this.Checkout = new Checkout(this);
-    this.Collection = new Collection(this);
-    this.Currency = new Currency(this);
-    this.Entry = new Entry(this);
-    this.Gateway = new Gateway(this);
-    this.Language = new Language(this);
-    this.Order = new Order(this);
-    this.Product = new Product(this);
-    this.Shipping = new Shipping(this);
-    this.Tax = new Tax(this);    if (this.Storage.get('mcurrency')) {
-      this.options.currency = this.Storage.get('mcurrency');
+  function Moltin(options) {
+    this.Helper = new HelperFactory;
+    this.config = this.Helper.Merge(this.config, options);
+    this.Storage = new StorageFactory(this);
+    this.RequestFactory = new RequestFactory(this);
+    this.Products = new Products(this);
+
+    /*
+    @Shipping      = new Shipping @
+    @Tax           = new Tax @
+    @Address       = new Address @
+    @Brand         = new Brand @
+    @Cart          = new Cart @
+    @Category      = new Category @
+    @Checkout      = new Checkout @
+    @Collection    = new Collection @
+    @Currency      = new Currency @
+    @Entry         = new Entry @
+    @Gateway       = new Gateway @
+    @Language      = new Language @
+    @Order         = new Order @
+     */
+    if (this.Storage.get('mcurrency')) {
+      this.config.currency = this.Storage.get('mcurrency');
     }
     if (this.Storage.get('mlanguage')) {
-      this.options.language = this.Storage.get('mlanguage');
+      this.config.language = this.Storage.get('mlanguage');
     }
+    return this;
   }
 
-  Moltin.prototype.Merge = function(o1, o2) {
-    var k, o3, v;
-    o3 = {};
-    for (k in o1) {
-      v = o1[k];
-      o3[k] = v;
+  Moltin.prototype.Authenticate = function() {
+    var c, data, headers, promise, r, s;
+    if (this.config.clientId.length <= 0) {
+      throw new Error("You must have a client id set");
     }
-    for (k in o2) {
-      v = o2[k];
-      o3[k] = v;
-    }
-    return o3;
-  };
-
-  Moltin.prototype.InArray = function(key, arr) {
-    if (!arr || __indexOf.call(arr, key) < 0) {
-      return false;
-    }
-    return true;
-  };
-
-  Moltin.prototype.Serialize = function(obj, prefix) {
-    var k, str, v;
-    if (prefix == null) {
-      prefix = null;
-    }
-    str = [];
-    for (k in obj) {
-      v = obj[k];
-      k = prefix !== null ? prefix + '[' + k + ']' : k;
-      str.push(typeof v === 'object' ? this.Serialize(v, k) : encodeURIComponent(k) + '=' + encodeURIComponent(v));
-    }
-    return str.join('&');
-  };
-
-  Moltin.prototype.Error = function(response) {
-    var k, msg, v, _ref;
-    msg = '';
-    if (typeof response.errors !== 'undefind') {
-      _ref = response.errors;
-      for (k in _ref) {
-        v = _ref[k];
-        msg += v + '<br />';
-      }
-    } else {
-      msg = response.error;
-    }
-    return this.options.notice('Error', msg);
-  };
-
-  Moltin.prototype.Authenticate = function(callback, error) {
-    var data, _e;
-    if (this.options.publicId.length <= 0) {
-      if (typeof error === 'function') {
-        error('error', 'Public ID must be set', 401);
-      }
-    }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
-      this.options.auth = {
-        expires: parseInt(this.Storage.get('mexpires')) * 1000,
-        token: this.Storage.get('mtoken')
-      };
-      if (typeof callback === 'function') {
-        callback(this.options.auth);
-      }      _e = document.createEvent('CustomEvent');
-      _e.initCustomEvent('MoltinReady', false, false, this);
-      window.dispatchEvent(_e);      return this;
-    }    data = {
+    data = {
       grant_type: 'implicit',
-      client_id: this.options.publicId
-    };    this.Ajax({
-      method: 'POST',
-      path: '/oauth/access_token',
-      data: data,
-      async: typeof callback === 'function' ? true : false,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      success: (function(_this) {
-        return function(r, c, e) {
-          _this.Storage.set('mexpires', r.expires);
-          _this.Storage.set('mtoken', r.token_type + ' ' + r.access_token);
-          _this.options.auth = {
-            expires: parseInt(_this.Storage.get('mexpires')) * 1000,
-            token: _this.Storage.get('mtoken')
-          };
-          if (typeof callback === 'function') {
-            callback(r);
-          }          _e = document.createEvent('CustomEvent');
-          _e.initCustomEvent('MoltinReady', false, false, _this);
-          window.dispatchEvent(_e);
-          return        };
-      })(this),
-      error: (function(_this) {
-        return function(e, c, r) {
-          if (typeof error === 'function') {
-            return error('error', 'Authorization failed', 401);
-          }
-        };
-      })(this)
+      client_id: this.config.clientId
+    };
+    headers = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    };
+    r = this.RequestFactory;
+    s = this.Storage;
+    c = this.config;
+    promise = new Promise(function(resolve, reject) {
+      return r.make(c.auth.uri, 'POST', data, headers).then(function(data) {
+        s.set('mexpires', r.expires);
+        s.set('mtoken', data.access_token, 1);
+        return resolve(data);
+      })["catch"](function(error) {
+        return reject(error);
+      });
     });
-    return this;
+    return promise;
   };
 
-  Moltin.prototype.Request = function(uri, method, data, callback, error) {
-    var _data, _headers;
-    if (method == null) {
-      method = 'GET';
+  Moltin.prototype.Request = function(uri, method, data, headers) {
+    var promise, r, s;
+    if (headers == null) {
+      headers = {};
     }
-    if (data == null) {
-      data = null;
-    }
-    _data = {};
-    _headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': this.options.auth.token
-    };
-    if (this.options.auth.token === null) {
-      if (typeof error === 'function') {
-        error('error', 'You much authenticate first', 401);
-      }
-    }
-    if (Date.now() >= this.options.auth.expires) {
-      this.Authenticate(null, error);
-    }
-    if (!this.InArray(method, this.options.methods)) {
-      if (typeof error === 'function') {
-        error('error', 'Invalid request method (' + method + ')', 400);
-      }
-    }
-    if (this.options.currency) {
-      _headers['X-Currency'] = this.options.currency;
-    }
-    if (this.options.language) {
-      _headers['X-Language'] = this.options.language;
-    }
-    this.Ajax({
-      method: method,
-      path: uri,
-      data: data,
-      async: typeof callback === 'function' ? true : false,
-      headers: _headers,
-      success: (function(_this) {
-        return function(r, c, e) {
-          if (typeof callback === 'function') {
-            return callback(r.result, typeof r.pagination !== 'undefined' ? r.pagination : null);
-          } else {
-            return _data = r;
-          }
-        };
-      })(this),
-      error: (function(_this) {
-        return function(r, c, e) {
-          if (r.status === false) {
-            if (typeof error === 'function') {
-              error('error', (typeof r.errors !== 'undefined' ? r.errors : r.error), c);
-            } else {
-              _this.Error((typeof r.errors !== 'undefined' ? r.errors : r.error));
-            }
-          }
-          return _data = r;
-        };
-      })(this)
+    r = this.RequestFactory;
+    s = this.Storage;
+    promise = new Promise(function(resolve, reject) {
+      var token;
+      token = s.get('mtoken');
+      headers['Authorization'] = 'Bearer: ' + token;
+      return r.make(uri, method, data, headers).then(function(data) {
+        return resolve(data);
+      })["catch"](function(error) {
+        return reject(error);
+      });
     });
-    if (typeof callback === 'undefined') {
-      return _data.result;
-    }
-  };
-
-  Moltin.prototype.Ajax = function(options) {
-    var args, e, k, request, timeout, v, _ref;
-    args = {
-      method: 'GET',
-      async: false,
-      data: null,
-      timeout: 60000,
-      headers: {},
-      host: this.options.url,
-      port: 443,
-      path: '/',
-      success: function(response, status, request) {},
-      error: function(response, status, request) {}
-    };
-    args = this.Merge(args, options);
-    args.method = args.method.toUpperCase();
-    try {
-      request = new XMLHttpRequest();
-    } catch (_error) {
-      e = _error;
-      try {
-        request = new ActiveXObject("Msxml2.XMLHTTP");
-      } catch (_error) {
-        e = _error;
-        return false;
-      }
-    }
-    args.url = (args.port === 443 ? 'https://' : 'http://') + args.host + (args.path.substr(0, 1) !== '/' ? '/' + this.options.version + '/' + args.path : args.path);
-    if (args.method === 'GET') {
-      args.url += '?' + this.Serialize(args.data);
-      args.data = null;
+    if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
+      return this.Authenticate.then()(function() {
+        return promise;
+      });
     } else {
-      args.data = this.Serialize(args.data);
+      return promise;
     }
-    request.open(args.method, args.url, args.async);
-    timeout = setTimeout((function(_this) {
-      return function() {
-        request.abort();
-        return args.error(request, 408, 'Your request timed out');
-      };
-    })(this), args.timeout);
-    _ref = args.headers;
-    for (k in _ref) {
-      v = _ref[k];
-      request.setRequestHeader(k, v);
-    }
-    request.onreadystatechange = function() {
-      var response;
-      if (request.readyState !== 4) {
-        return null;
-      }
-      clearTimeout(timeout);
-      response = JSON.parse(request.responseText);
-      if (request.status.toString().charAt(0) !== '2') {
-        return args.error(response, request.status, request);
-      } else {
-        return args.success(response, request.status, request);
-      }
-    };
-    return request.send(args.data);
   };
-
-  Storage = (function() {
-    function Storage() {}
-
-    Storage.prototype.set = function(key, value, days) {
-      var date, expires;
-      expires = "";
-      if (days) {
-        date = new Date;
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      return document.cookie = key + "=" + value + expires + "; path=/";
-    };
-
-    Storage.prototype.get = function(key) {
-      var c, _i, _len, _ref;
-      key = key + "=";
-      _ref = document.cookie.split(';');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        c = _ref[_i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(key) === 0) {
-          return c.substring(key.length, c.length);
-        }
-      }
-      return null;
-    };
-
-    Storage.prototype.remove = function(key) {
-      return this.set(key, '', -1);
-    };
-
-    return Storage;
-
-  })();
 
   Abstract = (function() {
     function Abstract(m) {
@@ -327,8 +122,8 @@ Moltin = (function() {
       return this.m.Request(this.endpoint, 'GET', terms, callback, error);
     };
 
-    Abstract.prototype.List = function(terms, callback, error) {
-      return this.m.Request(this.endpoint, 'GET', terms, callback, error);
+    Abstract.prototype.List = function(terms) {
+      return this.m.Request(this.endpoint, 'GET', terms);
     };
 
     Abstract.prototype.Fields = function(id, callback, error) {
@@ -339,6 +134,7 @@ Moltin = (function() {
       uri = this.endpoint + '/' + (id !== 0 ? id + '/fields' : 'fields');
       return this.m.Request(uri, 'GET', null, callback, error);
     };
+
     return Abstract;
 
   })();
@@ -605,28 +401,28 @@ Moltin = (function() {
     return Order;
 
   })(Abstract);
-  Product = (function(_super) {
-    __extends(Product, _super);
+  Products = (function(_super) {
+    __extends(Products, _super);
 
-    function Product() {
-      return Product.__super__.constructor.apply(this, arguments);
+    function Products() {
+      return Products.__super__.constructor.apply(this, arguments);
     }
 
-    Product.prototype.endpoint = 'products';
+    Products.prototype.endpoint = 'products';
 
-    Product.prototype.Search = function(terms, callback, error) {
+    Products.prototype.Search = function(terms, callback, error) {
       return this.m.Request(this.endpoint + '/search', 'GET', terms, callback, error);
     };
 
-    Product.prototype.Modifiers = function(id, callback, error) {
+    Products.prototype.Modifiers = function(id, callback, error) {
       return this.m.Request(this.endpoint + '/' + id + '/modifiers', 'GET', null, callback, error);
     };
 
-    Product.prototype.Variations = function(id, callback, error) {
+    Products.prototype.Variations = function(id, callback, error) {
       return this.m.Request(this.endpoint + '/' + id + '/variations', 'GET', null, callback, error);
     };
 
-    return Product;
+    return Products;
 
   })(Abstract);
   Shipping = (function(_super) {
@@ -653,6 +449,171 @@ Moltin = (function() {
     return Tax;
 
   })(Abstract);
+  HelperFactory = (function() {
+    function HelperFactory() {}
+
+    HelperFactory.prototype.Merge = function(o1, o2) {
+      var k, o3, v;
+      o3 = {};
+      for (k in o1) {
+        v = o1[k];
+        o3[k] = v;
+      }
+      for (k in o2) {
+        v = o2[k];
+        o3[k] = v;
+      }
+      return o3;
+    };
+
+    HelperFactory.prototype.InArray = function(key, arr) {
+      if (!arr || __indexOf.call(arr, key) < 0) {
+        return false;
+      }
+      return true;
+    };
+
+    HelperFactory.prototype.Serialize = function(obj, prefix) {
+      var k, str, v;
+      if (prefix == null) {
+        prefix = null;
+      }
+      str = [];
+      for (k in obj) {
+        v = obj[k];
+        k = prefix !== null ? prefix + '[' + k + ']' : k;
+        str.push(typeof v === 'object' ? this.Serialize(v, k) : encodeURIComponent(k) + '=' + encodeURIComponent(v));
+      }
+      return str.join('&');
+    };
+
+    HelperFactory.prototype.Error = function(response) {
+      var k, msg, v, _ref;
+      msg = '';
+      if (typeof response.errors !== 'undefind') {
+        _ref = response.errors;
+        for (k in _ref) {
+          v = _ref[k];
+          msg += v + '<br />';
+        }
+      } else {
+        msg = response.error;
+      }
+      return this.options.notice('Error', msg);
+    };
+
+    return HelperFactory;
+
+  })();
+
+  RequestFactory = (function() {
+    var driver;
+
+    driver = false;
+
+    function RequestFactory(m) {
+      var e;
+      this.m = m;
+      try {
+        this.driver = new XMLHttpRequest();
+      } catch (_error) {
+        e = _error;
+        try {
+          this.driver = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (_error) {
+          e = _error;
+          throw new Error("Request factory boot failed");
+        }
+      }
+      return this;
+    }
+
+    RequestFactory.prototype.make = function(uri, method, data, headers) {
+      var k, promise, r, timeout, url, v;
+      method = method.toUpperCase();
+      url = this.m.config.protocol + '://' + this.m.config.host + (uri !== 'oauth/access_token' ? '/' + this.m.config.version + '/' + uri : '/' + uri);
+      if (method === 'GET') {
+        url += '?' + this.m.Helper.Serialize(data);
+        data = null;
+      } else {
+        data = this.m.Helper.Serialize(data);
+      }
+      this.driver.open(method, url, true);
+      timeout = setTimeout((function(_this) {
+        return function() {
+          _this.driver.abort();
+          return _this.driver.error(_this.driver, 408, 'Your request timed out');
+        };
+      })(this), this.m.config.timeout);
+      for (k in headers) {
+        v = headers[k];
+        this.driver.setRequestHeader(k, v);
+      }
+      r = this.driver;
+      promise = new Promise(function(resolve, reject) {
+        return r.onreadystatechange = function() {
+          var err, json;
+          if (r.readyState !== 4) {
+            return null;
+          }
+          clearTimeout(timeout);
+          try {
+            json = JSON.parse(r.responseText);
+            return resolve(json);
+          } catch (_error) {
+            err = _error;
+            return reject(new Error(err));
+          }
+        };
+      });
+      this.driver.send(data);
+      return promise;
+    };
+
+    return RequestFactory;
+
+  })();
+
+  StorageFactory = (function() {
+    function StorageFactory(m) {
+      this.m = m;
+    }
+
+    StorageFactory.prototype.set = function(key, value, days) {
+      var date, expires;
+      expires = "";
+      if (days) {
+        date = new Date;
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+      }
+      return document.cookie = key + "=" + value + expires + "; path=/";
+    };
+
+    StorageFactory.prototype.get = function(key) {
+      var c, _i, _len, _ref;
+      key = key + "=";
+      _ref = document.cookie.split(';');
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        c = _ref[_i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1, c.length);
+        }
+        if (c.indexOf(key) === 0) {
+          return c.substring(key.length, c.length);
+        }
+      }
+      return null;
+    };
+
+    StorageFactory.prototype["delete"] = function(key) {
+      return this.set(key, '', -1);
+    };
+
+    return StorageFactory;
+
+  })();
+
   return Moltin;
 
 })();

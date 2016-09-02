@@ -2,25 +2,36 @@ class Moltin
 
   "use strict"
 
-  options:
-    publicId:  ''
-    secretKey: ''
-    auth:      {}
-    url:       'api.molt.in'
-    version:   'v1'
-    debug:     false
-    currency:  false
-    language:  false
-    methods:   ['GET', 'POST', 'PUT', 'DELETE']
-    notice:    (type, msg) ->
+  config:
+    clientId: ''
+    host: 'api.molt.in'
+    port: '443'
+    protocol: 'https'
+    version: 'v1'
+    debug: false
+    currency: false
+    language: false
+    timeout: 60000
+    contentType: 'application/json'
+    auth:
+      expires: 3600
+      uri: 'oauth/access_token'
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
 
-      console.log type + ": " + msg
+  constructor: (options) ->
 
-  constructor: (overrides) ->
+    @Helper = new HelperFactory
+    @config = @Helper.Merge @config, options
 
-    @options = @Merge @options, overrides
-    @Storage = new Storage
+    @Storage = new StorageFactory @
+    @RequestFactory = new RequestFactory @
 
+
+    @Products      = new Products @
+
+    ###
+    @Shipping      = new Shipping @
+    @Tax           = new Tax @
     @Address       = new Address @
     @Brand         = new Brand @
     @Cart          = new Cart @
@@ -32,282 +43,69 @@ class Moltin
     @Gateway       = new Gateway @
     @Language      = new Language @
     @Order         = new Order @
-    @Product       = new Product @
-    @Shipping      = new Shipping @
-    @Tax           = new Tax @
-    `// @if TARGET=='nodejs'
-    `
-    @Cache         = new Cache @
-    @Customer      = new Customer @
-    @CustomerGroup = new CustomerGroup @
-    @Email         = new Email @
-    @Field         = new Field @
-    @Flow          = new Flow @
-    @Payment       = new Payment @
-    @Promotion     = new Promotion @
-    @Stats         = new Stats @
-    @Transaction   = new Transaction @
-    @Variation     = new Variation @
-    @Modifier      = new Modifier @
-    @Webhook       = new Webhook @
-    `// @endif
-    `
+    ###
 
     if @Storage.get 'mcurrency'
-      @options.currency = @Storage.get 'mcurrency'
+      @config.currency = @Storage.get 'mcurrency'
 
     if @Storage.get 'mlanguage'
-      @options.language = @Storage.get 'mlanguage'
-
-  Merge: (o1, o2) ->
-
-    o3 = {}
-    o3[k] = v for k, v of o1
-    o3[k] = v for k, v of o2
-    return o3
-
-  InArray: (key, arr) ->
-
-    return false if not arr or key not in arr
-    return true
-
-  Serialize: (obj, prefix = null) ->
-
-    str = []
-
-    for k,v of obj
-      k = if prefix != null then prefix+'['+k+']' else k
-      str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
-
-    return str.join '&'
-
-  Error: (response) ->
-
-    msg = ''
-
-    if typeof response.errors != 'undefind'
-      msg += v+'<br />' for k,v of response.errors
-    else
-      msg = response.error
-
-    return @options.notice 'Error', msg
-
-  Authenticate: (callback, error)->
-
-    if @options.publicId.length <= 0
-      if typeof error == 'function'
-        error 'error', 'Public ID must be set', 401
-
-    `// @if TARGET=='nodejs'
-    `
-    if @options.secretKey.length <= 0
-      if typeof error == 'function'
-        error 'error', 'Secret Key must be set', 401
-    `// @endif
-    `
-
-    if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
-
-      @options.auth =
-        expires: parseInt(@Storage.get('mexpires')) * 1000
-        token:   @Storage.get 'mtoken'
-
-      if typeof callback == 'function'
-        callback @options.auth
-
-      `// @if TARGET=='js'
-      `
-      _e = document.createEvent 'CustomEvent'
-      _e.initCustomEvent 'MoltinReady', false, false, @
-      window.dispatchEvent _e
-      `// @endif
-      `
-
-      return @
-
-    `// @if TARGET!='nodejs'
-    `
-    data =
-      grant_type: 'implicit',
-      client_id:  @options.publicId
-    `// @endif
-    `
-
-    `// @if TARGET=='nodejs'
-    `
-    data =
-      grant_type:   'client_credentials',
-      client_id:     @options.publicId
-      client_secret: @options.secretKey
-    `// @endif
-    `
-
-    @Ajax
-      method: 'POST'
-      path: '/oauth/access_token'
-      data: data
-      async: if typeof callback == 'function' then true else false
-      headers:
-        'Content-Type': 'application/x-www-form-urlencoded'
-      success: (r, c, e) =>
-
-        @Storage.set 'mexpires', r.expires
-        @Storage.set 'mtoken', r.token_type+' '+r.access_token
-
-        @options.auth =
-          expires: parseInt(@Storage.get('mexpires')) * 1000
-          token:   @Storage.get 'mtoken'
-
-        if typeof callback == 'function'
-          callback r
-
-        `// @if TARGET=='js'
-        `
-        _e = document.createEvent 'CustomEvent'
-        _e.initCustomEvent 'MoltinReady', false, false, @
-        window.dispatchEvent _e
-        `// @endif
-        `
-
-      error: (e, c, r) =>
-        if typeof error == 'function'
-          error 'error', 'Authorization failed', 401
+      @config.language = @Storage.get 'mlanguage'
 
     return @
 
-  Request: (uri, method = 'GET', data = null, callback, error) ->
+  Authenticate: () ->
 
-    _data    = {}
-    _headers =
-      'Content-Type': 'application/x-www-form-urlencoded'
-      'Authorization': @options.auth.token
+    # Check Client ID is set
+    if @config.clientId.length <= 0
+      throw new Error "You must have a client id set"
 
-    if @options.auth.token == null
-      if typeof error == 'function'
-        error 'error', 'You much authenticate first', 401
+    data =
+      grant_type: 'implicit',
+      client_id:  @config.clientId
 
-    if Date.now() >= @options.auth.expires
-      @Authenticate null, error
+    headers =
+      'Content-Type': 'application/x-www-form-urlencoded'#@config.contentType
 
-    if not @InArray method, @options.methods
-      if typeof error == 'function'
-        error 'error', 'Invalid request method ('+method+')', 400
+    r = @RequestFactory
+    s = @Storage
+    c = @config
 
-    if @options.currency
-      _headers['X-Currency'] = @options.currency
+    promise = new Promise((resolve, reject) ->
 
-    if @options.language
-      _headers['X-Language'] = @options.language
+      r.make(c.auth.uri, 'POST', data, headers)
+      .then (data) ->
+        s.set 'mexpires', r.expires
+        s.set 'mtoken', data.access_token, 1
+        resolve data
+      .catch (error) ->
+        reject error
+    )
 
-    @Ajax 
-      method: method
-      path: uri
-      data: data
-      async: if typeof callback == 'function' then true else false
-      headers: _headers
-      success: (r, c, e) =>
-        if typeof callback == 'function'
-          callback r.result, if typeof r.pagination != 'undefined' then r.pagination else null
-        else 
-          _data = r
-      error: (r, c, e) =>
-        if r.status is false
-          if typeof error == 'function'
-            error 'error', ( if typeof r.errors != 'undefined' then r.errors else r.error ), c
-          else
-            @Error ( if typeof r.errors != 'undefined' then r.errors else r.error )
-        _data = r;
+    return promise
 
-    if typeof callback == 'undefined'
-      return _data.result
+  Request: (uri, method, data, headers = {}) ->
 
-  Ajax: (options) ->
+    r = @RequestFactory
+    s = @Storage
 
-    args =
-      method:   'GET'
-      async:    false
-      data:     null
-      timeout:  60000
-      headers:  {}
-      host:     @options.url
-      port:     443
-      path:     '/'
-      success:  (response, status, request) ->
-      error:    (response, status, request) ->
+    promise = new Promise((resolve, reject) ->
 
-    args = @Merge args, options
-    args.method = args.method.toUpperCase()
+      token = s.get 'mtoken'
+      headers['Authorization'] = 'Bearer: ' + token
 
-    try
-      request = new XMLHttpRequest()
-    catch e
-      try
-        request = new ActiveXObject("Msxml2.XMLHTTP")
-      catch e
-        return false;
+      r.make(uri, method, data, headers)
+      .then((data) ->
+        resolve data
+      ).catch((error) ->
+        reject error
+      )
+    )
 
-    args.url = ( if args.port == 443 then 'https://' else 'http://' ) + args.host +
-           ( if args.path.substr(0, 1) != '/' then '/' + @options.version + '/' + args.path else args.path )
-
-    if args.method == 'GET'
-      args.url += '?' + @Serialize args.data
-      args.data = null
+    if s.get 'mtoken' == null || Date.now() >= s.get 'mexpires'
+      @Authenticate
+      .then() -> return promise
     else
-      args.data = @Serialize args.data
-
-    request.open args.method, args.url, args.async
-
-    timeout = setTimeout =>
-      request.abort()
-      args.error request, 408, 'Your request timed out'
-    , args.timeout
-
-    request.setRequestHeader k, v for k,v of args.headers
-
-    request.onreadystatechange = ->
-
-      if request.readyState != 4
-        return null;
-
-      clearTimeout timeout
-
-      response = JSON.parse request.responseText
-
-      if request.status.toString().charAt(0) != '2'
-        args.error response, request.status, request
-      else
-        args.success response, request.status, request
-
-    request.send args.data
-
-  class Storage
-
-    constructor: () ->
-
-    set: (key, value, days) ->
-
-      expires = ""
-
-      if days
-        date = new Date
-        date.setTime(date.getTime() + (days*24*60*60*1000))
-        expires = "; expires=" + date.toGMTString()
-
-      document.cookie = key + "=" + value + expires + "; path=/"
-
-    get: (key) ->
-
-      key = key + "="
-      
-      for c in document.cookie.split(';')
-        c = c.substring(1, c.length) while c.charAt(0) is ' '
-        return c.substring(key.length, c.length) if c.indexOf(key) == 0
-      
-      return null
-
-    remove: (key) ->
-
-      @set key, '', -1
+      return promise
 
   class Abstract
 
@@ -321,32 +119,16 @@ class Moltin
 
       return @m.Request @endpoint, 'GET', terms, callback, error
 
-    List: (terms, callback, error) ->
+    List: (terms) ->
 
-      return @m.Request @endpoint, 'GET', terms, callback, error
+      return @m.Request @endpoint, 'GET', terms
 
     Fields: (id = 0, callback, error) ->
 
       uri  = @endpoint+'/'+ if id != 0 then id+'/fields' else 'fields'
-      
+
       return @m.Request uri, 'GET', null, callback, error
 
-    `// @if TARGET=='nodejs'
-    `
-    Create: (data, callback, error) ->
-
-      return @m.Request @endpoint, 'POST', data, callback, error
-
-    Update: (id, data, callback, error) ->
-
-      return @m.Request @endpoint+'/'+id, 'PUT', data, callback, error
-
-    Delete: (id, callback, error) ->
-
-      return @m.Request @endpoint+'/'+id, 'DELETE', null, callback, error
-
-    `// @endif
-    `
   class Address
 
     constructor: (@m) ->
@@ -839,7 +621,7 @@ class Moltin
   `// @endif
   `
 
-  class Product extends Abstract
+  class Products extends Abstract
 
     endpoint: 'products'
 
@@ -1000,3 +782,126 @@ class Moltin
 
   `// @endif
   `
+
+  class HelperFactory
+
+    constructor: () ->
+
+    Merge: (o1, o2) ->
+
+      o3 = {}
+      o3[k] = v for k, v of o1
+      o3[k] = v for k, v of o2
+      return o3
+
+    InArray: (key, arr) ->
+
+      return false if not arr or key not in arr
+      return true
+
+    Serialize: (obj, prefix = null) ->
+
+      str = []
+
+      for k,v of obj
+        k = if prefix != null then prefix+'['+k+']' else k
+        str.push if typeof v == 'object' then @Serialize v, k else encodeURIComponent(k)+'='+encodeURIComponent(v)
+
+      return str.join '&'
+
+    Error: (response) ->
+
+      msg = ''
+
+      if typeof response.errors != 'undefind'
+        msg += v+'<br />' for k,v of response.errors
+      else
+        msg = response.error
+
+      return @options.notice 'Error', msg
+
+  class RequestFactory
+
+    driver = false
+
+    constructor: (@m) ->
+      try
+        @driver = new XMLHttpRequest()
+      catch e
+        try
+          @driver = new ActiveXObject("Msxml2.XMLHTTP")
+        catch e
+          throw new Error "Request factory boot failed"
+
+      return @
+
+    make: (uri, method, data, headers) ->
+
+      method = method.toUpperCase()
+      url = @m.config.protocol + '://' + @m.config.host +
+        ( if uri != 'oauth/access_token' then '/' + @m.config.version + '/' + uri else '/' + uri )
+
+      if method == 'GET'
+        url += '?' + @m.Helper.Serialize data
+        data = null
+      else
+        data = @m.Helper.Serialize data
+
+      @driver.open method, url, true
+
+      timeout = setTimeout =>
+        @driver.abort()
+        @driver.error @driver, 408, 'Your request timed out'
+      , @m.config.timeout
+
+      @driver.setRequestHeader k, v for k,v of headers
+
+      r = @driver
+      promise = new Promise((resolve, reject) ->
+
+        r.onreadystatechange = ->
+
+          if r.readyState != 4
+            return null;
+
+          clearTimeout timeout
+
+          try
+            json = JSON.parse r.responseText
+            resolve json
+          catch err
+            reject new Error err
+      )
+
+      @driver.send data
+
+      return promise
+
+  class StorageFactory
+
+    constructor: (@m) ->
+
+    set: (key, value, days) ->
+
+      expires = ""
+
+      if days
+        date = new Date
+        date.setTime(date.getTime() + (days*24*60*60*1000))
+        expires = "; expires=" + date.toGMTString()
+
+      document.cookie = key + "=" + value + expires + "; path=/"
+
+    get: (key) ->
+
+      key = key + "="
+
+      for c in document.cookie.split(';')
+        c = c.substring(1, c.length) while c.charAt(0) is ' '
+        return c.substring(key.length, c.length) if c.indexOf(key) == 0
+
+      return null
+
+    delete: (key) ->
+
+      @set key, '', -1
