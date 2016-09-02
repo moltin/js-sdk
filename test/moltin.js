@@ -1,77 +1,79 @@
-// Test new moltin
-var options = {
-    clientId: '',
-    clientSecret: '',
-    url: 'api.molt.in',
-    port: '80',
-    protocol: 'http',
-    version: 'v2',
-    debug: false
-}
 
-// Testing individual functions return the correct data
-describe('Moltin Unit Tests', function(){
+describe('Moltin Authentication Test', function() {
 
-  beforeEach(function() {
-      this.moltin = new Moltin(options);
-  });
+    it("should throw an error when a client id is not set", function() {
+        var moltin = new Moltin();
+        moltin.config.clientId = '';
+        expect(function() { moltin.Authenticate() }).toThrow(new Error("You must have a client id set"));
+    });
 
-  // Test merge function
-  it("merges objects correctly together", function() {
-      var obj1 = {a: 1, b: 2, c: 3}
-      var obj2 = {a: "a", d: 4}
-      var obj3 = {a: "a", b: 2, c: 3, d: 4}
-      expect(this.moltin.Merge(obj1, obj2)).toEqual(obj3);
-  });
+    it("should return a promise", function() {
+      var moltin = new Moltin();
+      var promise = moltin.Authenticate();
+      expect(Promise.resolve(promise) == promise).toBe(true);
+    });
 
-  // Test Serialize function
-  it("serializes an object correctly", function() {
-      var obj = {a: 1, b: 2}
-      var prefix = "?";
-      var serializedString = "%3F%5Ba%5D=1&%3F%5Bb%5D=2";
-      expect(this.moltin.Serialize(obj, prefix)).toEqual(serializedString);
-  });
+    it("should authenticate correctly", function(done) {
+      var moltin = new Moltin();
 
-  // Test inArray function
-  it("runs inarray correctly", function() {
-      var arr = ["monkey", "balls"];
-      expect(this.moltin.InArray("balls", arr)).toBe(true);
-      expect(this.moltin.InArray("sick", arr)).toBe(false);
-  });
+      var success = function(data) {
+        expect(data).not.toBe(null);
+      }
 
-  // Test override object
-  it("has merged options and overrides correctly", function() {
-    expect(this.moltin.options.clientId).toMatch(options.clientId);
-    expect(this.moltin.options.clientSecret).toMatch(options.clientSecret);
-    expect(this.moltin.options.url).toMatch(options.url);
-    expect(this.moltin.options.port).toMatch(options.port);
-    expect(this.moltin.options.protocol).toMatch(options.protocol);
-    expect(this.moltin.options.version).toMatch(options.version);
-    expect(this.moltin.options.debug).toEqual(options.debug);
+      var failure = function(error) {
+        expect(error).toBe(null);
+      }
+
+      var promise = moltin.Authenticate()
+          .then(success)
+          .catch(failure)
+          .then(done)
+    });
+
+  it("should store a token on authentication", function(done) {
+    var moltin = new Moltin();
+
+    var success = function(data) {
+      expect(moltin.Storage.get('mtoken')).toEqual(data.access_token);
+    }
+
+    var failure = function(error) {
+      expect(error).toBe(null);
+    }
+
+    var promise = moltin.Authenticate()
+        .then(success)
+        .catch(failure)
+        .then(done)
   });
 });
 
-// Testing functions perform as they should
-describe('Moltin Functional Tests', function(){
+describe('Moltin Service Test', function() {
 
-    beforeEach(function() {
-        this.moltin = new Moltin(options);
-    });
+  beforeEach(function() {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  });
 
-    // Test Storage
-    it("should set get and delete storage correctly", function() {
-        var key = "monkey";
-        var value = "balls";
-        var days = 1;
+  it("should return a promise when we make a service request", function() {
+    var moltin = new Moltin();
+    var promise = moltin.Products.List();
+    expect(Promise.resolve(promise) == promise).toBe(true);
+  });
 
-        // Set and get
-        this.moltin.Storage.set(key, value, days);
-        expect(this.moltin.Storage.get(key)).toMatch(value);
+  it("should return a list of products", function(done) {
+    var moltin = new Moltin();
 
-        // Delete and get
-        this.moltin.Storage.remove(key);
-        expect(this.moltin.Storage.get(key)).toBe(null);
-    });
+    var success = function(data) {
+      expect(data).not.toEqual(null);
+    }
 
-    //
+    var failure = function(error) {
+      expect(error).toBe(null);
+    }
+
+    var products = moltin.Products.List()
+        .then(success)
+        .catch(failure)
+        .then(done);
+  });
 });
