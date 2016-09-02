@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       'src/*.coffee',
       'src/features/*.coffee',
-      'src/js/*.coffee',
+      'src/services/*.coffee',
       'test/*.js'
     ],
 
