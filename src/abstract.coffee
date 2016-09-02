@@ -10,9 +10,9 @@
 
       return @m.Request @endpoint, 'GET', terms, callback, error
 
-    List: (terms, callback, error) ->
+    List: (terms) ->
 
-      return @m.Request @endpoint, 'GET', terms, callback, error
+      return @m.Request @endpoint, 'GET', terms
 
     Fields: (id = 0, callback, error) ->
 
