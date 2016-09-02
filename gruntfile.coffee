@@ -17,11 +17,9 @@ module.exports = (grunt) ->
             dest: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
             src: [
               'src/moltin.coffee',
-              'src/' + target + '/ajax.coffee',
-              'src/' + target + '/storage.coffee',
               'src/abstract.coffee',
-              'src/features/*.coffee'
-              'src/' + target + '/export.coffee'
+              'src/features/*.coffee',
+              'src/services/*.coffee'
             ]
           }
         ]
@@ -55,7 +53,7 @@ module.exports = (grunt) ->
         configFile: 'karma.conf.js'
         options:
           background: false
-          files: ['src/*.coffee', 'src/features/*.coffee', 'src/js/*.coffee', 'test/*.js']
+          files: ['src/*.coffee', 'src/features/*.coffee', 'src/services/*.coffee', 'test/*.js']
     uglify:
       postCompile:
         options:
