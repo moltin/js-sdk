@@ -1,4 +1,4 @@
-  class Product extends Abstract
+  class Products extends Abstract
 
     endpoint: 'products'
 
