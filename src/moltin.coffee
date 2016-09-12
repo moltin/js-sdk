@@ -3,7 +3,7 @@ class Moltin
   "use strict"
 
   config:
-    clientId: ''
+    clientId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'
     host: 'api.molt.in'
     port: '443'
     protocol: 'https'
