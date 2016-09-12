@@ -91,11 +91,10 @@
 (function() {
 
   // Authenticate
-  var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-  moltin.Authenticate(function() {
+  var moltin = new Moltin({publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
+  moltin.Authenticate().then(function() {
 
-    // Get featured products
-    moltin.Cart.Contents(function(response) {
+    moltin.Cart.Contents(1).then(function(response) {
 
       $('#sample').html(JSON.stringify(response, null, '\t'));
 

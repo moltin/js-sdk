@@ -91,39 +91,35 @@
 (function() {
 
   // Authenticate
-  var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-  moltin.Authenticate(function() {
+  var moltin = new Moltin({publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
 
-    // Get featured products
-    moltin.Product.Search({category: 'featured', limit: 12}, function(response) {
+  moltin.Products.Search({category: 'featured', limit: 12}).then(function(data) {
+    
+    // Loop them
+    for ( var k in data.result ) {
 
-      // Loop them
-      for ( var k in response ) {
-        
-        // Assign product
-        var product = response[k];
+      // Assign product
+      var product = data.result[k];
 
-        // Assign item element
-        $('#example .item').first().clone().appendTo('#example');
-        var item = $('#example .item').last();
+      // Assign item element
+      $('#example .item').first().clone().appendTo('#example');
+      var item = $('#example .item').last();
 
-        // Update our listing
-        item.find('.list-group-image').attr('src', first(product.images).url.http).attr('alt', product.title);
-        item.find('.list-group-item-heading').html(product.title);
-        item.find('.list-group-item-text').html(product.description);
-        item.find('.lead').html(product.pricing.formatted.without_tax);
-        item.find('.btn-success').on('click', function(e) { alert(product.title+' added to cart!'); });
-      }
 
-      // Cleanup
-      $('#example .item').first().remove();
+      // Update our listing
+      item.find('.list-group-image').attr('src', first(product.images).url.http).attr('alt', product.title);
+      item.find('.list-group-item-heading').html(product.title);
+      item.find('.list-group-item-text').html(product.description);
+      item.find('.lead').html(product.price.data.formatted.without_tax);
+      item.find('.btn-success').on('click', function(e) { alert(product.title+' added to cart!'); });
+    }
 
-      $('#sample').html(JSON.stringify(response, null, '\t'));
+    // Cleanup
+    $('#example .item').first().remove();
 
-    });
+    $('#sample').html(JSON.stringify(data, null, '\t'));
 
   });
-
 })();
     </script>
 
