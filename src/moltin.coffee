@@ -74,8 +74,8 @@ class Moltin
 
       r.make(c.auth.uri, 'POST', data, headers)
       .then (data) ->
-        s.set 'mexpires', r.expires
-        s.set 'mtoken', data.access_token, 1
+        s.set 'mexpires', data.expires
+        s.set 'mtoken', data.access_token
         resolve data
       .catch (error) ->
         reject error
