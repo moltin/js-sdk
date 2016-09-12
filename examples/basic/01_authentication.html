@@ -75,11 +75,10 @@
 
   // Authenticate
   var moltin = new Moltin({clientId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
-  moltin.Products.List()
-    .then(function(data) {
-      $('#sample').html(JSON.stringify(data, null, '\t'));
-    });
 
+  moltin.Products.List().then(function(data) {
+    $('#sample').html(JSON.stringify(data, null, '\t'));
+  })
 })();
     </script>
 

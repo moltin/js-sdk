@@ -74,8 +74,8 @@ class Moltin
 
       r.make(c.auth.uri, 'POST', data, headers)
       .then (data) ->
-        s.set 'mexpires', r.expires
-        s.set 'mtoken', data.access_token, 1
+        s.set 'mexpires', data.expires
+        s.set 'mtoken', data.access_token
         resolve data
       .catch (error) ->
         reject error
@@ -243,27 +243,14 @@ class Moltin
 
     constructor: (@m) ->
 
-    set: (key, value, days) ->
+    set: (key, value) ->
 
-      expires = ""
-
-      if days
-        date = new Date
-        date.setTime(date.getTime() + (days*24*60*60*1000))
-        expires = "; expires=" + date.toGMTString()
-
-      document.cookie = key + "=" + value + expires + "; path=/"
+      return window.localStorage.setItem(key, value);
 
     get: (key) ->
 
-      key = key + "="
-
-      for c in document.cookie.split(';')
-        c = c.substring(1, c.length) while c.charAt(0) is ' '
-        return c.substring(key.length, c.length) if c.indexOf(key) == 0
-
-      return null
+      return window.localStorage.getItem(key)
 
     delete: (key) ->
 
-      @set key, '', -1
+      return window.localStorage.removeItem(key)

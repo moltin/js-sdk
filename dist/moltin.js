@@ -73,10 +73,10 @@ Moltin = (function() {
     c = this.config;
     promise = new Promise(function(resolve, reject) {
       return r.make(c.auth.uri, 'POST', data, headers).then(function(data) {
-        s.set('mexpires', r.expires);
-        s.set('mtoken', data.access_token, 1);
+        s.set('mexpires', data.expires);
+        s.set('mtoken', data.access_token);
         return resolve(data);
-      }).catch(function(error) {
+      })["catch"](function(error) {
         return reject(error);
       });
     });
@@ -96,18 +96,15 @@ Moltin = (function() {
       headers['Authorization'] = 'Bearer: ' + token;
       return r.make(uri, method, data, headers).then(function(data) {
         return resolve(data);
-      }).catch(function(error) {
+      })["catch"](function(error) {
         return reject(error);
       });
     });
-    if (s.get('mtoken' === null) || Date.now() >= s.get('mexpires')) {
-      console.log("DIS");
-      return this.Authenticate().then(function() {
-        console.log(promise);
+    if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
+      return this.Authenticate.then()(function() {
         return promise;
       });
     } else {
-      console.log("DAT");
       return promise;
     }
   };
@@ -260,7 +257,7 @@ Moltin = (function() {
       timeout = setTimeout((function(_this) {
         return function() {
           _this.driver.abort();
-          throw new Error("Request timed out: " + url);
+          return _this.driver.error(_this.driver, 408, 'Your request timed out');
         };
       })(this), this.m.config.timeout);
       for (k in headers) {
@@ -297,37 +294,16 @@ Moltin = (function() {
       this.m = m;
     }
 
-    StorageFactory.prototype.set = function(key, value, days) {
-      var date, expires;
-      expires = "";
-      if (days) {
-        date = new Date;
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-      }
-      console.log('setting');
-      return document.cookie = key + "=" + value + expires + "; path=/";
+    StorageFactory.prototype.set = function(key, value) {
+      return window.localStorage.setItem(key, value);
     };
 
     StorageFactory.prototype.get = function(key) {
-      var c, _i, _len, _ref;
-      key = key + "=";
-      _ref = document.cookie.split(';');
-      console.log('getting');
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        c = _ref[_i];
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1, c.length);
-        }
-        if (c.indexOf(key) === 0) {
-          return c.substring(key.length, c.length);
-        }
-      }
-      return null;
+      return window.localStorage.getItem(key);
     };
 
     StorageFactory.prototype["delete"] = function(key) {
-      return this.set(key, '', -1);
+      return window.localStorage.removeItem(key);
     };
 
     return StorageFactory;

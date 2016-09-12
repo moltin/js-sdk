@@ -74,22 +74,11 @@
 (function() {
 
   // Authenticate
-  var moltin = new Moltin({publicId: '85e4IP87t5jlB5w2Lv366UX0pJB69D2A0g309SSk'});
-  moltin.Authenticate(function() {
+  var moltin = new Moltin({publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
 
-    // Get your first product
-    moltin.Product.Get(6, function(response) {
-
-      // Your code here...
-
-      console.log(response);
-
-      $('#sample').html(JSON.stringify(response, null, '\t'));
-
-    });
-
-  });
-
+  moltin.Products.Get(902).then(function(data) {
+    $('#sample').html(JSON.stringify(data, null, '\t'));
+  })
 })();
     </script>
 
