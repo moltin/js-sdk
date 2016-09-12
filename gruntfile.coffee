@@ -18,7 +18,7 @@ module.exports = (grunt) ->
             src: [
               'src/moltin.coffee',
               'src/abstract.coffee',
-              'src/features/*.coffee',
+              'src/features/products.coffee',
               'src/services/*.coffee'
             ]
           }

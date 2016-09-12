@@ -5,10 +5,10 @@ var Moltin,
 
 Moltin = (function() {
   "use strict";
-  var Abstract, Address, Brand, Cache, Cart, Category, Checkout, Collection, Currency, Customer, CustomerGroup, Email, Entry, Field, Flow, Gateway, HelperFactory, Language, Modifier, Order, Payment, Products, Promotion, RequestFactory, Shipping, Stats, StorageFactory, Tax, Transaction, Variation, Webhook;
+  var Abstract, HelperFactory, Products, RequestFactory, StorageFactory;
 
   Moltin.prototype.config = {
-    clientId: '',
+    clientId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
     host: 'api.molt.in',
     port: '443',
     protocol: 'https',
@@ -76,7 +76,7 @@ Moltin = (function() {
         s.set('mexpires', r.expires);
         s.set('mtoken', data.access_token, 1);
         return resolve(data);
-      })["catch"](function(error) {
+      }).catch(function(error) {
         return reject(error);
       });
     });
@@ -96,15 +96,18 @@ Moltin = (function() {
       headers['Authorization'] = 'Bearer: ' + token;
       return r.make(uri, method, data, headers).then(function(data) {
         return resolve(data);
-      })["catch"](function(error) {
+      }).catch(function(error) {
         return reject(error);
       });
     });
-    if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
-      return this.Authenticate.then()(function() {
+    if (s.get('mtoken' === null) || Date.now() >= s.get('mexpires')) {
+      console.log("DIS");
+      return this.Authenticate().then(function() {
+        console.log(promise);
         return promise;
       });
     } else {
+      console.log("DAT");
       return promise;
     }
   };
@@ -139,268 +142,6 @@ Moltin = (function() {
 
   })();
 
-  Address = (function() {
-    function Address(m) {
-      this.m = m;
-    }
-
-    Address.prototype.Get = function(customer, id, callback, error) {
-      return this.m.Request('customers/' + customer + '/addresses/' + id, 'GET', null, callback, error);
-    };
-
-    Address.prototype.Find = function(customer, terms, callback, error) {
-      return this.m.Request('customers/' + customer + '/addresses', 'GET', terms, callback, error);
-    };
-
-    Address.prototype.List = function(customer, terms, callback, error) {
-      return this.m.Request('customers/' + customer + '/addresses', 'GET', terms, callback, error);
-    };
-
-    Address.prototype.Create = function(customer, data, callback, error) {
-      return this.m.Request('customers/' + customer + '/addresses', 'POST', data, callback, error);
-    };
-
-    Address.prototype.Fields = function(customer, id, callback, error) {
-      var uri;
-      if (customer == null) {
-        customer = 0;
-      }
-      if (id == null) {
-        id = 0;
-      }
-      if (customer > 0 && id <= 0) {
-        uri = 'customers/' + customer + '/addresses/fields';
-      } else if (customer > 0 && id > 0) {
-        uri = 'customers/' + customer + '/addresses/' + id + '/fields';
-      } else {
-        uri = 'addresses/fields';
-      }
-      return this.m.Request(uri, 'GET', null, callback, error);
-    };
-    return Address;
-
-  })();
-
-  Brand = (function(_super) {
-    __extends(Brand, _super);
-
-    function Brand() {
-      return Brand.__super__.constructor.apply(this, arguments);
-    }
-
-    Brand.prototype.endpoint = 'brands';
-
-    return Brand;
-
-  })(Abstract);
-  Cart = (function() {
-    function Cart(m) {
-      this.m = m;
-      this.cartId = this.Identifier();
-    }
-
-    Cart.prototype.Identifier = function(reset, id) {
-      if (reset == null) {
-        reset = false;
-      }
-      if (id == null) {
-        id = false;
-      }
-      if (!reset && !id && this.m.Storage.get('mcart') !== null) {
-        return this.m.Storage.get('mcart');
-      }
-      if (!id) {
-        id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, function(c) {
-          return (Math.random() * 16 | 0).toString(16);
-        });
-      }
-      this.m.Storage.set('mcart', id);
-      this.cartId = id;
-      return id;
-    };
-
-    Cart.prototype.Contents = function(callback, error) {
-      return this.m.Request('carts/' + this.cartId, 'GET', null, callback, error);
-    };
-
-    Cart.prototype.Insert = function(id, qty, mods, callback, error) {
-      if (qty == null) {
-        qty = 1;
-      }
-      if (mods == null) {
-        mods = null;
-      }
-      return this.m.Request('carts/' + this.cartId, 'POST', {
-        id: id,
-        quantity: qty,
-        modifier: mods
-      }, callback, error);
-    };
-
-    Cart.prototype.Update = function(id, data, callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'PUT', data, callback, error);
-    };
-
-    Cart.prototype.Delete = function(callback, error) {
-      return this.m.Request('carts/' + this.cartId, 'DELETE', null, callback, error);
-    };
-
-    Cart.prototype.Remove = function(id, callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'DELETE', null, callback, error);
-    };
-
-    Cart.prototype.Item = function(id, callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/item/' + id, 'GET', null, callback, error);
-    };
-
-    Cart.prototype.InCart = function(id, callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/has/' + id, 'GET', null, callback, error);
-    };
-
-    Cart.prototype.Checkout = function(callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/checkout', 'GET', null, callback, error);
-    };
-
-    Cart.prototype.Complete = function(data, callback, error) {
-      return this.m.Request('carts/' + this.cartId + '/checkout', 'POST', data, callback, error);
-    };
-
-    Cart.prototype.Discount = function(code, callback, error) {
-      if (code === null || code === false) {
-        return this.m.Request('carts/' + this.cartId + '/discount', 'DELETE', null, callback, error);
-      }
-      return this.m.Request('carts/' + this.cartId + '/discount', 'POST', {
-        code: code
-      }, callback, error);
-    };
-    return Cart;
-
-  })();
-
-  Category = (function(_super) {
-    __extends(Category, _super);
-
-    function Category() {
-      return Category.__super__.constructor.apply(this, arguments);
-    }
-
-    Category.prototype.endpoint = 'categories';
-
-    Category.prototype.Tree = function(terms, callback, error) {
-      return this.m.Request(this.endpoint + '/tree', 'GET', terms, callback, error);
-    };
-    return Category;
-
-  })(Abstract);
-
-  Checkout = (function() {
-    function Checkout(m) {
-      this.m = m;
-    }
-
-    Checkout.prototype.Payment = function(method, order, data, callback, error) {
-      return this.m.Request('checkout/payment/' + method + '/' + order, 'POST', data, callback, error);
-    };
-
-    return Checkout;
-
-  })();
-
-  Collection = (function(_super) {
-    __extends(Collection, _super);
-
-    function Collection() {
-      return Collection.__super__.constructor.apply(this, arguments);
-    }
-
-    Collection.prototype.endpoint = 'collections';
-
-    return Collection;
-
-  })(Abstract);
-
-  Currency = (function(_super) {
-    __extends(Currency, _super);
-
-    function Currency() {
-      return Currency.__super__.constructor.apply(this, arguments);
-    }
-
-    Currency.prototype.endpoint = 'currencies';
-
-    Currency.prototype.Set = function(code, callback, error) {
-      this.m.Storage.set('mcurrency', code);
-      this.m.options.currency = code;
-      if (typeof callback === 'function') {
-        return callback(code);
-      }
-    };
-
-    return Currency;
-
-  })(Abstract);
-  Entry = (function() {
-    function Entry(m) {
-      this.m = m;
-    }
-
-    Entry.prototype.Get = function(flow, id, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries/' + id, 'GET', null, callback, error);
-    };
-
-    Entry.prototype.Find = function(flow, terms, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries/search', 'GET', terms, callback, error);
-    };
-
-    Entry.prototype.List = function(flow, terms, callback, error) {
-      return this.m.Request('flows/' + flow + '/entries', 'GET', terms, callback, error);
-    };
-    return Entry;
-
-  })();
-  Gateway = (function() {
-    function Gateway(m) {
-      this.m = m;
-    }
-
-    Gateway.prototype.Get = function(slug, callback, error) {
-      return this.m.Request('gateways/' + slug, 'GET', null, callback, error);
-    };
-
-    Gateway.prototype.List = function(terms, callback, error) {
-      return this.m.Request('gateways', 'GET', terms, callback, error);
-    };
-    return Gateway;
-
-  })();
-
-  Language = (function() {
-    function Language(m) {
-      this.m = m;
-    }
-
-    Language.prototype.Set = function(code, callback, error) {
-      this.m.Storage.set('mlanguage', code);
-      this.m.options.language = code;
-      if (typeof callback === 'function') {
-        return callback(code);
-      }
-    };
-
-    return Language;
-
-  })();
-  Order = (function(_super) {
-    __extends(Order, _super);
-
-    Order.prototype.endpoint = 'orders';
-
-    function Order(m) {
-      this.m = m;
-    }
-    return Order;
-
-  })(Abstract);
   Products = (function(_super) {
     __extends(Products, _super);
 
@@ -425,30 +166,7 @@ Moltin = (function() {
     return Products;
 
   })(Abstract);
-  Shipping = (function(_super) {
-    __extends(Shipping, _super);
 
-    function Shipping() {
-      return Shipping.__super__.constructor.apply(this, arguments);
-    }
-
-    Shipping.prototype.endpoint = 'shipping';
-
-    return Shipping;
-
-  })(Abstract);
-  Tax = (function(_super) {
-    __extends(Tax, _super);
-
-    function Tax() {
-      return Tax.__super__.constructor.apply(this, arguments);
-    }
-
-    Tax.prototype.endpoint = 'taxes';
-
-    return Tax;
-
-  })(Abstract);
   HelperFactory = (function() {
     function HelperFactory() {}
 
@@ -542,7 +260,7 @@ Moltin = (function() {
       timeout = setTimeout((function(_this) {
         return function() {
           _this.driver.abort();
-          return _this.driver.error(_this.driver, 408, 'Your request timed out');
+          throw new Error("Request timed out: " + url);
         };
       })(this), this.m.config.timeout);
       for (k in headers) {
@@ -587,6 +305,7 @@ Moltin = (function() {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toGMTString();
       }
+      console.log('setting');
       return document.cookie = key + "=" + value + expires + "; path=/";
     };
 
@@ -594,6 +313,7 @@ Moltin = (function() {
       var c, _i, _len, _ref;
       key = key + "=";
       _ref = document.cookie.split(';');
+      console.log('getting');
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         c = _ref[_i];
         while (c.charAt(0) === ' ') {
