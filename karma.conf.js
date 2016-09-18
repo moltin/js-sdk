@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '.',
 
 
     // frameworks to use
@@ -15,10 +15,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/*.coffee',
-      'src/features/*.coffee',
-      'src/services/*.coffee',
-      'test/*.js'
+      './src/moltin.js',
+      './test/helperFactory.js',
+      './test/storageFactory.js',
+      './test/requestFactory.js',
+      './test/moltin.js'
     ],
 
 
@@ -29,8 +30,9 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    /*
     preprocessors: {
-        '**/*.coffee': ['coffee']
+      //  '**//*.coffee': ['coffee']
     },
 
     coffeePreprocessor: {
@@ -43,7 +45,7 @@ module.exports = function(config) {
         transformPath: function(path) {
             return path.replace(/\.coffee$/, '.js')
         }
-    },
+    },*/
 
 
     // test results reporter to use
@@ -62,7 +64,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes

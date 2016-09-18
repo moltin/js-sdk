@@ -30,23 +30,38 @@ describe('Moltin Authentication Test', function() {
           .then(done)
     });
 
-  it("should store a token on authentication", function(done) {
-    var moltin = new Moltin();
+    it("should re-authenticate if the token is expired", function(done) {
+      var moltin = new Moltin();
 
-    var success = function(data) {
-      expect(moltin.Storage.get('mtoken')).toEqual(data.access_token);
-    }
+      var success = function(data) {
 
-    var failure = function(error) {
-      expect(error).toBe(null);
-    }
+        moltin.Storage.set('mtoken', '');
+        var a = moltin.Storage.get('mtoken', '');
+        console.log(a);
 
-    var promise = moltin.Authenticate()
-        .then(success)
-        .catch(failure)
-        .then(done)
-  });
+
+        var products = moltin.Products.List({limit: 1})
+          .then(function(data) {
+            console.log(data);
+            console.log("suc");
+
+          }).catch(function(err) {
+            console.log("err");
+            console.log(err)
+          }).then(done)
+      }
+
+      var failure = function(error) {
+        console.log("FAIL");
+        expect(error).toBe(null);
+      }
+
+      var products = moltin.Products.List({limit: 1})
+          .then(success)
+          .catch(failure)
+    });
 });
+
 
 describe('Moltin Service Test', function() {
 
@@ -56,9 +71,10 @@ describe('Moltin Service Test', function() {
 
   it("should return a promise when we make a service request", function() {
     var moltin = new Moltin();
-    var promise = moltin.Products.List();
+    var promise = moltin.Products.List({limit: 1});
     expect(Promise.resolve(promise) == promise).toBe(true);
   });
+
 
   it("should return a list of products", function(done) {
     var moltin = new Moltin();
@@ -71,7 +87,7 @@ describe('Moltin Service Test', function() {
       expect(error).toBe(null);
     }
 
-    var products = moltin.Products.List()
+    var products = moltin.Products.List({limit: 1})
         .then(success)
         .catch(failure)
         .then(done);

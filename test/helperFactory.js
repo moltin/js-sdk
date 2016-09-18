@@ -2,7 +2,8 @@
 describe('Helper Factory Functionality', function(){
 
   beforeEach(function() {
-      this.helper = new HelperFactory();
+      var moltin = new Moltin();
+      this.helper = moltin.Helper;
   });
 
   // Test merge function

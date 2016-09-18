@@ -88,24 +88,26 @@
     <script src="../assets/examples.js"></script>
     <script src="../../dist/moltin.js"></script>
     <script type="text/javascript">
-(function() {
+      (function() {
 
-  // Authenticate
-  var moltin = new Moltin({publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
+        // Authenticate
+        var moltin = new Moltin({publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'});
 
-  moltin.Products.Get(902).then(function(data) {
-    console.log(data)
-    var item = $('#example .item');
-    var product = data.result;
-    item.find('.list-group-image').attr('src', first(product.images).url.http).attr('alt', product.title);
-    item.find('.list-group-item-heading').html(product.title);
-    item.find('.list-group-item-text').html(product.description);
-    item.find('.lead').html(product.price.data.formatted.without_tax);
-    item.find('.btn-success').on('click', function(e) { alert(product.title+' added to cart!'); });
+        moltin.Products.Get(902).then(function(data) {
+          console.log(data);
+          var item = $('#example .item');
+          var product = data.result;
+          item.find('.list-group-image').attr('src', first(product.images).url.http).attr('alt', product.title);
+          item.find('.list-group-item-heading').html(product.title);
+          item.find('.list-group-item-text').html(product.description);
+          item.find('.lead').html(product.price.data.formatted.without_tax);
+          item.find('.btn-success').on('click', function(e) { alert(product.title+' added to cart!'); });
 
-    $('#sample').html(JSON.stringify(data, null, '\t'));
-  })
-})();
+          $('#sample').html(JSON.stringify(data, null, '\t'));
+        }).catch(function(error) {
+          console.log(error);
+        })
+      })();
     </script>
 
   </body>
