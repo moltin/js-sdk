@@ -2,7 +2,8 @@
 describe('Storage Factory Functionality', function(){
 
     beforeEach(function() {
-        this.storage = new StorageFactory();
+        var moltin = new Moltin();
+        this.storage = moltin.Storage;
     });
 
     // Test Storage
@@ -16,7 +17,7 @@ describe('Storage Factory Functionality', function(){
         expect(this.storage.get(key)).toMatch(value);
 
         // Delete and get
-        this.storage.delete(key);
+        this.storage.remove(key);
         expect(this.storage.get(key)).toBe(null);
     });
 });

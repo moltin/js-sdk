@@ -3,12 +3,12 @@ describe('Request Factory Functionality', function() {
 
   beforeEach(function() {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    this.moltin = new Moltin()
+    this.moltin = new Moltin();
   });
 
   // Should return a promise
-  it('should return a promise when we call send', function() {
-      var promise = this.moltin.RequestFactory.make('/', 'GET');
+  it('should return a promise when we call make', function() {
+      var promise = this.moltin.RequestFactory.make('', 'GET');
       expect(Promise.resolve(promise) == promise).toBe(true);
   });
 
@@ -19,12 +19,16 @@ describe('Request Factory Functionality', function() {
         expect(data).not.toBeNull();
       }
 
+      var failure = function(data) {
+        console.log(data);
+      }
+
       // Override some variables
       this.moltin.config.host = 'api.github.com';
 
       var promise = this.moltin.RequestFactory.make('/', 'GET')
         .then(success)
-        .catch(new Error())
+        .catch(failure)
         .then(done);
   });
 

@@ -53,7 +53,13 @@ module.exports = (grunt) ->
         configFile: 'karma.conf.js'
         options:
           background: false
-          files: ['src/*.coffee', 'src/features/*.coffee', 'src/services/*.coffee', 'test/*.js']
+          files: [
+            './src/moltin.js',
+            './test/helperFactory.js',
+            './test/storageFactory.js',
+            './test/requestFactory.js',
+            './test/moltin.js'
+          ]
     uglify:
       postCompile:
         options:

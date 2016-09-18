@@ -17,7 +17,7 @@ Moltin = (function() {
     currency: false,
     language: false,
     timeout: 60000,
-    contentType: 'application/json',
+    contentType: 'application/x-www-form-urlencoded',//'application/json',
     auth: {
       expires: 3600,
       uri: 'oauth/access_token'
@@ -25,6 +25,11 @@ Moltin = (function() {
     methods: ['GET', 'POST', 'PUT', 'DELETE']
   };
 
+  /**
+   * Initialise the moltin class
+   *
+   * @param options object The configuration object for overrid
+   */
   function Moltin(options) {
     this.Helper = new HelperFactory;
     this.config = this.Helper.Merge(this.config, options);
@@ -56,59 +61,88 @@ Moltin = (function() {
     return this;
   }
 
+  /**
+   * Authenticate function
+   */
   Moltin.prototype.Authenticate = function() {
-    var c, data, headers, promise, r, s;
+
     if (this.config.clientId.length <= 0) {
       throw new Error("You must have a client id set");
     }
-    data = {
+
+    // Build data object
+    var data = {
       grant_type: 'implicit',
       client_id: this.config.clientId
     };
-    headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
+
+    // Compile headers
+    var headers = {
+      'Content-Type': this.config.contentType
     };
-    r = this.RequestFactory;
-    s = this.Storage;
-    c = this.config;
-    promise = new Promise(function(resolve, reject) {
+
+    var r = this.RequestFactory;
+    var s = this.Storage;
+    var c = this.config;
+
+    console.log("Authenticating");
+
+    var promise = new Promise(function(resolve, reject) {
       return r.make(c.auth.uri, 'POST', data, headers).then(function(data) {
+        console.log("Got rewuest, setting tokens");
         s.set('mexpires', data.expires);
         s.set('mtoken', data.access_token);
         return resolve(data);
-      })["catch"](function(error) {
+      }).catch(function(error) {
         return reject(error);
       });
     });
     return promise;
   };
 
+  /**
+   * Main request function
+   */
   Moltin.prototype.Request = function(uri, method, data, headers) {
-    var promise, r, s;
+
+    // Reset headers if they're null
     if (headers == null) {
       headers = {};
     }
-    r = this.RequestFactory;
-    s = this.Storage;
-    promise = new Promise(function(resolve, reject) {
-      var token;
-      token = s.get('mtoken');
-      headers['Authorization'] = 'Bearer: ' + token;
-      return r.make(uri, method, data, headers).then(function(data) {
-        return resolve(data);
-      })["catch"](function(error) {
-        return reject(error);
-      });
+
+    var t = this;
+    var r = this.RequestFactory;
+    var s = this.Storage;
+
+    var promise = new Promise(function(resolve, reject) {
+
+      var req = function() {
+        var token = s.get('mtoken');
+        headers['Authorization'] = 'Bearer: ' + token;
+        r.make(uri, method, data, headers).then(function(data) {
+          resolve(data);
+        }).catch(function(error) {
+          reject(error);
+        });
+      }
+
+      if (s.get('mtoken') === null || Date.now() >= s.get('mexpires')) {
+        t.Authenticate()
+          .then(req)
+          .catch(function() {
+            throw new Error("BUSTED");
+          })
+      }else{
+        req();
+      }
     });
-    if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
-      return this.Authenticate.then()(function() {
-        return promise;
-      });
-    } else {
-      return promise;
-    }
+
+    return promise;
   };
 
+  /**
+   * Abstract class features extend from
+   */
   Abstract = (function() {
     function Abstract(m) {
       this.m = m;
@@ -123,6 +157,7 @@ Moltin = (function() {
     };
 
     Abstract.prototype.List = function(terms) {
+      console.log("listing");
       return this.m.Request(this.endpoint, 'GET', terms);
     };
 
@@ -139,6 +174,10 @@ Moltin = (function() {
 
   })();
 
+  /**
+   * Products endpoint
+   * Extends abstract class
+   */
   Products = (function(_super) {
     __extends(Products, _super);
 
@@ -164,6 +203,10 @@ Moltin = (function() {
 
   })(Abstract);
 
+  /**
+   * Helper Factory
+   * Various helper functions
+   */
   HelperFactory = (function() {
     function HelperFactory() {}
 
@@ -221,49 +264,57 @@ Moltin = (function() {
 
   })();
 
+  /**
+   * Request Factory
+   * Main request driver
+   */
   RequestFactory = (function() {
-    var driver;
 
-    driver = false;
+    var m = false;
 
     function RequestFactory(m) {
-      var e;
       this.m = m;
-      try {
-        this.driver = new XMLHttpRequest();
-      } catch (_error) {
-        e = _error;
-        try {
-          this.driver = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (_error) {
-          e = _error;
-          throw new Error("Request factory boot failed");
-        }
-      }
-      return this;
     }
 
     RequestFactory.prototype.make = function(uri, method, data, headers) {
+
+      // Instantiate new driver
+      try {
+        this.driver = new XMLHttpRequest();
+      } catch (error) {
+        try {
+          this.driver = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (error) {
+          throw new Error("Request factory boot failed");
+        }
+      }
+
       var k, promise, r, timeout, url, v;
-      method = method.toUpperCase();
-      url = this.m.config.protocol + '://' + this.m.config.host + (uri !== 'oauth/access_token' ? '/' + this.m.config.version + '/' + uri : '/' + uri);
+      var method = method.toUpperCase();
+
+      var uri = (uri !== 'oauth/access_token' ? '/' + this.m.config.version + '/' + uri : '/' + uri);
+      var url = this.m.config.protocol + '://' + this.m.config.host + uri;
+
       if (method === 'GET') {
         url += '?' + this.m.Helper.Serialize(data);
         data = null;
       } else {
         data = this.m.Helper.Serialize(data);
       }
+
       this.driver.open(method, url, true);
       timeout = setTimeout((function(_this) {
         return function() {
           _this.driver.abort();
-          return _this.driver.error(_this.driver, 408, 'Your request timed out');
+          throw new Error("Remote request driver failed");
         };
       })(this), this.m.config.timeout);
+
       for (k in headers) {
         v = headers[k];
         this.driver.setRequestHeader(k, v);
       }
+
       r = this.driver;
       promise = new Promise(function(resolve, reject) {
         return r.onreadystatechange = function() {
@@ -289,6 +340,10 @@ Moltin = (function() {
 
   })();
 
+  /**
+   * Storage Factory
+   * Handles storing local data
+   */
   StorageFactory = (function() {
     function StorageFactory(m) {
       this.m = m;
@@ -302,7 +357,7 @@ Moltin = (function() {
       return window.localStorage.getItem(key);
     };
 
-    StorageFactory.prototype["delete"] = function(key) {
+    StorageFactory.prototype.remove = function(key) {
       return window.localStorage.removeItem(key);
     };
 
