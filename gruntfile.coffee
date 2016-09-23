@@ -31,24 +31,6 @@ module.exports = (grunt) ->
             TARGET: target
           inline: true
         src: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
-    replace:
-      dist:
-        options:
-          patterns: [
-            {
-              match: /[\s]{2,};\n/g,
-              replacement: () ->
-                return ''
-            }
-          ]
-        files: [
-          {
-            expand: true,
-            flatten: true,
-            src: ['dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'],
-            dest: 'dist/'
-          }
-        ]
     karma:
       unit:
         configFile: 'karma.conf.js'
@@ -129,7 +111,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-babel'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-compress'
-  grunt.loadNpmTasks 'grunt-replace'
   grunt.loadNpmTasks 'grunt-preprocess'
   grunt.loadNpmTasks 'grunt-karma'
   grunt.loadNpmTasks 'grunt-contrib-watch'
@@ -137,5 +118,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # Tasks.
-  grunt.registerTask 'build', ['clean', 'concat', 'babel', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
+  grunt.registerTask 'build', ['clean', 'concat', 'babel', 'preprocess:inline', 'karma', 'uglify', 'compress']
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
