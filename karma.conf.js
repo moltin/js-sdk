@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './src/moltin.js',
+      './dist/moltin.js',
       './test/helperFactory.js',
       './test/storageFactory.js',
       './test/requestFactory.js',
@@ -58,5 +58,5 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
-  })
-}
+  });
+};

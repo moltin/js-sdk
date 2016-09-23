@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         options:
           background: false
           files: [
-            './src/moltin.js',
+            './dist/moltin.js',
             './test/helperFactory.js',
             './test/storageFactory.js',
             './test/requestFactory.js',
