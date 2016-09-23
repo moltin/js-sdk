@@ -6,6 +6,7 @@ module.exports = (grunt) ->
   # Project configuration.
   config =
     pkg: grunt.file.readJSON 'package.json'
+    clean: ['dist']
     concat:
       dist:
         src: [
@@ -123,6 +124,7 @@ module.exports = (grunt) ->
   grunt.initConfig config
 
   # These plugins provide necessary tasks.
+  grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-babel'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -135,5 +137,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # Tasks.
-  grunt.registerTask 'build', ['concat', 'babel', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
+  grunt.registerTask 'build', ['clean', 'concat', 'babel', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
