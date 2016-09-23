@@ -6,23 +6,6 @@ module.exports = (grunt) ->
   # Project configuration.
   config =
     pkg: grunt.file.readJSON 'package.json'
-    coffee:
-      compile:
-        options:
-          bare: true
-          sourceMap: true
-          sourceMapDir: 'dist/'
-        files: [
-          {
-            dest: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
-            src: [
-              'src/moltin.coffee',
-              'src/abstract.coffee',
-              'src/features/products.coffee',
-              'src/services/*.coffee'
-            ]
-          }
-        ]
     preprocess:
       inline:
         options:
@@ -84,8 +67,8 @@ module.exports = (grunt) ->
         src: ['*.min.js', '*.min.css', '*.min.map']
         dest: 'dist/gzip/'
     watch:
-      files: ['src/*.coffee', 'src/**/*.coffee']
-      tasks: ['coffee', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
+      files: ['src/*.js', 'src/**/*.js']
+      tasks: ['preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
 
   # Do we have credentials?
   if grunt.file.exists('aws-credentials.json')
@@ -123,7 +106,6 @@ module.exports = (grunt) ->
   grunt.initConfig config
 
   # These plugins provide necessary tasks.
-  grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-compress'
   grunt.loadNpmTasks 'grunt-replace'
@@ -134,5 +116,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # Tasks.
-  grunt.registerTask 'build', ['coffee', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
+  grunt.registerTask 'build', ['preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
