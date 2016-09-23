@@ -6,6 +6,23 @@ module.exports = (grunt) ->
   # Project configuration.
   config =
     pkg: grunt.file.readJSON 'package.json'
+    concat:
+      dist:
+        src: [
+          'src/moltin.js',
+          'src/abstract.js',
+          'src/features/products.js',
+          'src/services/*.js'
+        ],
+        dest: 'dist/moltin.' + ( if target != 'js' then target + '.' else '' ) + 'js'
+    babel:
+      options:
+        sourceMap: true,
+        presets: ['babel-preset-es2015'],
+        plugins: ['babel-plugin-transform-class-properties'],
+      dist:
+        files:
+          'dist/moltin.js': 'dist/moltin.js'
     preprocess:
       inline:
         options:
@@ -106,6 +123,8 @@ module.exports = (grunt) ->
   grunt.initConfig config
 
   # These plugins provide necessary tasks.
+  grunt.loadNpmTasks 'grunt-contrib-concat'
+  grunt.loadNpmTasks 'grunt-babel'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-compress'
   grunt.loadNpmTasks 'grunt-replace'
@@ -116,5 +135,5 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
 
   # Tasks.
-  grunt.registerTask 'build', ['preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
+  grunt.registerTask 'build', ['concat', 'babel', 'preprocess:inline', 'replace', 'karma', 'uglify', 'compress']
   grunt.registerTask 's3', ['copy:aws', 'aws_s3:production']
