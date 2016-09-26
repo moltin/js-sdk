@@ -17,7 +17,7 @@ describe('Storage Factory Functionality', function(){
         expect(this.storage.get(key)).toMatch(value);
 
         // Delete and get
-        this.storage.remove(key);
+        this.storage.delete(key);
         expect(this.storage.get(key)).toBe(null);
     });
 });
