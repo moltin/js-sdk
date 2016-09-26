@@ -105,26 +105,31 @@ var Moltin = function () {
 
       var r = this.RequestFactory;
       var s = this.Storage;
+      var t = this;
 
       var promise = new Promise(function (resolve, reject) {
+        var req = function req() {
+          var token = s.get('mtoken');
+          headers['Authorization'] = 'Bearer: ' + token;
 
-        var token = s.get('mtoken');
-        headers['Authorization'] = 'Bearer: ' + token;
-
-        return r.make(uri, method, data, headers).then(function (data) {
-          return resolve(data);
-        }).catch(function (error) {
-          return reject(error);
-        });
+          return r.make(uri, method, data, headers).then(function (data) {
+            return resolve(data);
+          }).catch(function (error) {
+            return reject(error);
+          });
+        };
+        if (!s.get('mtoken' || Date.now() >= s.get('mexpires'))) {
+          return t.Authenticate().then(function (req) {
+            return resolve(req);
+          }).catch(function (error) {
+            return reject(error);
+          });
+        } else {
+          req();
+        }
       });
 
-      if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
-        return this.Authenticate.then()(function () {
-          return promise;
-        });
-      } else {
-        return promise;
-      }
+      return promise;
     }
   }]);
 
