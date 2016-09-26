@@ -91,21 +91,24 @@ class Moltin {
   Request(uri, method, data, headers = {}) {
     let r = this.RequestFactory;
     let s = this.Storage;
+    let t = this;
 
     let promise = new Promise(function(resolve, reject) {
+      let req = function() {
+        let token = s.get('mtoken');
+        headers['Authorization'] = `Bearer: ${token}`;
 
-      let token = s.get('mtoken');
-      headers['Authorization'] = `Bearer: ${token}`;
-
-      return r.make(uri, method, data, headers)
-      .then(data => resolve(data)).catch(error => reject(error));
+        return r.make(uri, method, data, headers)
+        .then(data => resolve(data)).catch(error => reject(error));
+      };
+      if (!s.get('mtoken' || Date.now() >= s.get('mexpires'))) {
+        return t.Authenticate()
+        .then(req => resolve(req)).catch(error => reject(error));
+      } else {
+        req();
+      }
     });
 
-    if (s.get('mtoken' === null || Date.now() >= s.get('mexpires'))) {
-      return this.Authenticate
-      .then()(() => promise);
-    } else {
-      return promise;
-    }
+    return promise;
   }
 }
