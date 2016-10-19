@@ -36,7 +36,7 @@ describe('Moltin Authentication Test', function() {
       var success = function(data) {
 
         moltin.Storage.set('mtoken', '');
-        var a = moltin.Storage.get('mtoken', '');
+        var a = moltin.Storage.get('mtoken');
         console.log(a);
 
 

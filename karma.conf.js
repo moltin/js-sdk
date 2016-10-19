@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './src/moltin.js',
+      './dist/moltin.js',
       './test/helperFactory.js',
       './test/storageFactory.js',
       './test/requestFactory.js',
@@ -26,27 +26,6 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [
     ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    /*
-    preprocessors: {
-      //  '**//*.coffee': ['coffee']
-    },
-
-    coffeePreprocessor: {
-        // options passed to the coffee compiler
-        options: {
-            bare: true,
-            sourceMap: true
-        },
-        // transforming the filenames
-        transformPath: function(path) {
-            return path.replace(/\.coffee$/, '.js')
-        }
-    },*/
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -79,5 +58,5 @@ module.exports = function(config) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
-  })
-}
+  });
+};
