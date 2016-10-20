@@ -4,7 +4,11 @@ class Abstract {
   }
 
   Get(id, callback, error) {
-    return this.m.Request(this.endpoint+'/'+id, 'GET', null, callback, error);
+    if (this.endpoint === 'carts') {
+      return this.m.Request(`${this.endpoint}/${this.cartId}`, 'GET', callback, error);
+    }
+
+    return this.m.Request(`${this.endpoint}/${id}`, 'GET', callback, error);
   }
 
   Find(terms, callback, error) {

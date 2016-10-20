@@ -4,10 +4,10 @@ class Moltin {
   constructor(options) {
     this.config = {
       clientId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
-      host: 'api.molt.in',
+      host: 'api-dev.moltin.com',
       port: '443',
-      protocol: 'https',
-      version: 'v1',
+      protocol: 'http',
+      version: 'v2',
       debug: false,
       currency: false,
       language: false,
@@ -27,7 +27,8 @@ class Moltin {
     this.RequestFactory = new RequestFactory(this);
 
 
-    this.Products      = new Products(this);
+    this.Products = new Products(this);
+    this.Cart = new Cart(this);
 
     /*
     @Shipping      = new Shipping @
@@ -67,8 +68,9 @@ class Moltin {
       client_id:  this.config.clientId
     };
 
-    let headers =
-      {'Content-Type': 'application/x-www-form-urlencoded'};//@config.contentType
+    let headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
 
     let r = this.RequestFactory;
     let s = this.Storage;
@@ -97,6 +99,7 @@ class Moltin {
       let req = function() {
         let token = s.get('mtoken');
         headers['Authorization'] = `Bearer: ${token}`;
+        headers['Content-Type'] = t.config.contentType;
 
         return r.make(uri, method, data, headers)
         .then(data => resolve(data)).catch(error => reject(error));

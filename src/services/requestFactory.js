@@ -21,11 +21,8 @@ class RequestFactory {
     let url = this.m.config.protocol + '://' + this.m.config.host +
       ( uri !== 'oauth/access_token' ? `/${this.m.config.version}/${uri}` : `/${uri}` );
 
-    if (method === 'GET') {
-      url += `?${this.m.Helper.Serialize(data)}`;
-      data = null;
-    } else {
-      data = this.m.Helper.Serialize(data);
+    if ( method === 'POST' || method === 'PUT' ) {
+      data = ( uri === 'oauth/access_token' ? this.m.Helper.Serialize(data) : `{"data":${JSON.stringify(data)}}`);
     }
 
     this.driver.open(method, url, true);

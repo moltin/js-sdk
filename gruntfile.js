@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         src: [
           'src/moltin.js',
           'src/abstract.js',
-          'src/features/products.js',
+          'src/features/*.js',
           'src/services/*.js'
         ],
         dest: `dist/moltin.${target !== 'js' ? target + '.' : ''}js`
