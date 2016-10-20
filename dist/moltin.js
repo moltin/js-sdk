@@ -16,10 +16,10 @@ var Moltin = function () {
 
     this.config = {
       clientId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
-      host: 'api.molt.in',
+      host: 'api-dev.moltin.com',
       port: '443',
-      protocol: 'https',
-      version: 'v1',
+      protocol: 'http',
+      version: 'v2',
       debug: false,
       currency: false,
       language: false,
@@ -80,7 +80,9 @@ var Moltin = function () {
         client_id: this.config.clientId
       };
 
-      var headers = { 'Content-Type': 'application/x-www-form-urlencoded' }; //@config.contentType
+      var headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      };
 
       var r = this.RequestFactory;
       var s = this.Storage;
@@ -111,6 +113,7 @@ var Moltin = function () {
         var req = function req() {
           var token = s.get('mtoken');
           headers['Authorization'] = 'Bearer: ' + token;
+          headers['Content-Type'] = t.config.contentType;
 
           return r.make(uri, method, data, headers).then(function (data) {
             return resolve(data);
