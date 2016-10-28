@@ -56,4 +56,8 @@ class Cart extends Abstract {
   Complete(data, callback, error) {
     return this.m.Request(`${this.endpoint}/${this.cartId}/checkout`, 'POST', data, callback, error);
   }
+
+  Delete(callback, error) {
+    return this.m.Request(`${this.endpoint}/${this.cartId}`, 'DELETE', callback, error);
+  }
 }
