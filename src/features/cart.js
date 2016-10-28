@@ -13,7 +13,7 @@ class Cart extends Abstract {
     }
 
     if (!id) {
-      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, (Math.random()*16)|0 ).toString(16);
+      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16));
     }
 
     this.m.Storage.set('mcart', id);
