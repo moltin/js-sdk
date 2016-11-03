@@ -46,11 +46,7 @@ module.exports = function(grunt) {
           background: false,
           files: [
             './dist/moltin.js',
-            './test/helperFactory.js',
-            './test/storageFactory.js',
-            './test/requestFactory.js',
-            './test/moltin.js',
-            './test/cart.js'
+            './tests/**/*.js'
           ]
         }
       }
