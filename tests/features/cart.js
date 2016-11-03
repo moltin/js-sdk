@@ -1,7 +1,7 @@
 describe('Moltin Cart Test', function() {
   beforeEach(function() {
     moltin = new Moltin()
-    product = '09fd817c-2738-436c-861e-22bbd6a3131f'
+    product = '3a785340-806b-42f2-8bf8-419cc45da89b'
   })
 
   it('should add a product to the cart', function(done) {

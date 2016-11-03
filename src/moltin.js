@@ -29,14 +29,13 @@ class Moltin {
 
     this.Products = new Products(this);
     this.Cart = new Cart(this);
+    this.Categories = new Categories(this);
 
     /*
     @Shipping      = new Shipping @
     @Tax           = new Tax @
     @Address       = new Address @
     @Brand         = new Brand @
-    @Cart          = new Cart @
-    @Category      = new Category @
     @Checkout      = new Checkout @
     @Collection    = new Collection @
     @Currency      = new Currency @
