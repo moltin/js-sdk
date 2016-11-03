@@ -49,7 +49,8 @@ module.exports = function(grunt) {
             './test/helperFactory.js',
             './test/storageFactory.js',
             './test/requestFactory.js',
-            './test/moltin.js'
+            './test/moltin.js',
+            './test/cart.js'
           ]
         }
       }
