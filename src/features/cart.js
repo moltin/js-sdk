@@ -60,8 +60,4 @@ class Cart extends Abstract {
   Delete(callback, error) {
     return this.m.Request(`${this.endpoint}/${this.cartId}`, 'DELETE', callback, error);
   }
-
-  Payment(id, gateway, data, callback, error) {
-    return this.m.Request(`gateways/${gateway}/orders/${id}/payments`, 'POST', data, callback, error);
-  }
 }

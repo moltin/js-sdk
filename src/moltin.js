@@ -26,9 +26,9 @@ class Moltin {
     this.Storage = new StorageFactory(this);
     this.RequestFactory = new RequestFactory(this);
 
-
     this.Products = new Products(this);
     this.Cart = new Cart(this);
+    this.Orders = new Orders(this);
     this.Categories = new Categories(this);
 
     /*
@@ -42,7 +42,6 @@ class Moltin {
     @Entry         = new Entry @
     @Gateway       = new Gateway @
     @Language      = new Language @
-    @Order         = new Order @
     */
 
     if (this.Storage.get('mcurrency')) {
