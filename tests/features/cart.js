@@ -1,8 +1,8 @@
 describe('Moltin Cart Test', function() {
   beforeEach(function() {
     moltin = new Moltin()
-    product = '3a785340-806b-42f2-8bf8-419cc45da89b'
-  })
+    product = '2e21c70e-65bc-4bd5-80ed-2e193eb988a6'
+  });
 
   it('should add a product to the cart', function(done) {
     var success = function(response) {
@@ -100,6 +100,5 @@ describe('Moltin Cart Test', function() {
     var request = moltin.Cart.Insert(product, 1)
       .then(success)
       .catch(failure)
-      .then(done)
   })
 })

@@ -20,16 +20,17 @@ class Moltin {
       methods: ['GET', 'POST', 'PUT', 'DELETE']
     };
 
-    this.Helper = new HelperFactory();
-    this.config = this.Helper.Merge(this.config, options);
+    this.Helper         = new HelperFactory();
+    this.config         = this.Helper.Merge(this.config, options);
 
-    this.Storage = new StorageFactory(this);
+    this.Storage        = new StorageFactory(this);
     this.RequestFactory = new RequestFactory(this);
 
-    this.Products = new Products(this);
-    this.Cart = new Cart(this);
-    this.Orders = new Orders(this);
-    this.Categories = new Categories(this);
+    this.Products       = new Products(this);
+    this.Cart           = new Cart(this);
+    this.Orders         = new Orders(this);
+    this.Categories     = new Categories(this);
+    this.Currency       = new Currency(this);
 
     /*
     @Shipping      = new Shipping @
@@ -38,7 +39,6 @@ class Moltin {
     @Brand         = new Brand @
     @Checkout      = new Checkout @
     @Collection    = new Collection @
-    @Currency      = new Currency @
     @Entry         = new Entry @
     @Gateway       = new Gateway @
     @Language      = new Language @
@@ -96,8 +96,15 @@ class Moltin {
     let promise = new Promise(function(resolve, reject) {
       let req = function() {
         let token = s.get('mtoken');
-        headers['Authorization'] = `Bearer: ${token}`;
-        headers['Content-Type'] = t.config.contentType;
+
+        headers = {
+          'Authorization': `Bearer: ${token}`,
+          'Content-Type': t.config.contentType
+        };
+
+        if (t.config.currency) {
+          headers['X-MOLTIN-CURRENCY'] = t.config.currency;
+        }
 
         return r.make(uri, method, data, headers)
         .then(data => resolve(data)).catch(error => reject(error));
