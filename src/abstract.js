@@ -15,8 +15,14 @@ class Abstract {
     return this.m.Request(this.endpoint, 'GET', terms, callback, error);
   }
 
-  List(terms) {
-    return this.m.Request(this.endpoint, 'GET', terms);
+  List(params) {
+    if (params) {
+      const includes = params.toString();
+
+      return this.m.Request(`${this.endpoint}?include=${includes}`, 'GET');
+    }
+
+    return this.m.Request(this.endpoint, 'GET');
   }
 
   Fields(callback, error) {
