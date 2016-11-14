@@ -3,12 +3,18 @@ class Abstract {
     this.m = m;
   }
 
-  Get(id, callback, error) {
+  Get(id, params) {
     if (this.endpoint === 'carts') {
-      return this.m.Request(`${this.endpoint}/${this.cartId}`, 'GET', callback, error);
+      return this.m.Request(`${this.endpoint}/${this.cartId}`, 'GET');
     }
 
-    return this.m.Request(`${this.endpoint}/${id}`, 'GET', callback, error);
+    if (params) {
+      const includes = params.toString();
+
+      return this.m.Request(`${this.endpoint}/${id}?include=${includes}`, 'GET');
+    }
+
+    return this.m.Request(`${this.endpoint}/${id}`, 'GET');
   }
 
   Find(terms, callback, error) {
