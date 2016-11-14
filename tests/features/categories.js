@@ -49,7 +49,7 @@ describe('Moltin Categories Test', function() {
       .then(done)
   })
 
-  it('should return a category and its children, products', function(done) {
+  it('should return categories and their children and products', function(done) {
     var success = function(response) {
       expect(response).not.toBe({ data: [] })
     }
@@ -58,7 +58,7 @@ describe('Moltin Categories Test', function() {
       expect(error).toBe(null)
     }
 
-    var request = moltin.Categories.Detail(category, ['children', 'products'])
+    var request = moltin.Categories.List(['children', 'products'])
       .then(success)
       .catch(failure)
       .then(done)
