@@ -1,4 +1,4 @@
-describe('Moltin Currency Service Test', function() {
+describe('Moltin Currency Class', function() {
   beforeEach(function() {
     moltin = new Moltin();
     currency = 'YEN';
@@ -6,7 +6,7 @@ describe('Moltin Currency Service Test', function() {
 
   it('should return an array of available currencies', function(done) {
     var success = function(response) {
-      expect(response).not.toBe({ data: [] });
+      expect(response.data).toBeArrayOfObjects();
     };
 
     var failure = function(error) {

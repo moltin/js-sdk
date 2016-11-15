@@ -1,62 +1,59 @@
-describe('Moltin Authentication Test', function() {
+describe('Moltin Class', function() {
+  beforeEach(function() {
+    moltin = new Moltin();
+  });
 
-    it("should throw an error when a client id is not set", function() {
-        var moltin = new Moltin();
-        moltin.config.clientId = '';
-        expect(function() { moltin.Authenticate() }).toThrow(new Error("You must have a client id set"));
-    });
+  it('should throw an error when a client id is not set', function() {
+    moltin.config.clientId = '';
 
-    it("should return a promise", function() {
-      var moltin = new Moltin();
-      var promise = moltin.Authenticate();
-      expect(Promise.resolve(promise) == promise).toBe(true);
-    });
+    var authenticate = function() {
+      moltin.Authenticate();
+    };
 
-    it("should authenticate correctly", function(done) {
-      var moltin = new Moltin();
+    expect(authenticate).toThrow(new Error('You must have a client id set'));
+  });
 
-      var success = function(data) {
-        expect(data).not.toBe(null);
-      }
+  it('should return a promise', function() {
+    var promise = moltin.Authenticate();
 
-      var failure = function(error) {
-        expect(error).toBe(null);
-      }
+    expect(Promise.resolve(promise) === promise).toBe(true);
+  });
 
-      var promise = moltin.Authenticate()
-          .then(success)
-          .catch(failure)
-          .then(done)
-    });
+  it('should authenticate correctly', function(done) {
+    var success = function(response) {
+      expect(response).not.toBe(null);
+    };
 
-    it("should re-authenticate if the token is expired", function(done) {
-      var moltin = new Moltin();
+    var failure = function(error) {
+      expect(error).toBe(null);
+    };
 
-      var success = function(data) {
+    var request = moltin.Authenticate()
+      .then(success)
+      .catch(failure)
+      .then(done);
+  });
 
-        moltin.Storage.set('mtoken', '');
-        var a = moltin.Storage.get('mtoken');
-        console.log(a);
+  it('should re-authenticate if the token is expired', function(done) {
+    var success = function() {
+      moltin.Storage.set('mtoken', '');
 
+      var request = moltin.Products.List()
+        .then((response) => {
+          expect(response.data).toBeArrayOfObjects();
+        })
+        .catch((error) => {
+          expect(error).toBe(null);
+        })
+        .then(done);
+    };
 
-        var products = moltin.Products.List({limit: 1})
-          .then(function(data) {
-            console.log(data);
-            console.log("suc");
+    var failure = function(error) {
+      expect(error).toBe(null);
+    };
 
-          }).catch(function(err) {
-            console.log("err");
-            console.log(err)
-          }).then(done)
-      }
-
-      var failure = function(error) {
-        console.log("FAIL");
-        expect(error).toBe(null);
-      }
-
-      var products = moltin.Products.List({limit: 1})
-          .then(success)
-          .catch(failure)
-    });
+    var request = moltin.Products.List()
+      .then(success)
+      .catch(failure);
+  });
 });
