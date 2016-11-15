@@ -31,6 +31,7 @@ class Moltin {
     this.Orders         = new Orders(this);
     this.Categories     = new Categories(this);
     this.Currency       = new Currency(this);
+    this.Brands         = new Brands(this);
 
     /*
     @Shipping      = new Shipping @

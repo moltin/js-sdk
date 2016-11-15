@@ -40,6 +40,7 @@
     "jasmine-core": "2.4.1",
     "karma": "~0.13.0",
     "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2"
+    "karma-jasmine": "^1.0.2",
+    "karma-jasmine-matchers": "^3.0.1"
   }
 }
