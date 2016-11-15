@@ -1,104 +1,129 @@
-describe('Moltin Cart Test', function() {
+describe('Moltin Cart Class', function() {
   beforeEach(function() {
-    moltin = new Moltin()
-    product = '2e21c70e-65bc-4bd5-80ed-2e193eb988a6'
+    moltin = new Moltin();
   });
 
   it('should add a product to the cart', function(done) {
     var success = function(response) {
-      expect(response).not.toBe({ data: [] })
-    }
+      var productId = response.data[0].id;
+
+      var request = moltin.Cart.Insert(productId, 1)
+        .then((response) => {
+          expect(response.data).toBeArrayOfObjects();
+        })
+        .catch((error) => {
+          expect(error).toBe(null);
+        })
+        .then(done);
+    };
 
     var failure = function(error) {
-      expect(error).toBe(null)
-    }
+      expect(error).toBe(null);
+    };
 
-    var request = moltin.Cart.Insert(product, 1)
+    var request = moltin.Products.List()
       .then(success)
-      .catch(failure)
-      .then(done)
-  })
+      .catch(failure);
+  });
 
-  it('should return an array of cart contents', function(done) {
+  it('should return an array of cart item objects', function(done) {
     var success = function(response) {
-      expect(response).not.toBe({ data: [] })
-    }
+      expect(response.data).toBeArrayOfObjects();
+    };
 
     var failure = function(error) {
-      expect(error).toBe(null)
-    }
+      expect(error).toBe(null);
+    };
 
     var request = moltin.Cart.Contents()
       .then(success)
       .catch(failure)
       .then(done);
-  })
+  });
 
   it('should update the quantity of a cart item', function(done) {
     var success = function(response) {
-      // Get the `id` of cart item we just added
-      var productId = response.data[0].id
+      var productId = response.data[0].id;
 
       var request = moltin.Cart.Quantity(productId, 2)
         .then((response) => {
-          expect(response.data[0].quantity).toEqual(2)
+          expect(response.data[0].quantity).toEqual(2);
         })
-        .then(done)
-    }
+        .catch((error) => {
+          expect(error).toBe(null);
+        })
+        .then(done);
+    };
 
     var failure = function(error) {
       expect(error).toBe(null);
-    }
+    };
 
     var request = moltin.Cart.Contents()
       .then(success)
-      .catch(failure)
-  })
+      .catch(failure);
+  });
 
   it('should remove a product from the cart', function(done) {
     var success = function(response) {
-      // Get the `id` of cart item we just added
-      var productId = response.data[0].id
+      var itemId = response.data[0].id;
 
-      var request = moltin.Cart.Remove(productId)
+      var request = moltin.Cart.Remove(itemId)
         .then((response) => {
-          expect(response).not.toBe({ data: [] })
+          expect(response).toEqual({
+            data: [{
+              type: 'cart_item',
+              id: itemId
+            }]
+          });
+          expect(response.data).toBeArrayOfSize(1);
         })
-        .then(done)
-    }
+        .catch((error) => {
+          expect(error).toBe(null);
+        })
+        .then(done);
+    };
 
     var failure = function(error) {
       expect(error).toBe(null);
-    }
+    };
 
     var request = moltin.Cart.Contents()
       .then(success)
-      .catch(failure)
-  })
+      .catch(failure);
+  });
 
   it('should delete a cart', function(done) {
     var success = function(response) {
-      // Get the `id` of the cart
-      var cartId = moltin.Storage.get('mcart');
+      var productId = response.data[0].id;
 
-      var request = moltin.Cart.Delete()
+      var insert = moltin.Cart.Insert(productId, 1)
+        .then(deletion)
+        .catch(failure);
+
+      var deletion = moltin.Cart.Delete()
         .then((response) => {
+          var cartId = moltin.Storage.get('mcart');
+
           expect(response).toEqual({
             data: [{
               type: 'cart',
               id: cartId
             }]
-          })
+          });
+        })
+        .catch((error) => {
+          expect(error).toBe(null);
         })
         .then(done);
-    }
+    };
 
     var failure = function(error) {
       expect(error).toBe(null);
-    }
+    };
 
-    var request = moltin.Cart.Insert(product, 1)
+    var request = moltin.Products.List()
       .then(success)
-      .catch(failure)
-  })
-})
+      .catch(failure);
+  });
+});
