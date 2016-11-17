@@ -32,6 +32,7 @@ class Moltin {
     this.Categories     = new Categories(this);
     this.Currency       = new Currency(this);
     this.Brands         = new Brands(this);
+    this.Collections    = new Collections(this);
 
     /*
     @Shipping      = new Shipping @
@@ -39,7 +40,6 @@ class Moltin {
     @Address       = new Address @
     @Brand         = new Brand @
     @Checkout      = new Checkout @
-    @Collection    = new Collection @
     @Entry         = new Entry @
     @Gateway       = new Gateway @
     @Language      = new Language @
