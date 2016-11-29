@@ -22,9 +22,7 @@ class Moltin {
 
     this.Helper         = new HelperFactory();
     this.config         = this.Helper.Merge(this.config, options);
-
     this.Storage        = new StorageFactory(this);
-    this.RequestFactory = new RequestFactory(this);
 
     this.Products       = new Products(this);
     this.Cart           = new Cart(this);
@@ -57,63 +55,79 @@ class Moltin {
   }
 
   Authenticate() {
-    // Check Client ID is set
-    if (this.config.clientId.length <= 0) {
+    const config = this.config;
+    const storage = this.Storage;
+    const helper = this.Helper;
+
+    if (config.clientId.length <= 0) {
       throw new Error("You must have a client id set");
     }
 
-    let data = {
+    const body = {
       grant_type: 'implicit',
-      client_id:  this.config.clientId
+      client_id: config.clientId
     };
 
-    let headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
-
-    let r = this.RequestFactory;
-    let s = this.Storage;
-    let c = this.config;
-
-    let promise = new Promise((resolve, reject) =>
-
-      r.make(c.auth.uri, 'POST', data, headers)
-      .then(function(data) {
-        s.set('mexpires', data.expires);
-        s.set('mtoken', data.access_token);
-        return resolve(data);
+    const promise = new Promise((resolve, reject) => {
+      fetch(`${config.protocol}://${config.host}/${config.auth.uri}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: helper.Serialize(body)
       })
-      .catch(error => reject(error))
-    );
+      .then((response) => {
+        if (response.status === 200) {
+          const data = response.json();
+
+          resolve(data);
+        }
+      })
+      .catch(error => reject(error));
+    });
+
+    promise.then((data) => {
+      storage.set('mexpires', data.expires);
+      storage.set('mtoken', data.access_token);
+    });
 
     return promise;
   }
 
-  Request(uri, method, data, headers = {}) {
-    let r = this.RequestFactory;
-    let s = this.Storage;
-    let t = this;
+  Request(uri, method, body) {
+    const storage = this.Storage;
+    const config = this.config;
 
-    let promise = new Promise(function(resolve, reject) {
-      let req = function() {
-        let token = s.get('mtoken');
-
-        headers = {
-          'Authorization': `Bearer: ${token}`,
-          'Content-Type': t.config.contentType
+    const promise = new Promise((resolve, reject) => {
+      const req = function() {
+        const headers = {
+          'Authorization': `Bearer: ${storage.get('mtoken')}`,
+          'Content-Type': config.contentType
         };
 
-        if (t.config.currency) {
-          headers['X-MOLTIN-CURRENCY'] = t.config.currency;
+        if (config.currency) {
+          headers['X-MOLTIN-CURRENCY'] = config.currency;
         }
 
-        return r.make(uri, method, data, headers)
-        .then(data => resolve(data)).catch(error => reject(error));
+        if ( method === 'POST' || method === 'PUT' ) {
+          body = `{"data":${JSON.stringify(body)}}`;
+        }
+
+        fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
+          method: method.toUpperCase(),
+          headers: headers,
+          body: body
+        })
+        .then((response) => {
+          resolve(response.json());
+        })
+        .catch(error => reject(error));
       };
 
-      if (!s.get('mtoken') || Date.now().toString() >= s.get('mexpires')) {
-        return t.Authenticate()
-        .then(req).catch(error => reject(error));
+      if (!storage.get('mtoken') || Date.now().toString() >= storage.get('mexpires')) {
+        return this.Authenticate()
+          .then(req)
+          .catch(error => reject(error));
       } else {
         req();
       }

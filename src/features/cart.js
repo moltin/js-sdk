@@ -27,17 +27,13 @@ class Cart extends Abstract {
     return this.m.Request(`${this.endpoint}/${this.cartId}/items`, 'GET', callback, error);
   }
 
-  Insert(product, quantity, callback, error) {
-    let quantityInt = parseInt(quantity);
+  Insert(id, quantity, callback, error) {
+    const productObject = {
+      id: id,
+      quantity: parseInt(quantity) || 1
+    };
 
-    if (product.constructor === Array) {
-      return this.m.Request(`${this.endpoint}/${this.cartId}/items`, 'POST', product, callback, error);
-    }
-
-    return this.m.Request(`${this.endpoint}/${this.cartId}/items`, 'POST', [{
-      id: product,
-      quantity: quantityInt || 1
-    }], callback, error);
+    return this.m.Request(`${this.endpoint}/${this.cartId}/items`, 'POST', productObject, callback, error);
   }
 
   Remove(id, callback, error) {
@@ -45,12 +41,11 @@ class Cart extends Abstract {
   }
 
   Quantity(id, quantity, callback, error) {
-    let quantityInt = parseInt(quantity);
+    const productObject = {
+      quantity: parseInt(quantity)
+    };
 
-    return this.m.Request(`${this.endpoint}/${this.cartId}/items/${id}`, 'PUT', [{
-      id: id,
-      quantity: quantityInt
-    }], callback, error);
+    return this.m.Request(`${this.endpoint}/${this.cartId}/items/${id}`, 'PUT', productObject, callback, error);
   }
 
   Complete(data, callback, error) {
