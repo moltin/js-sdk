@@ -1,7 +1,3 @@
 node_modules/*
-dist/*builder*
-dist/gzip/*
-examples/builder/*
-src/builder*
-aws-credentials.json
-test/server.js
+localStorage/
+npm-debug.log
