@@ -1,6 +1,9 @@
 describe('Moltin Currency Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
+      currency: 'GBP'
+    });
     currency = 'YEN';
   });
 
@@ -13,7 +16,7 @@ describe('Moltin Currency Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Currency.List()
+    var request = Moltin.Currencies.List()
       .then(success)
       .catch(failure)
       .then(done);
@@ -28,7 +31,7 @@ describe('Moltin Currency Class', function() {
       expect(error).not.toBe(currency);
     };
 
-    var request = moltin.Currency.Set(currency)
+    var request = Moltin.Currencies.Set('YEN')
       .then(success)
       .catch(failure)
       .then(done);
@@ -36,7 +39,7 @@ describe('Moltin Currency Class', function() {
 
   it('should return the active currency', function(done) {
     var success = function(response) {
-      var request = moltin.Currency.Active()
+      var request = Moltin.Currencies.Active()
         .then((response) => {
           expect(response).toBe(currency);
         })
@@ -47,7 +50,7 @@ describe('Moltin Currency Class', function() {
       expect(error).not.toBe(currency);
     };
 
-    var request = moltin.Currency.Set(currency)
+    var request = Moltin.Currencies.Set(currency)
       .then(success)
       .catch(failure);
   });

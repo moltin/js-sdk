@@ -1,6 +1,9 @@
 describe('Moltin Categories Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
+      currency: 'GBP'
+    });
   });
 
   it('should return an array of multiple category objects', function(done) {
@@ -12,7 +15,7 @@ describe('Moltin Categories Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Categories.List()
+    var request = Moltin.Categories.List()
       .then(success)
       .catch(failure)
       .then(done);
@@ -22,7 +25,7 @@ describe('Moltin Categories Class', function() {
     var success = function(response) {
       var categoryId = response.data[0].id;
 
-      var request = moltin.Categories.Get(categoryId)
+      var request = Moltin.Categories.Get(categoryId)
         .then((response) => {
           expect(response.data).toBeArrayOfSize(1);
         })
@@ -36,7 +39,7 @@ describe('Moltin Categories Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Categories.List()
+    var request = Moltin.Categories.List()
       .then(success)
       .catch(failure);
   });
@@ -50,7 +53,7 @@ describe('Moltin Categories Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Categories.Tree()
+    var request = Moltin.Categories.Tree()
       .then(success)
       .catch(failure)
       .then(done);
@@ -60,7 +63,7 @@ describe('Moltin Categories Class', function() {
     var success = function(response) {
       var categoryId = response.data[0].id;
 
-      var request = moltin.Categories.Get(categoryId, 'products')
+      var request = Moltin.Categories.Get(categoryId, 'products')
         .then((response) => {
           expect(response.data).toBeArrayOfSize(1);
           expect(response.included.products).toBeArrayOfObjects();
@@ -75,7 +78,7 @@ describe('Moltin Categories Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Categories.List()
+    var request = Moltin.Categories.List()
       .then(success)
       .catch(failure);
   });

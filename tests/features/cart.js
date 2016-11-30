@@ -1,13 +1,15 @@
 describe('Moltin Cart Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'
+    });
   });
 
   it('should add a product to the cart', function(done) {
     var success = function(response) {
       var productId = response.data[0].id;
 
-      var request = moltin.Cart.Insert(productId, 1)
+      return Moltin.Cart.Insert(productId, 1)
         .then((response) => {
           expect(response.data).toBeArrayOfObjects();
         })
@@ -21,7 +23,7 @@ describe('Moltin Cart Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Products.List()
+    return Moltin.Products.List()
       .then(success)
       .catch(failure);
   });
@@ -35,7 +37,7 @@ describe('Moltin Cart Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Cart.Contents()
+    var request = Moltin.Cart.Contents()
       .then(success)
       .catch(failure)
       .then(done);
@@ -45,7 +47,7 @@ describe('Moltin Cart Class', function() {
     var success = function(response) {
       var productId = response.data[0].id;
 
-      var request = moltin.Cart.Quantity(productId, 2)
+      var request = Moltin.Cart.Quantity(productId, 2)
         .then((response) => {
           expect(response.data[0].quantity).toEqual(2);
         })
@@ -59,7 +61,7 @@ describe('Moltin Cart Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Cart.Contents()
+    var request = Moltin.Cart.Contents()
       .then(success)
       .catch(failure);
   });
@@ -68,7 +70,7 @@ describe('Moltin Cart Class', function() {
     var success = function(response) {
       var itemId = response.data[0].id;
 
-      var request = moltin.Cart.Remove(itemId)
+      var request = Moltin.Cart.Remove(itemId)
         .then((response) => {
           expect(response).toEqual({
             data: [{
@@ -88,7 +90,7 @@ describe('Moltin Cart Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Cart.Contents()
+    var request = Moltin.Cart.Contents()
       .then(success)
       .catch(failure);
   });
@@ -97,13 +99,13 @@ describe('Moltin Cart Class', function() {
     var success = function(response) {
       var productId = response.data[0].id;
 
-      var insert = moltin.Cart.Insert(productId, 1)
+      var insert = Moltin.Cart.Insert(productId, 1)
         .then(deletion)
         .catch(failure);
 
-      var deletion = moltin.Cart.Delete()
+      var deletion = Moltin.Cart.Delete()
         .then((response) => {
-          var cartId = moltin.Storage.get('mcart');
+          var cartId = Moltin.storage.get('mcart');
 
           expect(response).toEqual({
             data: [{
@@ -122,7 +124,7 @@ describe('Moltin Cart Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Products.List()
+    var request = Moltin.Products.List()
       .then(success)
       .catch(failure);
   });

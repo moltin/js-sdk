@@ -1,20 +1,22 @@
 describe('Moltin Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'
+    });
   });
 
   it('should throw an error when a client id is not set', function() {
-    moltin.config.clientId = '';
+    Moltin.config.clientId = '';
 
     var authenticate = function() {
-      moltin.Authenticate();
+      Moltin.Authenticate();
     };
 
     expect(authenticate).toThrow(new Error('You must have a client id set'));
   });
 
   it('should return a promise', function() {
-    var promise = moltin.Authenticate();
+    var promise = Moltin.Authenticate();
 
     expect(Promise.resolve(promise) === promise).toBe(true);
   });
@@ -28,7 +30,7 @@ describe('Moltin Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Authenticate()
+    var request = Moltin.Authenticate()
       .then(success)
       .catch(failure)
       .then(done);
@@ -36,9 +38,9 @@ describe('Moltin Class', function() {
 
   it('should re-authenticate if the token is expired', function(done) {
     var success = function() {
-      moltin.Storage.set('mtoken', '');
+      Moltin.storage.delete('mtoken');
 
-      var request = moltin.Products.List()
+      var request = Moltin.Products.List()
         .then((response) => {
           expect(response.data).toBeArrayOfObjects();
         })
@@ -52,7 +54,7 @@ describe('Moltin Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Products.List()
+    var request = Moltin.Products.List()
       .then(success)
       .catch(failure);
   });

@@ -1,6 +1,9 @@
 describe('Moltin Collections Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE',
+      currency: 'GBP'
+    });
   });
 
   it('should return an array of multiple collection objects', function(done) {
@@ -12,7 +15,7 @@ describe('Moltin Collections Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Collections.List()
+    var request = Moltin.Collections.List()
       .then(success)
       .catch(failure)
       .then(done);
@@ -22,7 +25,7 @@ describe('Moltin Collections Class', function() {
     var success = function(response) {
       var collectionId = response.data[0].id;
 
-      var request = moltin.Collections.Get(collectionId)
+      var request = Moltin.Collections.Get(collectionId)
         .then((response) => {
           expect(response.data).toBeArrayOfSize(1);
         })
@@ -36,7 +39,7 @@ describe('Moltin Collections Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Collections.List()
+    var request = Moltin.Collections.List()
       .then(success)
       .catch(failure);
   });

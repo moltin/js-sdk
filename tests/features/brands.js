@@ -1,6 +1,8 @@
 describe('Moltin Brands Class', function() {
   beforeEach(function() {
-    moltin = new Moltin();
+    Moltin = moltin.gateway({
+      publicId: 'umRG34nxZVGIuCSPfYf8biBSvtABgTR8GMUtflyE'
+    });
   });
 
   it('should return an array of multiple brand objects', function(done) {
@@ -12,7 +14,7 @@ describe('Moltin Brands Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Brands.List()
+    return Moltin.Brands.List()
       .then(success)
       .catch(failure)
       .then(done);
@@ -22,7 +24,7 @@ describe('Moltin Brands Class', function() {
     var success = function(response) {
       var brandId = response.data[0].id;
 
-      var request = moltin.Brands.Get(brandId)
+      var request = Moltin.Brands.Get(brandId)
         .then((response) => {
           expect(response.data).toBeArrayOfSize(1);
         })
@@ -36,7 +38,7 @@ describe('Moltin Brands Class', function() {
       expect(error).toBe(null);
     };
 
-    var request = moltin.Brands.List()
+    var request = Moltin.Brands.List()
       .then(success)
       .catch(failure);
   });
