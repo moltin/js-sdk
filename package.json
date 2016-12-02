@@ -8,9 +8,10 @@
     "url": "https://moltin.com/"
   },
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "test": "npm run -s build && karma start || true"
+    "roll:cjs": "rollup -c rollup/cjs.config.js",
+    "roll:iife": "rollup -c rollup/iife.config.js",
+    "build": "npm run roll:cjs && npm run roll:iife",
+    "test": "npm run build && karma start || true"
   },
   "main": "dist/moltin.cjs.js",
   "jsnext:main": "src/moltin.js",
@@ -39,8 +40,7 @@
     "rollup-plugin-buble": "^0.14.0",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "rollup-plugin-uglify": "^1.0.1",
-    "rollup-watch": "^2.5.0"
+    "rollup-plugin-uglify": "^1.0.1"
   },
   "dependencies": {
     "es6-promise": "^4.0.5",

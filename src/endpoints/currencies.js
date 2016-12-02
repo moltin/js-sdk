@@ -1,5 +1,3 @@
-import Promise from 'es6-promise';
-
 import Abstract from '../abstract';
 import StorageFactory from '../factories/storage';
 

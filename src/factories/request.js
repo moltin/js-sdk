@@ -1,6 +1,3 @@
-import fetch from 'fetch-everywhere';
-import Promise from 'es6-promise';
-
 import StorageFactory from './storage';
 
 class RequestFactory {

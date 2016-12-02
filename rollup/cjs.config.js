@@ -5,7 +5,7 @@ import uglify from 'rollup-plugin-uglify';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 
-const pkg = require('./package.json');
+const pkg = require('../package.json');
 
 export default {
   entry: 'src/moltin.js',
@@ -23,20 +23,7 @@ export default {
     buble(),
     uglify()
   ],
-  targets: [
-    {
-      dest: pkg['main'],
-      format: 'cjs',
-      sourceMap: true
-    }, {
-      dest: pkg['browser'],
-      format: 'iife',
-      sourceMap: true,
-      moduleName: 'moltin',
-      globals: {
-        'fetch-everywhere': 'fetch',
-        'es6-promise': 'Promise'
-      }
-    }
-  ]
+  dest: pkg['main'],
+  format: 'cjs',
+  sourceMap: true
 };
