@@ -22,7 +22,7 @@
       
       return @m.Request uri, 'GET', null, callback, error
 
-    Update: (product, modifier, callback, error) ->
+    Delete: (product, modifier, callback, error) ->
 
       return @m.Request 'products/'+product+'/modifiers/'+modifier, 'DELETE', null, callback, error
 
