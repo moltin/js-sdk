@@ -1,5 +1,7 @@
 import StorageFactory from './storage';
 
+import { setHeaderContentType } from '../utils/helpers';
+
 class RequestFactory {
   constructor(config) {
     this.config = config;
@@ -58,7 +60,7 @@ class RequestFactory {
       const req = function() {
         const headers = {
           'Authorization': `Bearer: ${storage.get('mtoken')}`,
-          'Content-Type': config.contentType
+          'Content-Type': setHeaderContentType(uri, method)
         };
 
         if (config.currency) {

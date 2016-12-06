@@ -1,29 +1,13 @@
-import Abstract from '../abstract';
-import StorageFactory from '../factories/storage';
+import BaseExtend from '../extends/base';
 
-class CartEndpoint extends Abstract {
+import { cartIdentifier } from '../utils/helpers';
+
+class CartEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint);
 
     this.endpoint = 'carts';
-    this.storage = new StorageFactory();
-    this.cartId = this.identifier();
-  }
-
-  identifier(reset = false, id = false) {
-    const storage = this.storage;
-
-    if (!reset && !id && storage.get('mcart') !== null) {
-      return storage.get('mcart');
-    }
-
-    if (!id) {
-      id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16));
-    }
-
-    storage.set('mcart', id);
-
-    return id;
+    this.cartId = cartIdentifier();
   }
 
   Contents() {
@@ -51,8 +35,8 @@ class CartEndpoint extends Abstract {
     return this.request.send(`${this.endpoint}/${this.cartId}/items/${id}`, 'PUT', productObject);
   }
 
-  Complete(data) {
-    return this.request.send(`${this.endpoint}/${this.cartId}/checkout`, 'POST', data);
+  Complete(body) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/checkout`, 'POST', body);
   }
 
   Delete() {

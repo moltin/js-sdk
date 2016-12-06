@@ -1,6 +1,6 @@
-import Abstract from '../abstract';
+import CatalogueExtend from '../extends/catalogue';
 
-class BrandsEndpoint extends Abstract {
+class BrandsEndpoint extends CatalogueExtend {
   constructor(endpoint) {
     super(endpoint);
 

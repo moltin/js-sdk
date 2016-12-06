@@ -1,6 +1,6 @@
-import RequestFactory from './factories/request';
+import RequestFactory from '../factories/request';
 
-class Abstract {
+class BaseExtend {
   constructor(config) {
     this.request = new RequestFactory(config);
 
@@ -20,16 +20,6 @@ class Abstract {
 
     return this.request.send(`${this.endpoint}/${id}`, 'GET');
   }
-
-  List(params) {
-    if (params) {
-      const includes = params.toString();
-
-      return this.request.send(`${this.endpoint}?include=${includes}`, 'GET');
-    }
-
-    return this.request.send(`${this.endpoint}`, 'GET');
-  }
 }
 
-export default Abstract;
+export default BaseExtend;

@@ -1,14 +1,18 @@
-import Abstract from '../abstract';
+import BaseExtend from '../extends/base';
 
-class OrdersEndpoint extends Abstract {
+class OrdersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint);
 
     this.endpoint = 'orders';
   }
 
-  Payment(id, data) {
-    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', data);
+  List() {
+    return this.request.send(`${this.endpoint}`, 'GET');
+  }
+
+  Payment(id, body) {
+    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body);
   }
 }
 

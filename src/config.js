@@ -10,7 +10,6 @@ class Config {
     this.currency = options.currency;
     this.language = false;
     this.timeout = 60000;
-    this.contentType = 'application/json';
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token'
