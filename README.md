@@ -1,41 +1,61 @@
 # Moltin JavaScript SDK
 
-Shit left to sort out:
+> The Moltin Javascript SDK is a simple to use interface for the Moltin eCommerce API to help you get off the ground quickly and efficiently within client and server applications.
 
- - Complete move from coffee-script by breaking up the main JS file
- - Create proper factories and DI
- - Make tests use Request Mocking
- - Standardise error responses
- - Catch API errors
- - Create multiple storage drivers
- - Finish readme
- - Create build process
- - Version SDK and CDN version correctly
- - Finish examples
+📚 [Wiki](https://github.com/moltin/js-sdk/wiki) &mdash; 📚 [API docs](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
 
-### Usage
+## Installation
 
-```js
-// List of products
-var moltin = new Moltin();
-moltin.Products.List()
-  .then(function(data) {
-    console.log(data);
-  });
+```
+npm install --save moltin
 ```
 
-### Local dev
+#### JavaScript
 
-Install dependencies with ```npm```
+```html
+<script src="node_modules/moltin/dist/moltin.js"></script>
+```
+
+This will expose a `moltin` object in the global namespace.
+
+#### Node.js
+
+```js
+const moltin = require('moltin');
+```
+
+## Usage
+
+To get started, create a new instance of the Moltin class with your store `public_id`.
+
+> **Note:** This requires a [Moltin](http://moltin.com) account.
+
+```js
+const Moltin = moltin.gateway({
+  publicId: 'XXX'
+});
+```
+
+You can now authenticate with the Moltin service 🎉
+
+```js
+Moltin.Authenticate().then((response) => {
+  console.log('authenticated', response);
+});
+```
+
+Check out the [wiki](https://github.com/moltin/js-sdk/wiki) to learn more about authenticating and the available endpoints.
+
+
+## Development
+
+The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled into Node and browser compatible files using [Rollup](http://rollupjs.org).
+
+If you want to roll your own bundle, or make changes to any of the modules in `src`, then you'll need to install the package dependencies and build the `dist` files.
 
 ```
 npm install
+npm run build
 ```
 
-### Tests
-
-Once dependencies are installed, you can run tests with Karma:
-
-```
-grunt karma
-```
+You can learn more about Rollup, the API and configuration  [here](https://github.com/rollup/rollup/wiki).
