@@ -12,7 +12,16 @@ class OrdersEndpoint extends BaseExtend {
   }
 
   Payment(id, body) {
-    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body);
+    let parsedBody = body;
+
+    // Add `id` key to `body` object if not included
+    if (!('method' in body)) {
+      parsedBody = Object.assign(body, {
+        method: 'purchase'
+      });
+    }
+
+    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', parsedBody);
   }
 }
 
