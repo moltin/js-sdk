@@ -1,5 +1,7 @@
 import BaseExtend from '../extends/base';
 
+import { mergeBodyObject } from '../utils/helpers';
+
 class OrdersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint);
@@ -12,16 +14,7 @@ class OrdersEndpoint extends BaseExtend {
   }
 
   Payment(id, body) {
-    let parsedBody = body;
-
-    // Add `id` key to `body` object if not included
-    if (!('method' in body)) {
-      parsedBody = Object.assign(body, {
-        method: 'purchase'
-      });
-    }
-
-    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', parsedBody);
+    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', mergeBodyObject(body, 'method', 'purchase'));
   }
 }
 
