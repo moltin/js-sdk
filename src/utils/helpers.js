@@ -35,3 +35,15 @@ export function setHeaderContentType(uri, method) {
 
   return contentType;
 }
+
+export function mergeBodyObject(body, key, value) {
+  let mergedBody = body;
+
+  if (!(key in body)) {
+    mergedBody = Object.assign(body, {
+      key: value
+    });
+  }
+
+  return mergedBody;
+}

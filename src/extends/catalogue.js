@@ -1,5 +1,7 @@
 import BaseExtend from './base';
 
+import { mergeBodyObject } from '../utils/helpers';
+
 class CatalogueExtend extends BaseExtend {
   List(params) {
     if (params) {
@@ -20,16 +22,7 @@ class CatalogueExtend extends BaseExtend {
   }
 
   Update(id, body) {
-    let parsedBody = body;
-
-    // Add `id` key to `body` object if not included
-    if (!('id' in body)) {
-      parsedBody = Object.assign(body, {
-        id: id
-      });
-    }
-
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', parsedBody);
+    return this.request.send(`${this.endpoint}/${id}`, 'PUT', mergeBodyObject(body, 'id', id));
   }
 }
 
