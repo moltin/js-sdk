@@ -12,13 +12,13 @@ class ProductsEndpoint extends CatalogueExtend {
   AddRelationship(id, body) {
     const parsedType = parseRelationshipType(body.type);
 
-    return this.request.send(`${this.endpoint}/${id}/relationships/${parsedType}`, 'POST', body);
+    return this.request.send(`${this.endpoint}/${id}/relationships/${parsedType}`, 'POST', [body]);
   }
 
   DeleteRelationship(id, body) {
     const parsedType = parseRelationshipType(body.type);
 
-    return this.request.send(`${this.endpoint}/${id}/relationships/${parsedType}`, 'DELETE', body);
+    return this.request.send(`${this.endpoint}/${id}/relationships/${parsedType}`, 'DELETE', [body]);
   }
 }
 

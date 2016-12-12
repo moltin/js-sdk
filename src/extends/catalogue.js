@@ -22,7 +22,7 @@ class CatalogueExtend extends BaseExtend {
   }
 
   Update(id, body) {
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', mergeBodyObject(body, 'id', id));
+    return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
   }
 }
 

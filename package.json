@@ -11,7 +11,7 @@
     "roll:cjs": "rollup -c rollup/cjs.config.js",
     "roll:iife": "rollup -c rollup/iife.config.js",
     "build": "npm run roll:cjs && npm run roll:iife",
-    "test": "npm run build && karma start || true"
+    "test": "npm run build && mocha test/unit/* || true"
   },
   "main": "dist/moltin.cjs.js",
   "jsnext:main": "src/moltin.js",
@@ -31,11 +31,9 @@
     }
   ],
   "devDependencies": {
-    "jasmine-core": "2.4.1",
-    "karma": "~0.13.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.0.2",
-    "karma-jasmine-matchers": "^3.0.1",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.2",
     "rollup": "^0.36.4",
     "rollup-plugin-buble": "^0.14.0",
     "rollup-plugin-commonjs": "^5.0.5",
