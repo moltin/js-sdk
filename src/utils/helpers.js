@@ -27,7 +27,7 @@ export function cartIdentifier(reset = false, id = false) {
 }
 
 export function setHeaderContentType(uri, method) {
-  let contentType = 'application/vnd.api+json';
+  let contentType = 'application/json';
 
   if (uri === 'files' && method === 'POST') {
     contentType = 'multipart/form-data';
