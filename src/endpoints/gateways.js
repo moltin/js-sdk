@@ -12,7 +12,7 @@ class GatewaysEndpoint extends BaseExtend {
   }
 
   Update(slug, body) {
-    return this.request.send(`${this.endpoint}`, 'GET', body);
+    return this.request.send(`${this.endpoint}/${slug}`, 'PUT', body);
   }
 
   Enabled(slug, enabled) {
