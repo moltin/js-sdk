@@ -120,8 +120,8 @@ Moltin = (function() {
       }
     }    if (this.Storage.get('mtoken') !== null && parseInt(this.Storage.get('mexpires')) > Date.now()) {
       this.options.auth = {
-        token: this.Storage.get('mtoken'),
-        expires: this.Storage.get('mexpires')
+        expires: parseInt(this.Storage.get('mexpires')) * 1000,
+        token: this.Storage.get('mtoken')
       };
       if (typeof callback === 'function') {
         callback(this.options.auth);
@@ -140,12 +140,12 @@ Moltin = (function() {
       },
       success: (function(_this) {
         return function(r, c, e) {
+          _this.Storage.set('mexpires', r.expires);
+          _this.Storage.set('mtoken', r.token_type + ' ' + r.access_token);
           _this.options.auth = {
-            token: r.access_token,
-            expires: parseInt(r.expires) * 1000
+            expires: parseInt(_this.Storage.get('mexpires')) * 1000,
+            token: _this.Storage.get('mtoken')
           };
-          _this.Storage.set('mtoken', r.access_token);
-          _this.Storage.set('mexpires', _this.options.auth.expires);
           if (typeof callback === 'function') {
             callback(r);
           }        };
@@ -172,14 +172,14 @@ Moltin = (function() {
     _data = {};
     _headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + this.options.auth.token
+      'Authorization': this.options.auth.token
     };
     if (this.options.auth.token === null) {
       if (typeof error === 'function') {
         error('error', 'You much authenticate first', 401);
       }
     }
-    if (Date.now() > parseInt(this.Storage.get('mexpires'))) {
+    if (Date.now() >= this.options.auth.expires) {
       this.Authenticate(null, error);
     }
     if (!this.InArray(method, this.options.methods)) {
@@ -836,7 +836,7 @@ Moltin = (function() {
       return this.m.Request(uri, 'GET', null, callback, error);
     };
 
-    Modifier.prototype.Update = function(product, modifier, callback, error) {
+    Modifier.prototype.Delete = function(product, modifier, callback, error) {
       return this.m.Request('products/' + product + '/modifiers/' + modifier, 'DELETE', null, callback, error);
     };
 

@@ -107,10 +107,10 @@ class Moltin
     `
 
     if @Storage.get('mtoken') != null and parseInt(@Storage.get('mexpires')) > Date.now()
-      
+
       @options.auth =
+        expires: parseInt(@Storage.get('mexpires')) * 1000
         token:   @Storage.get 'mtoken'
-        expires: @Storage.get 'mexpires'
 
       if typeof callback == 'function'
         callback @options.auth
@@ -150,12 +150,13 @@ class Moltin
       headers:
         'Content-Type': 'application/x-www-form-urlencoded'
       success: (r, c, e) =>
-        @options.auth =
-          token:   r.access_token
-          expires: parseInt(r.expires) * 1000
 
-        @Storage.set 'mtoken', r.access_token
-        @Storage.set 'mexpires', @options.auth.expires
+        @Storage.set 'mexpires', r.expires
+        @Storage.set 'mtoken', r.token_type+' '+r.access_token
+
+        @options.auth =
+          expires: parseInt(@Storage.get('mexpires')) * 1000
+          token:   @Storage.get 'mtoken'
 
         if typeof callback == 'function'
           callback r
@@ -179,13 +180,13 @@ class Moltin
     _data    = {}
     _headers =
       'Content-Type': 'application/x-www-form-urlencoded'
-      'Authorization': 'Bearer '+@options.auth.token
+      'Authorization': @options.auth.token
 
     if @options.auth.token == null
       if typeof error == 'function'
         error 'error', 'You much authenticate first', 401
 
-    if Date.now() > parseInt(@Storage.get('mexpires'))
+    if Date.now() >= @options.auth.expires
       @Authenticate null, error
 
     if not @InArray method, @options.methods
@@ -745,7 +746,7 @@ class Moltin
       
       return @m.Request uri, 'GET', null, callback, error
 
-    Update: (product, modifier, callback, error) ->
+    Delete: (product, modifier, callback, error) ->
 
       return @m.Request 'products/'+product+'/modifiers/'+modifier, 'DELETE', null, callback, error
 
