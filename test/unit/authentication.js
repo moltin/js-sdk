@@ -19,7 +19,8 @@ describe('Moltin authentication', () => {
     })
     .post('/oauth/access_token', 'grant_type=implicit&client_id=XXX')
     .reply(200, {
-      access_token: 'a550d8cbd4a4627013452359ab69694cd446615a'
+      access_token: 'a550d8cbd4a4627013452359ab69694cd446615a',
+      expires: '999999999999999999999'
     });
 
     return store.Authenticate().then((response) => {
@@ -28,12 +29,12 @@ describe('Moltin authentication', () => {
   });
 
   // TODO: endpoint request should fire authenticate function if `access_token` is null
-  // it('should reauthenticate if access_token is null', function(done) {
+  // it('should reauthenticate if access_token is null', () => {
   //
   // });
 
   // TODO: endpoint request should refresh `access_token` if expired
-  // it('should reauthenticate if access_token has expired', function(done) {
+  // it('should reauthenticate if access_token has expired', () => {
   //
   // });
 
