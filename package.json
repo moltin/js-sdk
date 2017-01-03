@@ -1,7 +1,7 @@
 {
   "name": "moltin",
   "description": "SDK for the Moltin eCommerce API",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "homepage": "https://github.com/moltin/js-sdk",
   "author": {
     "name": "Moltin Team",
