@@ -56,7 +56,11 @@ describe('Moltin cart', () => {
         'Content-Type': 'application/json'
       }
     })
-    .post('/carts/3/items')
+    .post('/carts/3/items', {
+      data: {
+        type: 'cart_item'
+      }
+    })
     .reply(201, {
       product_id: '4',
       quantity: 2

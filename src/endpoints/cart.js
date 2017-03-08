@@ -17,6 +17,7 @@ class CartEndpoint extends BaseExtend {
   Insert(id, quantity) {
     const productObject = {
       id: id,
+      type: 'cart_item',
       quantity: parseInt(quantity) || 1
     };
 
