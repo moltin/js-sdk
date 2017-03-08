@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const store = moltin.gateway({
-  publicId: 'XXX'
+  client_id: 'XXX'
 });
 
 const apiUrl = 'https://api.moltin.com';
@@ -39,8 +39,8 @@ describe('Moltin authentication', () => {
   // });
 
   it('should throw an error when no client id is set', () => {
-    // Clear the `clientId`
-    store.config.clientId = '';
+    // Clear the `client_id`
+    store.config.client_id = '';
 
     assert.throws(() => store.Authenticate(), Error, 'You must have a client id set');
   });

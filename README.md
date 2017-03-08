@@ -32,7 +32,7 @@ To get started, create a new instance of the Moltin class with your store `publi
 
 ```js
 const Moltin = moltin.gateway({
-  publicId: 'XXX'
+  client_id: 'XXX'
 });
 ```
 

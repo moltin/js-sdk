@@ -1,7 +1,7 @@
 class Config {
   constructor(options) {
-    this.clientId = options.publicId;
-    this.clientSecret = options.secretKey;
+    this.client_id = options.client_id;
+    this.client_secret = options.client_secret;
     this.host = 'api.moltin.com';
     this.port = '443';
     this.protocol = 'https';
