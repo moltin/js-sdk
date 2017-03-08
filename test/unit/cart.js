@@ -5,7 +5,7 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const items = require('../factories').cartItemsArray;
 const store = moltin.gateway({
-  publicId: 'XXX'
+  client_id: 'XXX'
 });
 
 const apiUrl = 'https://api.moltin.com/v2';
