@@ -66,7 +66,7 @@ describe('Moltin cart', () => {
       quantity: 2
     });
 
-    return store.Cart.Insert('4', 2).then((item) => {
+    return store.Cart.AddProduct('4', 2).then((item) => {
       assert.propertyVal(item, 'product_id', '4');
       assert.propertyVal(item, 'quantity', 2);
     });

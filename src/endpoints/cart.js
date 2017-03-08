@@ -14,7 +14,7 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'GET');
   }
 
-  Insert(id, quantity) {
+  AddProduct(id, quantity) {
     const productObject = {
       id: id,
       type: 'cart_item',
