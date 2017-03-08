@@ -24,6 +24,14 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', productObject);
   }
 
+  AddCustomItem(body) {
+    const itemObject = Object.assign(body, {
+      type: 'custom_item'
+    });
+
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', itemObject);
+  }
+
   Remove(id) {
     return this.request.send(`${this.endpoint}/${this.cartId}/items/${id}`, 'DELETE');
   }

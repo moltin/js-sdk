@@ -72,6 +72,42 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should add a custom item to the cart', () => {
+    const item = {
+      name: 'Custom Item',
+      sku: '001',
+      description: 'A new custom item',
+      quantity: 1,
+      price: {
+        amount: 20
+      }
+    };
+
+    // Intercept the API request
+    nock(apiUrl)
+    .post('/carts/3/items', {
+      data: {
+        type: 'custom_item',
+        name: 'Custom Item',
+        sku: '001',
+        description: 'A new custom item',
+        quantity: 1,
+        price: {
+          amount: 20
+        }
+      }
+    })
+    .reply(201, {
+      name: 'Custom Item',
+      quantity: 1
+    });
+
+    return store.Cart.AddCustomItem(item).then((item) => {
+      assert.propertyVal(item, 'name', 'Custom Item');
+      assert.propertyVal(item, 'quantity', 1);
+    });
+  });
+
   it('should update the quantity of a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
