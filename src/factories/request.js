@@ -13,17 +13,17 @@ class RequestFactory {
     const config = this.config;
     const storage = this.storage;
 
-    if (config.clientId.length <= 0) {
+    if (config.client_id.length <= 0) {
       throw new Error('You must have a client id set');
     }
 
     const body = {
-      grant_type: config.clientSecret ? 'client_credentials' : 'implicit',
-      client_id: config.clientId,
+      grant_type: config.client_secret ? 'client_credentials' : 'implicit',
+      client_id: config.client_id,
     };
 
-    if (config.clientSecret) {
-      body['client_secret'] = config.clientSecret;
+    if (config.client_secret) {
+      body['client_secret'] = config.client_secret;
     }
 
     const promise = new Promise((resolve, reject) => {
