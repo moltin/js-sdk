@@ -14,7 +14,7 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${cartId}`, 'GET');
   }
 
-  Contents(cartId = this.cartId) {
+  Items(cartId = this.cartId) {
     return this.request.send(`${this.endpoint}/${cartId}/items`, 'GET');
   }
 
@@ -36,11 +36,11 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', itemObject);
   }
 
-  Remove(productId, cartId = this.cartId) {
+  RemoveItem(productId, cartId = this.cartId) {
     return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'DELETE');
   }
 
-  Quantity(productId, quantity, cartId = this.cartId) {
+  UpdateItemQuantity(productId, quantity, cartId = this.cartId) {
     const productObject = {
       quantity: parseInt(quantity)
     };
@@ -48,7 +48,7 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'PUT', productObject);
   }
 
-  Complete(body, cartId = this.cartId) {
+  Checkout(body, cartId = this.cartId) {
     return this.request.send(`${this.endpoint}/${cartId}/checkout`, 'POST', body);
   }
 

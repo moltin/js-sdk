@@ -84,7 +84,7 @@ describe('Moltin cart', () => {
     .get(`/carts/${cartId}/items`)
     .reply(200, items);
 
-    return store.Cart.Contents().then((items) => {
+    return store.Cart.Items().then((items) => {
       assert.lengthOf(items, 4);
     });
   });
@@ -99,7 +99,7 @@ describe('Moltin cart', () => {
     .get(`/carts/5/items`)
     .reply(200, items);
 
-    return store.Cart.Contents('5').then((items) => {
+    return store.Cart.Items('5').then((items) => {
       assert.lengthOf(items, 4);
     });
   });
@@ -225,7 +225,7 @@ describe('Moltin cart', () => {
       quantity: 6
     });
 
-    return store.Cart.Quantity('2', 6).then((item) => {
+    return store.Cart.UpdateItemQuantity('2', 6).then((item) => {
       assert.propertyVal(item, 'product_id', '2');
       assert.propertyVal(item, 'quantity', 6);
     });
@@ -241,7 +241,7 @@ describe('Moltin cart', () => {
     .delete(`/carts/${cartId}/items/2`)
     .reply(200, items);
 
-    return store.Cart.Remove('2').then((items) => {
+    return store.Cart.RemoveItem('2').then((items) => {
       assert.lengthOf(items, 4);
     });
   });
@@ -256,7 +256,7 @@ describe('Moltin cart', () => {
     .delete('/carts/5/items/2')
     .reply(200, items);
 
-    return store.Cart.Remove('2', '5').then((items) => {
+    return store.Cart.RemoveItem('2', '5').then((items) => {
       assert.lengthOf(items, 4);
     });
   });
@@ -306,7 +306,7 @@ describe('Moltin cart', () => {
       status: 'complete'
     });
 
-    return store.Cart.Complete(this.order).then((order) => {
+    return store.Cart.Checkout(this.order).then((order) => {
       assert.propertyVal(order, 'id', '1');
       assert.propertyVal(order, 'status', 'complete');
     });
@@ -327,7 +327,7 @@ describe('Moltin cart', () => {
       status: 'complete'
     });
 
-    return store.Cart.Complete(this.order, '5').then((order) => {
+    return store.Cart.Checkout(this.order, '5').then((order) => {
       assert.propertyVal(order, 'id', '1');
       assert.propertyVal(order, 'status', 'complete');
     });
