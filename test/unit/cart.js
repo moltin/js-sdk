@@ -58,7 +58,8 @@ describe('Moltin cart', () => {
     })
     .post('/carts/3/items', {
       data: {
-        type: 'cart_item'
+        type: 'cart_item',
+        quantity: 2
       }
     })
     .reply(201, {
@@ -69,6 +70,30 @@ describe('Moltin cart', () => {
     return store.Cart.AddProduct('4', 2).then((item) => {
       assert.propertyVal(item, 'product_id', '4');
       assert.propertyVal(item, 'quantity', 2);
+    });
+  });
+
+  it('should add a product to the cart without quantity paramater', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .post('/carts/3/items', {
+      data: {
+        type: 'cart_item',
+        quantity: 1
+      }
+    })
+    .reply(201, {
+      product_id: '4',
+      quantity: 1
+    });
+
+    return store.Cart.AddProduct('4').then((item) => {
+      assert.propertyVal(item, 'product_id', '4');
+      assert.propertyVal(item, 'quantity', 1);
     });
   });
 
