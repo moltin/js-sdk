@@ -8,10 +8,6 @@ class BaseExtend {
   }
 
   Get(id, params) {
-    if (this.endpoint === 'carts') {
-      return this.request.send(`${this.endpoint}/${this.cartId}`, 'GET');
-    }
-
     if (params) {
       const includes = params.toString();
 

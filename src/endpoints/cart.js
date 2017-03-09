@@ -10,46 +10,50 @@ class CartEndpoint extends BaseExtend {
     this.cartId = cartIdentifier();
   }
 
-  Contents() {
-    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'GET');
+  Get(cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}`, 'GET');
   }
 
-  AddProduct(id, quantity) {
+  Contents(cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}/items`, 'GET');
+  }
+
+  AddProduct(productId, quantity = 1, cartId = this.cartId) {
     const productObject = {
-      id: id,
+      id: productId,
       type: 'cart_item',
-      quantity: parseInt(quantity) || 1
+      quantity: parseInt(quantity)
     };
 
-    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', productObject);
+    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', productObject);
   }
 
-  AddCustomItem(body) {
+  AddCustomItem(body, cartId = this.cartId) {
     const itemObject = Object.assign(body, {
       type: 'custom_item'
     });
 
-    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', itemObject);
+    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', itemObject);
   }
 
-  Remove(id) {
-    return this.request.send(`${this.endpoint}/${this.cartId}/items/${id}`, 'DELETE');
+  Remove(productId, cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'DELETE');
   }
 
-  Quantity(id, quantity) {
+  Quantity(productId, quantity, cartId = this.cartId) {
     const productObject = {
       quantity: parseInt(quantity)
     };
 
-    return this.request.send(`${this.endpoint}/${this.cartId}/items/${id}`, 'PUT', productObject);
+    return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'PUT', productObject);
   }
 
-  Complete(body) {
-    return this.request.send(`${this.endpoint}/${this.cartId}/checkout`, 'POST', body);
+  Complete(body, cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}/checkout`, 'POST', body);
   }
 
-  Delete() {
-    return this.request.send(`${this.endpoint}/${this.cartId}`, 'DELETE');
+  Delete(cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}`, 'DELETE');
   }
 }
 

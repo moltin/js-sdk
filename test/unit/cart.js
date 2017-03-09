@@ -15,6 +15,29 @@ describe('Moltin cart', () => {
     store.Cart.cartId = '3';
 
     cartId = store.Cart.cartId;
+
+    order = {
+      customer: {
+        name: 'John Doe',
+        email: 'john@doe.co'
+      },
+      billing_address: {
+        first_name: 'John',
+        last_name: 'Doe',
+        line_1: '1 Test Street',
+        postcode: 'NE1 6UF',
+        county: 'Tyne & Wear',
+        country: 'UK'
+      },
+      shipping_address: {
+        first_name: 'John',
+        last_name: 'Doe',
+        line_1: '1 Test Street',
+        postcode: 'NE1 6UF',
+        county: 'Tyne & Wear',
+        country: 'UK'
+      }
+    };
   });
 
   it('should return a cart', () => {
@@ -34,6 +57,23 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should return a cart with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .get(`/carts/5`)
+    .reply(200, {
+      id: '5'
+    });
+
+    return store.Cart.Get('5').then((cart) => {
+      assert.propertyVal(cart, 'id', '5');
+    });
+  });
+
   it('should return an array of cart items', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -49,6 +89,21 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should return an array of cart items with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .get(`/carts/5/items`)
+    .reply(200, items);
+
+    return store.Cart.Contents('5').then((items) => {
+      assert.lengthOf(items, 4);
+    });
+  });
+
   it('should add a product to the cart', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -56,7 +111,7 @@ describe('Moltin cart', () => {
         'Content-Type': 'application/json'
       }
     })
-    .post('/carts/3/items', {
+    .post(`/carts/${cartId}/items`, {
       data: {
         type: 'cart_item',
         quantity: 2
@@ -73,6 +128,30 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should add a product to the cart with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .post('/carts/5/items', {
+      data: {
+        type: 'cart_item',
+        quantity: 2
+      }
+    })
+    .reply(201, {
+      product_id: '4',
+      quantity: 2
+    });
+
+    return store.Cart.AddProduct('4', 2, '5').then((item) => {
+      assert.propertyVal(item, 'product_id', '4');
+      assert.propertyVal(item, 'quantity', 2);
+    });
+  });
+
   it('should add a product to the cart without quantity paramater', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -80,7 +159,7 @@ describe('Moltin cart', () => {
         'Content-Type': 'application/json'
       }
     })
-    .post('/carts/3/items', {
+    .post(`/carts/${cartId}/items`, {
       data: {
         type: 'cart_item',
         quantity: 1
@@ -110,7 +189,7 @@ describe('Moltin cart', () => {
 
     // Intercept the API request
     nock(apiUrl)
-    .post('/carts/3/items', {
+    .post(`/carts/${cartId}/items`, {
       data: {
         type: 'custom_item',
         name: 'Custom Item',
@@ -140,7 +219,7 @@ describe('Moltin cart', () => {
         'Content-Type': 'application/json'
       }
     })
-    .put('/carts/3/items/2')
+    .put(`/carts/${cartId}/items/2`)
     .reply(200, {
       product_id: '2',
       quantity: 6
@@ -167,6 +246,21 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should delete a cart item with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .delete('/carts/5/items/2')
+    .reply(200, items);
+
+    return store.Cart.Remove('2', '5').then((items) => {
+      assert.lengthOf(items, 4);
+    });
+  });
+
   it('should delete a cart', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -182,30 +276,22 @@ describe('Moltin cart', () => {
     });
   });
 
-  it('should create an order', () => {
-    const order = {
-      customer: {
-        name: 'John Doe',
-        email: 'john@doe.co'
-      },
-      billing_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        line_1: '1 Test Street',
-        postcode: 'NE1 6UF',
-        county: 'Tyne & Wear',
-        country: 'UK'
-      },
-      shipping_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        line_1: '1 Test Street',
-        postcode: 'NE1 6UF',
-        county: 'Tyne & Wear',
-        country: 'UK'
+  it('should delete a cart with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
       }
-    };
+    })
+    .delete('/carts/5')
+    .reply(200, {});
 
+    return store.Cart.Delete('5').then((cart) => {
+      assert.deepEqual(cart, {});
+    });
+  });
+
+  it('should create an order', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -213,14 +299,35 @@ describe('Moltin cart', () => {
       }
     })
     .post(`/carts/${cartId}/checkout`, {
-      data: order
+      data: this.order
     })
     .reply(201, {
       id: '1',
       status: 'complete'
     });
 
-    return store.Cart.Complete(order).then((order) => {
+    return store.Cart.Complete(this.order).then((order) => {
+      assert.propertyVal(order, 'id', '1');
+      assert.propertyVal(order, 'status', 'complete');
+    });
+  });
+
+  it('should create an order with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .post('/carts/5/checkout', {
+      data: this.order
+    })
+    .reply(201, {
+      id: '1',
+      status: 'complete'
+    });
+
+    return store.Cart.Complete(this.order, '5').then((order) => {
       assert.propertyVal(order, 'id', '1');
       assert.propertyVal(order, 'status', 'complete');
     });
