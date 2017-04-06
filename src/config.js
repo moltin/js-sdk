@@ -15,6 +15,10 @@ class Config {
       uri: 'oauth/access_token'
     };
     this.methods = ['GET', 'POST', 'PUT', 'DELETE'];
+    this.sdk = {
+      version: '2.0.0',
+      language: 'JS'
+    };
   }
 }
 
