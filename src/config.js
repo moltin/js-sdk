@@ -16,8 +16,8 @@ class Config {
     };
     this.methods = ['GET', 'POST', 'PUT', 'DELETE'];
     this.sdk = {
-      version: "2.0.0",
-      language: "JS"
+      version: '2.0.0',
+      language: 'JS'
     };
   }
 }
