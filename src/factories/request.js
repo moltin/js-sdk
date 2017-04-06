@@ -61,8 +61,8 @@ class RequestFactory {
         const headers = {
           'Authorization': `Bearer: ${storage.get('mtoken')}`,
           'Content-Type': setHeaderContentType(uri, method),
-          'X-Moltin-Sdk-Language': config.sdk.language,
-          'X-Moltin-Sdk-Version': config.sdk.version
+          'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
+          'X-MOLTIN-SDK-VERSION': config.sdk.version
         };
 
         if (config.currency) {
