@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- node
+- '7'
+- '6'
+- '5'
+- '4'
+notifications:
+  slack:
+    secure: RfHHdoc4LfZsS0W4xbyQ4HVl/I9AmEnDcxYhFaH0c3omtN+Mh5t6oVjUIl/EY27tnG3NXJQIFOx/XAEdDwxVHhse7yTAaRc1wWJDDLEZkb2jB8Iq8sRS03TDrWb61BLOVazPM2+rZPao3JlWeWzkuiyM436S1H9gB+7hEykhew4=
