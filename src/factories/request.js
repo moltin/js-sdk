@@ -23,7 +23,7 @@ class RequestFactory {
     };
 
     if (config.client_secret) {
-      body['client_secret'] = config.client_secret;
+      body.client_secret = config.client_secret;
     }
 
     const promise = new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ class RequestFactory {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: Object.keys(body).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`).join('&')
+        body: Object.keys(body).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`).join('&'),
       })
       .then((response) => {
         if (response.status === 200) {
@@ -57,26 +57,26 @@ class RequestFactory {
     const storage = this.storage;
 
     const promise = new Promise((resolve, reject) => {
-      const req = function() {
+      const req = () => {
         const headers = {
-          'Authorization': `Bearer: ${storage.get('mtoken')}`,
+          Authorization: `Bearer: ${storage.get('mtoken')}`,
           'Content-Type': setHeaderContentType(uri, method),
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-          'X-MOLTIN-SDK-VERSION': config.sdk.version
+          'X-MOLTIN-SDK-VERSION': config.sdk.version,
         };
 
         if (config.currency) {
           headers['X-MOLTIN-CURRENCY'] = config.currency;
         }
 
-        if ( method === 'POST' || method === 'PUT' ) {
+        if (method === 'POST' || method === 'PUT') {
           body = `{"data":${JSON.stringify(body)}}`;
         }
 
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
-          headers: headers,
-          body: body
+          headers,
+          body,
         })
         .then((response) => {
           resolve(response.json());
@@ -88,9 +88,9 @@ class RequestFactory {
         return this.authenticate()
           .then(req)
           .catch(error => reject(error));
-      } else {
-        req();
       }
+
+      return req();
     });
 
     return promise;
