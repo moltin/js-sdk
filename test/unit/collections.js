@@ -22,7 +22,7 @@ describe('Moltin collections', () => {
     .get('/collections')
     .reply(200, collections);
 
-    return store.Collections.List().then((collections) => {
+    return store.Collections.All().then((collections) => {
       assert.lengthOf(collections, 4);
     });
   });

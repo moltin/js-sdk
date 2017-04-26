@@ -21,7 +21,7 @@ describe('Moltin products', () => {
     .get('/products')
     .reply(200, products);
 
-    return store.Products.List().then((products) => {
+    return store.Products.All().then((products) => {
       assert.lengthOf(products, 4);
     });
   });

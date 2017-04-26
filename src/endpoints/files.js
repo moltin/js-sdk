@@ -7,7 +7,7 @@ class FilesEndpoint extends BaseExtend {
     this.endpoint = 'files';
   }
 
-  List() {
+  All() {
     return this.request.send(`${this.endpoint}`, 'GET');
   }
 

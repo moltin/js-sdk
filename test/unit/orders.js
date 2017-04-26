@@ -21,7 +21,7 @@ describe('Moltin orders', () => {
     .get('/orders')
     .reply(200, orders);
 
-    return store.Orders.List().then((orders) => {
+    return store.Orders.All().then((orders) => {
       assert.lengthOf(orders, 4);
       assert.propertyVal(orders[0], 'id', 'order-1');
     });

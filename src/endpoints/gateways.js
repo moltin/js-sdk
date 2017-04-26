@@ -7,7 +7,7 @@ class GatewaysEndpoint extends BaseExtend {
     this.endpoint = 'gateways';
   }
 
-  List() {
+  All() {
     return this.request.send(`${this.endpoint}`, 'GET');
   }
 

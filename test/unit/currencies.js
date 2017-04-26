@@ -21,7 +21,7 @@ describe('Moltin currencies', () => {
     .get('/currencies')
     .reply(200, currencies);
 
-    return store.Currencies.List().then((currencies) => {
+    return store.Currencies.All().then((currencies) => {
       assert.lengthOf(currencies, 4);
     });
   });

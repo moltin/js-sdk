@@ -3,7 +3,7 @@ import BaseExtend from './base';
 import { mergeBodyObject } from '../utils/helpers';
 
 class CatalogueExtend extends BaseExtend {
-  List(params) {
+  All(params) {
     if (params) {
       const includes = params.toString();
 

@@ -9,7 +9,7 @@ class CurrenciesEndpoint extends BaseExtend {
     this.storage = new StorageFactory();
   }
 
-  List() {
+  All() {
     return this.request.send(`${this.endpoint}`, 'GET');
   }
 

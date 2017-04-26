@@ -21,7 +21,7 @@ describe('Moltin gateways', () => {
     .get('/gateways')
     .reply(200, gateways);
 
-    return store.Gateways.List().then((gateways) => {
+    return store.Gateways.All().then((gateways) => {
       assert.lengthOf(gateways, 2);
     });
   });

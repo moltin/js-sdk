@@ -7,7 +7,7 @@ class OrdersEndpoint extends BaseExtend {
     this.endpoint = 'orders';
   }
 
-  List() {
+  All() {
     return this.request.send(`${this.endpoint}`, 'GET');
   }
 
