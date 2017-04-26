@@ -22,7 +22,7 @@ describe('Moltin brands', () => {
     .get('/brands')
     .reply(200, brands);
 
-    return store.Brands.List().then((brands) => {
+    return store.Brands.All().then((brands) => {
       assert.lengthOf(brands, 4);
     });
   });

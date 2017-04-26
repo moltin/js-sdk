@@ -1,18 +1,6 @@
 import BaseExtend from './base';
 
-import { mergeBodyObject } from '../utils/helpers';
-
 class CatalogueExtend extends BaseExtend {
-  List(params) {
-    if (params) {
-      const includes = params.toString();
-
-      return this.request.send(`${this.endpoint}?include=${includes}`, 'GET');
-    }
-
-    return this.request.send(`${this.endpoint}`, 'GET');
-  }
-
   Create(body) {
     return this.request.send(`${this.endpoint}`, 'POST', body);
   }
@@ -23,6 +11,12 @@ class CatalogueExtend extends BaseExtend {
 
   Update(id, body) {
     return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
+  }
+
+  With(includes) {
+    this.resources = includes.toString().toLowerCase();
+
+    return this;
   }
 }
 

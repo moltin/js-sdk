@@ -47,3 +47,11 @@ export function mergeBodyObject(body, key, value) {
 
   return mergedBody;
 }
+
+export function buildURL(endpoint, resources = null) {
+  if (resources) {
+    return `${endpoint}?include=${resources}`;
+  }
+
+  return `${endpoint}`;
+}

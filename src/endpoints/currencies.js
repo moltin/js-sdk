@@ -9,10 +9,6 @@ class CurrenciesEndpoint extends BaseExtend {
     this.storage = new StorageFactory();
   }
 
-  List() {
-    return this.request.send(`${this.endpoint}`, 'GET');
-  }
-
   Create(body) {
     return this.request.send(`${this.endpoint}`, 'POST', body);
   }
@@ -37,7 +33,7 @@ class CurrenciesEndpoint extends BaseExtend {
 
       try {
         resolve(request);
-      } catch(err) {
+      } catch (err) {
         reject(new Error(err));
       }
     });
@@ -53,7 +49,7 @@ class CurrenciesEndpoint extends BaseExtend {
 
       try {
         resolve(request);
-      } catch(err) {
+      } catch (err) {
         reject(new Error(err));
       }
     });

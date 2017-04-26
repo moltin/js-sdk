@@ -1,6 +1,6 @@
 import CatalogueExtend from '../extends/catalogue';
 
-class CollectionsEndpoint extends CatalogueExtend  {
+class CollectionsEndpoint extends CatalogueExtend {
   constructor(endpoint) {
     super(endpoint);
 

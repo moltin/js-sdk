@@ -21,7 +21,7 @@ describe('Moltin products', () => {
     .get('/products')
     .reply(200, products);
 
-    return store.Products.List().then((products) => {
+    return store.Products.All().then((products) => {
       assert.lengthOf(products, 4);
     });
   });
@@ -37,6 +37,28 @@ describe('Moltin products', () => {
     .reply(200, products[0]);
 
     return store.Products.Get(1).then((product) => {
+      assert.propertyVal(product, 'name', 'Product 1');
+    });
+  });
+
+  it('should return all products and include associated brands, categories, collections', () => {
+    // Intercept the API request
+    nock(apiUrl)
+    .get('/products?include=brands,categories,collections')
+    .reply(200, products);
+
+    return store.Products.With(['brands', 'categories', 'collections']).All().then((product) => {
+      assert.lengthOf(products, 4);
+    });
+  });
+
+  it('should return a single product and include associated brands, categories, collections', () => {
+    // Intercept the API request
+    nock(apiUrl)
+    .get('/products/1?include=brands,categories,collections')
+    .reply(200, products[0]);
+
+    return store.Products.With(['brands', 'categories', 'collections']).Get(1).then((product) => {
       assert.propertyVal(product, 'name', 'Product 1');
     });
   });

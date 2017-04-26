@@ -1,4 +1,5 @@
 import RequestFactory from '../factories/request';
+import { buildURL } from '../utils/helpers';
 
 class BaseExtend {
   constructor(config) {
@@ -7,14 +8,16 @@ class BaseExtend {
     this.config = config;
   }
 
-  Get(id, params) {
-    if (params) {
-      const includes = params.toString();
+  All() {
+    this.call = this.request.send(buildURL(this.endpoint, this.resources), 'GET');
 
-      return this.request.send(`${this.endpoint}/${id}?include=${includes}`, 'GET');
-    }
+    return this.call;
+  }
 
-    return this.request.send(`${this.endpoint}/${id}`, 'GET');
+  Get(id) {
+    this.call = this.request.send(buildURL(`${this.endpoint}/${id}`, this.resources), 'GET');
+
+    return this.call;
   }
 }
 

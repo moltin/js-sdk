@@ -22,7 +22,7 @@ describe('Moltin files', () => {
     .get('/files')
     .reply(200, files);
 
-    return store.Files.List().then((files) => {
+    return store.Files.All().then((files) => {
       assert.lengthOf(files, 4);
       assert.propertyVal(files[0], 'file_name', 'File 1');
     });

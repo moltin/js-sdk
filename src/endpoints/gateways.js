@@ -7,10 +7,6 @@ class GatewaysEndpoint extends BaseExtend {
     this.endpoint = 'gateways';
   }
 
-  List() {
-    return this.request.send(`${this.endpoint}`, 'GET');
-  }
-
   Update(slug, body) {
     return this.request.send(`${this.endpoint}/${slug}`, 'PUT', body);
   }
@@ -18,7 +14,7 @@ class GatewaysEndpoint extends BaseExtend {
   Enabled(slug, enabled) {
     return this.request.send(`${this.endpoint}/${slug}`, 'PUT', {
       type: 'gateway',
-      enabled: enabled
+      enabled,
     });
   }
 }
