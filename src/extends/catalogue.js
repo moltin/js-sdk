@@ -1,16 +1,6 @@
 import BaseExtend from './base';
 
 class CatalogueExtend extends BaseExtend {
-  All(params) {
-    if (params) {
-      const includes = params.toString();
-
-      return this.request.send(`${this.endpoint}?include=${includes}`, 'GET');
-    }
-
-    return this.request.send(`${this.endpoint}`, 'GET');
-  }
-
   Create(body) {
     return this.request.send(`${this.endpoint}`, 'POST', body);
   }
