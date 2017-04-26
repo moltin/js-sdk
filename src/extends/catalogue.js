@@ -1,7 +1,5 @@
 import BaseExtend from './base';
 
-import { mergeBodyObject } from '../utils/helpers';
-
 class CatalogueExtend extends BaseExtend {
   All(params) {
     if (params) {
@@ -23,6 +21,12 @@ class CatalogueExtend extends BaseExtend {
 
   Update(id, body) {
     return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
+  }
+
+  With(includes) {
+    this.resources = includes.toString().toLowerCase();
+
+    return this;
   }
 }
 
