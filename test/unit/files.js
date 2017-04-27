@@ -182,4 +182,45 @@ describe('Moltin files', () => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
+
+  it('should remove all existing product-file relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/files`, {
+      data: [{
+        type: 'file',
+        id: 'file-1',
+      }],
+    })
+    .reply(200, files[0]);
+
+    return store.Products.UpdateRelationships(products[0].id, 'file', files[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'file-1');
+    });
+  });
+
+  it('should remove all existing product-file relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/files`, {
+      data: null,
+    })
+    .reply(200, {
+      data: [],
+    });
+
+    return store.Products.UpdateRelationships(products[0].id, 'file').then((response) => {
+      assert.deepEqual(response, { data: [] });
+    });
+  });
 });

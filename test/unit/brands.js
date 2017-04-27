@@ -200,4 +200,45 @@ describe('Moltin brands', () => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
+
+  it('should update existing product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/brands`, {
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }],
+    })
+    .reply(200, brands[0]);
+
+    return store.Products.UpdateRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
+    });
+  });
+
+  it('should remove all existing product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/brands`, {
+      data: null,
+    })
+    .reply(200, {
+      data: [],
+    });
+
+    return store.Products.UpdateRelationships(products[0].id, 'brand').then((response) => {
+      assert.deepEqual(response, { data: [] });
+    });
+  });
 });

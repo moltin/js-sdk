@@ -195,4 +195,45 @@ describe('Moltin categories', () => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
+
+  it('should update existing product-category relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/categories`, {
+      data: [{
+        type: 'category',
+        id: 'category-1',
+      }],
+    })
+    .reply(200, categories[0]);
+
+    return store.Products.UpdateRelationships(products[0].id, 'category', categories[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'category-1');
+    });
+  });
+
+  it('should remove all existing product-category relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/categories`, {
+      data: null,
+    })
+    .reply(200, {
+      data: [],
+    });
+
+    return store.Products.UpdateRelationships(products[0].id, 'category').then((response) => {
+      assert.deepEqual(response, { data: [] });
+    });
+  });
 });
