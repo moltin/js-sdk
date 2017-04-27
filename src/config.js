@@ -1,3 +1,5 @@
+const pkg = require('../package.json');
+
 class Config {
   constructor(options) {
     this.client_id = options.client_id;
@@ -12,12 +14,12 @@ class Config {
     this.timeout = 60000;
     this.auth = {
       expires: 3600,
-      uri: 'oauth/access_token'
+      uri: 'oauth/access_token',
     };
     this.methods = ['GET', 'POST', 'PUT', 'DELETE'];
     this.sdk = {
-      version: '2.0.0',
-      language: 'JS'
+      version: pkg.version,
+      language: 'JS',
     };
   }
 }
