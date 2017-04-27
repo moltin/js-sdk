@@ -20,6 +20,12 @@ class ProductsEndpoint extends CatalogueExtend {
 
     return this.request.send(`${this.endpoint}/${id}/relationships/${pluralize(type)}`, 'DELETE', body);
   }
+
+  UpdateRelationships(id, type, resources = null) {
+    const body = buildRelationshipData(type, resources);
+
+    return this.request.send(`${this.endpoint}/${id}/relationships/${pluralize(type)}`, 'PUT', body);
+  }
 }
 
 export default ProductsEndpoint;

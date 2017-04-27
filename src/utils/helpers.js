@@ -3,6 +3,10 @@ import StorageFactory from '../factories/storage';
 export function buildRelationshipData(type, ids) {
   let data = [];
 
+  if (ids === null || ids.length === 0) {
+    return null;
+  }
+
   if (typeof ids === 'string') {
     return [{
       type,
