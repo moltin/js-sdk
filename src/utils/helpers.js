@@ -1,13 +1,23 @@
 import StorageFactory from '../factories/storage';
 
-export function parseRelationshipType(type) {
-  let parsedType = `${type}s`;
+export function buildRelationshipData(type, ids) {
+  let data = [];
 
-  if (type === 'category') {
-    parsedType = 'categories';
+  if (typeof ids === 'string') {
+    return [{
+      type,
+      id: ids,
+    }];
   }
 
-  return parsedType;
+  if (Array.isArray(ids)) {
+    data = ids.map(id => ({
+      type,
+      id,
+    }));
+  }
+
+  return data;
 }
 
 export function cartIdentifier(reset = false, id = false) {
@@ -34,18 +44,6 @@ export function setHeaderContentType(uri, method) {
   }
 
   return contentType;
-}
-
-export function mergeBodyObject(body, key, value) {
-  let mergedBody = body;
-
-  if (!(key in body)) {
-    mergedBody = Object.assign(body, {
-      key: value
-    });
-  }
-
-  return mergedBody;
 }
 
 export function buildURL(endpoint, resources = null) {

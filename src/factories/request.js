@@ -69,14 +69,10 @@ class RequestFactory {
           headers['X-MOLTIN-CURRENCY'] = config.currency;
         }
 
-        if (method === 'POST' || method === 'PUT') {
-          body = `{"data":${JSON.stringify(body)}}`;
-        }
-
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
-          body,
+          body: `{"data":${JSON.stringify(body)}}`,
         })
         .then((response) => {
           resolve(response.json());
