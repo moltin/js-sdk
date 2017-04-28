@@ -75,7 +75,11 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put('/collections/1')
+    .put('/collections/1', {
+      data: {
+        name: 'Updated collection name',
+      },
+    })
     .reply(200, {
       name: 'Updated collection name',
     });
@@ -114,7 +118,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/collections`, {
+    .post('/products/product-1/relationships/collections', {
       data: [{
         type: 'collection',
         id: 'collection-1',
@@ -135,7 +139,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/collections`, {
+    .post('/products/product-1/relationships/collections', {
       data: [{
         type: 'collection',
         id: 'collection-1',
@@ -159,7 +163,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/collections`, {
+    .delete('/products/product-1/relationships/collections', {
       data: [{
         type: 'collection',
         id: 'collection-1',
@@ -180,7 +184,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/collections`, {
+    .delete('/products/product-1/relationships/collections', {
       data: [{
         type: 'collection',
         id: 'collection-1',
@@ -204,7 +208,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/collections`, {
+    .put('/products/product-1/relationships/collections', {
       data: [{
         type: 'collection',
         id: 'collection-1',
@@ -225,7 +229,7 @@ describe('Moltin collections', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/collections`, {
+    .put('/products/product-1/relationships/collections', {
       data: null,
     })
     .reply(200, {

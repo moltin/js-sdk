@@ -39,7 +39,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get(`/brands/${brands[0].id}`)
+    .get('/brands/brand-1')
     .reply(200, brands[0]);
 
     return store.Brands.Get(brands[0].id).then((response) => {
@@ -79,7 +79,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/brands/${brands[0].id}`, {
+    .put('/brands/brand-1', {
       data: {
         name: 'Updated brand name',
       },
@@ -103,7 +103,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/brands/${brands[0].id}`)
+    .delete('/brands/brand-1')
     .reply(200, brands[0]);
 
     return store.Brands.Delete(brands[0].id).then((response) => {
@@ -119,7 +119,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/brands`, {
+    .post('/products/product-1/relationships/brands', {
       data: [{
         type: 'brand',
         id: 'brand-1',
@@ -140,7 +140,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/brands`, {
+    .post('/products/product-1/relationships/brands', {
       data: [{
         type: 'brand',
         id: 'brand-1',
@@ -164,7 +164,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/brands`, {
+    .delete('/products/product-1/relationships/brands', {
       data: [{
         type: 'brand',
         id: 'brand-1',
@@ -185,7 +185,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/brands`, {
+    .delete('/products/product-1/relationships/brands', {
       data: [{
         type: 'brand',
         id: 'brand-1',
@@ -209,7 +209,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/brands`, {
+    .put('/products/product-1/relationships/brands', {
       data: [{
         type: 'brand',
         id: 'brand-1',
@@ -230,7 +230,7 @@ describe('Moltin brands', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/brands`, {
+    .put('/products/product-1/relationships/brands', {
       data: null,
     })
     .reply(200, {

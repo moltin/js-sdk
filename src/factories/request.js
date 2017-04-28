@@ -1,6 +1,6 @@
 import StorageFactory from './storage';
 
-import { setHeaderContentType } from '../utils/helpers';
+import { setHeaderContentType, buildRequestBody } from '../utils/helpers';
 
 class RequestFactory {
   constructor(config) {
@@ -13,8 +13,8 @@ class RequestFactory {
     const config = this.config;
     const storage = this.storage;
 
-    if (config.client_id.length <= 0) {
-      throw new Error('You must have a client id set');
+    if (!config.client_id) {
+      throw new Error('You must have a client_id set');
     }
 
     const body = {
@@ -72,7 +72,7 @@ class RequestFactory {
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
-          body: `{"data":${JSON.stringify(body)}}`,
+          body: buildRequestBody(method, body),
         })
         .then((response) => {
           resolve(response.json());

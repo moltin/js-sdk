@@ -6,17 +6,15 @@
 
 ## Installation
 
-```
+```bash
 npm install --save moltin
 ```
 
 #### JavaScript
 
-```html
-<script src="node_modules/moltin/dist/moltin.js"></script>
+```js
+import { gateway as MoltinGateway } from 'moltin';
 ```
-
-This will expose a `moltin` object in the global namespace.
 
 #### Node.js
 
@@ -26,13 +24,32 @@ const moltin = require('moltin');
 
 ## Usage
 
-To get started, create a new instance of the Moltin class with your store `public_id`.
+To get started, instantiate a new Moltin client with your store credentials.
 
 > **Note:** This requires a [Moltin](http://moltin.com) account.
 
+#### JavaScript
+
+```js
+const Moltin = MoltinGateway({
+  client_id: 'XXX'
+});
+```
+
+> **Note:** If you're using [webpack](https://webpack.github.io), you'll need to add the following to your projects configuration file.
+
+```
+node: {
+  fs: 'empty'
+}
+```
+
+#### Node.js
+
 ```js
 const Moltin = moltin.gateway({
-  client_id: 'XXX'
+  client_id: 'XXX',
+  client_secret: 'XXX',
 });
 ```
 

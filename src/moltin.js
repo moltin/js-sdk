@@ -14,7 +14,7 @@ import OrdersEndpoint from './endpoints/orders';
 import GatewaysEndpoint from './endpoints/gateways';
 import FilesEndpoint from './endpoints/files';
 
-class Moltin {
+export default class Moltin {
   constructor(config) {
     this.config = config;
     this.request = new RequestFactory(config);

@@ -55,7 +55,11 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post('/categories')
+    .post('/categories', {
+      data: {
+        name: 'A new category',
+      },
+    })
     .reply(201, {
       name: 'A new category',
     });
@@ -75,7 +79,11 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put('/categories/1')
+    .put('/categories/1', {
+      data: {
+        name: 'Updated category name',
+      },
+    })
     .reply(200, {
       name: 'Updated category name',
     });
@@ -114,7 +122,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/categories`, {
+    .post('/products/product-1/relationships/categories', {
       data: [{
         type: 'category',
         id: 'category-1',
@@ -135,7 +143,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/categories`, {
+    .post('/products/product-1/relationships/categories', {
       data: [{
         type: 'category',
         id: 'category-1',
@@ -159,7 +167,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/categories`, {
+    .delete('/products/product-1/relationships/categories', {
       data: [{
         type: 'category',
         id: 'category-1',
@@ -180,7 +188,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/categories`, {
+    .delete('/products/product-1/relationships/categories', {
       data: [{
         type: 'category',
         id: 'category-1',
@@ -204,7 +212,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/categories`, {
+    .put('/products/product-1/relationships/categories', {
       data: [{
         type: 'category',
         id: 'category-1',
@@ -225,7 +233,7 @@ describe('Moltin categories', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/categories`, {
+    .put('/products/product-1/relationships/categories', {
       data: null,
     })
     .reply(200, {
