@@ -58,6 +58,15 @@ export function buildURL(endpoint, resources = null) {
   return `${endpoint}`;
 }
 
+
+export function buildRequestBody(method, body) {
+  if (method !== 'GET') {
+    return `{"data":${JSON.stringify(body)}}`;
+  }
+
+  return null;
+}
+
 export function buildCartItemData(product, quantity, type = 'cart_item') {
   return {
     id: product,
