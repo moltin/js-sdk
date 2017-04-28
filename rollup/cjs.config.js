@@ -13,17 +13,17 @@ export default {
     resolve({
       jsnext: true,
       main: true,
-      browser: true,
       skip: [
         'fetch-everywhere',
-        'es6-promise'
-      ]
+        'es6-promise',
+      ],
     }),
     commonjs(),
     buble(),
-    uglify()
+    uglify(),
   ],
-  dest: pkg['main'],
+  dest: pkg['cjs:main'],
+  exports: 'named',
   format: 'cjs',
-  sourceMap: true
+  sourceMap: true,
 };

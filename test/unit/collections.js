@@ -1,12 +1,15 @@
-/* jshint node: true */
+/* eslint no-undef: "off",
+          import/no-extraneous-dependencies: "off"
+*/
 
 const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const collections = require('../factories').collectionsArray;
 const products = require('../factories').productsArray;
+
 const store = moltin.gateway({
-  client_id: 'XXX'
+  client_id: 'XXX',
 });
 
 const apiUrl = 'https://api.moltin.com/v2';
@@ -16,14 +19,15 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/collections')
     .reply(200, collections);
 
-    return store.Collections.All().then((collections) => {
-      assert.lengthOf(collections, 4);
+    return store.Collections.All().then((response) => {
+      assert.lengthOf(response, 4);
     });
   });
 
@@ -31,14 +35,15 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/collections/1')
     .reply(200, collections[0]);
 
-    return store.Collections.Get(1).then((collection) => {
-      assert.propertyVal(collection, 'name', 'Collection 1');
+    return store.Collections.Get(1).then((response) => {
+      assert.propertyVal(response, 'name', 'Collection 1');
     });
   });
 
@@ -46,18 +51,19 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .post('/collections')
     .reply(201, {
-      name: 'A new collection'
+      name: 'A new collection',
     });
 
     return store.Collections.Create({
-      name: 'A new collection'
-    }).then((collection) => {
-      assert.propertyVal(collection, 'name', 'A new collection');
+      name: 'A new collection',
+    }).then((response) => {
+      assert.propertyVal(response, 'name', 'A new collection');
     });
   });
 
@@ -65,18 +71,19 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .put('/collections/1')
     .reply(200, {
-      name: 'Updated collection name'
+      name: 'Updated collection name',
     });
 
     return store.Collections.Update('1', {
-      name: 'Updated collection name'
-    }).then((collection) => {
-      assert.propertyVal(collection, 'name', 'Updated collection name');
+      name: 'Updated collection name',
+    }).then((response) => {
+      assert.propertyVal(response, 'name', 'Updated collection name');
     });
   });
 
@@ -84,17 +91,18 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .delete('/collections/1')
     .reply(200, {
       type: 'collection',
-      id: '1'
+      id: '1',
     });
 
-    return store.Collections.Delete('1').then((collection) => {
-      assert.propertyVal(collection, 'id', '1');
+    return store.Collections.Delete('1').then((response) => {
+      assert.propertyVal(response, 'id', '1');
     });
   });
 
@@ -102,25 +110,44 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .post('/products/1/relationships/collections', {
+    .post(`/products/${products[0].id}/relationships/collections`, {
       data: [{
         type: 'collection',
-        id: '2'
-      }]
+        id: 'collection-1',
+      }],
     })
-    .reply(200, {
-      type: 'collection',
-      id: '2'
-    });
+    .reply(200, collections[0]);
 
-    return store.Products.AddRelationship('1', {
-      type: 'collection',
-      id: '2'
-    }).then((product) => {
-      assert.propertyVal(product, 'id', '2');
+    return store.Products.CreateRelationships(products[0].id, 'collection', collections[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'collection-1');
+    });
+  });
+
+  it('should create multiple new product-collection relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .post(`/products/${products[0].id}/relationships/collections`, {
+      data: [{
+        type: 'collection',
+        id: 'collection-1',
+      }, {
+        type: 'collection',
+        id: 'collection-2',
+      }],
+    })
+    .reply(200, collections[0]);
+
+    return store.Products.CreateRelationships(products[0].id, 'collection', [collections[0].id, collections[1].id]).then((response) => {
+      assert.propertyVal(response, 'id', 'collection-1');
     });
   });
 
@@ -128,14 +155,85 @@ describe('Moltin collections', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .delete(`/products/${products[0].id}/relationships/collections`)
-    .reply(200, collections[1]);
+    .delete(`/products/${products[0].id}/relationships/collections`, {
+      data: [{
+        type: 'collection',
+        id: 'collection-1',
+      }],
+    })
+    .reply(200, collections[0]);
 
-    return store.Products.DeleteRelationship(products[0].id, collections[1]).then((collection) => {
-      assert.propertyVal(collection, 'id', 'collection-2');
+    return store.Products.DeleteRelationships(products[0].id, 'collection', collections[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'collection-1');
+    });
+  });
+
+  it('should delete multiple existing product-collection relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .delete(`/products/${products[0].id}/relationships/collections`, {
+      data: [{
+        type: 'collection',
+        id: 'collection-1',
+      }, {
+        type: 'collection',
+        id: 'collection-2',
+      }],
+    })
+    .reply(200, collections[0]);
+
+    return store.Products.DeleteRelationships(products[0].id, 'collection', [collections[0].id, collections[1].id]).then((response) => {
+      assert.propertyVal(response, 'id', 'collection-1');
+    });
+  });
+
+  it('should update existing product-collection relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/collections`, {
+      data: [{
+        type: 'collection',
+        id: 'collection-1',
+      }],
+    })
+    .reply(200, collections[0]);
+
+    return store.Products.UpdateRelationships(products[0].id, 'collection', collections[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'collection-1');
+    });
+  });
+
+  it('should remove all existing product-collection relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/collections`, {
+      data: null,
+    })
+    .reply(200, {
+      data: [],
+    });
+
+    return store.Products.UpdateRelationships(products[0].id, 'collection').then((response) => {
+      assert.deepEqual(response, { data: [] });
     });
   });
 });

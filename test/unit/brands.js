@@ -1,12 +1,15 @@
-/* jshint node: true */
+/* eslint no-undef: "off",
+          import/no-extraneous-dependencies: "off"
+*/
 
 const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const brands = require('../factories').brandsArray;
 const products = require('../factories').productsArray;
+
 const store = moltin.gateway({
-  client_id: 'XXX'
+  client_id: 'XXX',
 });
 
 const apiUrl = 'https://api.moltin.com/v2';
@@ -16,14 +19,15 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/brands')
     .reply(200, brands);
 
-    return store.Brands.All().then((brands) => {
-      assert.lengthOf(brands, 4);
+    return store.Brands.All().then((response) => {
+      assert.lengthOf(response, 4);
     });
   });
 
@@ -31,14 +35,15 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get(`/brands/${brands[0].id}`)
     .reply(200, brands[0]);
 
-    return store.Brands.Get(brands[0].id).then((brand) => {
-      assert.propertyVal(brand, 'name', 'Brand 1');
+    return store.Brands.Get(brands[0].id).then((response) => {
+      assert.propertyVal(response, 'name', 'Brand 1');
     });
   });
 
@@ -46,22 +51,23 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .post('/brands', {
       data: {
-        name: 'A new brand'
-      }
+        name: 'A new brand',
+      },
     })
     .reply(201, {
-      name: 'A new brand'
+      name: 'A new brand',
     });
 
     return store.Brands.Create({
-      name: 'A new brand'
-    }).then((brand) => {
-      assert.propertyVal(brand, 'name', 'A new brand');
+      name: 'A new brand',
+    }).then((response) => {
+      assert.propertyVal(response, 'name', 'A new brand');
     });
   });
 
@@ -69,22 +75,23 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .put(`/brands/${brands[0].id}`, {
       data: {
-        name: 'Updated brand name'
-      }
+        name: 'Updated brand name',
+      },
     })
     .reply(200, {
-      name: 'Updated brand name'
+      name: 'Updated brand name',
     });
 
     return store.Brands.Update(brands[0].id, {
-      name: 'Updated brand name'
-    }).then((brand) => {
-      assert.propertyVal(brand, 'name', 'Updated brand name');
+      name: 'Updated brand name',
+    }).then((response) => {
+      assert.propertyVal(response, 'name', 'Updated brand name');
     });
   });
 
@@ -92,14 +99,15 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .delete(`/brands/${brands[0].id}`)
     .reply(200, brands[0]);
 
-    return store.Brands.Delete(brands[0].id).then((brand) => {
-      assert.propertyVal(brand, 'id', 'brand-1');
+    return store.Brands.Delete(brands[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
     });
   });
 
@@ -107,18 +115,44 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .post(`/products/${products[0].id}/relationships/brands`, {
-      data: [
-        brands[1]
-      ]
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }],
     })
-    .reply(200, brands[1]);
+    .reply(200, brands[0]);
 
-    return store.Products.AddRelationship(products[0].id, brands[1]).then((product) => {
-      assert.propertyVal(product, 'id', 'brand-2');
+    return store.Products.CreateRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
+    });
+  });
+
+  it('should create multiple new product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .post(`/products/${products[0].id}/relationships/brands`, {
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }, {
+        type: 'brand',
+        id: 'brand-2',
+      }],
+    })
+    .reply(200, brands[0]);
+
+    return store.Products.CreateRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id]).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
     });
   });
 
@@ -126,14 +160,85 @@ describe('Moltin brands', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .delete(`/products/${products[0].id}/relationships/brands`)
-    .reply(200, brands[1]);
+    .delete(`/products/${products[0].id}/relationships/brands`, {
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }],
+    })
+    .reply(200, brands[0]);
 
-    return store.Products.DeleteRelationship(products[0].id, brands[1]).then((product) => {
-      assert.propertyVal(product, 'id', 'brand-2');
+    return store.Products.DeleteRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
+    });
+  });
+
+  it('should delete multiple existing product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .delete(`/products/${products[0].id}/relationships/brands`, {
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }, {
+        type: 'brand',
+        id: 'brand-2',
+      }],
+    })
+    .reply(200, brands[0]);
+
+    return store.Products.DeleteRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id]).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
+    });
+  });
+
+  it('should update existing product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/brands`, {
+      data: [{
+        type: 'brand',
+        id: 'brand-1',
+      }],
+    })
+    .reply(200, brands[0]);
+
+    return store.Products.UpdateRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'brand-1');
+    });
+  });
+
+  it('should remove all existing product-brand relationships', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .put(`/products/${products[0].id}/relationships/brands`, {
+      data: null,
+    })
+    .reply(200, {
+      data: [],
+    });
+
+    return store.Products.UpdateRelationships(products[0].id, 'brand').then((response) => {
+      assert.deepEqual(response, { data: [] });
     });
   });
 });
