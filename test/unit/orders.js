@@ -1,11 +1,14 @@
-/* jshint node: true */
+/* eslint no-undef: "off",
+          import/no-extraneous-dependencies: "off"
+*/
 
 const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const orders = require('../factories').ordersArray;
+
 const store = moltin.gateway({
-  client_id: 'XXX'
+  client_id: 'XXX',
 });
 
 const apiUrl = 'https://api.moltin.com/v2';
@@ -15,15 +18,16 @@ describe('Moltin orders', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/orders')
     .reply(200, orders);
 
-    return store.Orders.All().then((orders) => {
-      assert.lengthOf(orders, 4);
-      assert.propertyVal(orders[0], 'id', 'order-1');
+    return store.Orders.All().then((response) => {
+      assert.lengthOf(response, 4);
+      assert.propertyVal(response[0], 'id', 'order-1');
     });
   });
 
@@ -31,15 +35,16 @@ describe('Moltin orders', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .get(`/orders/${orders[0].id}`)
+    .get('/orders/order-1')
     .reply(200, orders[0]);
 
-    return store.Orders.Get(orders[0].id).then((order) => {
-      assert.propertyVal(order, 'id', 'order-1');
-      assert.propertyVal(order, 'status', 'complete');
+    return store.Orders.Get(orders[0].id).then((response) => {
+      assert.propertyVal(response, 'id', 'order-1');
+      assert.propertyVal(response, 'status', 'complete');
     });
   });
 
@@ -47,26 +52,27 @@ describe('Moltin orders', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .post(`/orders/${orders[1].id}/payments`, {
+    .post('/orders/order-2/payments', {
       data: {
         gateway: 'braintree',
         method: 'purchase',
-        customer_id: '3'
-      }
+        customer_id: '3',
+      },
     })
     .reply(201, {
-      status: 'complete'
+      status: 'complete',
     });
 
     return store.Orders.Payment(orders[1].id, {
       gateway: 'braintree',
       method: 'purchase',
-      customer_id: '3'
-    }).then((order) => {
-      assert.propertyVal(order, 'status', 'complete');
+      customer_id: '3',
+    }).then((response) => {
+      assert.propertyVal(response, 'status', 'complete');
     });
   });
 });

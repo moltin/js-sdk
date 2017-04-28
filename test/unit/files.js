@@ -40,7 +40,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get(`/files/${files[0].id}`)
+    .get('/files/file-1')
     .reply(200, files[0]);
 
     return store.Files.Get(files[0].id).then((response) => {
@@ -85,7 +85,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/files/${files[0].id}`)
+    .delete('/files/file-1')
     .reply(200, files[0]);
 
     return store.Files.Delete(files[0].id).then((response) => {
@@ -101,7 +101,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/files`, {
+    .post('/products/product-1/relationships/files', {
       data: [{
         type: 'file',
         id: 'file-1',
@@ -122,7 +122,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post(`/products/${products[0].id}/relationships/files`, {
+    .post('/products/product-1/relationships/files', {
       data: [{
         type: 'file',
         id: 'file-1',
@@ -146,7 +146,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/files`, {
+    .delete('/products/product-1/relationships/files', {
       data: [{
         type: 'file',
         id: 'file-1',
@@ -167,7 +167,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete(`/products/${products[0].id}/relationships/files`, {
+    .delete('/products/product-1/relationships/files', {
       data: [{
         type: 'file',
         id: 'file-1',
@@ -191,7 +191,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/files`, {
+    .put('/products/product-1/relationships/files', {
       data: [{
         type: 'file',
         id: 'file-1',
@@ -212,7 +212,7 @@ describe('Moltin files', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put(`/products/${products[0].id}/relationships/files`, {
+    .put('/products/product-1/relationships/files', {
       data: null,
     })
     .reply(200, {

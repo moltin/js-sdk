@@ -1,11 +1,14 @@
-/* jshint node: true */
+/* eslint no-undef: "off",
+          import/no-extraneous-dependencies: "off"
+*/
 
 const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const currencies = require('../factories').currenciesArray;
+
 const store = moltin.gateway({
-  client_id: 'XXX'
+  client_id: 'XXX',
 });
 
 const apiUrl = 'https://api.moltin.com/v2';
@@ -15,14 +18,15 @@ describe('Moltin currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/currencies')
     .reply(200, currencies);
 
-    return store.Currencies.All().then((currencies) => {
-      assert.lengthOf(currencies, 4);
+    return store.Currencies.All().then((response) => {
+      assert.lengthOf(response, 4);
     });
   });
 
@@ -30,14 +34,15 @@ describe('Moltin currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .get('/currencies/1')
     .reply(200, currencies[0]);
 
-    return store.Currencies.Get('1').then((currency) => {
-      assert.propertyVal(currency, 'code', 'USD');
+    return store.Currencies.Get('1').then((response) => {
+      assert.propertyVal(response, 'code', 'USD');
     });
   });
 
@@ -45,18 +50,23 @@ describe('Moltin currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .post('/currencies')
+    .post('/currencies', {
+      data: {
+        code: 'USD',
+      },
+    })
     .reply(201, {
-      code: 'USD'
+      code: 'USD',
     });
 
     return store.Currencies.Create({
-      code: 'USD'
-    }).then((currency) => {
-      assert.propertyVal(currency, 'code', 'USD');
+      code: 'USD',
+    }).then((response) => {
+      assert.propertyVal(response, 'code', 'USD');
     });
   });
 
@@ -64,18 +74,23 @@ describe('Moltin currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
-    .put('/currencies/1')
+    .put('/currencies/1', {
+      data: {
+        code: 'GBP',
+      },
+    })
     .reply(200, {
-      code: 'GBP'
+      code: 'GBP',
     });
 
     return store.Currencies.Update('1', {
-      code: 'GBP'
-    }).then((currency) => {
-      assert.propertyVal(currency, 'code', 'GBP');
+      code: 'GBP',
+    }).then((response) => {
+      assert.propertyVal(response, 'code', 'GBP');
     });
   });
 
@@ -83,31 +98,32 @@ describe('Moltin currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
-        'Content-Type': 'application/json'
-      }
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
     })
     .delete('/currencies/1')
     .reply(200, {
       type: 'currency',
-      id: '1'
+      id: '1',
     });
 
-    return store.Currencies.Delete('1').then((currency) => {
-      assert.propertyVal(currency, 'id', '1');
+    return store.Currencies.Delete('1').then((response) => {
+      assert.propertyVal(response, 'id', '1');
     });
   });
 
   it('should return the active currency', () => {
-    return store.Currencies.Set(currencies[2].code).then(() => {
-      return store.Currencies.Active().then((currency) => {
-        assert.equal(currency, 'YEN');
+    store.Currencies.Set(currencies[2].code).then(() => {
+      store.Currencies.Active().then((response) => {
+        assert.equal(response, 'YEN');
       });
     });
   });
 
   it('should set the active currency', () => {
-    return store.Currencies.Set(currencies[1].code).then((currency) => {
-      assert.equal(currency, 'GBP');
+    store.Currencies.Set(currencies[1].code).then((response) => {
+      assert.equal(response, 'GBP');
     });
   });
 });
