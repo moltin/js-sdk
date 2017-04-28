@@ -57,3 +57,11 @@ export function buildURL(endpoint, resources = null) {
 
   return `${endpoint}`;
 }
+
+export function buildCartItemData(product, quantity, type = 'cart_item') {
+  return {
+    id: product,
+    type,
+    quantity: parseInt(quantity, 10),
+  };
+}

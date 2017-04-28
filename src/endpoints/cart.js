@@ -1,6 +1,6 @@
 import BaseExtend from '../extends/base';
 
-import { cartIdentifier } from '../utils/helpers';
+import { cartIdentifier, buildCartItemData } from '../utils/helpers';
 
 class CartEndpoint extends BaseExtend {
   constructor(endpoint) {
@@ -19,33 +19,27 @@ class CartEndpoint extends BaseExtend {
   }
 
   AddProduct(productId, quantity = 1, cartId = this.cartId) {
-    const productObject = {
-      id: productId,
-      type: 'cart_item',
-      quantity: parseInt(quantity)
-    };
+    const body = buildCartItemData(productId, quantity);
 
-    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', productObject);
+    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', body);
   }
 
   AddCustomItem(body, cartId = this.cartId) {
     const itemObject = Object.assign(body, {
-      type: 'custom_item'
+      type: 'custom_item',
     });
 
     return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', itemObject);
   }
 
-  RemoveItem(productId, cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'DELETE');
+  RemoveItem(itemId, cartId = this.cartId) {
+    return this.request.send(`${this.endpoint}/${cartId}/items/${itemId}`, 'DELETE');
   }
 
-  UpdateItemQuantity(productId, quantity, cartId = this.cartId) {
-    const productObject = {
-      quantity: parseInt(quantity)
-    };
+  UpdateItemQuantity(itemId, quantity, cartId = this.cartId) {
+    const body = buildCartItemData(itemId, quantity);
 
-    return this.request.send(`${this.endpoint}/${cartId}/items/${productId}`, 'PUT', productObject);
+    return this.request.send(`${this.endpoint}/${cartId}/items/${itemId}`, 'PUT', body);
   }
 
   Checkout(body, cartId = this.cartId) {
