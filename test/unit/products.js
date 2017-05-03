@@ -78,6 +78,22 @@ describe('Moltin products', () => {
     });
   });
 
+  it('should return all products sorted by name key', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/products?include=brands&sort=(name)')
+    .reply(200, products);
+
+    return store.Products.Sort('name').With(['brands']).All().then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
+
   it('should create a new product', () => {
     // Intercept the API request
     nock(apiUrl, {
