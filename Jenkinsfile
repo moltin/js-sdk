@@ -28,7 +28,7 @@ try {
 
       stage ("Versioning") {
         docker.image('zot24/semantic-release-cli').inside("-v \$(pwd):/data") {
-          sh "semantic-release pre"
+          sh "semantic-release-cli pre"
         }
 
         docker.image('node:alpine').inside {
@@ -36,7 +36,7 @@ try {
         }
 
         docker.image('zot24/semantic-release-cli').inside("-v \$(pwd):/data") {
-          sh "semantic-release post"
+          sh "semantic-release-cli post"
         }
       }
     }
