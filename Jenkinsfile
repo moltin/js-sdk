@@ -10,6 +10,12 @@ try {
     }
 
     sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+      stage ("Provisioning") {
+        docker.image('node:alpine').inside {
+          npm install --production
+        }
+      }
+
       stage ("Run tests") {
         docker.image('node:alpine').inside {
           npm run-script test
@@ -43,7 +49,7 @@ try {
   echo "RESULT: ${currentBuild.result}"
 
   if (config.error) {
-    slackSend color: "warning", message: 'Semthing went wrong!'
+    slackSend color: "warning", message: 'Something went wrong!'
   } else {
     slackSend color: "good", message: 'Everything just works fine!'
   }
