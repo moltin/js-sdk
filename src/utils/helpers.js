@@ -50,7 +50,15 @@ export function setHeaderContentType(uri, method) {
   return contentType;
 }
 
-export function buildQueryParams(includes, sort) {
+function formatQueryString(key, value) {
+  if (key === 'limit' || key === 'offset') {
+    return `page${(value)}`;
+  }
+
+  return `${key}=${value}`;
+}
+
+function buildQueryParams(includes, sort, limit, offset) {
   const params = {};
 
   if (includes) {
@@ -61,12 +69,20 @@ export function buildQueryParams(includes, sort) {
     params.sort = `(${sort})`;
   }
 
-  return Object.keys(params).map(k => `${k}=${params[k]}`).join('&');
+  if (limit) {
+    params.limit = `[limit]=${limit}`;
+  }
+
+  if (offset) {
+    params.offset = `[offset]=${offset}`;
+  }
+
+  return Object.keys(params).map(k => formatQueryString(k, params[k])).join('&');
 }
 
-export function buildURL(endpoint, includes = null, sort = null) {
-  if (includes || sort) {
-    const params = buildQueryParams(includes, sort);
+export function buildURL(endpoint, includes = null, sort = null, limit = null, offset = null) {
+  if (includes || sort || limit || offset) {
+    const params = buildQueryParams(includes, sort, limit, offset);
 
     return `${endpoint}?${params}`;
   }

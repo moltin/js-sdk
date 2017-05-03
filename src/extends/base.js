@@ -9,7 +9,7 @@ class BaseExtend {
   }
 
   All() {
-    this.call = this.request.send(buildURL(this.endpoint, this.includes, this.sort), 'GET');
+    this.call = this.request.send(buildURL(this.endpoint, this.includes, this.sort, this.limit, this.offset), 'GET');
 
     return this.call;
   }
@@ -20,6 +20,17 @@ class BaseExtend {
     return this.call;
   }
 
+  Limit(value) {
+    this.limit = value;
+
+    return this;
+  }
+
+  Offset(value) {
+    this.offset = value;
+
+    return this;
+  }
 
   Sort(value) {
     this.sort = value;
