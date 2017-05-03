@@ -12,13 +12,13 @@ try {
     sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
       stage ("Provisioning") {
         docker.image('node:alpine').inside {
-          npm install --production
+          sh "npm install"
         }
       }
 
       stage ("Run tests") {
         docker.image('node:alpine').inside {
-          npm run-script test
+          sh "npm run-script test"
         }
       }
 
@@ -28,15 +28,15 @@ try {
 
       stage ("Versioning") {
         docker.image('zot24/semantic-release-cli').inside("-v \$(pwd):/data") {
-          semantic-release pre
+          sh "semantic-release pre"
         }
 
         docker.image('node:alpine').inside {
-          npm publish
+          sh "npm publish"
         }
 
         docker.image('zot24/semantic-release-cli').inside("-v \$(pwd):/data") {
-          semantic-release post
+          sh "semantic-release post"
         }
       }
     }
