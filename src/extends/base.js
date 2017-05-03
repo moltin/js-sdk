@@ -9,15 +9,22 @@ class BaseExtend {
   }
 
   All() {
-    this.call = this.request.send(buildURL(this.endpoint, this.resources), 'GET');
+    this.call = this.request.send(buildURL(this.endpoint, this.includes, this.sort), 'GET');
 
     return this.call;
   }
 
   Get(id) {
-    this.call = this.request.send(buildURL(`${this.endpoint}/${id}`, this.resources), 'GET');
+    this.call = this.request.send(buildURL(`${this.endpoint}/${id}`, this.includes), 'GET');
 
     return this.call;
+  }
+
+
+  Sort(value) {
+    this.sort = value;
+
+    return this;
   }
 }
 

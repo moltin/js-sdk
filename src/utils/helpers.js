@@ -50,12 +50,28 @@ export function setHeaderContentType(uri, method) {
   return contentType;
 }
 
-export function buildURL(endpoint, resources = null) {
-  if (resources) {
-    return `${endpoint}?include=${resources}`;
+export function buildQueryParams(includes, sort) {
+  const params = {};
+
+  if (includes) {
+    params.include = includes;
   }
 
-  return `${endpoint}`;
+  if (sort) {
+    params.sort = `(${sort})`;
+  }
+
+  return Object.keys(params).map(k => `${k}=${params[k]}`).join('&');
+}
+
+export function buildURL(endpoint, includes = null, sort = null) {
+  if (includes || sort) {
+    const params = buildQueryParams(includes, sort);
+
+    return `${endpoint}?${params}`;
+  }
+
+  return endpoint;
 }
 
 
