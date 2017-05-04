@@ -9,6 +9,12 @@ try {
       checkout scm
     }
 
+    sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+      stage ("Checkout repo master branch") {
+        sh "git checkout master"
+      }
+    }
+
     withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
       stage ("Provisioning") {
         docker.image('node:alpine').inside {
