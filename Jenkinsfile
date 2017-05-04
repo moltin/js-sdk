@@ -9,41 +9,43 @@ try {
       checkout scm
     }
 
-    sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
-      stage ("Checkout repo master branch") {
-        sh "git checkout master"
-      }
-    }
-
-    withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
-      stage ("Provisioning") {
-        docker.image('node:alpine').inside {
-          sh "npm install"
+    if (env.BRANCH_NAME == 'master') {
+      sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+        stage ("Checkout repo master branch") {
+          sh "git checkout master"
         }
       }
 
-      stage ("Run tests") {
-        docker.image('node:alpine').inside {
-          sh "npm run-script test"
+      withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
+        stage ("Provisioning") {
+          docker.image('node:alpine').inside {
+            sh "npm install"
+          }
         }
-      }
 
-      stage ("Configure npm") {
-        sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
-      }
-
-      stage ("Versioning - semantic pre") {
-        sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release pre"
-      }
-
-      stage ("Versioning - npm publish") {
-        docker.image('node:alpine').inside {
-          sh "npm publish"
+        stage ("Run tests") {
+          docker.image('node:alpine').inside {
+            sh "npm run-script test"
+          }
         }
-      }
 
-      stage ("Versioning - semantic post") {
-        sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release post"
+        stage ("Configure npm") {
+          sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
+        }
+
+        stage ("Versioning - semantic pre") {
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release pre"
+        }
+
+        stage ("Versioning - npm publish") {
+          docker.image('node:alpine').inside {
+            sh "npm publish"
+          }
+        }
+
+        stage ("Versioning - semantic post") {
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release post"
+        }
       }
     }
   }
