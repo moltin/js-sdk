@@ -50,12 +50,44 @@ export function setHeaderContentType(uri, method) {
   return contentType;
 }
 
-export function buildURL(endpoint, resources = null) {
-  if (resources) {
-    return `${endpoint}?include=${resources}`;
+function formatQueryString(key, value) {
+  if (key === 'limit' || key === 'offset') {
+    return `page${(value)}`;
   }
 
-  return `${endpoint}`;
+  return `${key}=${value}`;
+}
+
+function buildQueryParams(includes, sort, limit, offset) {
+  const params = {};
+
+  if (includes) {
+    params.include = includes;
+  }
+
+  if (sort) {
+    params.sort = `(${sort})`;
+  }
+
+  if (limit) {
+    params.limit = `[limit]=${limit}`;
+  }
+
+  if (offset) {
+    params.offset = `[offset]=${offset}`;
+  }
+
+  return Object.keys(params).map(k => formatQueryString(k, params[k])).join('&');
+}
+
+export function buildURL(endpoint, includes = null, sort = null, limit = null, offset = null) {
+  if (includes || sort || limit || offset) {
+    const params = buildQueryParams(includes, sort, limit, offset);
+
+    return `${endpoint}?${params}`;
+  }
+
+  return endpoint;
 }
 
 

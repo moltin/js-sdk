@@ -46,6 +46,38 @@ describe('Moltin products', () => {
     });
   });
 
+  it('should return a limited number of products', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/products?page[limit]=4')
+    .reply(200, products);
+
+    return store.Products.Limit(4).All().then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
+
+  it('should return a limited number of products offset by a value', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/products?page[limit]=4&page[offset]=10')
+    .reply(200, products);
+
+    return store.Products.Limit(4).Offset(10).All().then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
+
   it('should return all products and include associated brands, categories, collections', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -54,10 +86,11 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?include=brands,categories,collections')
+    .get('/products?include=brands,categories,collections&page[limit]=4&page[offset]=10')
     .reply(200, products);
 
-    return store.Products.With(['brands', 'categories', 'collections']).All().then((response) => {
+    return store.Products.With(['brands', 'categories', 'collections']).Limit(4).Offset(10).All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -75,6 +108,24 @@ describe('Moltin products', () => {
 
     return store.Products.With(['brands', 'categories', 'collections']).Get(1).then((response) => {
       assert.propertyVal(response, 'name', 'Product 1');
+    });
+  });
+
+  it('should return all products sorted by name key', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/products?include=brands&sort=(name)&page[limit]=4&page[offset]=10')
+    .reply(200, products);
+
+    return store.Products.Sort('name').With(['brands']).Limit(4).Offset(10)
+    .All()
+    .then((response) => {
+      assert.lengthOf(response, 4);
     });
   });
 
