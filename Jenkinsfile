@@ -20,7 +20,7 @@ try {
         sh "npm run-script test"
       }
     }
-    
+
     if (env.BRANCH_NAME == 'master') {
       sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
         stage ("Checkout repo master branch") {
@@ -34,7 +34,7 @@ try {
         }
 
         stage ("Versioning - semantic pre") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release pre"
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CLI=true zot24/semantic-release semantic-release pre"
         }
 
         stage ("Versioning - npm publish") {
@@ -44,7 +44,7 @@ try {
         }
 
         stage ("Versioning - semantic post") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release post"
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CLI=true zot24/semantic-release semantic-release post"
         }
       }
     }
