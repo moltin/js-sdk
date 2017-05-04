@@ -32,18 +32,18 @@ try {
         sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
       }
 
-      stage ("Versioning") {
-        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data -e GH_TOKEN=$GH_TOKEN") {
-          sh "semantic-release pre"
-        }
+      stage ("Versioning - semantic pre") {
+        sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release pre"
+      }
 
+      stage ("Versioning - npm publish") {
         docker.image('node:alpine').inside {
           sh "npm publish"
         }
+      }
 
-        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data -e GH_TOKEN=$GH_TOKEN") {
-          sh "semantic-release post"
-        }
+      stage ("Versioning - semantic post") {
+        sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN zot24/semantic-release semantic-release post"
       }
     }
   }
