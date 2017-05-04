@@ -2,7 +2,7 @@
 
 > The Moltin Javascript SDK is a simple to use interface for the Moltin eCommerce API to help you get off the ground quickly and efficiently within client and server applications.
 
-📚 [Wiki](https://github.com/moltin/js-sdk/wiki) &mdash; 📚 [API docs](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
+[Wiki](https://github.com/moltin/js-sdk/wiki) &mdash; [API docs](https://moltin.api-docs.io/v2) &mdash; [moltin.com](https://moltin.com)
 
 ## Installation
 
@@ -53,7 +53,7 @@ const Moltin = moltin.gateway({
 });
 ```
 
-You can now authenticate with the Moltin service 🎉
+You can now authenticate with the Moltin service.
 
 ```js
 Moltin.Authenticate().then((response) => {
