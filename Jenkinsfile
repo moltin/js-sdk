@@ -56,9 +56,19 @@ try {
 } finally {
   echo "RESULT: ${currentBuild.result}"
 
-  if (config.error) {
-    slackSend color: "warning", message: 'Something went wrong!'
+  if (err) {
+    slackSend color: "danger",
+      message:
+        """:cold_sweat: Something went wrong!.
+        |${env.BUILD_URL}
+        |Branch: ${env.BRANCH_NAME}""".stripMargin()
+
+    throw err
   } else {
-    slackSend color: "good", message: 'Everything just works fine!'
+    slackSend color: "good",
+      message:
+        """:smirk: All good!.
+        |${env.BUILD_URL}
+        |Branch: ${env.BRANCH_NAME}""".stripMargin()
   }
 }
