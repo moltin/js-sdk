@@ -7,13 +7,16 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const currencies = require('../factories').currenciesArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin currencies', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -25,7 +28,8 @@ describe('Moltin currencies', () => {
     .get('/currencies')
     .reply(200, currencies);
 
-    return store.Currencies.All().then((response) => {
+    return Moltin.Currencies.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -41,7 +45,8 @@ describe('Moltin currencies', () => {
     .get('/currencies/1')
     .reply(200, currencies[0]);
 
-    return store.Currencies.Get('1').then((response) => {
+    return Moltin.Currencies.Get('1')
+    .then((response) => {
       assert.propertyVal(response, 'code', 'USD');
     });
   });
@@ -63,9 +68,10 @@ describe('Moltin currencies', () => {
       code: 'USD',
     });
 
-    return store.Currencies.Create({
+    return Moltin.Currencies.Create({
       code: 'USD',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'code', 'USD');
     });
   });
@@ -87,9 +93,10 @@ describe('Moltin currencies', () => {
       code: 'GBP',
     });
 
-    return store.Currencies.Update('1', {
+    return Moltin.Currencies.Update('1', {
       code: 'GBP',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'code', 'GBP');
     });
   });
@@ -108,21 +115,24 @@ describe('Moltin currencies', () => {
       id: '1',
     });
 
-    return store.Currencies.Delete('1').then((response) => {
+    return Moltin.Currencies.Delete('1')
+    .then((response) => {
       assert.propertyVal(response, 'id', '1');
     });
   });
 
   it('should return the active currency', () => {
-    store.Currencies.Set(currencies[2].code).then(() => {
-      store.Currencies.Active().then((response) => {
+    Moltin.Currencies.Set(currencies[2].code).then(() => {
+      Moltin.Currencies.Active()
+      .then((response) => {
         assert.equal(response, 'YEN');
       });
     });
   });
 
   it('should set the active currency', () => {
-    store.Currencies.Set(currencies[1].code).then((response) => {
+    Moltin.Currencies.Set(currencies[1].code)
+    .then((response) => {
       assert.equal(response, 'GBP');
     });
   });

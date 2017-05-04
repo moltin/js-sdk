@@ -7,13 +7,16 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const gateways = require('../factories').gatewaysArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin gateways', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of gateways', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -25,7 +28,8 @@ describe('Moltin gateways', () => {
     .get('/gateways')
     .reply(200, gateways);
 
-    return store.Gateways.All().then((response) => {
+    return Moltin.Gateways.All()
+    .then((response) => {
       assert.lengthOf(response, 2);
     });
   });
@@ -41,7 +45,8 @@ describe('Moltin gateways', () => {
     .get('/gateways/braintree')
     .reply(200, gateways[0]);
 
-    return store.Gateways.Get(gateways[0].slug).then((response) => {
+    return Moltin.Gateways.Get(gateways[0].slug)
+    .then((response) => {
       assert.propertyVal(response, 'slug', 'braintree');
     });
   });
@@ -63,7 +68,8 @@ describe('Moltin gateways', () => {
       enabled: true,
     });
 
-    return store.Gateways.Enabled(gateways[0].slug, true).then((response) => {
+    return Moltin.Gateways.Enabled(gateways[0].slug, true)
+    .then((response) => {
       assert.propertyVal(response, 'enabled', true);
     });
   });
@@ -85,9 +91,10 @@ describe('Moltin gateways', () => {
       name: 'Braintree (updated)',
     });
 
-    return store.Gateways.Update(gateways[0].slug, {
+    return Moltin.Gateways.Update(gateways[0].slug, {
       name: 'Braintree (updated)',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Braintree (updated)');
     });
   });

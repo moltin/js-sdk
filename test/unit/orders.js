@@ -7,13 +7,16 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const orders = require('../factories').ordersArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin orders', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of orders', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -25,7 +28,8 @@ describe('Moltin orders', () => {
     .get('/orders')
     .reply(200, orders);
 
-    return store.Orders.All().then((response) => {
+    return Moltin.Orders.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
       assert.propertyVal(response[0], 'id', 'order-1');
     });
@@ -42,7 +46,8 @@ describe('Moltin orders', () => {
     .get('/orders/order-1')
     .reply(200, orders[0]);
 
-    return store.Orders.Get(orders[0].id).then((response) => {
+    return Moltin.Orders.Get(orders[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'order-1');
       assert.propertyVal(response, 'status', 'complete');
     });
@@ -67,11 +72,12 @@ describe('Moltin orders', () => {
       status: 'complete',
     });
 
-    return store.Orders.Payment(orders[1].id, {
+    return Moltin.Orders.Payment(orders[1].id, {
       gateway: 'braintree',
       method: 'purchase',
       customer_id: '3',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'status', 'complete');
     });
   });
