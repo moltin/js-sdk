@@ -35,7 +35,7 @@ try {
 
         stage ("Setting NPM_TOKEN") {
           def NPM_TOKEN = sh (
-            script: "echo $(cat .npmrc) | sed -n -e 's/^.*_authToken=//p'",
+            script: "echo \$(cat .npmrc) | sed -n -e 's/^.*_authToken=//p'",
             returnStdout: true
           )
         }
