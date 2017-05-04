@@ -9,7 +9,7 @@ try {
       checkout scm
     }
 
-    sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+    withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
       stage ("Provisioning") {
         docker.image('node:alpine').inside {
           sh "npm install"
@@ -27,7 +27,7 @@ try {
       }
 
       stage ("Versioning") {
-        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data") {
+        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data -e GH_TOKEN=$GH_TOKEN") {
           sh "semantic-release pre"
         }
 
@@ -35,7 +35,7 @@ try {
           sh "npm publish"
         }
 
-        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data") {
+        docker.image('zot24/semantic-release').inside("-v \$(pwd):/data -e GH_TOKEN=$GH_TOKEN") {
           sh "semantic-release post"
         }
       }
