@@ -9,6 +9,18 @@ try {
       checkout scm
     }
 
+    stage ("Provisioning") {
+      docker.image('node:alpine').inside {
+        sh "npm install"
+      }
+    }
+
+    stage ("Run tests") {
+      docker.image('node:alpine').inside {
+        sh "npm run-script test"
+      }
+    }
+    
     if (env.BRANCH_NAME == 'master') {
       sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
         stage ("Checkout repo master branch") {
@@ -17,18 +29,6 @@ try {
       }
 
       withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
-        stage ("Provisioning") {
-          docker.image('node:alpine').inside {
-            sh "npm install"
-          }
-        }
-
-        stage ("Run tests") {
-          docker.image('node:alpine').inside {
-            sh "npm run-script test"
-          }
-        }
-
         stage ("Configure npm") {
           sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
         }
