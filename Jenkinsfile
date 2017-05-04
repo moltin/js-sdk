@@ -33,8 +33,15 @@ try {
           sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
         }
 
+        stage ("Setting NPM_TOKEN") {
+          def NPM_TOKEN = sh (
+            script: "echo \$(cat .npmrc) | sed -n -e 's/^.*_authToken=//p'",
+            returnStdout: true
+          )
+        }
+
         stage ("Versioning - semantic pre") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true zot24/semantic-release semantic-release pre"
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true -e NPM_TOKEN=$NPM_TOKEN zot24/semantic-release semantic-release pre"
         }
 
         stage ("Versioning - npm publish") {
@@ -44,7 +51,7 @@ try {
         }
 
         stage ("Versioning - semantic post") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true zot24/semantic-release semantic-release post"
+          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true -e NPM_TOKEN=$NPM_TOKEN zot24/semantic-release semantic-release post"
         }
       }
     }
