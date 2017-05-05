@@ -27,13 +27,6 @@ try {
         sh "git checkout master"
       }
 
-      stage ("Provisioning") {
-        docker.image('node:alpine').inside {
-          sh "npm prune"
-          sh "npm install"
-        }
-      }
-
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'npm-moltin-moltinbot-password', usernameVariable: 'NPM_USERNAME', passwordVariable: 'NPM_PASSWORD']]) {
         stage ("Configure npm") {
           sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
