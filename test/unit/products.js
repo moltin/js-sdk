@@ -59,7 +59,12 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?page[limit]=4')
+    .get('/products')
+    .query({
+      page: {
+        limit: 4,
+      },
+    })
     .reply(200, products);
 
     return Moltin.Products.Limit(4).All()
@@ -76,7 +81,12 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?page[offset]=10')
+    .get('/products')
+    .query({
+      page: {
+        offset: 10,
+      },
+    })
     .reply(200, products);
 
     return Moltin.Products.Offset(10).All()
@@ -93,7 +103,10 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?include=brands,categories,collections')
+    .get('/products')
+    .query({
+      include: 'brands,categories,collections',
+    })
     .reply(200, products);
 
     return Moltin.Products.With(['brands', 'categories', 'collections']).All()
@@ -110,7 +123,10 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products/1?include=brands,categories,collections')
+    .get('/products/1')
+    .query({
+      include: 'brands,categories,collections',
+    })
     .reply(200, products[0]);
 
     return Moltin.Products.With(['brands', 'categories', 'collections']).Get(1)
@@ -127,7 +143,10 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?sort=(name)')
+    .get('/products')
+    .query({
+      sort: '(name)',
+    })
     .reply(200, products);
 
     return Moltin.Products.Sort('name').All()
