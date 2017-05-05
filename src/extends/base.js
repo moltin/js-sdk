@@ -9,7 +9,7 @@ class BaseExtend {
   }
 
   All() {
-    this.call = this.request.send(buildURL(this.endpoint, this.includes, this.sort, this.limit, this.offset), 'GET');
+    this.call = this.request.send(buildURL(this.endpoint, this.includes, this.sort, this.limit, this.offset, this.filter), 'GET');
 
     return this.call;
   }
