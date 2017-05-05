@@ -22,37 +22,62 @@ try {
     }
 
     if (env.BRANCH_NAME == 'master') {
-      sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
-        stage ("Checkout repo master branch") {
-          sh "git checkout master"
+      stage ("Checkout master branch") {
+        gitClean()
+        sh "git checkout master"
+      }
+
+      stage ("Prune + Provisioning") {
+        docker.image('node:alpine').inside {
+          sh "npm prune"
         }
       }
 
-      withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
-        stage ("Configure npm") {
-          sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc"
+      stage ("Provisioning") {
+        docker.image('node:alpine').inside {
+          sh "npm install"
         }
+      }
 
-        stage ("Setting NPM_TOKEN") {
-          def NPM_TOKEN = sh (
-            script: "set +x ; echo \$(cat .npmrc) | sed -n -e 's/^.*_authToken=//p' ; set -x",
+      stage ("Configure npm") {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'npm-moltin-moltinbot-password', usernameVariable: 'NPM_USERNAME', passwordVariable: 'NPM_PASSWORD']]) {
+          sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc.tmp"
+
+          env.NPM_TOKEN = sh (
+            script: "set +x ; echo -n \$(cat .npmrc.tmp) | sed -n -e 's/^.*_authToken=//p'",
             returnStdout: true
           )
         }
+      }
 
-        stage ("Versioning - semantic pre") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true -e NPM_TOKEN=${NPM_TOKEN} zot24/semantic-release semantic-release pre"
-        }
+      stage ("Versioning") {
+        withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
+          sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+            env.GIT_BRANCH="origin/master"
+            env.CI=true
 
-        stage ("Versioning - npm publish") {
-          docker.image('node:alpine').inside {
-            sh "npm publish"
+            try {
+              docker.image("zot24/semantic-release").inside {
+                sh "semantic-release pre"
+              }
+
+              docker.image('node:alpine').inside {
+                sh "mv .npmrc.tmp .npmrc"
+                sh "npm publish"
+              }
+
+              docker.image("zot24/semantic-release").inside {
+                sh "semantic-release post"
+              }
+            } catch (Exception e) {
+              echo "Failed versioning with semantic-release, check logs above)"
+            }
           }
         }
+      }
 
-        stage ("Versioning - semantic post") {
-          sh "docker run -v \$(pwd):/data -w /data -e GH_TOKEN=$GH_TOKEN -e CI=true -e NPM_TOKEN=${NPM_TOKEN} zot24/semantic-release semantic-release post"
-        }
+      stage ("Cleaning up") {
+        sh "rm .npmrc"  
       }
     }
   }
