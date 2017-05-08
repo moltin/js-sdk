@@ -75,38 +75,37 @@ function formatQueryString(key, value) {
   return `${key}=${value}`;
 }
 
-function buildQueryParams(includes, sort, limit, offset, filter) {
-  const params = {};
+function buildQueryParams(params) {
+  const query = {};
 
-  if (includes) {
-    params.include = includes;
+  if (params.includes) {
+    query.include = params.includes;
   }
 
-  if (sort) {
-    params.sort = `(${sort})`;
+  if (params.sort) {
+    query.sort = `(${params.sort})`;
   }
 
-  if (limit) {
-    params.limit = `[limit]=${limit}`;
+  if (params.limit) {
+    query.limit = `[limit]=${params.limit}`;
   }
 
-  if (offset) {
-    params.offset = `[offset]=${offset}`;
+  if (params.offset) {
+    query.offset = `[offset]=${params.offset}`;
   }
 
-  if (filter) {
-    params.filter = filter;
+  if (params.filter) {
+    query.filter = params.filter;
   }
 
-  return Object.keys(params).map(k => formatQueryString(k, params[k])).join('&');
+  return Object.keys(query).map(k => formatQueryString(k, query[k])).join('&');
 }
 
-export function buildURL(endpoint, includes = null, sort = null, limit = null, offset = null, filter = null) {
+export function buildURL(endpoint, params) {
+  if (params.includes || params.sort || params.limit || params.offset || params.filter) {
+    const paramsString = buildQueryParams(params);
 
-  if (includes || sort || limit || offset || filter) {
-    const params = buildQueryParams(includes, sort, limit, offset, filter);
-
-    return `${endpoint}?${params}`;
+    return `${endpoint}?${paramsString}`;
   }
 
   return endpoint;
