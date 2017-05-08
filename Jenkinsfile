@@ -22,9 +22,12 @@ try {
     }
 
     if (env.BRANCH_NAME == 'master') {
-      stage ("Checkout master branch") {
-        gitClean()
-        sh "git checkout master"
+      sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+        stage ("Checkout master branch") {
+          gitClean()
+          sh "git checkout master"
+          sh "git pull"
+        }
       }
 
       stage ("Prune + Provisioning") {
@@ -50,13 +53,13 @@ try {
         }
       }
 
-      stage ("Versioning") {
-        withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
-          sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
-            env.GIT_BRANCH="origin/master"
-            env.CI=true
+      try {
+        stage ("Versioning") {
+          withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
+            sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
+              env.CI=true
+              env.GIT_BRANCH="origin/master"
 
-            try {
               docker.image("zot24/semantic-release").inside {
                 sh "semantic-release pre"
               }
@@ -69,15 +72,16 @@ try {
               docker.image("zot24/semantic-release").inside {
                 sh "semantic-release post"
               }
-            } catch (Exception e) {
-              echo "Failed versioning with semantic-release, check logs above)"
             }
           }
         }
-      }
 
-      stage ("Cleaning up") {
-        sh "rm .npmrc"  
+        stage ("Cleaning up") {
+          sh "rm .npmrc"
+        }
+      } catch (Exception e) {
+        sh "rm .npmrc.tmp"
+        echo "Failed versioning with semantic-release, check logs above)"
       }
     }
   }
