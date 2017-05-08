@@ -60,6 +60,19 @@ Moltin.Authenticate().then((response) => {
 Check out the [wiki](https://github.com/moltin/js-sdk/wiki) to learn more about authenticating and the available endpoints.
 
 
+## Contributing
+
+We love community contributions. Here's a quick guide if you want to submit a pull request:
+
+1. Fork the repository
+2. Add a test for your change (it should fail)
+3. Make the tests pass
+4. Commit your changes (see note below)
+5. Submit your PR with a brief description explaining your changes
+
+> **Note:** Commits should adhere to the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
+
+
 ## Development
 
 The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled using [Rollup](http://rollupjs.org).
