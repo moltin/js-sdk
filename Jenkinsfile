@@ -44,7 +44,7 @@ try {
 
       stage ("Configure npm") {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'npm-moltin-moltinbot-password', usernameVariable: 'NPM_USERNAME', passwordVariable: 'NPM_PASSWORD']]) {
-          sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS="$NPM_PASSWORD" -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc.tmp"
+          sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=\"$NPM_PASSWORD\" -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc.tmp"
 
           env.NPM_TOKEN = sh (
             script: "set +x ; echo -n \$(cat .npmrc.tmp) | sed -n -e 's/^.*_authToken=//p'",
