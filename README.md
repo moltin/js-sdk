@@ -1,5 +1,7 @@
 # Moltin JavaScript SDK
 
+[![npm version](https://img.shields.io/npm/v/@moltin/sdk.svg)](https://www.npmjs.com/package/@moltin/sdk)
+
 > A simple to use API interface to help get you off the ground quickly and efficiently with your Moltin JavaScript apps.
 
 📚 [Wiki](https://github.com/moltin/js-sdk/wiki) &mdash; 📚 [API docs](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
