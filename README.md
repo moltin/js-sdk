@@ -8,19 +8,17 @@
 
 ## Installation
 
+Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and import in your project.
+
 ```bash
 npm install --save @moltin/sdk
 ```
 
-#### JavaScript
-
 ```js
+// ES6 modules
 import { gateway as MoltinGateway } from '@moltin/sdk';
-```
 
-#### Node.js
-
-```js
+// CommonJS modules
 const moltin = require('@moltin/sdk');
 ```
 
@@ -30,29 +28,25 @@ To get started, instantiate a new Moltin client with your store credentials.
 
 > **Note:** This requires a [Moltin](http://moltin.com) account.
 
-#### JavaScript
-
 ```js
+// JavaScript
 const Moltin = MoltinGateway({
   client_id: 'XXX'
+});
+
+// Node.js
+const Moltin = moltin.gateway({
+  client_id: 'XXX',
+  client_secret: 'XXX',
 });
 ```
 
 > **Note:** If you're using [webpack](https://webpack.github.io), you'll need to add the following to your projects configuration file.
 
-```
+```js
 node: {
   fs: 'empty'
 }
-```
-
-#### Node.js
-
-```js
-const Moltin = moltin.gateway({
-  client_id: 'XXX',
-  client_secret: 'XXX',
-});
 ```
 
 You can now authenticate with the Moltin service 🎉
