@@ -1,7 +1,7 @@
 {
   "name": "@moltin/sdk",
   "description": "SDK for the Moltin eCommerce API",
-  "version": "2.1.0",
+  "version": "0.0.0-semantic-release",
   "homepage": "https://github.com/moltin/js-sdk",
   "author": "Moltin (https://moltin.com/)",
   "scripts": {
@@ -19,12 +19,6 @@
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/moltin/js-sdk/blob/master/LICENSE"
-    }
-  ],
   "devDependencies": {
     "@krux/condition-jenkins": "^1.0.1",
     "chai": "^3.5.0",
