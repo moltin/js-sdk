@@ -7,13 +7,16 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const products = require('../factories').productsArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin products', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of products', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -25,7 +28,8 @@ describe('Moltin products', () => {
     .get('/products')
     .reply(200, products);
 
-    return store.Products.All().then((response) => {
+    return Moltin.Products.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -41,8 +45,34 @@ describe('Moltin products', () => {
     .get('/products/1')
     .reply(200, products[0]);
 
-    return store.Products.Get(1).then((response) => {
+    return Moltin.Products.Get(1)
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Product 1');
+    });
+  });
+
+  it('should return a filtered array of products', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)')
+    .reply(200, products);
+
+    return Moltin.Products.Filter({
+      eq: {
+        status: 'live',
+        slug: 'new-slug',
+      },
+      gt: {
+        stock: 2,
+      },
+    }).All()
+    .then((response) => {
+      assert.lengthOf(response, 4);
     });
   });
 
@@ -54,15 +84,21 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?page[limit]=4')
+    .get('/products')
+    .query({
+      page: {
+        limit: 4,
+      },
+    })
     .reply(200, products);
 
-    return store.Products.Limit(4).All().then((response) => {
+    return Moltin.Products.Limit(4).All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
 
-  it('should return a limited number of products offset by a value', () => {
+  it('should return an array products offset by a value', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -70,10 +106,16 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?page[limit]=4&page[offset]=10')
+    .get('/products')
+    .query({
+      page: {
+        offset: 10,
+      },
+    })
     .reply(200, products);
 
-    return store.Products.Limit(4).Offset(10).All().then((response) => {
+    return Moltin.Products.Offset(10).All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -86,10 +128,13 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?include=brands,categories,collections&page[limit]=4&page[offset]=10')
+    .get('/products')
+    .query({
+      include: 'brands,categories,collections',
+    })
     .reply(200, products);
 
-    return store.Products.With(['brands', 'categories', 'collections']).Limit(4).Offset(10).All()
+    return Moltin.Products.With(['brands', 'categories', 'collections']).All()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -103,10 +148,14 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products/1?include=brands,categories,collections')
+    .get('/products/1')
+    .query({
+      include: 'brands,categories,collections',
+    })
     .reply(200, products[0]);
 
-    return store.Products.With(['brands', 'categories', 'collections']).Get(1).then((response) => {
+    return Moltin.Products.With(['brands', 'categories', 'collections']).Get(1)
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Product 1');
     });
   });
@@ -119,11 +168,13 @@ describe('Moltin products', () => {
         'Content-Type': 'application/json',
       },
     })
-    .get('/products?include=brands&sort=(name)&page[limit]=4&page[offset]=10')
+    .get('/products')
+    .query({
+      sort: '(name)',
+    })
     .reply(200, products);
 
-    return store.Products.Sort('name').With(['brands']).Limit(4).Offset(10)
-    .All()
+    return Moltin.Products.Sort('name').All()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -146,9 +197,10 @@ describe('Moltin products', () => {
       name: 'A new product',
     });
 
-    return store.Products.Create({
+    return Moltin.Products.Create({
       name: 'A new product',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'A new product');
     });
   });
@@ -170,9 +222,10 @@ describe('Moltin products', () => {
       name: 'Updated product name',
     });
 
-    return store.Products.Update(1, {
+    return Moltin.Products.Update(1, {
       name: 'Updated product name',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Updated product name');
     });
   });
@@ -191,7 +244,8 @@ describe('Moltin products', () => {
       id: '1',
     });
 
-    return store.Products.Delete(1).then((response) => {
+    return Moltin.Products.Delete(1)
+    .then((response) => {
       assert.propertyVal(response, 'id', '1');
     });
   });

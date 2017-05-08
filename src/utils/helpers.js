@@ -50,41 +50,62 @@ export function setHeaderContentType(uri, method) {
   return contentType;
 }
 
+function formatFilterString(type, filter) {
+  const filterStringArray = Object.keys(filter).map((key) => {
+    const value = filter[key];
+
+    return `${type}(${key},${value})`;
+  });
+
+  return filterStringArray.join(':');
+}
+
 function formatQueryString(key, value) {
   if (key === 'limit' || key === 'offset') {
     return `page${(value)}`;
   }
 
+  if (key === 'filter') {
+    const filterValues = Object.keys(value).map(
+      filter => formatFilterString(filter, value[filter]));
+
+    return `${key}=${filterValues.join(':')}`;
+  }
+
   return `${key}=${value}`;
 }
 
-function buildQueryParams(includes, sort, limit, offset) {
-  const params = {};
+function buildQueryParams(params) {
+  const query = {};
 
-  if (includes) {
-    params.include = includes;
+  if (params.includes) {
+    query.include = params.includes;
   }
 
-  if (sort) {
-    params.sort = `(${sort})`;
+  if (params.sort) {
+    query.sort = `(${params.sort})`;
   }
 
-  if (limit) {
-    params.limit = `[limit]=${limit}`;
+  if (params.limit) {
+    query.limit = `[limit]=${params.limit}`;
   }
 
-  if (offset) {
-    params.offset = `[offset]=${offset}`;
+  if (params.offset) {
+    query.offset = `[offset]=${params.offset}`;
   }
 
-  return Object.keys(params).map(k => formatQueryString(k, params[k])).join('&');
+  if (params.filter) {
+    query.filter = params.filter;
+  }
+
+  return Object.keys(query).map(k => formatQueryString(k, query[k])).join('&');
 }
 
-export function buildURL(endpoint, includes = null, sort = null, limit = null, offset = null) {
-  if (includes || sort || limit || offset) {
-    const params = buildQueryParams(includes, sort, limit, offset);
+export function buildURL(endpoint, params) {
+  if (params.includes || params.sort || params.limit || params.offset || params.filter) {
+    const paramsString = buildQueryParams(params);
 
-    return `${endpoint}?${params}`;
+    return `${endpoint}?${paramsString}`;
   }
 
   return endpoint;

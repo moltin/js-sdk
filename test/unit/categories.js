@@ -8,13 +8,16 @@ const moltin = require('../../dist/moltin.cjs.js');
 const categories = require('../factories').categoriesArray;
 const products = require('../factories').productsArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin categories', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of categories', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -26,7 +29,8 @@ describe('Moltin categories', () => {
     .get('/categories')
     .reply(200, categories);
 
-    return store.Categories.All().then((response) => {
+    return Moltin.Categories.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -42,7 +46,8 @@ describe('Moltin categories', () => {
     .get('/categories/1')
     .reply(200, categories[0]);
 
-    return store.Categories.Get(1).then((response) => {
+    return Moltin.Categories.Get(1)
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Category 1');
     });
   });
@@ -64,9 +69,10 @@ describe('Moltin categories', () => {
       name: 'A new category',
     });
 
-    return store.Categories.Create({
+    return Moltin.Categories.Create({
       name: 'A new category',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'A new category');
     });
   });
@@ -88,9 +94,10 @@ describe('Moltin categories', () => {
       name: 'Updated category name',
     });
 
-    return store.Categories.Update('1', {
+    return Moltin.Categories.Update('1', {
       name: 'Updated category name',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Updated category name');
     });
   });
@@ -109,7 +116,8 @@ describe('Moltin categories', () => {
       id: '1',
     });
 
-    return store.Categories.Delete('1').then((response) => {
+    return Moltin.Categories.Delete('1')
+    .then((response) => {
       assert.propertyVal(response, 'id', '1');
     });
   });
@@ -130,7 +138,8 @@ describe('Moltin categories', () => {
     })
     .reply(200, categories[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'category', categories[0].id).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'category', categories[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
@@ -154,7 +163,8 @@ describe('Moltin categories', () => {
     })
     .reply(200, categories[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'category', [categories[0].id, categories[1].id]).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'category', [categories[0].id, categories[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
@@ -175,7 +185,8 @@ describe('Moltin categories', () => {
     })
     .reply(200, categories[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'category', categories[0].id).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'category', categories[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
@@ -199,7 +210,8 @@ describe('Moltin categories', () => {
     })
     .reply(200, categories[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'category', [categories[0].id, categories[1].id]).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'category', [categories[0].id, categories[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
@@ -220,7 +232,8 @@ describe('Moltin categories', () => {
     })
     .reply(200, categories[0]);
 
-    return store.Products.UpdateRelationships(products[0].id, 'category', categories[0].id).then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'category', categories[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'category-1');
     });
   });
@@ -240,7 +253,8 @@ describe('Moltin categories', () => {
       data: [],
     });
 
-    return store.Products.UpdateRelationships(products[0].id, 'category').then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'category')
+    .then((response) => {
       assert.deepEqual(response, { data: [] });
     });
   });

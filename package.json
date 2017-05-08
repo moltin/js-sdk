@@ -10,7 +10,7 @@
   "scripts": {
     "roll:cjs": "rollup -c rollup/cjs.config.js",
     "build": "npm run roll:cjs",
-    "test": "npm run build && mocha test/unit/* || true"
+    "test": "npm run build && mocha test/unit/*"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",

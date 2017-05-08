@@ -7,17 +7,17 @@ const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const items = require('../factories').cartItemsArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin cart', () => {
   beforeEach(() => {
-    store.Cart.cartId = '3';
+    // Instantiate a Moltin client before each test
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+    Moltin.Cart.cartId = '3';
 
-    cartId = store.Cart.cartId;
+    cartId = Moltin.Cart.cartId;
 
     order = {
       customer: {
@@ -56,7 +56,8 @@ describe('Moltin cart', () => {
       id: '3',
     });
 
-    return store.Cart.Get().then((response) => {
+    return Moltin.Cart.Get()
+    .then((response) => {
       assert.propertyVal(response, 'id', '3');
     });
   });
@@ -74,7 +75,8 @@ describe('Moltin cart', () => {
       id: '5',
     });
 
-    return store.Cart.Get('5').then((response) => {
+    return Moltin.Cart.Get('5')
+    .then((response) => {
       assert.propertyVal(response, 'id', '5');
     });
   });
@@ -90,7 +92,8 @@ describe('Moltin cart', () => {
     .get('/carts/3/items')
     .reply(200, items);
 
-    return store.Cart.Items().then((response) => {
+    return Moltin.Cart.Items()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -106,7 +109,8 @@ describe('Moltin cart', () => {
     .get('/carts/5/items')
     .reply(200, items);
 
-    return store.Cart.Items('5').then((response) => {
+    return Moltin.Cart.Items('5')
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -131,7 +135,8 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return store.Cart.AddProduct('4', 2).then((response) => {
+    return Moltin.Cart.AddProduct('4', 2)
+    .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
     });
@@ -157,7 +162,8 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return store.Cart.AddProduct('4', 2, '5').then((response) => {
+    return Moltin.Cart.AddProduct('4', 2, '5')
+    .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
     });
@@ -183,7 +189,8 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return store.Cart.AddProduct('4').then((response) => {
+    return Moltin.Cart.AddProduct('4')
+    .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 1);
     });
@@ -224,7 +231,8 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return store.Cart.AddCustomItem(item).then((response) => {
+    return Moltin.Cart.AddCustomItem(item)
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Custom Item');
       assert.propertyVal(response, 'quantity', 1);
     });
@@ -250,7 +258,8 @@ describe('Moltin cart', () => {
       quantity: 6,
     });
 
-    return store.Cart.UpdateItemQuantity('2', 6).then((item) => {
+    return Moltin.Cart.UpdateItemQuantity('2', 6)
+    .then((item) => {
       assert.propertyVal(item, 'id', '2');
       assert.propertyVal(item, 'quantity', 6);
     });
@@ -267,7 +276,8 @@ describe('Moltin cart', () => {
     .delete('/carts/3/items/2')
     .reply(200, items);
 
-    return store.Cart.RemoveItem('2').then((response) => {
+    return Moltin.Cart.RemoveItem('2')
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -283,7 +293,8 @@ describe('Moltin cart', () => {
     .delete('/carts/5/items/2')
     .reply(200, items);
 
-    return store.Cart.RemoveItem('2', '5').then((response) => {
+    return Moltin.Cart.RemoveItem('2', '5')
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -299,7 +310,8 @@ describe('Moltin cart', () => {
     .delete('/carts/3')
     .reply(200, {});
 
-    return store.Cart.Delete().then((response) => {
+    return Moltin.Cart.Delete()
+    .then((response) => {
       assert.deepEqual(response, {});
     });
   });
@@ -315,7 +327,8 @@ describe('Moltin cart', () => {
     .delete('/carts/5')
     .reply(200, {});
 
-    return store.Cart.Delete('5').then((response) => {
+    return Moltin.Cart.Delete('5')
+    .then((response) => {
       assert.deepEqual(response, {});
     });
   });
@@ -336,7 +349,8 @@ describe('Moltin cart', () => {
       status: 'complete',
     });
 
-    return store.Cart.Checkout(this.order).then((response) => {
+    return Moltin.Cart.Checkout(this.order)
+    .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
     });
@@ -358,7 +372,8 @@ describe('Moltin cart', () => {
       status: 'complete',
     });
 
-    return store.Cart.Checkout(this.order, '5').then((response) => {
+    return Moltin.Cart.Checkout(this.order, '5')
+    .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
     });

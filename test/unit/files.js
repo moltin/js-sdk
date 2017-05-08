@@ -8,13 +8,16 @@ const moltin = require('../../dist/moltin.cjs.js');
 const files = require('../factories').filesArray;
 const products = require('../factories').productsArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin files', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of files', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -26,7 +29,8 @@ describe('Moltin files', () => {
     .get('/files')
     .reply(200, files);
 
-    return store.Files.All().then((response) => {
+    return Moltin.Files.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
       assert.propertyVal(response[0], 'file_name', 'File 1');
     });
@@ -43,7 +47,8 @@ describe('Moltin files', () => {
     .get('/files/file-1')
     .reply(200, files[0]);
 
-    return store.Files.Get(files[0].id).then((response) => {
+    return Moltin.Files.Get(files[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
       assert.propertyVal(response, 'file_name', 'File 1');
     });
@@ -68,10 +73,11 @@ describe('Moltin files', () => {
       file_name: 'New file',
     });
 
-    return store.Files.Create({
+    return Moltin.Files.Create({
       public: false,
       file: 'New file',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'file_name', 'New file');
       assert.propertyVal(response, 'public', false);
     });
@@ -88,7 +94,8 @@ describe('Moltin files', () => {
     .delete('/files/file-1')
     .reply(200, files[0]);
 
-    return store.Files.Delete(files[0].id).then((response) => {
+    return Moltin.Files.Delete(files[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -109,7 +116,8 @@ describe('Moltin files', () => {
     })
     .reply(200, files[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'file', files[0].id).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'file', files[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -133,7 +141,8 @@ describe('Moltin files', () => {
     })
     .reply(200, files[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'file', [files[0].id, files[1].id]).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'file', [files[0].id, files[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -154,7 +163,8 @@ describe('Moltin files', () => {
     })
     .reply(200, files[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'file', files[0].id).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'file', files[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -178,7 +188,8 @@ describe('Moltin files', () => {
     })
     .reply(200, files[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'file', [files[0].id, files[1].id]).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'file', [files[0].id, files[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -199,7 +210,8 @@ describe('Moltin files', () => {
     })
     .reply(200, files[0]);
 
-    return store.Products.UpdateRelationships(products[0].id, 'file', files[0].id).then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'file', files[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'file-1');
     });
   });
@@ -219,7 +231,8 @@ describe('Moltin files', () => {
       data: [],
     });
 
-    return store.Products.UpdateRelationships(products[0].id, 'file').then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'file')
+    .then((response) => {
       assert.deepEqual(response, { data: [] });
     });
   });

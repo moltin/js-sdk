@@ -8,13 +8,16 @@ const moltin = require('../../dist/moltin.cjs.js');
 const brands = require('../factories').brandsArray;
 const products = require('../factories').productsArray;
 
-const store = moltin.gateway({
-  client_id: 'XXX',
-});
-
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin brands', () => {
+  // Instantiate a Moltin client before each test
+  beforeEach(() => {
+    Moltin = moltin.gateway({
+      client_id: 'XXX',
+    });
+  });
+
   it('should return an array of brands', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -26,7 +29,8 @@ describe('Moltin brands', () => {
     .get('/brands')
     .reply(200, brands);
 
-    return store.Brands.All().then((response) => {
+    return Moltin.Brands.All()
+    .then((response) => {
       assert.lengthOf(response, 4);
     });
   });
@@ -42,7 +46,8 @@ describe('Moltin brands', () => {
     .get('/brands/brand-1')
     .reply(200, brands[0]);
 
-    return store.Brands.Get(brands[0].id).then((response) => {
+    return Moltin.Brands.Get(brands[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Brand 1');
     });
   });
@@ -64,9 +69,10 @@ describe('Moltin brands', () => {
       name: 'A new brand',
     });
 
-    return store.Brands.Create({
+    return Moltin.Brands.Create({
       name: 'A new brand',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'A new brand');
     });
   });
@@ -88,9 +94,10 @@ describe('Moltin brands', () => {
       name: 'Updated brand name',
     });
 
-    return store.Brands.Update(brands[0].id, {
+    return Moltin.Brands.Update(brands[0].id, {
       name: 'Updated brand name',
-    }).then((response) => {
+    })
+    .then((response) => {
       assert.propertyVal(response, 'name', 'Updated brand name');
     });
   });
@@ -106,7 +113,8 @@ describe('Moltin brands', () => {
     .delete('/brands/brand-1')
     .reply(200, brands[0]);
 
-    return store.Brands.Delete(brands[0].id).then((response) => {
+    return Moltin.Brands.Delete(brands[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -127,7 +135,8 @@ describe('Moltin brands', () => {
     })
     .reply(200, brands[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'brand', brands[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -151,7 +160,8 @@ describe('Moltin brands', () => {
     })
     .reply(200, brands[0]);
 
-    return store.Products.CreateRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id]).then((response) => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -172,7 +182,8 @@ describe('Moltin brands', () => {
     })
     .reply(200, brands[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'brand', brands[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -196,7 +207,8 @@ describe('Moltin brands', () => {
     })
     .reply(200, brands[0]);
 
-    return store.Products.DeleteRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id]).then((response) => {
+    return Moltin.Products.DeleteRelationships(products[0].id, 'brand', [brands[0].id, brands[1].id])
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -217,7 +229,8 @@ describe('Moltin brands', () => {
     })
     .reply(200, brands[0]);
 
-    return store.Products.UpdateRelationships(products[0].id, 'brand', brands[0].id).then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'brand', brands[0].id)
+    .then((response) => {
       assert.propertyVal(response, 'id', 'brand-1');
     });
   });
@@ -237,7 +250,8 @@ describe('Moltin brands', () => {
       data: [],
     });
 
-    return store.Products.UpdateRelationships(products[0].id, 'brand').then((response) => {
+    return Moltin.Products.UpdateRelationships(products[0].id, 'brand')
+    .then((response) => {
       assert.deepEqual(response, { data: [] });
     });
   });
