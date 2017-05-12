@@ -40,6 +40,15 @@ export function cartIdentifier(reset = false, id = false) {
   return id;
 }
 
+export function parseJSON(response) {
+  return new Promise(resolve => response.json()
+    .then(json => resolve({
+      status: response.status,
+      ok: response.ok,
+      json,
+    })));
+}
+
 export function setHeaderContentType(uri, method) {
   let contentType = 'application/json';
 
