@@ -40,6 +40,15 @@ export function cartIdentifier(reset = false, id = false) {
   return id;
 }
 
+export function parseJSON(response) {
+  return new Promise(resolve => response.json()
+    .then(json => resolve({
+      status: response.status,
+      ok: response.ok,
+      json,
+    })));
+}
+
 export function setHeaderContentType(uri, method) {
   let contentType = 'application/json';
 
@@ -75,27 +84,27 @@ function formatQueryString(key, value) {
   return `${key}=${value}`;
 }
 
-function buildQueryParams(params) {
+function buildQueryParams({ includes, sort, limit, offset, filter }) {
   const query = {};
 
-  if (params.includes) {
-    query.include = params.includes;
+  if (includes) {
+    query.include = includes;
   }
 
-  if (params.sort) {
-    query.sort = `(${params.sort})`;
+  if (sort) {
+    query.sort = `(${sort})`;
   }
 
-  if (params.limit) {
-    query.limit = `[limit]=${params.limit}`;
+  if (limit) {
+    query.limit = `[limit]=${limit}`;
   }
 
-  if (params.offset) {
-    query.offset = `[offset]=${params.offset}`;
+  if (offset) {
+    query.offset = `[offset]=${offset}`;
   }
 
-  if (params.filter) {
-    query.filter = params.filter;
+  if (filter) {
+    query.filter = filter;
   }
 
   return Object.keys(query).map(k => formatQueryString(k, query[k])).join('&');

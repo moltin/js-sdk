@@ -1,6 +1,6 @@
 import StorageFactory from './storage';
 
-import { setHeaderContentType, buildRequestBody } from '../utils/helpers';
+import { setHeaderContentType, buildRequestBody, parseJSON } from '../utils/helpers';
 
 class RequestFactory {
   constructor(config) {
@@ -34,19 +34,20 @@ class RequestFactory {
         },
         body: Object.keys(body).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`).join('&'),
       })
+      .then(parseJSON)
       .then((response) => {
-        if (response.status === 200) {
-          const data = response.json();
-
-          resolve(data);
+        if (response.ok) {
+          resolve(response.json);
         }
+
+        reject(response.json);
       })
-      .then(null, error => reject(error));
+      .catch(() => reject('Fetch error - check your network'));
     });
 
-    promise.then((data) => {
-      storage.set('mtoken', data.access_token);
-      storage.set('mexpires', data.expires);
+    promise.then((response) => {
+      storage.set('mtoken', response.access_token);
+      storage.set('mexpires', response.expires);
     });
 
     return promise;
@@ -74,10 +75,15 @@ class RequestFactory {
           headers,
           body: buildRequestBody(method, body),
         })
+        .then(parseJSON)
         .then((response) => {
-          resolve(response.json());
+          if (response.ok) {
+            resolve(response.json);
+          }
+
+          reject(response.json);
         })
-        .catch(error => reject(error));
+        .catch(() => reject('Fetch error - check your network'));
       };
 
       if (!storage.get('mtoken') || Date.now().toString() >= storage.get('mexpires')) {
