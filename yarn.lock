@@ -2,6 +2,17 @@
 # yarn lockfile v1
 
 
+"@krux/condition-jenkins@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@krux/condition-jenkins/-/condition-jenkins-1.0.1.tgz#be991b9867949115ea98040e43676fc60220410b"
+  dependencies:
+    "@semantic-release/error" "^1.0.0"
+    semver "^5.0.3"
+
+"@semantic-release/error@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-1.0.0.tgz#bb8f8eeedd5c7f8c46f96b37ef39e1b8c376c1cc"
+
 acorn-jsx@^3.0.0, acorn-jsx@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-3.0.1.tgz#afdf9488fb1ecefc8348f6fb22f464e32a58b36b"
@@ -1144,6 +1155,10 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
+semver@^5.0.3:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+
 shelljs@^0.7.5:
   version "0.7.7"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.7.tgz#b2f5c77ef97148f4b4f6e22682e10bba8667cff1"
@@ -1173,10 +1188,6 @@ source-map@^0.5.6, source-map@~0.5.1:
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
-
-storage-available@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/storage-available/-/storage-available-1.0.0.tgz#404109e5fd992e1ab0a1796672f20207ace2963a"
 
 string-width@^1.0.1:
   version "1.0.2"
