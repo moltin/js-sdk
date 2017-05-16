@@ -244,7 +244,7 @@ describe('Moltin brands', () => {
       },
     })
     .put('/products/product-1/relationships/brands', {
-      data: null,
+      data: [],
     })
     .reply(200, {
       data: [],
