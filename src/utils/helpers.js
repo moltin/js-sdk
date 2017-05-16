@@ -4,7 +4,7 @@ export function buildRelationshipData(type, ids) {
   let data = [];
 
   if (ids === null || ids.length === 0) {
-    return null;
+    return '[]';
   }
 
   if (typeof ids === 'string') {
