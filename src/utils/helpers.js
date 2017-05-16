@@ -121,8 +121,8 @@ export function buildURL(endpoint, params) {
 }
 
 
-export function buildRequestBody(method, body) {
-  if (method !== 'GET') {
+export function buildRequestBody(body) {
+  if (body) {
     return `{"data":${JSON.stringify(body)}}`;
   }
 

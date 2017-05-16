@@ -53,7 +53,7 @@ class RequestFactory {
     return promise;
   }
 
-  send(uri, method, body) {
+  send(uri, method, body = null) {
     const config = this.config;
     const storage = this.storage;
 
@@ -73,7 +73,7 @@ class RequestFactory {
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
-          body: buildRequestBody(method, body),
+          body: buildRequestBody(body),
         })
         .then(parseJSON)
         .then((response) => {
