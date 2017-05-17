@@ -1,6 +1,6 @@
 import StorageFactory from './storage';
 
-import { setHeaderContentType, buildRequestBody, parseJSON } from '../utils/helpers';
+import { buildRequestBody, parseJSON } from '../utils/helpers';
 
 class RequestFactory {
   constructor(config) {
@@ -61,7 +61,7 @@ class RequestFactory {
       const req = () => {
         const headers = {
           Authorization: `Bearer: ${storage.get('mtoken')}`,
-          'Content-Type': setHeaderContentType(uri, method),
+          'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version,
         };

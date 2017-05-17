@@ -49,16 +49,6 @@ export function parseJSON(response) {
     })));
 }
 
-export function setHeaderContentType(uri, method) {
-  let contentType = 'application/json';
-
-  if (uri === 'files' && method === 'POST') {
-    contentType = 'multipart/form-data';
-  }
-
-  return contentType;
-}
-
 function formatFilterString(type, filter) {
   const filterStringArray = Object.keys(filter).map((key) => {
     const value = filter[key];
@@ -120,13 +110,16 @@ export function buildURL(endpoint, params) {
   return endpoint;
 }
 
-
 export function buildRequestBody(body) {
+  let parsedBody = null;
+
   if (body) {
-    return `{"data":${JSON.stringify(body)}}`;
+    parsedBody = `{
+      "data": ${JSON.stringify(body)}
+    }`;
   }
 
-  return null;
+  return parsedBody;
 }
 
 export function buildCartItemData(product, quantity, type = 'cart_item') {
