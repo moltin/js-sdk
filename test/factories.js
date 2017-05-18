@@ -149,3 +149,15 @@ exports.ordersArray = [{
   type: 'order',
   status: 'cancelled',
 }];
+
+exports.orderItemsArray = [{
+  id: 'item-1',
+  type: 'order_item',
+  quantity: 2,
+  product_id: 'product-1',
+}, {
+  id: 'item-2',
+  type: 'order_item',
+  quantity: 1,
+  product_id: 'product-2',
+}];
