@@ -225,7 +225,7 @@ describe('Moltin files', () => {
       },
     })
     .put('/products/product-1/relationships/files', {
-      data: null,
+      data: [],
     })
     .reply(200, {
       data: [],

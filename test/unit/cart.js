@@ -17,8 +17,6 @@ describe('Moltin cart', () => {
     });
     Moltin.Cart.cartId = '3';
 
-    cartId = Moltin.Cart.cartId;
-
     order = {
       customer: {
         name: 'John Doe',
@@ -342,14 +340,14 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/3/checkout', {
-      data: this.order,
+      data: order,
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(this.order)
+    return Moltin.Cart.Checkout(order)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
@@ -365,14 +363,14 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/5/checkout', {
-      data: this.order,
+      data: order,
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(this.order, '5')
+    return Moltin.Cart.Checkout(order, '5')
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
