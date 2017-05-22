@@ -6,6 +6,7 @@ const assert = require('chai').assert;
 const nock = require('nock');
 const moltin = require('../../dist/moltin.cjs.js');
 const orders = require('../factories').ordersArray;
+const orderItems = require('../factories').orderItemsArray;
 
 const apiUrl = 'https://api.moltin.com/v2';
 
@@ -50,6 +51,24 @@ describe('Moltin orders', () => {
     .then((response) => {
       assert.propertyVal(response, 'id', 'order-1');
       assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should return an array of items from an order', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/orders/order-1/items')
+    .reply(200, orderItems[0]);
+
+    return Moltin.Orders.Items(orders[0].id)
+    .then((response) => {
+      assert.propertyVal(response, 'id', 'item-1');
+      assert.propertyVal(response, 'product_id', 'product-1');
     });
   });
 

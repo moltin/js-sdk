@@ -7,6 +7,10 @@ class OrdersEndpoint extends BaseExtend {
     this.endpoint = 'orders';
   }
 
+  Items(id) {
+    return this.request.send(`${this.endpoint}/${id}/items`, 'GET');
+  }
+
   Payment(id, body) {
     return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body);
   }
