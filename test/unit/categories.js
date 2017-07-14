@@ -4,7 +4,7 @@
 
 const assert = require('chai').assert;
 const nock = require('nock');
-const moltin = require('../../dist/moltin.cjs.js');
+const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
 const categories = require('../factories').categoriesArray;
 const products = require('../factories').productsArray;
 
@@ -13,7 +13,7 @@ const apiUrl = 'https://api.moltin.com/v2';
 describe('Moltin categories', () => {
   // Instantiate a Moltin client before each test
   beforeEach(() => {
-    Moltin = moltin.gateway({
+    Moltin = MoltinGateway({
       client_id: 'XXX',
     });
   });

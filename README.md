@@ -19,7 +19,7 @@ npm install --save @moltin/sdk
 import { gateway as MoltinGateway } from '@moltin/sdk';
 
 // CommonJS modules
-const moltin = require('@moltin/sdk');
+const MoltinGateway = require('@moltin/sdk').gateway;
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ const Moltin = MoltinGateway({
 });
 
 // Node.js
-const Moltin = moltin.gateway({
+const Moltin = MoltinGateway({
   client_id: 'XXX',
   client_secret: 'XXX',
 });
