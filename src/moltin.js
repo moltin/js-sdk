@@ -12,7 +12,6 @@ import CategoriesEndpoint from './endpoints/categories';
 import CollectionsEndpoint from './endpoints/collections';
 import OrdersEndpoint from './endpoints/orders';
 import GatewaysEndpoint from './endpoints/gateways';
-import FilesEndpoint from './endpoints/files';
 
 export default class Moltin {
   constructor(config) {
@@ -28,7 +27,6 @@ export default class Moltin {
     this.Collections = new CollectionsEndpoint(config);
     this.Orders = new OrdersEndpoint(config);
     this.Gateways = new GatewaysEndpoint(config);
-    this.Files = new FilesEndpoint(config);
   }
 
   // Expose `authenticate` function on the Moltin class
