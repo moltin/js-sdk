@@ -2,3 +2,4 @@ node_modules/*
 localStorage/
 npm-debug.log
 .npmrc
+dist/
