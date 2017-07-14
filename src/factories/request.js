@@ -70,6 +70,7 @@ class RequestFactory {
           headers['X-MOLTIN-CURRENCY'] = config.currency;
         }
 
+        /* eslint no-undef: "off" */
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
@@ -88,8 +89,8 @@ class RequestFactory {
 
       if (!storage.get('mtoken') || Date.now().toString() >= storage.get('mexpires')) {
         return this.authenticate()
-          .then(req)
-          .catch(error => reject(error));
+        .then(req)
+        .catch(error => reject(error));
       }
 
       return req();

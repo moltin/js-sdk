@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4';
 import StorageFactory from '../factories/storage';
 
 export function buildRelationshipData(type, ids) {
@@ -24,29 +25,26 @@ export function buildRelationshipData(type, ids) {
   return data;
 }
 
-export function cartIdentifier(reset = false, id = false) {
+export function cartIdentifier() {
   const storage = new StorageFactory();
+  const cartId = uuidv4();
 
-  if (!reset && !id && storage.get('mcart') !== null) {
+  if (storage.get('mcart') !== null) {
     return storage.get('mcart');
   }
 
-  if (!id) {
-    id = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16));
-  }
+  storage.set('mcart', cartId);
 
-  storage.set('mcart', id);
-
-  return id;
+  return cartId;
 }
 
 export function parseJSON(response) {
   return new Promise(resolve => response.json()
-    .then(json => resolve({
-      status: response.status,
-      ok: response.ok,
-      json,
-    })));
+  .then(json => resolve({
+    status: response.status,
+    ok: response.ok,
+    json,
+  })));
 }
 
 function formatFilterString(type, filter) {

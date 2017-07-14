@@ -28,8 +28,8 @@ export default {
     'fetch-everywhere',
     'es6-promise',
   ],
-  dest: pkg['cjs:main'],
+  dest: pkg.browser,
   exports: 'named',
-  format: 'cjs',
-  sourceMap: true,
+  format: 'umd',
+  moduleName: 'moltin',
 };
