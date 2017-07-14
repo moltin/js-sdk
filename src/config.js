@@ -1,4 +1,4 @@
-const pkg = require('../package.json');
+import { version } from '../package.json';
 
 class Config {
   constructor(options) {
@@ -18,7 +18,7 @@ class Config {
     };
     this.methods = ['GET', 'POST', 'PUT', 'DELETE'];
     this.sdk = {
-      version: pkg.version,
+      version,
       language: 'JS',
     };
   }
