@@ -14,6 +14,7 @@ export default {
   entry: 'src/moltin.js',
   plugins: [
     resolve({
+      browser: true,
       jsnext: true,
     }),
     commonjs(),
