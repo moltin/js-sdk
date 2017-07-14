@@ -1,3 +1,7 @@
+/* eslint import/no-unresolved: "off",
+          import/no-extraneous-dependencies: "off"
+*/
+
 import buble from 'rollup-plugin-buble';
 import uglify from 'rollup-plugin-uglify';
 import resolve from 'rollup-plugin-node-resolve';

@@ -1,4 +1,6 @@
-/* jshint node: true */
+/* eslint no-undef: "off",
+          global-require: "off"
+*/
 
 class StorageFactory {
   constructor() {

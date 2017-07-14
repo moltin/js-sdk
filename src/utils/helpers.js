@@ -42,11 +42,11 @@ export function cartIdentifier(reset = false, id = false) {
 
 export function parseJSON(response) {
   return new Promise(resolve => response.json()
-    .then(json => resolve({
-      status: response.status,
-      ok: response.ok,
-      json,
-    })));
+  .then(json => resolve({
+    status: response.status,
+    ok: response.ok,
+    json,
+  })));
 }
 
 function formatFilterString(type, filter) {
