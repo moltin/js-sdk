@@ -6,8 +6,7 @@
   "author": "Moltin (https://moltin.com/)",
   "scripts": {
     "rollup": "rollup -c",
-    "build": "npm run rollup",
-    "test": "npm run build && mocha test/unit/*"
+    "test": "npm run rollup && mocha test/unit/*"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",

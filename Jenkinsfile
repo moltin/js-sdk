@@ -66,7 +66,7 @@ try {
 
               docker.image('node:alpine').inside {
                 sh "mv .npmrc.tmp .npmrc"
-                sh "npm run build"
+                sh "npm run rollup"
                 sh "npm publish"
               }
 
