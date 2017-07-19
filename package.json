@@ -7,7 +7,7 @@
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
-    "test": "npm run rollup && mocha test/unit/*"
+    "test": "mocha test/unit/*"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",
