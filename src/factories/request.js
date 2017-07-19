@@ -1,5 +1,4 @@
 import StorageFactory from './storage';
-
 import { buildRequestBody, parseJSON } from '../utils/helpers';
 
 class RequestFactory {
