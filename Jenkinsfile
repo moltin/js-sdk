@@ -15,7 +15,13 @@ try {
       }
     }
 
-    stage ("Run tests") {
+    stage ("Building") {
+        docker.image('node:alpine').inside {
+          sh "npm run rollup"
+        }
+    }
+    
+    stage ("Testing") {
       docker.image('node:alpine').inside {
         sh "npm run-script test"
       }
@@ -30,18 +36,6 @@ try {
         }
       }
 
-      stage ("Prune + Provisioning") {
-        docker.image('node:alpine').inside {
-          sh "npm prune"
-        }
-      }
-
-      stage ("Provisioning") {
-        docker.image('node:alpine').inside {
-          sh "npm install"
-        }
-      }
-
       stage ("Configure npm") {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'npm-moltin-moltinbot-password', usernameVariable: 'NPM_USERNAME', passwordVariable: 'NPM_PASSWORD']]) {
           sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=\"$NPM_PASSWORD\" -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc.tmp"
@@ -53,7 +47,7 @@ try {
         }
       }
 
-      try {
+      try {        
         stage ("Versioning") {
           withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
             sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
@@ -66,7 +60,6 @@ try {
 
               docker.image('node:alpine').inside {
                 sh "mv .npmrc.tmp .npmrc"
-                sh "npm run rollup"
                 sh "npm publish"
               }
 
