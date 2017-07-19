@@ -20,7 +20,7 @@ try {
           sh "npm run rollup"
         }
     }
-    
+
     stage ("Testing") {
       docker.image('node:alpine').inside {
         sh "npm run-script test"
@@ -36,9 +36,10 @@ try {
         }
       }
 
-      stage ("Pruning") {
+      stage ("Prune and install") {
         docker.image('node:alpine').inside {
           sh "npm prune"
+          sh "npm install"
         }
       }
       
