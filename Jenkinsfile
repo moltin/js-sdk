@@ -36,6 +36,12 @@ try {
         }
       }
 
+      stage ("Pruning") {
+        docker.image('node:alpine').inside {
+          sh "npm prune"
+        }
+      }
+      
       stage ("Configure npm") {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'npm-moltin-moltinbot-password', usernameVariable: 'NPM_USERNAME', passwordVariable: 'NPM_PASSWORD']]) {
           sh "docker run -e NPM_USER=$NPM_USERNAME -e NPM_PASS=\"$NPM_PASSWORD\" -e NPM_EMAIL=$NPM_EMAIL bravissimolabs/generate-npm-authtoken > .npmrc.tmp"
@@ -47,7 +53,7 @@ try {
         }
       }
 
-      try {        
+      try {
         stage ("Versioning") {
           withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
             sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
