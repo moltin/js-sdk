@@ -25,8 +25,10 @@ export default {
     json(),
   ],
   external: [
-    'fetch-everywhere',
     'es6-promise',
+    'fetch-everywhere',
+    'inflected',
+    'uuid',
   ],
   dest: pkg['cjs:main'],
   exports: 'named',

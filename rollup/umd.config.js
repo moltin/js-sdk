@@ -24,12 +24,9 @@ export default {
     uglify(),
     json(),
   ],
-  external: [
-    'fetch-everywhere',
-    'es6-promise',
-  ],
   dest: pkg.browser,
   exports: 'named',
   format: 'umd',
   moduleName: 'moltin',
+  context: 'self',
 };
