@@ -2,6 +2,7 @@ import { version } from '../package.json';
 
 class Config {
   constructor(options) {
+    this.application = options.application;
     this.client_id = options.client_id;
     this.client_secret = options.client_secret;
     this.host = 'api.moltin.com';
