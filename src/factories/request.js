@@ -65,6 +65,10 @@ class RequestFactory {
           'X-MOLTIN-SDK-VERSION': config.sdk.version,
         };
 
+        if (config.application) {
+          headers['X-MOLTIN-APPLICATION'] = config.application;
+        }
+
         if (config.currency) {
           headers['X-MOLTIN-CURRENCY'] = config.currency;
         }
