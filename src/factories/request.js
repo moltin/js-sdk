@@ -41,7 +41,7 @@ class RequestFactory {
 
         reject(response.json);
       })
-      .catch(() => reject('Fetch error - check your network'));
+      .catch(error => reject(error));
     });
 
     promise.then((response) => {
@@ -87,7 +87,7 @@ class RequestFactory {
 
           reject(response.json);
         })
-        .catch(() => reject('Fetch error - check your network'));
+        .catch(error => reject(error));
       };
 
       if (!storage.get('mtoken') || Date.now().toString() >= storage.get('mexpires')) {
