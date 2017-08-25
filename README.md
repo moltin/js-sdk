@@ -41,6 +41,18 @@ const Moltin = MoltinGateway({
 });
 ```
 
+Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
+
+```js
+<script src="https://unpkg.com/@moltin/sdk">
+
+<script>
+  const Moltin = moltin.gateway({
+    client_id: 'XXX'
+  });
+</script>
+```
+
 > **Note:** If you're using [webpack](https://webpack.github.io), you'll need to add the following to your projects configuration file.
 
 ```js
