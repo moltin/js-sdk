@@ -109,7 +109,7 @@ export function buildURL(endpoint, params) {
 }
 
 export function buildRequestBody(body) {
-  let parsedBody = null;
+  let parsedBody;
 
   if (body) {
     parsedBody = `{

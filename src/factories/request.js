@@ -52,7 +52,7 @@ class RequestFactory {
     return promise;
   }
 
-  send(uri, method, body = null) {
+  send(uri, method, body = undefined) {
     const config = this.config;
     const storage = this.storage;
 
