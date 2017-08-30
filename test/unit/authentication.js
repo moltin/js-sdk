@@ -45,8 +45,30 @@ describe('Moltin authentication', () => {
 
   it('should throw an error when no client id is set', () => {
     // Clear the `client_id`
-    Moltin.config.client_id = '';
+    Moltin = MoltinGateway({
+      client_id: '',
+    });
 
-    assert.throws(() => Moltin.Authenticate(), Error, 'You must have a client_id set');
+    assert.throws(() => Moltin.Authenticate(), Error, /You must have a client_id set/);
+  });
+
+  it('should throw an error when no host is set', () => {
+    // Clear the `host`
+    Moltin = MoltinGateway({
+      client_id: 'XXX',
+      host: '',
+    });
+
+    assert.throws(() => Moltin.Authenticate(), Error, /You have not specificed an API host/);
+  });
+
+  it('should use a custom API host', () => {
+    // Set a custom `host` when instantiating
+    Moltin = MoltinGateway({
+      client_id: 'XXX',
+      host: 'api.test.test',
+    });
+
+    assert.equal(Moltin.config.host, 'api.test.test');
   });
 });
