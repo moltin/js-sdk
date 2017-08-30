@@ -14,14 +14,6 @@ Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and im
 npm install --save @moltin/sdk
 ```
 
-```js
-// ES6 modules
-import { gateway as MoltinGateway } from '@moltin/sdk';
-
-// CommonJS modules
-const MoltinGateway = require('@moltin/sdk').gateway;
-```
-
 ## Usage
 
 To get started, instantiate a new Moltin client with your store credentials.
@@ -30,11 +22,15 @@ To get started, instantiate a new Moltin client with your store credentials.
 
 ```js
 // JavaScript
+import { gateway as MoltinGateway } from '@moltin/sdk';
+
 const Moltin = MoltinGateway({
   client_id: 'XXX'
 });
 
 // Node.js
+const MoltinGateway = require('@moltin/sdk').gateway;
+
 const Moltin = MoltinGateway({
   client_id: 'XXX',
   client_secret: 'XXX',
@@ -70,6 +66,17 @@ Moltin.Authenticate().then((response) => {
 ```
 
 Check out the [wiki](https://github.com/moltin/js-sdk/wiki) to learn more about authenticating and the available endpoints.
+
+### Custom Host
+
+If you're an enterprise customer with your own infrastructure, you'll need to specify your API URL when instantiating:
+
+```js
+const Moltin = MoltinGateway({
+  client_id: 'XXX',
+  host: 'api.yourdomain.com'
+});
+```
 
 
 ## Contributing
