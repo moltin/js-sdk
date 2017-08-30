@@ -9,12 +9,14 @@ class BaseExtend {
   }
 
   All() {
+    const { includes, sort, limit, offset, filter } = this;
+
     this.call = this.request.send(buildURL(this.endpoint, {
-      includes: this.includes,
-      sort: this.sort,
-      limit: this.limit,
-      offset: this.offset,
-      filter: this.filter,
+      includes,
+      sort,
+      limit,
+      offset,
+      filter,
     }), 'GET');
 
     return this.call;

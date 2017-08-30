@@ -22,8 +22,7 @@ class CurrenciesEndpoint extends BaseExtend {
   }
 
   Set(currency) {
-    const storage = this.storage;
-    const config = this.config;
+    const { config, storage } = this;
 
     storage.set('mcurrency', currency);
     config.currency = currency;

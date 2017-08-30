@@ -9,11 +9,14 @@ class RequestFactory {
   }
 
   authenticate() {
-    const config = this.config;
-    const storage = this.storage;
+    const { config, storage } = this;
 
     if (!config.client_id) {
       throw new Error('You must have a client_id set');
+    }
+
+    if (!config.host) {
+      throw new Error('You have not specificed an API host');
     }
 
     const body = {
@@ -53,8 +56,7 @@ class RequestFactory {
   }
 
   send(uri, method, body = undefined) {
-    const config = this.config;
-    const storage = this.storage;
+    const { config, storage } = this;
 
     const promise = new Promise((resolve, reject) => {
       const req = () => {

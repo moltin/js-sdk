@@ -9,14 +9,11 @@ const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
 const apiUrl = 'https://api.moltin.com';
 
 describe('Moltin authentication', () => {
-  // Instantiate a Moltin client before each test
-  beforeEach(() => {
+  it('should return an access token', () => {
     Moltin = MoltinGateway({
       client_id: 'XXX',
     });
-  });
 
-  it('should return an access token', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -45,8 +42,30 @@ describe('Moltin authentication', () => {
 
   it('should throw an error when no client id is set', () => {
     // Clear the `client_id`
-    Moltin.config.client_id = '';
+    Moltin = MoltinGateway({
+      client_id: '',
+    });
 
-    assert.throws(() => Moltin.Authenticate(), Error, 'You must have a client_id set');
+    assert.throws(() => Moltin.Authenticate(), Error, /You must have a client_id set/);
+  });
+
+  it('should fallback to default API host if host is undefined during instantiation', () => {
+    // Clear the `host`
+    Moltin = MoltinGateway({
+      client_id: 'XXX',
+      host: null,
+    });
+
+    assert.equal(Moltin.config.host, 'api.moltin.com');
+  });
+
+  it('should use a custom API host', () => {
+    // Set a custom `host` when instantiating
+    Moltin = MoltinGateway({
+      client_id: 'XXX',
+      host: 'api.test.test',
+    });
+
+    assert.equal(Moltin.config.host, 'api.test.test');
   });
 });
