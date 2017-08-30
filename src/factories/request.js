@@ -9,8 +9,7 @@ class RequestFactory {
   }
 
   authenticate() {
-    const config = this.config;
-    const storage = this.storage;
+    const { config, storage } = this;
 
     if (!config.client_id) {
       throw new Error('You must have a client_id set');
@@ -57,8 +56,7 @@ class RequestFactory {
   }
 
   send(uri, method, body = undefined) {
-    const config = this.config;
-    const storage = this.storage;
+    const { config, storage } = this;
 
     const promise = new Promise((resolve, reject) => {
       const req = () => {
