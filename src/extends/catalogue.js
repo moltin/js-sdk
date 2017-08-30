@@ -14,7 +14,7 @@ class CatalogueExtend extends BaseExtend {
   }
 
   With(includes) {
-    this.includes = includes.toString().toLowerCase();
+    if (includes) this.includes = includes.toString().toLowerCase();
 
     return this;
   }
