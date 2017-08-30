@@ -16,6 +16,10 @@ class RequestFactory {
       throw new Error('You must have a client_id set');
     }
 
+    if (!config.host) {
+      throw new Error('You have not specificed an API host');
+    }
+
     const body = {
       grant_type: config.client_secret ? 'client_credentials' : 'implicit',
       client_id: config.client_id,

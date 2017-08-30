@@ -2,4 +2,5 @@ extends: airbnb-base
 plugins:
   - import
 rules:
-  indent: ["error", 2, { "MemberExpression": 0}]
+  indent: ["error", 2, { "MemberExpression": 0 }]
+  camelcase: [0, { properties: "never" }]

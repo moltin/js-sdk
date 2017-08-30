@@ -2,13 +2,15 @@ import { version } from '../package.json';
 
 class Config {
   constructor(options) {
-    this.application = options.application;
-    this.client_id = options.client_id;
-    this.client_secret = options.client_secret;
-    this.host = 'api.moltin.com';
+    const { application, client_id, client_secret, currency, host } = options;
+
+    this.application = application;
+    this.client_id = client_id;
+    this.client_secret = client_secret;
+    this.host = host || 'api.moltin.com';
     this.protocol = 'https';
     this.version = 'v2';
-    this.currency = options.currency;
+    this.currency = currency;
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
