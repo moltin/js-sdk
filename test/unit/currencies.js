@@ -110,14 +110,11 @@ describe('Moltin currencies', () => {
       },
     })
     .delete('/currencies/1')
-    .reply(200, {
-      type: 'currency',
-      id: '1',
-    });
+    .reply(204);
 
     return Moltin.Currencies.Delete('1')
     .then((response) => {
-      assert.propertyVal(response, 'id', '1');
+      assert.equal(response, '{}');
     });
   });
 

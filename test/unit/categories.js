@@ -111,14 +111,11 @@ describe('Moltin categories', () => {
       },
     })
     .delete('/categories/1')
-    .reply(200, {
-      type: 'category',
-      id: '1',
-    });
+    .reply(204);
 
     return Moltin.Categories.Delete('1')
     .then((response) => {
-      assert.propertyVal(response, 'id', '1');
+      assert.equal(response, '{}');
     });
   });
 
@@ -183,11 +180,11 @@ describe('Moltin categories', () => {
         id: 'category-1',
       }],
     })
-    .reply(200, categories[0]);
+    .reply(204);
 
     return Moltin.Products.DeleteRelationships(products[0].id, 'category', categories[0].id)
     .then((response) => {
-      assert.propertyVal(response, 'id', 'category-1');
+      assert.equal(response, '{}');
     });
   });
 
@@ -208,11 +205,11 @@ describe('Moltin categories', () => {
         id: 'category-2',
       }],
     })
-    .reply(200, categories[0]);
+    .reply(204);
 
     return Moltin.Products.DeleteRelationships(products[0].id, 'category', [categories[0].id, categories[1].id])
     .then((response) => {
-      assert.propertyVal(response, 'id', 'category-1');
+      assert.equal(response, '{}');
     });
   });
 
@@ -230,11 +227,11 @@ describe('Moltin categories', () => {
         id: 'category-1',
       }],
     })
-    .reply(200, categories[0]);
+    .reply(204);
 
     return Moltin.Products.UpdateRelationships(products[0].id, 'category', categories[0].id)
     .then((response) => {
-      assert.propertyVal(response, 'id', 'category-1');
+      assert.equal(response, '{}');
     });
   });
 

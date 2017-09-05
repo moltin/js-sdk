@@ -16,7 +16,7 @@ class RequestFactory {
     }
 
     if (!config.host) {
-      throw new Error('You have not specificed an API host');
+      throw new Error('You have not specified an API host');
     }
 
     const body = {

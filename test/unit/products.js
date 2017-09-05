@@ -239,14 +239,11 @@ describe('Moltin products', () => {
       },
     })
     .delete('/products/1')
-    .reply(200, {
-      type: 'product',
-      id: '1',
-    });
+    .reply(204);
 
     return Moltin.Products.Delete(1)
     .then((response) => {
-      assert.propertyVal(response, 'id', '1');
+      assert.equal(response, '{}');
     });
   });
 });
