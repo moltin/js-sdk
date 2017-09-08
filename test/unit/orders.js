@@ -7,6 +7,7 @@ const nock = require('nock');
 const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
 const orders = require('../factories').ordersArray;
 const orderItems = require('../factories').orderItemsArray;
+const orderTransactions = require('../factories').orderTransactionsArray;
 
 const apiUrl = 'https://api.moltin.com/v2';
 
@@ -69,6 +70,24 @@ describe('Moltin orders', () => {
     .then((response) => {
       assert.propertyVal(response, 'id', 'item-1');
       assert.propertyVal(response, 'product_id', 'product-1');
+    });
+  });
+  
+  it('should return an array of transactions from an order', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/orders/order-1/transactions')
+    .reply(200, orderTransactions[0]);
+
+    return Moltin.Orders.Transactions(orders[0].id)
+    .then((response) => {
+      assert.propertyVal(response, 'id', 'transaction-1');
+      assert.nestedPropertyVal(response, 'relationships.order.data.id', 'c5530906-7b68-42ee-99c3-68cfebdcd749');
     });
   });
 
