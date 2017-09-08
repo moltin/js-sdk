@@ -71,6 +71,23 @@ describe('Moltin orders', () => {
       assert.propertyVal(response, 'product_id', 'product-1');
     });
   });
+  
+  it('should return an array of transactions from an order', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .get('/orders/order-1/transactions')
+    .reply(200, transactions);
+
+    return Moltin.Orders.Transactions(orders[0].id)
+    .then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
 
   it('should complete a payment for an order', () => {
     // Intercept the API request
