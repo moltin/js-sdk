@@ -161,3 +161,40 @@ export const orderItemsArray = [{
   quantity: 1,
   product_id: 'product-2',
 }];
+
+export const orderTransactionsArray = [{
+  id: 'transaction-1',
+  type: 'transaction',
+  reference: 'ch_1AzkYiFnpfya5sMz8gVp6Ds6',
+  gateway: 'stripe',
+  amount: 159800,
+  currency: 'NOK',
+  'transaction-type': 'purchase',
+  status: 'complete',
+  relationships: {
+    order: {
+      data: {
+        type: 'order',
+        id: 'c5530906-7b68-42ee-99c3-68cfebdcd749',
+      },
+    },
+  },
+},
+{
+  id: 'transaction-2',
+  type: 'transaction',
+  reference: 'ch_1AzkYiFnpfya5sMz8gVp6Ds6',
+  gateway: 'stripe',
+  amount: 159800,
+  currency: 'NOK',
+  'transaction-type': 'purchase',
+  status: 'complete',
+  relationships: {
+    order: {
+      data: {
+        type: 'order',
+        id: 'c5530906-7b68-42ee-99c3-68cfebdcd749',
+      },
+    },
+  },
+}];
