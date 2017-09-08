@@ -87,7 +87,7 @@ describe('Moltin orders', () => {
     return Moltin.Orders.Transactions(orders[0].id)
     .then((response) => {
       assert.propertyVal(response, 'id', 'transaction-1');
-      //assert.propertyVal(response, 'product_id', 'product-1');
+      assert.nestedPropertyVal(response, 'relationships.order.data.id', 'c5530906-7b68-42ee-99c3-68cfebdcd749');
     });
   });
 
