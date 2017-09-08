@@ -7,6 +7,7 @@ const nock = require('nock');
 const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
 const orders = require('../factories').ordersArray;
 const orderItems = require('../factories').orderItemsArray;
+const orderTransactions = require('../factories').orderTransactionsArray;
 
 const apiUrl = 'https://api.moltin.com/v2';
 
@@ -81,11 +82,12 @@ describe('Moltin orders', () => {
       },
     })
     .get('/orders/order-1/transactions')
-    .reply(200, transactions);
+    .reply(200, orderTransactions[0]);
 
     return Moltin.Orders.Transactions(orders[0].id)
     .then((response) => {
-      assert.lengthOf(response, 4);
+      assert.propertyVal(response, 'id', 'transaction-1');
+      //assert.propertyVal(response, 'product_id', 'product-1');
     });
   });
 
