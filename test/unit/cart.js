@@ -1,45 +1,39 @@
-/* eslint no-undef: "off",
-          import/no-extraneous-dependencies: "off"
-*/
-
-const assert = require('chai').assert;
-const nock = require('nock');
-const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
-const items = require('../factories').cartItemsArray;
+import { assert } from 'chai';
+import nock from 'nock';
+import { gateway as MoltinGateway } from '../../src/moltin';
+import { cartItemsArray as items } from '../factories';
 
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin cart', () => {
-  beforeEach(() => {
-    // Instantiate a Moltin client before each test
-    Moltin = MoltinGateway({
-      client_id: 'XXX',
-    });
-    Moltin.Cart.cartId = '3';
-
-    order = {
-      customer: {
-        name: 'John Doe',
-        email: 'john@doe.co',
-      },
-      billing_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        line_1: '1 Test Street',
-        postcode: 'NE1 6UF',
-        county: 'Tyne & Wear',
-        country: 'UK',
-      },
-      shipping_address: {
-        first_name: 'John',
-        last_name: 'Doe',
-        line_1: '1 Test Street',
-        postcode: 'NE1 6UF',
-        county: 'Tyne & Wear',
-        country: 'UK',
-      },
-    };
+  const Moltin = MoltinGateway({
+    client_id: 'XXX',
   });
+
+  Moltin.Cart.cartId = '3';
+
+  const order = {
+    customer: {
+      name: 'John Doe',
+      email: 'john@doe.co',
+    },
+    billing_address: {
+      first_name: 'John',
+      last_name: 'Doe',
+      line_1: '1 Test Street',
+      postcode: 'NE1 6UF',
+      county: 'Tyne & Wear',
+      country: 'UK',
+    },
+    shipping_address: {
+      first_name: 'John',
+      last_name: 'Doe',
+      line_1: '1 Test Street',
+      postcode: 'NE1 6UF',
+      county: 'Tyne & Wear',
+      country: 'UK',
+    },
+  };
 
   it('should return a cart', () => {
     // Intercept the API request

@@ -1,23 +1,16 @@
-/* eslint no-undef: "off",
-          import/no-extraneous-dependencies: "off"
-*/
-
-const assert = require('chai').assert;
-const nock = require('nock');
-const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
-const products = require('../factories').productsArray;
+import { assert } from 'chai';
+import nock from 'nock';
+import { gateway as MoltinGateway } from '../../src/moltin';
+import { productsArray as products } from '../factories';
 
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin products', () => {
-  // Instantiate a Moltin client before each test
-  beforeEach(() => {
-    Moltin = MoltinGateway({
+  it('should return an array of products', () => {
+    const Moltin = MoltinGateway({
       client_id: 'XXX',
     });
-  });
 
-  it('should return an array of products', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -35,6 +28,10 @@ describe('Moltin products', () => {
   });
 
   it('should return a single product', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -52,6 +49,10 @@ describe('Moltin products', () => {
   });
 
   it('should return a filtered array of products', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -77,6 +78,10 @@ describe('Moltin products', () => {
   });
 
   it('should return a limited number of products', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -99,6 +104,10 @@ describe('Moltin products', () => {
   });
 
   it('should return an array products offset by a value', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -121,6 +130,10 @@ describe('Moltin products', () => {
   });
 
   it('should return all products and include associated brands, categories, collections', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -141,6 +154,10 @@ describe('Moltin products', () => {
   });
 
   it('should return a single product and include associated brands, categories, collections', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -161,6 +178,10 @@ describe('Moltin products', () => {
   });
 
   it('should return all products sorted by name key', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -181,6 +202,10 @@ describe('Moltin products', () => {
   });
 
   it('should create a new product', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -206,6 +231,10 @@ describe('Moltin products', () => {
   });
 
   it('should update a product', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -231,6 +260,10 @@ describe('Moltin products', () => {
   });
 
   it('should delete a product', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {

@@ -1,16 +1,12 @@
-/* eslint no-undef: "off",
-          import/no-extraneous-dependencies: "off"
-*/
-
-const assert = require('chai').assert;
-const nock = require('nock');
-const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
+import { assert } from 'chai';
+import nock from 'nock';
+import { gateway as MoltinGateway } from '../../src/moltin';
 
 const apiUrl = 'https://api.moltin.com';
 
 describe('Moltin authentication', () => {
   it('should return an access token', () => {
-    Moltin = MoltinGateway({
+    const Moltin = MoltinGateway({
       client_id: 'XXX',
     });
 
@@ -35,14 +31,8 @@ describe('Moltin authentication', () => {
     });
   });
 
-  // TODO: endpoint request should fire authenticate function if `access_token` is null
-  // it('should reauthenticate if access_token is null', () => {
-  //
-  // });
-
   it('should throw an error when no client id is set', () => {
-    // Clear the `client_id`
-    Moltin = MoltinGateway({
+    const Moltin = MoltinGateway({
       client_id: '',
     });
 
@@ -50,8 +40,7 @@ describe('Moltin authentication', () => {
   });
 
   it('should fallback to default API host if host is undefined during instantiation', () => {
-    // Clear the `host`
-    Moltin = MoltinGateway({
+    const Moltin = MoltinGateway({
       client_id: 'XXX',
       host: null,
     });
@@ -60,8 +49,7 @@ describe('Moltin authentication', () => {
   });
 
   it('should use a custom API host', () => {
-    // Set a custom `host` when instantiating
-    Moltin = MoltinGateway({
+    const Moltin = MoltinGateway({
       client_id: 'XXX',
       host: 'api.test.test',
     });
