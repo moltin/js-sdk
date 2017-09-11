@@ -7,7 +7,7 @@
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
-    "test": "mocha --compilers js:babel-core/register test/unit/*"
+    "test": "mocha --compilers js:babel-core/register test/unit/* test/utils/*"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",
