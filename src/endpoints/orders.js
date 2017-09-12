@@ -14,6 +14,11 @@ class OrdersEndpoint extends BaseExtend {
   Payment(id, body) {
     return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body);
   }
+  
+  Transactions(id) {
+    return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET');
+  }
+  
 }
 
 export default OrdersEndpoint;
