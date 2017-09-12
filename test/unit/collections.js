@@ -1,21 +1,13 @@
-/* eslint no-undef: "off",
-          import/no-extraneous-dependencies: "off"
-*/
-
-const assert = require('chai').assert;
-const nock = require('nock');
-const MoltinGateway = require('../../dist/moltin.cjs.js').gateway;
-const collections = require('../factories').collectionsArray;
-const products = require('../factories').productsArray;
+import { assert } from 'chai';
+import nock from 'nock';
+import { gateway as MoltinGateway } from '../../src/moltin';
+import { collectionsArray as collections, productsArray as products } from '../factories';
 
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin collections', () => {
-  // Instantiate a Moltin client before each test
-  beforeEach(() => {
-    Moltin = MoltinGateway({
-      client_id: 'XXX',
-    });
+  const Moltin = MoltinGateway({
+    client_id: 'XXX',
   });
 
   it('should return an array of collections', () => {

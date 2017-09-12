@@ -7,7 +7,7 @@
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
-    "test": "npm run rollup && mocha test/unit/*"
+    "test": "mocha --compilers js:babel-core/register test/unit/*"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",
@@ -22,6 +22,9 @@
   },
   "devDependencies": {
     "@krux/condition-jenkins": "^1.0.1",
+    "babel-core": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "chai": "^4.1.0",
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",

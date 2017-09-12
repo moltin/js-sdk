@@ -4,3 +4,6 @@ plugins:
 rules:
   indent: ["error", 2, { "MemberExpression": 0 }]
   camelcase: [0, { properties: "never" }]
+  no-undef: ["off"]
+  no-unused-expressions: ["off"]
+  import/no-extraneous-dependencies: ["off"]

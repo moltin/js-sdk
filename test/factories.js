@@ -1,4 +1,4 @@
-exports.productsArray = [{
+export const productsArray = [{
   id: 'product-1',
   type: 'product',
   name: 'Product 1',
@@ -16,7 +16,7 @@ exports.productsArray = [{
   name: 'Product 4',
 }];
 
-exports.brandsArray = [{
+export const brandsArray = [{
   id: 'brand-1',
   type: 'brand',
   name: 'Brand 1',
@@ -34,7 +34,7 @@ exports.brandsArray = [{
   name: 'Brand 4',
 }];
 
-exports.categoriesArray = [{
+export const categoriesArray = [{
   id: 'category-1',
   type: 'category',
   name: 'Category 1',
@@ -52,7 +52,7 @@ exports.categoriesArray = [{
   name: 'Category 4',
 }];
 
-exports.collectionsArray = [{
+export const collectionsArray = [{
   id: 'collection-1',
   type: 'collection',
   name: 'Collection 1',
@@ -70,7 +70,7 @@ exports.collectionsArray = [{
   name: 'Collection 4',
 }];
 
-exports.currenciesArray = [{
+export const currenciesArray = [{
   id: 'currency-1',
   type: 'currency',
   code: 'USD',
@@ -88,7 +88,7 @@ exports.currenciesArray = [{
   code: 'EUR',
 }];
 
-exports.cartItemsArray = [{
+export const cartItemsArray = [{
   id: 'cart_item-1',
   type: 'cart_item',
   name: 'Cart item 1',
@@ -106,7 +106,7 @@ exports.cartItemsArray = [{
   name: 'Cart item 4',
 }];
 
-exports.gatewaysArray = [{
+export const gatewaysArray = [{
   slug: 'braintree',
   type: 'gateway',
 }, {
@@ -114,7 +114,7 @@ exports.gatewaysArray = [{
   type: 'gateway',
 }];
 
-exports.filesArray = [{
+export const filesArray = [{
   id: 'file-1',
   type: 'file',
   file_name: 'File 1',
@@ -132,7 +132,7 @@ exports.filesArray = [{
   file_name: 'File 4',
 }];
 
-exports.ordersArray = [{
+export const ordersArray = [{
   id: 'order-1',
   type: 'order',
   status: 'complete',
@@ -150,7 +150,7 @@ exports.ordersArray = [{
   status: 'cancelled',
 }];
 
-exports.orderItemsArray = [{
+export const orderItemsArray = [{
   id: 'item-1',
   type: 'order_item',
   quantity: 2,
