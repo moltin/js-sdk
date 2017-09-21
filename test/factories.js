@@ -198,3 +198,21 @@ export const orderTransactionsArray = [{
     },
   },
 }];
+export const customersArray = [{
+  type: 'customer',
+  id: 'customer-1',
+  username: 'test-user',
+  name: 'test-user',
+  email: 'testuser@test.com',
+  password: true,
+  test: null
+},
+{
+  type: 'customer',
+  id: 'customer-2',
+  username: 'test-user2',
+  name: 'test-user2',
+  email: 'testuser2@test.com',
+  password: true,
+  test: null
+}];
