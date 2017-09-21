@@ -40,7 +40,6 @@ describe('Moltin customers', () => {
 
     return Moltin.Customers.Get(1)
     .then((response) => {
-      console.log(response)
       assert.propertyVal(response, 'id', 'customer-1');
     });
   })
@@ -89,7 +88,7 @@ describe('Moltin customers', () => {
         'Content-Type': 'application/json',
       },
     })
-    .put('/customers/1', {
+    .put('/customers/customer-1', {
       data: {
         name: 'Updated customer name',
       },
@@ -98,7 +97,7 @@ describe('Moltin customers', () => {
       name: 'Updated customer name',
     });
 
-    return Moltin.Customers.Update('1', {
+    return Moltin.Customers.Update('customer-1', {
       name: 'Updated customer name',
     })
     .then((response) => {
@@ -114,12 +113,12 @@ describe('Moltin customers', () => {
         'Content-Type': 'application/json',
       },
     })
-    .delete('/customers/customer-1', {
-      data: [{
-        type: 'customer',
-        id: 'customer-1',
-      }],
-    })
+    .delete('/customers/customer-1')
     .reply(204);
+
+    return Moltin.Customers.Delete('customer-1')
+    .then((response) => {
+      assert.equal(response, '{}');
+    });
   });
 });
