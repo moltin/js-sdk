@@ -28,7 +28,7 @@ describe('Moltin customers', () => {
   });
 
   it('should return a single customer', () => {
-     // Intercept the API request
+    // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
         Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
@@ -42,7 +42,7 @@ describe('Moltin customers', () => {
     .then((response) => {
       assert.propertyVal(response, 'id', 'customer-1');
     });
-  })
+  });
 
   it('should create a new customer', () => {
     // Intercept the API request
@@ -54,26 +54,23 @@ describe('Moltin customers', () => {
     })
     .post('/customers', {
       data: {
-        type: 'customer',
         username: 'maximusPowerus',
         name: 'Max Power',
         email: 'max@power.com',
-        password: 'fakepass'
+        password: 'fakepass',
       },
     })
     .reply(201, {
-      type: 'customer',
       username: 'maximusPowerus',
       name: 'Max Power',
-      email: 'max@power.com'
+      email: 'max@power.com',
     });
 
     return Moltin.Customers.Create({
-      type: 'customer',
-        username: 'maximusPowerus',
-        name: 'Max Power',
-        email: 'max@power.com',
-        password: 'fakepass'
+      username: 'maximusPowerus',
+      name: 'Max Power',
+      email: 'max@power.com',
+      password: 'fakepass',
     })
     .then((response) => {
       assert.propertyVal(response, 'name', 'Max Power');
@@ -105,7 +102,7 @@ describe('Moltin customers', () => {
     });
   });
 
-  it('it should delete a customer', () => {
+  it('should delete a customer', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -119,6 +116,32 @@ describe('Moltin customers', () => {
     return Moltin.Customers.Delete('customer-1')
     .then((response) => {
       assert.equal(response, '{}');
+    });
+  });
+
+  it('should authenticate a customer and return a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .post('/customers/tokens', {
+      data: {
+        email: customers[0].email,
+        password: customers[0].password,
+      },
+    })
+    .reply(201, {
+      customer_id: customers[0].id,
+      token: customers[0].token,
+    });
+
+    return Moltin.Customers.Token(customers[0].email, customers[0].password)
+    .then((response) => {
+      assert.propertyVal(response, 'token', 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0');
+      assert.propertyVal(response, 'customer_id', 'customer-1');
     });
   });
 });

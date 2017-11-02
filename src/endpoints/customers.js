@@ -15,6 +15,15 @@ class CustomersEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${id}`, 'DELETE');
   }
 
+  Token(email, password) {
+    const body = {
+      email,
+      password,
+    };
+
+    return this.request.send(`${this.endpoint}/tokens`, 'POST', body);
+  }
+
   Update(id, body) {
     return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
   }
