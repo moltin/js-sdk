@@ -121,4 +121,30 @@ describe('Moltin customers', () => {
       assert.equal(response, '{}');
     });
   });
+
+  it('it should authenticate a customer and return a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqHeaders: {
+        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        'Content-Type': 'application/json',
+      },
+    })
+    .post('/customers/token', {
+      data: {
+        email: customers[0].email,
+        password: customers[0].password,
+      },
+    })
+    .reply(201, {
+      customer_id: customers[0].id,
+      token: customers[0].token,
+    });
+
+    return Moltin.Customers.Token(customers[0].email, customers[0].password)
+    .then((response) => {
+      assert.propertyVal(response, 'token', 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0');
+      assert.propertyVal(response, 'customer_id', 'customer-1');
+    });
+  });
 });

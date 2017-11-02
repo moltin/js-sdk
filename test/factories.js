@@ -199,20 +199,20 @@ export const orderTransactionsArray = [{
   },
 }];
 export const customersArray = [{
-  type: 'customer',
   id: 'customer-1',
+  type: 'customer',
   username: 'test-user',
   name: 'test-user',
   email: 'testuser@test.com',
-  password: true,
-  test: null
+  password: 'securepassword',
+  token: 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0',
 },
 {
-  type: 'customer',
   id: 'customer-2',
+  type: 'customer',
   username: 'test-user2',
   name: 'test-user2',
   email: 'testuser2@test.com',
-  password: true,
-  test: null
+  password: 'securepassword',
+  token: 'eXAiOiAiSldUIiB9.eyJzdWIiOiI0YzY',
 }];
