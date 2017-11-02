@@ -102,7 +102,7 @@ describe('Moltin customers', () => {
     });
   });
 
-  it('it should delete a customer', () => {
+  it('should delete a customer', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {
@@ -119,7 +119,7 @@ describe('Moltin customers', () => {
     });
   });
 
-  it('it should authenticate a customer and return a JWT', () => {
+  it('should authenticate a customer and return a JWT', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqHeaders: {

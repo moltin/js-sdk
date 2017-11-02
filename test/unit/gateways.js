@@ -54,6 +54,7 @@ describe('Moltin gateways', () => {
     })
     .put('/gateways/braintree', {
       data: {
+        type: 'gateway',
         enabled: true,
       },
     })
