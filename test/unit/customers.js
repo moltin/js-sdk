@@ -127,7 +127,7 @@ describe('Moltin customers', () => {
         'Content-Type': 'application/json',
       },
     })
-    .post('/customers/token', {
+    .post('/customers/tokens', {
       data: {
         email: customers[0].email,
         password: customers[0].password,

@@ -21,7 +21,7 @@ class CustomersEndpoint extends BaseExtend {
       password,
     };
 
-    return this.request.send(`${this.endpoint}/token`, 'POST', body);
+    return this.request.send(`${this.endpoint}/tokens`, 'POST', body);
   }
 
   Update(id, body) {
