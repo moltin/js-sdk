@@ -38,9 +38,8 @@ describe('Moltin cart', () => {
   it('should return a cart', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/carts/3')
@@ -57,9 +56,8 @@ describe('Moltin cart', () => {
   it('should return a cart with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/carts/5')
@@ -76,9 +74,8 @@ describe('Moltin cart', () => {
   it('should return an array of cart items', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/carts/3/items')
@@ -93,9 +90,8 @@ describe('Moltin cart', () => {
   it('should return an array of cart items with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/carts/5/items')
@@ -110,9 +106,8 @@ describe('Moltin cart', () => {
   it('should add a product to the cart', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/3/items', {
@@ -137,9 +132,8 @@ describe('Moltin cart', () => {
   it('should add a product to the cart with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/5/items', {
@@ -164,9 +158,8 @@ describe('Moltin cart', () => {
   it('should add a product to the cart without quantity paramater', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/3/items', {
@@ -201,9 +194,8 @@ describe('Moltin cart', () => {
 
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/3/items', {
@@ -233,9 +225,8 @@ describe('Moltin cart', () => {
   it('should update the quantity of a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/carts/3/items/2', {
@@ -260,9 +251,8 @@ describe('Moltin cart', () => {
   it('should delete a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/carts/3/items/2')
@@ -277,9 +267,8 @@ describe('Moltin cart', () => {
   it('should delete a cart item with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/carts/5/items/2')
@@ -294,9 +283,8 @@ describe('Moltin cart', () => {
   it('should delete a cart', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/carts/3')
@@ -311,9 +299,8 @@ describe('Moltin cart', () => {
   it('should delete a cart with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/carts/5')
@@ -328,9 +315,8 @@ describe('Moltin cart', () => {
   it('should create an order', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/3/checkout', {
@@ -351,9 +337,8 @@ describe('Moltin cart', () => {
   it('should create an order with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/carts/5/checkout', {

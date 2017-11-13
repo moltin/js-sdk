@@ -13,9 +13,8 @@ describe('Moltin categories', () => {
   it('should return an array of categories', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/categories')
@@ -30,9 +29,8 @@ describe('Moltin categories', () => {
   it('should return a single category', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/categories/1')
@@ -47,9 +45,8 @@ describe('Moltin categories', () => {
   it('should create a new category', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/categories', {
@@ -72,9 +69,8 @@ describe('Moltin categories', () => {
   it('should update a category', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/categories/1', {
@@ -97,9 +93,8 @@ describe('Moltin categories', () => {
   it('should delete a category', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/categories/1')
@@ -114,9 +109,8 @@ describe('Moltin categories', () => {
   it('should create a new product-category relationship', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/products/product-1/relationships/categories', {
@@ -136,9 +130,8 @@ describe('Moltin categories', () => {
   it('should create multiple new product-category relationships', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/products/product-1/relationships/categories', {
@@ -161,9 +154,8 @@ describe('Moltin categories', () => {
   it('should delete an existing product-category relationship', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/products/product-1/relationships/categories', {
@@ -183,9 +175,8 @@ describe('Moltin categories', () => {
   it('should delete multiple existing product-category relationships', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/products/product-1/relationships/categories', {
@@ -208,9 +199,8 @@ describe('Moltin categories', () => {
   it('should update existing product-category relationships', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/products/product-1/relationships/categories', {
@@ -230,9 +220,8 @@ describe('Moltin categories', () => {
   it('should remove all existing product-category relationships', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/products/product-1/relationships/categories', {
