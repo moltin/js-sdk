@@ -28,6 +28,24 @@ describe('Moltin orders', () => {
     });
   });
 
+  it('should return an array of orders from a specified customer', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken',
+      },
+    })
+    .get('/orders')
+    .reply(200, orders);
+
+    return Moltin.Orders.All('testtoken')
+    .then((response) => {
+      assert.lengthOf(response, 4);
+      assert.propertyVal(response[0], 'id', 'order-1');
+    });
+  });
+
   it('should return a single order', () => {
     // Intercept the API request
     nock(apiUrl, {
