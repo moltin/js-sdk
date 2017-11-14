@@ -8,7 +8,7 @@ class BaseExtend {
     this.config = config;
   }
 
-  All() {
+  All(token = null) {
     const { includes, sort, limit, offset, filter } = this;
 
     this.call = this.request.send(buildURL(this.endpoint, {
@@ -17,7 +17,7 @@ class BaseExtend {
       limit,
       offset,
       filter,
-    }), 'GET');
+    }), 'GET', undefined, token);
 
     return this.call;
   }

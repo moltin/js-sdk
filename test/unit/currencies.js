@@ -13,9 +13,8 @@ describe('Moltin currencies', () => {
   it('should return an array of currencies', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/currencies')
@@ -30,9 +29,8 @@ describe('Moltin currencies', () => {
   it('should return a single currency', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/currencies/1')
@@ -47,9 +45,8 @@ describe('Moltin currencies', () => {
   it('should create a currency', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/currencies', {
@@ -72,9 +69,8 @@ describe('Moltin currencies', () => {
   it('should update a currency', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/currencies/1', {
@@ -97,9 +93,8 @@ describe('Moltin currencies', () => {
   it('should delete a currency', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .delete('/currencies/1')

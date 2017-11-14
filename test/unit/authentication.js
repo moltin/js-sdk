@@ -12,7 +12,7 @@ describe('Moltin authentication', () => {
 
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
+      reqheaders: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     })

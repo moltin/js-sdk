@@ -13,9 +13,8 @@ describe('Moltin gateways', () => {
   it('should return an array of gateways', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/gateways')
@@ -30,9 +29,8 @@ describe('Moltin gateways', () => {
   it('should return a single gateway', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/gateways/braintree')
@@ -47,9 +45,8 @@ describe('Moltin gateways', () => {
   it('should enable a gateway', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/gateways/braintree', {
@@ -71,9 +68,8 @@ describe('Moltin gateways', () => {
   it('should update a gateway', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .put('/gateways/braintree', {

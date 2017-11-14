@@ -13,9 +13,8 @@ describe('Moltin orders', () => {
   it('should return an array of orders', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/orders')
@@ -28,12 +27,29 @@ describe('Moltin orders', () => {
     });
   });
 
+  it('should return an array of orders from a specified customer', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken',
+      },
+    })
+    .get('/orders')
+    .reply(200, orders);
+
+    return Moltin.Orders.All('testtoken')
+    .then((response) => {
+      assert.lengthOf(response, 4);
+      assert.propertyVal(response[0], 'id', 'order-1');
+    });
+  });
+
   it('should return a single order', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/orders/order-1')
@@ -49,9 +65,8 @@ describe('Moltin orders', () => {
   it('should return an array of items from an order', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/orders/order-1/items')
@@ -67,9 +82,8 @@ describe('Moltin orders', () => {
   it('should return an array of transactions from an order', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .get('/orders/order-1/transactions')
@@ -85,9 +99,8 @@ describe('Moltin orders', () => {
   it('should complete a payment for an order', () => {
     // Intercept the API request
     nock(apiUrl, {
-      reqHeaders: {
-        Authorization: 'a550d8cbd4a4627013452359ab69694cd446615a',
-        'Content-Type': 'application/json',
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
     .post('/orders/order-2/payments', {

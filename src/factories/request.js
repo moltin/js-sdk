@@ -55,7 +55,7 @@ class RequestFactory {
     return promise;
   }
 
-  send(uri, method, body = undefined) {
+  send(uri, method, body = undefined, token = undefined) {
     const { config, storage } = this;
 
     const promise = new Promise((resolve, reject) => {
@@ -73,6 +73,10 @@ class RequestFactory {
 
         if (config.currency) {
           headers['X-MOLTIN-CURRENCY'] = config.currency;
+        }
+
+        if (token) {
+          headers['X-MOLTIN-CUSTOMER-TOKEN'] = token;
         }
 
         /* eslint no-undef: "off" */
