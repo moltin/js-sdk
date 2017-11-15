@@ -12,27 +12,31 @@ describe('Moltin cart', () => {
 
   Moltin.cartId = '3';
 
-  const order = {
-    customer: {
-      name: 'John Doe',
-      email: 'john@doe.co',
-    },
-    billing_address: {
-      first_name: 'John',
-      last_name: 'Doe',
-      line_1: '1 Test Street',
-      postcode: 'NE1 6UF',
-      county: 'Tyne & Wear',
-      country: 'UK',
-    },
-    shipping_address: {
-      first_name: 'John',
-      last_name: 'Doe',
-      line_1: '1 Test Street',
-      postcode: 'NE1 6UF',
-      county: 'Tyne & Wear',
-      country: 'UK',
-    },
+  const customerId = {
+    id: '1',
+  };
+
+  const customerEmail = {
+    email: 'john@doe.com',
+    name: 'John Doe',
+  };
+
+  const billing_address = {
+    first_name: 'John',
+    last_name: 'Doe',
+    line_1: '1 Test Street',
+    postcode: 'NE1 6UF',
+    county: 'Tyne & Wear',
+    country: 'UK',
+  };
+
+  const shipping_address = {
+    first_name: 'John',
+    last_name: 'Doe',
+    line_1: '1 Moltin Street',
+    postcode: 'NE1 6UF',
+    county: 'Tyne & Wear',
+    country: 'UK',
   };
 
   it('should return a cart', () => {
@@ -337,7 +341,7 @@ describe('Moltin cart', () => {
     });
   });
 
-  it('should create an order', () => {
+  it('should checkout a cart with a customer ID', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -345,14 +349,70 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/3/checkout', {
-      data: order,
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address: billing_address,
+      },
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart().Checkout(order)
+    return Moltin.Cart().Checkout('1', billing_address)
+    .then((response) => {
+      assert.propertyVal(response, 'id', '1');
+      assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should checkout a cart with a customer email', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/3/checkout', {
+      data: {
+        customer: customerEmail,
+        billing_address,
+        shipping_address: billing_address,
+      },
+    })
+    .reply(201, {
+      id: '1',
+      status: 'complete',
+    });
+
+    return Moltin.Cart().Checkout(customerEmail, billing_address)
+    .then((response) => {
+      assert.propertyVal(response, 'id', '1');
+      assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should checkout a cart with a shipping address', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/3/checkout', {
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address,
+      },
+    })
+    .reply(201, {
+      id: '1',
+      status: 'complete',
+    });
+
+    return Moltin.Cart().Checkout('1', billing_address, shipping_address)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
@@ -367,14 +427,18 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/5/checkout', {
-      data: order,
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address: billing_address,
+      },
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart('5').Checkout(order)
+    return Moltin.Cart('5').Checkout('1', billing_address)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
