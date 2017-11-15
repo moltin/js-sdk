@@ -1,6 +1,6 @@
 import BaseExtend from '../extends/base';
 
-import { buildCartItemData } from '../utils/helpers';
+import { buildCartItemData, buildCartCheckoutData } from '../utils/helpers';
 
 class CartEndpoint extends BaseExtend {
   constructor(request, id) {
@@ -49,7 +49,9 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items/${itemId}`, 'PUT', body);
   }
 
-  Checkout(body) {
+  Checkout(customer, billing_address, shipping_address = billing_address) {
+    const body = buildCartCheckoutData(customer, billing_address, shipping_address);
+
     return this.request.send(`${this.endpoint}/${this.cartId}/checkout`, 'POST', body);
   }
 

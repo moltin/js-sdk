@@ -150,3 +150,15 @@ export function buildCartItemData(id, quantity = null, type = 'cart_item') {
 
   return payload;
 }
+
+export function buildCartCheckoutData(customer, billing_address, shipping_address) {
+  let parsedCustomer = customer;
+
+  if (typeof customer === 'string') parsedCustomer = { id: customer };
+
+  return {
+    customer: parsedCustomer,
+    billing_address,
+    shipping_address,
+  };
+}
