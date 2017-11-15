@@ -10,7 +10,7 @@ describe('Moltin cart', () => {
     client_id: 'XXX',
   });
 
-  Moltin.Cart.cartId = '3';
+  Moltin.cartId = '3';
 
   const order = {
     customer: {
@@ -47,7 +47,7 @@ describe('Moltin cart', () => {
       id: '3',
     });
 
-    return Moltin.Cart.Get()
+    return Moltin.Cart().Get()
     .then((response) => {
       assert.propertyVal(response, 'id', '3');
     });
@@ -65,7 +65,7 @@ describe('Moltin cart', () => {
       id: '5',
     });
 
-    return Moltin.Cart.Get('5')
+    return Moltin.Cart('5').Get()
     .then((response) => {
       assert.propertyVal(response, 'id', '5');
     });
@@ -81,7 +81,7 @@ describe('Moltin cart', () => {
     .get('/carts/3/items')
     .reply(200, items);
 
-    return Moltin.Cart.Items()
+    return Moltin.Cart().Items()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -97,7 +97,7 @@ describe('Moltin cart', () => {
     .get('/carts/5/items')
     .reply(200, items);
 
-    return Moltin.Cart.Items('5')
+    return Moltin.Cart('5').Items()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -122,7 +122,7 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return Moltin.Cart.AddProduct('4', 2)
+    return Moltin.Cart().AddProduct('4', 2)
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
@@ -148,7 +148,7 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return Moltin.Cart.AddProduct('4', 2, '5')
+    return Moltin.Cart('5').AddProduct('4', 2)
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
@@ -174,7 +174,7 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return Moltin.Cart.AddProduct('4')
+    return Moltin.Cart().AddProduct('4')
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 1);
@@ -215,7 +215,7 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return Moltin.Cart.AddCustomItem(item)
+    return Moltin.Cart().AddCustomItem(item)
     .then((response) => {
       assert.propertyVal(response, 'name', 'Custom Item');
       assert.propertyVal(response, 'quantity', 1);
@@ -266,7 +266,7 @@ describe('Moltin cart', () => {
       quantity: 6,
     });
 
-    return Moltin.Cart.UpdateItemQuantity('2', 6)
+    return Moltin.Cart().UpdateItemQuantity('2', 6)
     .then((item) => {
       assert.propertyVal(item, 'id', '2');
       assert.propertyVal(item, 'quantity', 6);
@@ -283,7 +283,7 @@ describe('Moltin cart', () => {
     .delete('/carts/3/items/2')
     .reply(200, items);
 
-    return Moltin.Cart.RemoveItem('2')
+    return Moltin.Cart().RemoveItem('2')
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -299,7 +299,7 @@ describe('Moltin cart', () => {
     .delete('/carts/5/items/2')
     .reply(200, items);
 
-    return Moltin.Cart.RemoveItem('2', '5')
+    return Moltin.Cart('5').RemoveItem('2')
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -315,7 +315,7 @@ describe('Moltin cart', () => {
     .delete('/carts/3')
     .reply(200, {});
 
-    return Moltin.Cart.Delete()
+    return Moltin.Cart().Delete()
     .then((response) => {
       assert.deepEqual(response, {});
     });
@@ -331,7 +331,7 @@ describe('Moltin cart', () => {
     .delete('/carts/5')
     .reply(200, {});
 
-    return Moltin.Cart.Delete('5')
+    return Moltin.Cart('5').Delete()
     .then((response) => {
       assert.deepEqual(response, {});
     });
@@ -352,7 +352,7 @@ describe('Moltin cart', () => {
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(order)
+    return Moltin.Cart().Checkout(order)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
@@ -374,7 +374,7 @@ describe('Moltin cart', () => {
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(order, '5')
+    return Moltin.Cart('5').Checkout(order)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
