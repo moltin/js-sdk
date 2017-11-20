@@ -32,6 +32,15 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', itemObject);
   }
 
+  AddPromotion(code, cartId = this.cartId) {
+    const body = {
+      type: 'promotion_item',
+      code,
+    };
+
+    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', body);
+  }
+
   RemoveItem(itemId, cartId = this.cartId) {
     return this.request.send(`${this.endpoint}/${cartId}/items/${itemId}`, 'DELETE');
   }
