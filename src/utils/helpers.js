@@ -130,10 +130,23 @@ export function buildRequestBody(body) {
   return parsedBody;
 }
 
-export function buildCartItemData(product, quantity, type = 'cart_item') {
-  return {
-    id: product,
+export function buildCartItemData(id, quantity = null, type = 'cart_item') {
+  const payload = {
     type,
-    quantity: parseInt(quantity, 10),
   };
+
+  if (type === 'cart_item') {
+    Object.assign(payload, {
+      id,
+      quantity: parseInt(quantity, 10),
+    });
+  }
+
+  if (type === 'promotion_item') {
+    Object.assign(payload, {
+      code: id,
+    });
+  }
+
+  return payload;
 }

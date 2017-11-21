@@ -222,6 +222,31 @@ describe('Moltin cart', () => {
     });
   });
 
+  it('should add a promotion to the cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/3/items', {
+      data: {
+        type: 'promotion_item',
+        code: 'testcode',
+      },
+    })
+    .reply(201, {
+      name: 'Custom Item',
+      quantity: 1,
+    });
+
+    return Moltin.Cart.AddPromotion('testcode')
+    .then((response) => {
+      assert.propertyVal(response, 'name', 'Custom Item');
+      assert.propertyVal(response, 'quantity', 1);
+    });
+  });
+
   it('should update the quantity of a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {

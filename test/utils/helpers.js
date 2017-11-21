@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { buildRelationshipData } from '../../src/utils/helpers';
+import { buildRelationshipData, buildCartItemData } from '../../src/utils/helpers';
 
 describe('Build relationship payloads', () => {
   it('should return an array of relationship key value pairings', () => {
@@ -15,5 +15,26 @@ describe('Build relationship payloads', () => {
     const relationships = buildRelationshipData('category', null);
 
     expect(relationships).to.be.an('array').that.is.empty;
+  });
+});
+
+describe('Build cart payloads', () => {
+  it('should return a promotion item payload', () => {
+    const payload = buildCartItemData('testcode', null, 'promotion_item');
+
+    expect(payload).to.include({
+      type: 'promotion_item',
+      code: 'testcode',
+    });
+  });
+
+  it('should return a cart item payload', () => {
+    const payload = buildCartItemData('123', 4);
+
+    expect(payload).to.include({
+      type: 'cart_item',
+      id: '123',
+      quantity: 4,
+    });
   });
 });
