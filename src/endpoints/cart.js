@@ -33,10 +33,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   AddPromotion(code, cartId = this.cartId) {
-    const body = {
-      type: 'promotion_item',
-      code,
-    };
+    const body = buildCartItemData(code, null, 'promotion_item');
 
     return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', body);
   }
