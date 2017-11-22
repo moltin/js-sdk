@@ -1,59 +1,62 @@
 import BaseExtend from '../extends/base';
 
-import { cartIdentifier, buildCartItemData } from '../utils/helpers';
+import { buildCartItemData, buildCartCheckoutData } from '../utils/helpers';
 
 class CartEndpoint extends BaseExtend {
-  constructor(endpoint) {
-    super(endpoint);
+  constructor(request, id) {
+    super(...arguments);
 
+    this.request = request;
+    this.cartId = id;
     this.endpoint = 'carts';
-    this.cartId = cartIdentifier();
   }
 
-  Get(cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}`, 'GET');
+  Get() {
+    return this.request.send(`${this.endpoint}/${this.cartId}`, 'GET');
   }
 
-  Items(cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}/items`, 'GET');
+  Items() {
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'GET');
   }
 
-  AddProduct(productId, quantity = 1, cartId = this.cartId) {
+  AddProduct(productId, quantity = 1) {
     const body = buildCartItemData(productId, quantity);
 
-    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', body);
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', body);
   }
 
-  AddCustomItem(body, cartId = this.cartId) {
+  AddCustomItem(body) {
     const itemObject = Object.assign(body, {
       type: 'custom_item',
     });
 
-    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', itemObject);
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', itemObject);
   }
 
-  AddPromotion(code, cartId = this.cartId) {
+  AddPromotion(code) {
     const body = buildCartItemData(code, null, 'promotion_item');
 
-    return this.request.send(`${this.endpoint}/${cartId}/items`, 'POST', body);
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', body);
   }
 
-  RemoveItem(itemId, cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}/items/${itemId}`, 'DELETE');
+  RemoveItem(itemId) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/items/${itemId}`, 'DELETE');
   }
 
-  UpdateItemQuantity(itemId, quantity, cartId = this.cartId) {
+  UpdateItemQuantity(itemId, quantity) {
     const body = buildCartItemData(itemId, quantity);
 
-    return this.request.send(`${this.endpoint}/${cartId}/items/${itemId}`, 'PUT', body);
+    return this.request.send(`${this.endpoint}/${this.cartId}/items/${itemId}`, 'PUT', body);
   }
 
-  Checkout(body, cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}/checkout`, 'POST', body);
+  Checkout(customer, billing_address, shipping_address = billing_address) {
+    const body = buildCartCheckoutData(customer, billing_address, shipping_address);
+
+    return this.request.send(`${this.endpoint}/${this.cartId}/checkout`, 'POST', body);
   }
 
-  Delete(cartId = this.cartId) {
-    return this.request.send(`${this.endpoint}/${cartId}`, 'DELETE');
+  Delete() {
+    return this.request.send(`${this.endpoint}/${this.cartId}`, 'DELETE');
   }
 }
 

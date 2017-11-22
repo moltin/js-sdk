@@ -7,3 +7,4 @@ rules:
   no-undef: ["off"]
   no-unused-expressions: ["off"]
   import/no-extraneous-dependencies: ["off"]
+  prefer-rest-params: ["off"]

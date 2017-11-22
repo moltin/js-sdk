@@ -10,29 +10,33 @@ describe('Moltin cart', () => {
     client_id: 'XXX',
   });
 
-  Moltin.Cart.cartId = '3';
+  Moltin.cartId = '3';
 
-  const order = {
-    customer: {
-      name: 'John Doe',
-      email: 'john@doe.co',
-    },
-    billing_address: {
-      first_name: 'John',
-      last_name: 'Doe',
-      line_1: '1 Test Street',
-      postcode: 'NE1 6UF',
-      county: 'Tyne & Wear',
-      country: 'UK',
-    },
-    shipping_address: {
-      first_name: 'John',
-      last_name: 'Doe',
-      line_1: '1 Test Street',
-      postcode: 'NE1 6UF',
-      county: 'Tyne & Wear',
-      country: 'UK',
-    },
+  const customerId = {
+    id: '1',
+  };
+
+  const customerEmail = {
+    email: 'john@doe.com',
+    name: 'John Doe',
+  };
+
+  const billing_address = {
+    first_name: 'John',
+    last_name: 'Doe',
+    line_1: '1 Test Street',
+    postcode: 'NE1 6UF',
+    county: 'Tyne & Wear',
+    country: 'UK',
+  };
+
+  const shipping_address = {
+    first_name: 'John',
+    last_name: 'Doe',
+    line_1: '1 Moltin Street',
+    postcode: 'NE1 6UF',
+    county: 'Tyne & Wear',
+    country: 'UK',
   };
 
   it('should return a cart', () => {
@@ -47,7 +51,7 @@ describe('Moltin cart', () => {
       id: '3',
     });
 
-    return Moltin.Cart.Get()
+    return Moltin.Cart().Get()
     .then((response) => {
       assert.propertyVal(response, 'id', '3');
     });
@@ -65,7 +69,7 @@ describe('Moltin cart', () => {
       id: '5',
     });
 
-    return Moltin.Cart.Get('5')
+    return Moltin.Cart('5').Get()
     .then((response) => {
       assert.propertyVal(response, 'id', '5');
     });
@@ -81,7 +85,7 @@ describe('Moltin cart', () => {
     .get('/carts/3/items')
     .reply(200, items);
 
-    return Moltin.Cart.Items()
+    return Moltin.Cart().Items()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -97,7 +101,7 @@ describe('Moltin cart', () => {
     .get('/carts/5/items')
     .reply(200, items);
 
-    return Moltin.Cart.Items('5')
+    return Moltin.Cart('5').Items()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -122,7 +126,7 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return Moltin.Cart.AddProduct('4', 2)
+    return Moltin.Cart().AddProduct('4', 2)
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
@@ -148,7 +152,7 @@ describe('Moltin cart', () => {
       quantity: 2,
     });
 
-    return Moltin.Cart.AddProduct('4', 2, '5')
+    return Moltin.Cart('5').AddProduct('4', 2)
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 2);
@@ -174,7 +178,7 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return Moltin.Cart.AddProduct('4')
+    return Moltin.Cart().AddProduct('4')
     .then((response) => {
       assert.propertyVal(response, 'id', '4');
       assert.propertyVal(response, 'quantity', 1);
@@ -215,7 +219,7 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return Moltin.Cart.AddCustomItem(item)
+    return Moltin.Cart().AddCustomItem(item)
     .then((response) => {
       assert.propertyVal(response, 'name', 'Custom Item');
       assert.propertyVal(response, 'quantity', 1);
@@ -240,7 +244,32 @@ describe('Moltin cart', () => {
       quantity: 1,
     });
 
-    return Moltin.Cart.AddPromotion('testcode')
+    return Moltin.Cart().AddPromotion('testcode')
+    .then((response) => {
+      assert.propertyVal(response, 'name', 'Custom Item');
+      assert.propertyVal(response, 'quantity', 1);
+    });
+  });
+
+  it('should add a promotion to the cart with a cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/5/items', {
+      data: {
+        type: 'promotion_item',
+        code: 'testcode',
+      },
+    })
+    .reply(201, {
+      name: 'Custom Item',
+      quantity: 1,
+    });
+
+    return Moltin.Cart('5').AddPromotion('testcode')
     .then((response) => {
       assert.propertyVal(response, 'name', 'Custom Item');
       assert.propertyVal(response, 'quantity', 1);
@@ -266,7 +295,7 @@ describe('Moltin cart', () => {
       quantity: 6,
     });
 
-    return Moltin.Cart.UpdateItemQuantity('2', 6)
+    return Moltin.Cart().UpdateItemQuantity('2', 6)
     .then((item) => {
       assert.propertyVal(item, 'id', '2');
       assert.propertyVal(item, 'quantity', 6);
@@ -283,7 +312,7 @@ describe('Moltin cart', () => {
     .delete('/carts/3/items/2')
     .reply(200, items);
 
-    return Moltin.Cart.RemoveItem('2')
+    return Moltin.Cart().RemoveItem('2')
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -299,7 +328,7 @@ describe('Moltin cart', () => {
     .delete('/carts/5/items/2')
     .reply(200, items);
 
-    return Moltin.Cart.RemoveItem('2', '5')
+    return Moltin.Cart('5').RemoveItem('2')
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -315,7 +344,7 @@ describe('Moltin cart', () => {
     .delete('/carts/3')
     .reply(200, {});
 
-    return Moltin.Cart.Delete()
+    return Moltin.Cart().Delete()
     .then((response) => {
       assert.deepEqual(response, {});
     });
@@ -331,13 +360,13 @@ describe('Moltin cart', () => {
     .delete('/carts/5')
     .reply(200, {});
 
-    return Moltin.Cart.Delete('5')
+    return Moltin.Cart('5').Delete()
     .then((response) => {
       assert.deepEqual(response, {});
     });
   });
 
-  it('should create an order', () => {
+  it('should checkout a cart with a customer ID', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -345,14 +374,70 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/3/checkout', {
-      data: order,
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address: billing_address,
+      },
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(order)
+    return Moltin.Cart().Checkout('1', billing_address)
+    .then((response) => {
+      assert.propertyVal(response, 'id', '1');
+      assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should checkout a cart with a customer email', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/3/checkout', {
+      data: {
+        customer: customerEmail,
+        billing_address,
+        shipping_address: billing_address,
+      },
+    })
+    .reply(201, {
+      id: '1',
+      status: 'complete',
+    });
+
+    return Moltin.Cart().Checkout(customerEmail, billing_address)
+    .then((response) => {
+      assert.propertyVal(response, 'id', '1');
+      assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should checkout a cart with a shipping address', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/carts/3/checkout', {
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address,
+      },
+    })
+    .reply(201, {
+      id: '1',
+      status: 'complete',
+    });
+
+    return Moltin.Cart().Checkout('1', billing_address, shipping_address)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
@@ -367,14 +452,18 @@ describe('Moltin cart', () => {
       },
     })
     .post('/carts/5/checkout', {
-      data: order,
+      data: {
+        customer: customerId,
+        billing_address,
+        shipping_address: billing_address,
+      },
     })
     .reply(201, {
       id: '1',
       status: 'complete',
     });
 
-    return Moltin.Cart.Checkout(order, '5')
+    return Moltin.Cart('5').Checkout('1', billing_address)
     .then((response) => {
       assert.propertyVal(response, 'id', '1');
       assert.propertyVal(response, 'status', 'complete');
