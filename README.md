@@ -4,7 +4,7 @@
 
 > A simple to use API interface to help get you off the ground quickly and efficiently with your Moltin JavaScript apps.
 
-📚 [Wiki](https://github.com/moltin/js-sdk/wiki) &mdash; 📚 [API docs](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
+📚 [API reference](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
 
 ## Installation
 
@@ -65,7 +65,7 @@ Moltin.Authenticate().then((response) => {
 });
 ```
 
-Check out the [wiki](https://github.com/moltin/js-sdk/wiki) to learn more about authenticating and the available endpoints.
+Check out the [API reference](https://moltin.api-docs.io/v2) to learn more about authenticating and the available endpoints.
 
 ### Custom Host
 
