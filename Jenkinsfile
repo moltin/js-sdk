@@ -27,10 +27,10 @@ try {
       }
     }
 
-    if (env.BRANCH_NAME == 'master') {
+    if (env.BRANCH_NAME == '2.x') {
       sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
-        stage ("Checkout master branch") {
-          sh "git checkout master"
+        stage ("Checkout 2.x branch") {
+          sh "git checkout 2.x"
           sh "git pull"
         }
       }
