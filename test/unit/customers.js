@@ -123,6 +123,7 @@ describe('Moltin customers', () => {
     })
     .post('/customers/tokens', {
       data: {
+        type: 'token',
         email: customers[0].email,
         password: customers[0].password,
       },
