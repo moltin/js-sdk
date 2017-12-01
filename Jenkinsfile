@@ -61,7 +61,7 @@ try {
           withCredentials([[$class: 'StringBinding', credentialsId: 'github-moltin-moltinbot-token', variable: 'GH_TOKEN']]) {
             sshagent (credentials: ['github-moltin-moltinbot-ssh-key']) {
               env.CI=true
-              env.GIT_BRANCH="origin/master"
+              env.GIT_BRANCH="origin/2.x"
 
               docker.image("zot24/semantic-release").inside {
                 sh "semantic-release pre"
