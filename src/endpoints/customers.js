@@ -17,6 +17,7 @@ class CustomersEndpoint extends BaseExtend {
 
   Token(email, password) {
     const body = {
+      type: 'token',
       email,
       password,
     };
