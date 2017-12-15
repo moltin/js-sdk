@@ -62,6 +62,24 @@ describe('Moltin orders', () => {
     });
   });
 
+  it('should return a single order using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken',
+      },
+    })
+    .get('/orders/order-1')
+    .reply(200, orders[0]);
+
+    return Moltin.Orders.Get(orders[0].id, 'testtoken')
+    .then((response) => {
+      assert.propertyVal(response, 'id', 'order-1');
+      assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
   it('should return an array of items from an order', () => {
     // Intercept the API request
     nock(apiUrl, {

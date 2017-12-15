@@ -42,6 +42,23 @@ describe('Moltin customers', () => {
     });
   });
 
+  it('should return a single customer using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken',
+      },
+    })
+    .get('/customers/1')
+    .reply(200, customers[0]);
+
+    return Moltin.Customers.Get(1, 'testtoken')
+    .then((response) => {
+      assert.propertyVal(response, 'id', 'customer-1');
+    });
+  });
+
   it('should create a new customer', () => {
     // Intercept the API request
     nock(apiUrl, {
