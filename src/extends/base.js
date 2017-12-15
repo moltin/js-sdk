@@ -22,10 +22,10 @@ class BaseExtend {
     return this.call;
   }
 
-  Get(id) {
+  Get(id, token = null) {
     this.call = this.request.send(buildURL(`${this.endpoint}/${id}`, {
       includes: this.includes,
-    }), 'GET');
+    }), 'GET', undefined, token);
 
     return this.call;
   }
