@@ -6,11 +6,11 @@ import { ordersArray as orders, orderItemsArray as orderItems, orderTransactions
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin orders', () => {
-  const Moltin = MoltinGateway({
-    client_id: 'XXX',
-  });
-
   it('should return an array of orders', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -28,6 +28,10 @@ describe('Moltin orders', () => {
   });
 
   it('should return an array of orders from a specified customer', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -45,7 +49,58 @@ describe('Moltin orders', () => {
     });
   });
 
+  it('should return an array of orders and include associated items', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .get('/orders')
+    .query({
+      include: 'items',
+    })
+    .reply(200, orders);
+
+    return Moltin.Orders.With('items').All()
+    .then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
+
+  it('should return an array of orders from a specified customer and include associated items', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken',
+      },
+    })
+    .get('/orders')
+    .query({
+      include: 'items',
+    })
+    .reply(200, orders);
+
+    return Moltin.Orders.With('items').All('testtoken')
+    .then((response) => {
+      assert.lengthOf(response, 4);
+    });
+  });
+
   it('should return a single order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -63,6 +118,10 @@ describe('Moltin orders', () => {
   });
 
   it('should return a single order using a JWT', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -81,6 +140,10 @@ describe('Moltin orders', () => {
   });
 
   it('should return an array of items from an order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -98,6 +161,10 @@ describe('Moltin orders', () => {
   });
 
   it('should return an array of transactions from an order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -115,6 +182,10 @@ describe('Moltin orders', () => {
   });
 
   it('should complete a payment for an order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
