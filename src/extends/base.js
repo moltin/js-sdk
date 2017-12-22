@@ -47,6 +47,12 @@ class BaseExtend {
 
     return this;
   }
+
+  With(includes) {
+    if (includes) this.includes = includes.toString().toLowerCase();
+
+    return this;
+  }
 }
 
 export default BaseExtend;

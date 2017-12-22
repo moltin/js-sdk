@@ -12,12 +12,6 @@ class CatalogueExtend extends BaseExtend {
   Update(id, body) {
     return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
   }
-
-  With(includes) {
-    if (includes) this.includes = includes.toString().toLowerCase();
-
-    return this;
-  }
 }
 
 export default CatalogueExtend;
