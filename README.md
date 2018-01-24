@@ -4,7 +4,7 @@
 
 > A simple to use API interface to help get you off the ground quickly and efficiently with your Moltin JavaScript apps.
 
-📚 [API reference](https://moltin.api-docs.io/v2) &mdash; 📚 [moltin.com](https://moltin.com)
+📚 [API reference](https://docs.moltin.com/?javascript) &mdash; 📚 [moltin.com](https://moltin.com)
 
 ## Installation
 
