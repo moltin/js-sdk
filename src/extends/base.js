@@ -30,6 +30,12 @@ class BaseExtend {
     return this.call;
   }
 
+  Filter(filter) {
+    this.filter = filter;
+
+    return this;
+  }
+
   Limit(value) {
     this.limit = value;
 
