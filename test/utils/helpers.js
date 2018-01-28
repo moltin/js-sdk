@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import { buildRelationshipData, buildCartItemData } from '../../src/utils/helpers';
+import {
+  buildRelationshipData,
+  buildCartItemData,
+  buildURL,
+} from '../../src/utils/helpers';
 
 describe('Build relationship payloads', () => {
   it('should return an array of relationship key value pairings', () => {
@@ -36,5 +40,25 @@ describe('Build cart payloads', () => {
       id: '123',
       quantity: 4,
     });
+  });
+});
+
+describe('Build query params', () => {
+  it('should build filter query string from object', () => {
+    const params = {
+      filter: {
+        eq: {
+          status: 'live',
+          slug: 'new-slug',
+        },
+        gt: {
+          stock: 2,
+        },
+      },
+    };
+
+    const queryString = buildURL('products', params);
+
+    expect(queryString).to.equal('products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)');
   });
 });

@@ -9,12 +9,6 @@ class ProductsEndpoint extends CatalogueExtend {
     this.endpoint = 'products';
   }
 
-  Filter(filter) {
-    this.filter = filter;
-
-    return this;
-  }
-
   CreateRelationships(id, type, resources) {
     const body = buildRelationshipData(type, resources);
 
