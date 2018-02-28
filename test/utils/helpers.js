@@ -66,8 +66,15 @@ describe('Build query params', () => {
 });
 
 describe('Unique cart identifier', () => {
-  it('should create a unique string', () => {
+  it('should create a string', () => {
     expect(createCartIdentifier()).to.be.a('string')
+  })
+
+  it('should create a unique string', () => {
+    const firstId = createCartIdentifier()
+    const secondId = createCartIdentifier()
+
+    expect(firstId).not.equal(secondId)
   })
 
   it('should return a valid cart identifier', () => {
