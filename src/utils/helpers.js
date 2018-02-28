@@ -25,9 +25,13 @@ export function buildRelationshipData(type, ids) {
   return data;
 }
 
+export function createCartIdentifier() {
+  return cuid()
+}
+
 export function cartIdentifier() {
   const storage = new StorageFactory();
-  const cartId = cuid();
+  const cartId = createCartIdentifier()
 
   if (storage.get('mcart') !== null) {
     return storage.get('mcart');
