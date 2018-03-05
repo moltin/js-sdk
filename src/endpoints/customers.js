@@ -7,7 +7,11 @@ class CustomersEndpoint extends BaseExtend {
     this.endpoint = 'customers';
   }
 
-  Create(body) {
+  Create(customer) {
+    const body = Object.assign(customer, {
+      type: 'customer',
+    });
+
     return this.request.send(`${this.endpoint}`, 'POST', body);
   }
 
