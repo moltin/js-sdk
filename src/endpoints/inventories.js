@@ -1,14 +1,10 @@
-import CatalogueExtend from '../extends/catalogue'
+import BaseExtend from '../extends/base'
 
-class InventoriesEndpoint extends CatalogueExtend {
+class InventoriesEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
 
     this.endpoint = 'inventories'
-  }
-
-  All() {
-    return this.request.send(`${this.endpoint}`, 'GET')
   }
 
   Get(productId) {
@@ -22,7 +18,7 @@ class InventoriesEndpoint extends CatalogueExtend {
       quantity
     }
 
-    return this.request.send(`${this.endpoint}/${productId}`, 'POST', body)
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', body)
   }
 
   DecrementStock(productId, quantity) {
@@ -32,7 +28,7 @@ class InventoriesEndpoint extends CatalogueExtend {
       quantity
     }
 
-    return this.request.send(`${this.endpoint}/${productId}`, 'POST', body)
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', body)
   }
 
   GetTransactions(productId) {
