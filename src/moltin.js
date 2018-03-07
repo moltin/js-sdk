@@ -13,6 +13,7 @@ import CollectionsEndpoint from './endpoints/collections';
 import OrdersEndpoint from './endpoints/orders';
 import GatewaysEndpoint from './endpoints/gateways';
 import CustomersEndpoint from './endpoints/customers';
+import InventoriesEndpoint from './endpoints/inventories'
 
 import { cartIdentifier } from './utils/helpers';
 
@@ -32,6 +33,7 @@ export default class Moltin {
     this.Orders = new OrdersEndpoint(config);
     this.Gateways = new GatewaysEndpoint(config);
     this.Customers = new CustomersEndpoint(config);
+    this.Inventories = new InventoriesEndpoint(config);
   }
 
   // Expose `Cart` class on Moltin class
