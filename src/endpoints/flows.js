@@ -11,22 +11,21 @@ class FlowsEndpoint extends CatalogueExtend {
     return this.request.send(`${this.endpoint}/${slug}/entries`, 'GET');
   }
 
-  GetEntry(slug, entry) {
-      return this.request.send(`${this.endpoint}/${slug}/entries/${entry}`, 'GET');
+  GetEntry(slug, entryId) {
+      return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'GET');
   }
 
   CreateEntry(slug, body) {
     return this.request.send(`${this.endpoint}/${slug}/entries`, 'POST', body);
   }
 
-  UpdateEntry(slug, entry, body) {
-    return this.request.send(`${this.endpoint}/${slug}/entries/${entry}`, 'PUT', body);
+  UpdateEntry(slug, entryId, body) {
+    return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'PUT', body);
   }
 
-  DeleteEntry(slug, entry) {
-    return this.request.send(`${this.endpoint}/${slug}/entries/${entry}`, 'DELETE');
+  DeleteEntry(slug, entryId) {
+    return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'DELETE');
   }
-
 }
 
 export default FlowsEndpoint;

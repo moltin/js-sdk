@@ -6,6 +6,104 @@ import { flowsArray as flows, flowEntriesArray as flowEntries } from '../factori
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin flows', () => {
+
+  it('should create a flow', () => {
+    const Moltin = MoltinGateway({
+        client_id: 'XXX',
+    });
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .post('/flows', {
+      data: {
+        name: 'A new flow',
+      },
+    })
+    .reply(201, {
+      name: 'A new flow',
+    })
+
+    return Moltin.Flows.Create({
+      name: 'A new flow',
+    })
+    .then((response) => {
+      assert.propertyVal(response, 'name', 'A new flow');
+    });
+  });
+
+  it('should update a flow', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .put('/flows/flow-1', {
+      data: {
+        name: 'Updated flow name',
+      },
+    })
+    .reply(200, {
+      name: 'Updated flow name',
+    });
+
+    return Moltin.Flows.Update('flow-1', {
+      name: 'Updated flow name',
+    })
+    .then((response) => {
+      assert.propertyVal(response, 'name', 'Updated flow name');
+    });
+  });
+
+  it('should get a flow', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .get('/flows/flow-1')
+    .reply(200, {
+      name: 'Updated flow name',
+    });
+
+    return Moltin.Flows.Get('flow-1')
+    .then((response) => {
+      assert.propertyVal(response, 'name', 'Updated flow name');
+    });
+  });
+
+  it('should delete a flow', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .delete('/flows/flow-1')
+    .reply(204);
+
+    return Moltin.Flows.Delete('flow-1')
+    .then((response) => {
+        assert.equal(response, '{}');
+    });
+  });
+
   it('should return an array of flows', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX',
