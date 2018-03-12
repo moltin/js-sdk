@@ -216,3 +216,23 @@ export const customersArray = [{
   password: 'securepassword',
   token: 'eXAiOiAiSldUIiB9.eyJzdWIiOiI0YzY',
 }];
+export const flowsArray = [{
+  id: 'flow-1',
+  type: 'flow',
+  name: 'Flow 1',
+  slug: 'flow-1'
+},{
+  id: 'flow-2',
+  type: 'flow',
+  name: 'Flow 2',
+  slug: 'flow-2'
+}];
+export const flowEntriesArray = [{
+  id: 'flow-entry-1',
+  type: 'entry',
+  name: 'Flow Entry 1'
+},{
+  id: 'flow-entry-2',
+  type: 'entry',
+  name: 'Flow Entry 2'
+}];
