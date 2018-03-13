@@ -1,4 +1,4 @@
-import BaseExtend from '../extends/base'
+import BaseExtend from '../extends/base';
 
 class InventoriesEndpoint extends BaseExtend {
   constructor(endpoint) {
