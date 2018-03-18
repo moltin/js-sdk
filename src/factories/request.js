@@ -1,6 +1,22 @@
 import StorageFactory from './storage';
 import { buildRequestBody, parseJSON } from '../utils/helpers';
 
+class Credentials {
+  constructor(client_id, access_token, expires) {
+    this.client_id = client_id;
+    this.access_token = access_token;
+    this.expires = expires;
+  }
+
+  toObject() {
+    return {
+      client_id: this.client_id,
+      access_token: this.access_token,
+      expires: this.expires,
+    };
+  }
+}
+
 class RequestFactory {
   constructor(config) {
     this.config = config;
@@ -48,8 +64,11 @@ class RequestFactory {
     });
 
     promise.then((response) => {
-      storage.set('mtoken', response.access_token);
-      storage.set('mexpires', response.expires);
+      const credentials = new Credentials(
+        config.client_id,
+        response.access_token,
+        response.expires);
+      storage.set('moltinCredentials', JSON.stringify(credentials));
     });
 
     return promise;
@@ -59,9 +78,10 @@ class RequestFactory {
     const { config, storage } = this;
 
     const promise = new Promise((resolve, reject) => {
+      const credentials = JSON.parse(storage.get('moltinCredentials'));
       const req = () => {
         const headers = {
-          Authorization: `Bearer: ${storage.get('mtoken')}`,
+          Authorization: `Bearer: ${credentials.access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version,
@@ -96,7 +116,12 @@ class RequestFactory {
         .catch(error => reject(error));
       };
 
-      if (!storage.get('mtoken') || Date.now().toString() >= storage.get('mexpires')) {
+      if (
+        !credentials ||
+        !credentials.access_token ||
+        credentials.client_id !== config.client_id ||
+        Date.now().toString() >= credentials.expires
+      ) {
         return this.authenticate()
         .then(req)
         .catch(error => reject(error));
