@@ -51,9 +51,9 @@ class RequestFactory {
     const { config } = this;
 
     const promise = new Promise((resolve, reject) => {
-      const req = () => {
+      const req = (access_token) => {
         const headers = {
-          Authorization: `Bearer: ${credentials.access_token}`,
+          Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version,
@@ -87,6 +87,10 @@ class RequestFactory {
         })
         .catch(error => reject(error));
       };
+
+      return this.authenticate()
+      .then(({ access_token }) => req(access_token))
+      .catch(error => reject(error));
     });
 
     return promise;
