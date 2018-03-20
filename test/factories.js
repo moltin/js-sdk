@@ -216,6 +216,29 @@ export const customersArray = [{
   password: 'securepassword',
   token: 'eXAiOiAiSldUIiB9.eyJzdWIiOiI0YzY',
 }];
+export const inventoriesArray = [{
+  id: 'inventory-1',
+  type: 'stock',
+  total: 10,
+  available: 10,
+  allocated: 0
+},{
+  id: 'inventory-2',
+  type: 'stock',
+  total: 20,
+  available: 20,
+  allocated: 0
+}];
+export const stockTransactionsArray = [{
+  id: 'stock-transaction-1',
+  product_id: 'managed-product-1',
+  quantity: 1
+}, {
+  id: 'stock-transaction-2',
+  product_id: 'managed-product-2',
+  quantity: 2
+}];
+
 export const flowsArray = [{
   id: 'flow-1',
   type: 'flow',
