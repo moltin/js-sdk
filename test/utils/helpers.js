@@ -3,6 +3,8 @@ import {
   buildRelationshipData,
   buildCartItemData,
   buildURL,
+  createCartIdentifier,
+  cartIdentifier
 } from '../../src/utils/helpers';
 
 describe('Build relationship payloads', () => {
@@ -62,3 +64,20 @@ describe('Build query params', () => {
     expect(queryString).to.equal('products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)');
   });
 });
+
+describe('Unique cart identifier', () => {
+  it('should create a string', () => {
+    expect(createCartIdentifier()).to.be.a('string')
+  })
+
+  it('should create a unique string', () => {
+    const firstId = createCartIdentifier()
+    const secondId = createCartIdentifier()
+
+    expect(firstId).not.equal(secondId)
+  })
+
+  it('should return a valid cart identifier', () => {
+    expect(cartIdentifier()).to.be.a('string')
+  })
+})

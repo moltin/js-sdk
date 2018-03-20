@@ -28,7 +28,7 @@ export default {
     'es6-promise',
     'fetch-everywhere',
     'inflected',
-    'uuid',
+    'cuid',
   ],
   dest: pkg['cjs:main'],
   exports: 'named',
