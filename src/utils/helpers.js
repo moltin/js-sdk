@@ -1,5 +1,4 @@
 import cuid from 'cuid';
-import StorageFactory from '../factories/storage';
 
 export function buildRelationshipData(type, ids) {
   let data = [];
@@ -26,20 +25,11 @@ export function buildRelationshipData(type, ids) {
 }
 
 export function createCartIdentifier() {
-  return cuid()
+  return cuid();
 }
 
 export function cartIdentifier() {
-  const storage = new StorageFactory();
-  const cartId = createCartIdentifier()
-
-  if (storage.get('mcart') !== null) {
-    return storage.get('mcart');
-  }
-
-  storage.set('mcart', cartId);
-
-  return cartId;
+  return createCartIdentifier();
 }
 
 export function parseJSON(response) {

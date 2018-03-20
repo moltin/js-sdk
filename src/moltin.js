@@ -3,7 +3,6 @@ import 'es6-promise';
 
 import Config from './config';
 import RequestFactory from './factories/request';
-import StorageFactory from './factories/storage';
 import ProductsEndpoint from './endpoints/products';
 import CurrenciesEndpoint from './endpoints/currencies';
 import BrandsEndpoint from './endpoints/brands';
@@ -26,7 +25,6 @@ export default class Moltin {
     this.cartId = cartIdentifier();
 
     this.request = new RequestFactory(config);
-    this.storage = new StorageFactory();
 
     this.Products = new ProductsEndpoint(config);
     this.Currencies = new CurrenciesEndpoint(config);

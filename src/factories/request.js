@@ -1,31 +1,12 @@
-import StorageFactory from './storage';
 import { buildRequestBody, parseJSON } from '../utils/helpers';
-
-class Credentials {
-  constructor(client_id, access_token, expires) {
-    this.client_id = client_id;
-    this.access_token = access_token;
-    this.expires = expires;
-  }
-
-  toObject() {
-    return {
-      client_id: this.client_id,
-      access_token: this.access_token,
-      expires: this.expires,
-    };
-  }
-}
 
 class RequestFactory {
   constructor(config) {
     this.config = config;
-
-    this.storage = new StorageFactory();
   }
 
   authenticate() {
-    const { config, storage } = this;
+    const { config } = this;
 
     if (!config.client_id) {
       throw new Error('You must have a client_id set');
@@ -63,25 +44,16 @@ class RequestFactory {
       .catch(error => reject(error));
     });
 
-    promise.then((response) => {
-      const credentials = new Credentials(
-        config.client_id,
-        response.access_token,
-        response.expires);
-      storage.set('moltinCredentials', JSON.stringify(credentials));
-    });
-
     return promise;
   }
 
   send(uri, method, body = undefined, token = undefined) {
-    const { config, storage } = this;
+    const { config } = this;
 
     const promise = new Promise((resolve, reject) => {
-      const credentials = JSON.parse(storage.get('moltinCredentials'));
-      const req = () => {
+      const req = (access_token) => {
         const headers = {
-          Authorization: `Bearer: ${credentials.access_token}`,
+          Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version,
@@ -116,18 +88,9 @@ class RequestFactory {
         .catch(error => reject(error));
       };
 
-      if (
-        !credentials ||
-        !credentials.access_token ||
-        credentials.client_id !== config.client_id ||
-        Date.now().toString() >= credentials.expires
-      ) {
-        return this.authenticate()
-        .then(req)
-        .catch(error => reject(error));
-      }
-
-      return req();
+      return this.authenticate()
+      .then(({ access_token }) => req(access_token))
+      .catch(error => reject(error));
     });
 
     return promise;
