@@ -1,15 +1,13 @@
 import { assert } from 'chai';
 import nock from 'nock';
 import { gateway as MoltinGateway } from '../../src/moltin';
-import { fieldsArray as fields } from '../factories';
 
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin flow fields', () => {
-
   it('should create a field', () => {
     const Moltin = MoltinGateway({
-        client_id: 'XXX',
+      client_id: 'XXX',
     });
     // Intercept the API request
     nock(apiUrl, {
@@ -19,12 +17,13 @@ describe('Moltin flow fields', () => {
     })
     .post('/fields', {
       data: {
+        type: 'field',
         name: 'A new field',
       },
     })
     .reply(201, {
       name: 'A new field',
-    })
+    });
 
     return Moltin.Fields.Create({
       name: 'A new field',
@@ -47,6 +46,7 @@ describe('Moltin flow fields', () => {
     })
     .put('/fields/1', {
       data: {
+        type: 'field',
         name: 'Updated field name',
       },
     })
@@ -100,7 +100,7 @@ describe('Moltin flow fields', () => {
 
     return Moltin.Fields.Delete('1')
     .then((response) => {
-        assert.equal(response, '{}');
+      assert.equal(response, '{}');
     });
   });
 });

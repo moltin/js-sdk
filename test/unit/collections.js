@@ -49,7 +49,12 @@ describe('Moltin collections', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
       },
     })
-    .post('/collections')
+    .post('/collections', {
+      data: {
+        type: 'collection',
+        name: 'A new collection',
+      },
+    })
     .reply(201, {
       name: 'A new collection',
     });
@@ -71,6 +76,7 @@ describe('Moltin collections', () => {
     })
     .put('/collections/1', {
       data: {
+        type: 'collection',
         name: 'Updated collection name',
       },
     })

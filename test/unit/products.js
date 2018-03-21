@@ -206,6 +206,7 @@ describe('Moltin products', () => {
     })
     .post('/products', {
       data: {
+        type: 'product',
         name: 'A new product',
       },
     })
@@ -234,6 +235,7 @@ describe('Moltin products', () => {
     })
     .put('/products/1', {
       data: {
+        type: 'product',
         name: 'Updated product name',
       },
     })

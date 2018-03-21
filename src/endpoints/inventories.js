@@ -5,10 +5,6 @@ class InventoriesEndpoint extends BaseExtend {
     super(endpoint);
 
     this.endpoint = 'inventories';
-
-    this.transactionObject = {
-      type: 'stock-transaction'
-    };
   }
 
   Get(productId) {
@@ -16,62 +12,23 @@ class InventoriesEndpoint extends BaseExtend {
   }
 
   IncrementStock(productId, quantity) {
-    const body = Object.assign({}, this.transactionObject, {
-      action: 'increment',
-      quantity
-    });
-
-    return this.request.send(
-      `${this.endpoint}/${productId}/transactions`,
-      'POST',
-      body
-    );
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', { action: 'increment', quantity, type: 'stock-transaction' });
   }
 
   DecrementStock(productId, quantity) {
-    const body = Object.assign({}, this.transactionObject, {
-      action: 'decrement',
-      quantity
-    });
-
-    return this.request.send(
-      `${this.endpoint}/${productId}/transactions`,
-      'POST',
-      body
-    );
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', { action: 'decrement', quantity, type: 'stock-transaction' });
   }
 
   AllocateStock(productId, quantity) {
-    const body = Object.assign({}, this.transactionObject, {
-      action: 'allocate',
-      quantity
-    });
-
-    return this.request.send(
-      `${this.endpoint}/${productId}/transactions`,
-      'POST',
-      body
-    );
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', { action: 'allocate', quantity, type: 'stock-transaction' });
   }
 
   DeallocateStock(productId, quantity) {
-    const body = Object.assign({}, this.transactionObject, {
-      action: 'deallocate',
-      quantity
-    });
-
-    return this.request.send(
-      `${this.endpoint}/${productId}/transactions`,
-      'POST',
-      body
-    );
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'POST', { action: 'deallocate', quantity, type: 'stock-transaction' });
   }
 
   GetTransactions(productId) {
-    return this.request.send(
-      `${this.endpoint}/${productId}/transactions`,
-      'GET'
-    );
+    return this.request.send(`${this.endpoint}/${productId}/transactions`, 'GET');
   }
 }
 

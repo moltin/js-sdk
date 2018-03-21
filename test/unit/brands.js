@@ -51,6 +51,7 @@ describe('Moltin brands', () => {
     })
     .post('/brands', {
       data: {
+        type: 'brand',
         name: 'A new brand',
       },
     })
@@ -75,6 +76,7 @@ describe('Moltin brands', () => {
     })
     .put('/brands/brand-1', {
       data: {
+        type: 'brand',
         name: 'Updated brand name',
       },
     })

@@ -1,6 +1,6 @@
-import CatalogueExtend from '../extends/catalogue';
+import CRUDExtend from '../extends/crud';
 
-class FlowsEndpoint extends CatalogueExtend {
+class FlowsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint);
 
@@ -12,15 +12,15 @@ class FlowsEndpoint extends CatalogueExtend {
   }
 
   GetEntry(slug, entryId) {
-      return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'GET');
+    return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'GET');
   }
 
   CreateEntry(slug, body) {
-    return this.request.send(`${this.endpoint}/${slug}/entries`, 'POST', body);
+    return this.request.send(`${this.endpoint}/${slug}/entries`, 'POST', { ...body, type: 'entry' });
   }
 
   UpdateEntry(slug, entryId, body) {
-    return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'PUT', body);
+    return this.request.send(`${this.endpoint}/${slug}/entries/${entryId}`, 'PUT', { ...body, type: 'entry' });
   }
 
   DeleteEntry(slug, entryId) {

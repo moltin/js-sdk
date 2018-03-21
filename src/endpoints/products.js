@@ -1,8 +1,9 @@
 import { pluralize } from 'inflected';
-import CatalogueExtend from '../extends/catalogue';
+
+import CRUDExtend from '../extends/crud';
 import { buildRelationshipData } from '../utils/helpers';
 
-class ProductsEndpoint extends CatalogueExtend {
+class ProductsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint);
 

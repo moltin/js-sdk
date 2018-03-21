@@ -1,6 +1,6 @@
-import CatalogueExtend from '../extends/catalogue';
+import CRUDExtend from '../extends/crud';
 
-class BrandsEndpoint extends CatalogueExtend {
+class BrandsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint);
 
