@@ -1,4 +1,5 @@
 import { pluralize } from 'inflected';
+
 import CatalogueExtend from '../extends/catalogue';
 import { buildRelationshipData } from '../utils/helpers';
 
