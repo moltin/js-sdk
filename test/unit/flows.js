@@ -6,10 +6,9 @@ import { flowsArray as flows, flowEntriesArray as flowEntries } from '../factori
 const apiUrl = 'https://api.moltin.com/v2';
 
 describe('Moltin flows', () => {
-
   it('should create a flow', () => {
     const Moltin = MoltinGateway({
-        client_id: 'XXX',
+      client_id: 'XXX',
     });
     // Intercept the API request
     nock(apiUrl, {
@@ -19,13 +18,13 @@ describe('Moltin flows', () => {
     })
     .post('/flows', {
       data: {
+        type: 'flow',
         name: 'A new flow',
       },
     })
     .reply(201, {
       name: 'A new flow',
-    })
-
+    });
     return Moltin.Flows.Create({
       name: 'A new flow',
     })
@@ -47,6 +46,7 @@ describe('Moltin flows', () => {
     })
     .put('/flows/flow-1', {
       data: {
+        type: 'flow',
         name: 'Updated flow name',
       },
     })
@@ -100,7 +100,7 @@ describe('Moltin flows', () => {
 
     return Moltin.Flows.Delete('flow-1')
     .then((response) => {
-        assert.equal(response, '{}');
+      assert.equal(response, '{}');
     });
   });
 
@@ -166,7 +166,7 @@ describe('Moltin flows', () => {
 
   it('should create a flow entry', () => {
     const Moltin = MoltinGateway({
-        client_id: 'XXX',
+      client_id: 'XXX',
     });
     // Intercept the API request
     nock(apiUrl, {
@@ -176,12 +176,13 @@ describe('Moltin flows', () => {
     })
     .post('/flows/flow-1/entries', {
       data: {
+        type: 'entry',
         name: 'A new entry',
       },
     })
     .reply(201, {
       name: 'A new entry',
-    })
+    });
 
     return Moltin.Flows.CreateEntry('flow-1', {
       name: 'A new entry',
@@ -204,6 +205,7 @@ describe('Moltin flows', () => {
     })
     .put('/flows/flow-1/entries/1', {
       data: {
+        type: 'entry',
         name: 'Updated flow name',
       },
     })
@@ -257,7 +259,7 @@ describe('Moltin flows', () => {
 
     return Moltin.Flows.DeleteEntry('flow-1', '1')
     .then((response) => {
-        assert.equal(response, '{}');
+      assert.equal(response, '{}');
     });
   });
 });

@@ -88,6 +88,7 @@ describe('Moltin customers', () => {
     })
     .post('/customers', {
       data: {
+        type: 'customer',
         username: 'maximusPowerus',
         name: 'Max Power',
         email: 'max@power.com',
@@ -120,6 +121,7 @@ describe('Moltin customers', () => {
     })
     .put('/customers/customer-1', {
       data: {
+        type: 'customer',
         name: 'Updated customer name',
       },
     })

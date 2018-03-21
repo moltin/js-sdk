@@ -51,6 +51,7 @@ describe('Moltin categories', () => {
     })
     .post('/categories', {
       data: {
+        type: 'category',
         name: 'A new category',
       },
     })
@@ -75,6 +76,7 @@ describe('Moltin categories', () => {
     })
     .put('/categories/1', {
       data: {
+        type: 'category',
         name: 'Updated category name',
       },
     })
