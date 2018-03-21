@@ -2,7 +2,7 @@ import { singularize } from 'inflected';
 
 import BaseExtend from './base';
 
-class CatalogueExtend extends BaseExtend {
+class CRUDExtend extends BaseExtend {
   Create(body) {
     return this.request.send(this.endpoint, 'POST', { ...body, type: singularize(this.endpoint) });
   }
@@ -16,4 +16,4 @@ class CatalogueExtend extends BaseExtend {
   }
 }
 
-export default CatalogueExtend;
+export default CRUDExtend;
