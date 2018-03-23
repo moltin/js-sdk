@@ -8,6 +8,12 @@ const pkg = require('./package.json');
 
 export default {
   input: 'src/moltin.js',
+  external: [
+    'cuid',
+    'es6-promise',
+    'fetch-everywhere',
+    'inflected',
+  ],
   plugins: [
     resolve({
       browser: true,
@@ -22,12 +28,6 @@ export default {
     json(),
   ],
   output: [{
-    external: [
-      'es6-promise',
-      'fetch-everywhere',
-      'inflected',
-      'uuid',
-    ],
     file: pkg['cjs:main'],
     exports: 'named',
     format: 'cjs',
@@ -37,6 +37,5 @@ export default {
     exports: 'named',
     format: 'umd',
     name: 'moltin',
-    context: 'self',
   }],
 };
