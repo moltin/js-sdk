@@ -1,7 +1,11 @@
 import { assert } from 'chai';
 import nock from 'nock';
 import { gateway as MoltinGateway } from '../../src/moltin';
-import { ordersArray as orders, orderItemsArray as orderItems, orderTransactionsArray as orderTransactions } from '../factories';
+import {
+  ordersArray as orders,
+  orderItemsArray as orderItems,
+  orderTransactionsArray as orderTransactions,
+} from '../factories';
 
 const apiUrl = 'https://api.moltin.com/v2';
 
@@ -20,8 +24,7 @@ describe('Moltin orders', () => {
     .get('/orders')
     .reply(200, orders);
 
-    return Moltin.Orders.All()
-    .then((response) => {
+    return Moltin.Orders.All().then((response) => {
       assert.lengthOf(response, 4);
       assert.propertyVal(response[0], 'id', 'order-1');
     });
@@ -42,8 +45,7 @@ describe('Moltin orders', () => {
     .get('/orders')
     .reply(200, orders);
 
-    return Moltin.Orders.All('testtoken')
-    .then((response) => {
+    return Moltin.Orders.All('testtoken').then((response) => {
       assert.lengthOf(response, 4);
       assert.propertyVal(response[0], 'id', 'order-1');
     });
@@ -66,7 +68,8 @@ describe('Moltin orders', () => {
     })
     .reply(200, orders);
 
-    return Moltin.Orders.With('items').All()
+    return Moltin.Orders.With('items')
+    .All()
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -90,7 +93,8 @@ describe('Moltin orders', () => {
     })
     .reply(200, orders);
 
-    return Moltin.Orders.With('items').All('testtoken')
+    return Moltin.Orders.With('items')
+    .All('testtoken')
     .then((response) => {
       assert.lengthOf(response, 4);
     });
@@ -110,8 +114,7 @@ describe('Moltin orders', () => {
     .get('/orders/order-1')
     .reply(200, orders[0]);
 
-    return Moltin.Orders.Get(orders[0].id)
-    .then((response) => {
+    return Moltin.Orders.Get(orders[0].id).then((response) => {
       assert.propertyVal(response, 'id', 'order-1');
       assert.propertyVal(response, 'status', 'complete');
     });
@@ -132,8 +135,7 @@ describe('Moltin orders', () => {
     .get('/orders/order-1')
     .reply(200, orders[0]);
 
-    return Moltin.Orders.Get(orders[0].id, 'testtoken')
-    .then((response) => {
+    return Moltin.Orders.Get(orders[0].id, 'testtoken').then((response) => {
       assert.propertyVal(response, 'id', 'order-1');
       assert.propertyVal(response, 'status', 'complete');
     });
@@ -153,8 +155,7 @@ describe('Moltin orders', () => {
     .get('/orders/order-1/items')
     .reply(200, orderItems[0]);
 
-    return Moltin.Orders.Items(orders[0].id)
-    .then((response) => {
+    return Moltin.Orders.Items(orders[0].id).then((response) => {
       assert.propertyVal(response, 'id', 'item-1');
       assert.propertyVal(response, 'product_id', 'product-1');
     });
@@ -174,10 +175,13 @@ describe('Moltin orders', () => {
     .get('/orders/order-1/transactions')
     .reply(200, orderTransactions[0]);
 
-    return Moltin.Orders.Transactions(orders[0].id)
-    .then((response) => {
+    return Moltin.Orders.Transactions(orders[0].id).then((response) => {
       assert.propertyVal(response, 'id', 'transaction-1');
-      assert.nestedPropertyVal(response, 'relationships.order.data.id', 'c5530906-7b68-42ee-99c3-68cfebdcd749');
+      assert.nestedPropertyVal(
+        response,
+        'relationships.order.data.id',
+        'c5530906-7b68-42ee-99c3-68cfebdcd749',
+      );
     });
   });
 
@@ -207,9 +211,36 @@ describe('Moltin orders', () => {
       gateway: 'braintree',
       method: 'purchase',
       customer_id: '3',
-    })
-    .then((response) => {
+    }).then((response) => {
       assert.propertyVal(response, 'status', 'complete');
+    });
+  });
+
+  it('should update an order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+    });
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+      },
+    })
+    .put('/orders/order-1', {
+      data: {
+        type: 'order',
+        shipping: 'fulfilled',
+      },
+    })
+    .reply(200, {
+      shipping: 'fulfilled',
+    });
+
+    return Moltin.Orders.Update(orders[0].id, {
+      shipping: 'fulfilled',
+    }).then((response) => {
+      assert.propertyVal(response, 'shipping', 'fulfilled');
     });
   });
 });
