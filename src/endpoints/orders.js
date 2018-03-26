@@ -18,6 +18,10 @@ class OrdersEndpoint extends BaseExtend {
   Transactions(id) {
     return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET');
   }
+
+  Update(id, body) {
+    return this.request.send(`${this.endpoint}/${id}`, 'PUT', { ...body, type: 'order' });
+  }
 }
 
 export default OrdersEndpoint;
