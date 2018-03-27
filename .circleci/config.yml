@@ -1,7 +1,7 @@
 version: 2
 jobs:
   # build and test on node 8
-  build_node_8:
+  build:
     docker:
       - image: circleci/node:8
     steps:
@@ -9,8 +9,8 @@ jobs:
 
       # restore `npm` dependencies cache
       - restore_cache:
-        keys:
-          - js-sdk-dependencies-{{ checksum "package.json" }}
+          keys:
+            - js-sdk-dependencies-{{ checksum "package.json" }}
 
       - run: npm install
 
@@ -46,7 +46,7 @@ workflows:
   version: 2
   test_and_release:
     jobs:
-      - build_node_8
+      - build
       - release:
-        - requires:
-          - build_node_8
+          requires:
+            - build
