@@ -37,11 +37,11 @@ jobs:
       - run:
           command: npm run test-output
           environment:
-            MOCHA_FILE: project/test-results.xml
+            MOCHA_FILE: project/mocha/test-results.xml
           when: always
 
       - store_test_results:
-          path: ~/project
+          path: project
 
   # run `semantic-release` for release, publishing
   release:
