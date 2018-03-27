@@ -21,7 +21,6 @@
     "url": "https://github.com/moltin/js-sdk/issues"
   },
   "devDependencies": {
-    "@krux/condition-jenkins": "^1.0.1",
     "babel-core": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
@@ -50,12 +49,6 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
-    }
-  },
-  "release": {
-    "branch": "master",
-    "verifyConditions": {
-      "path": "./node_modules/@krux/condition-jenkins"
     }
   },
   "directories": {
