@@ -41,7 +41,9 @@ jobs:
           when: always
 
       - store_test_results:
-          path: mocha
+          path: ~/mocha
+      - store_artifacts:
+          path: ~/mocha
 
   # run `semantic-release` for release, publishing
   release:
