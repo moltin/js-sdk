@@ -36,13 +36,10 @@ jobs:
       # run tests
       - run: npm run test
 
-  # build and release on node 8
+  # run `semantic-release` for release, publishing
   release:
     docker:
       - image: circleci/node:8
-    branches:
-      only:
-        - master
     steps:
       - checkout
 
@@ -64,5 +61,8 @@ workflows:
       - build
       - test
       - release:
+          filters:
+            branches:
+              only: master
           requires:
             - test
