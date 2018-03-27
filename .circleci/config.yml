@@ -1,5 +1,6 @@
 version: 2
 jobs:
+  # build and test on node 8
   build_node_8:
     docker:
       - image: circleci/node:8
@@ -25,13 +26,20 @@ jobs:
       # run tests
       - run: npm run test
 
+  # build and release on node 8
   release:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
+
+      # install `npm` dependencies
       - run: npm install
+
+      # build bundles
       - run: npm run rollup
+
+      # release, publish package
       - run: npx semantic-release
 
 workflows:
