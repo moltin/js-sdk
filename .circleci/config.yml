@@ -34,7 +34,14 @@ jobs:
       - run: npm run rollup
 
       # run tests
-      - run: npm run test
+      - run:
+          command: mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/unit/* test/utils/*
+          environment:
+            MOCHA_FILE: junit/test-results.xml
+          when: always
+
+      - store_test_results:
+          path: ~/junit
 
   # run `semantic-release` for release, publishing
   release:
