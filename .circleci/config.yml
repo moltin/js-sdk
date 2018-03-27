@@ -35,7 +35,7 @@ jobs:
 
       # run tests
       - run:
-          command: mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/unit/* test/utils/*
+          command: npm run test-output
           environment:
             MOCHA_FILE: junit/test-results.xml
           when: always
