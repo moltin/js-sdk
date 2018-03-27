@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build_node_8:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+
+      # restore `npm` dependencies cache
+      - restore_cache:
+        keys:
+          - js-sdk-dependencies-{{ checksum "package.json" }}
+
+      - run: npm install
+
+      # save `npm` dependencies cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-sdk-dependencies-{{ checksum "package.json" }}
+
+      # build bundles
+      - run: npm run rollup
+
+      # run tests
+      - run: npm run test
+
+  release:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run rollup
+      - run: npx semantic-release
+
+workflows:
+  version: 2
+  test_and_release:
+    jobs:
+      - build_node_8
+      - release:
+        - requires:
+          - build_node_8
