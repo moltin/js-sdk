@@ -34,7 +34,7 @@ jobs:
       - run: npm run rollup
 
       # run tests
-      - run: mkdir ~/junit
+      - run: mkdir junit
       - run:
           command: npm run test-output
           environment:
@@ -42,9 +42,9 @@ jobs:
           when: always
 
       - store_test_results:
-          path: ~/junit
+          path: junit
       - store_artifacts:
-          path: ~/junit
+          path: junit
 
   # run `semantic-release` for release, publishing
   release:
