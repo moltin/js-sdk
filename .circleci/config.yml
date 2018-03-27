@@ -1,7 +1,25 @@
 version: 2
 jobs:
-  # build and test on node 8
+  # build on node 8
   build:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+
+      - run: npm install
+
+      # save `npm` dependencies cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-sdk-dependencies-{{ checksum "package.json" }}
+
+      # build bundles
+      - run: npm run rollup
+
+  # test on node 8
+  test:
     docker:
       - image: circleci/node:8
     steps:
@@ -11,14 +29,6 @@ jobs:
       - restore_cache:
           keys:
             - js-sdk-dependencies-{{ checksum "package.json" }}
-
-      - run: npm install
-
-      # save `npm` dependencies cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
       - run: npm run rollup
@@ -36,8 +46,10 @@ jobs:
     steps:
       - checkout
 
-      # install `npm` dependencies
-      - run: npm install
+      # restore `npm` dependencies cache
+      - restore_cache:
+          keys:
+            - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
       - run: npm run rollup
@@ -47,9 +59,10 @@ jobs:
 
 workflows:
   version: 2
-  build_and_release:
+  build_test_release:
     jobs:
       - build
+      - test
       - release:
           requires:
-            - build
+            - test
