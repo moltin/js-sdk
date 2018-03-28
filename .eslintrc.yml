@@ -1,12 +1,14 @@
-extends: prettier
+extends:
+- plugin:prettier/recommended
 
 plugins:
-  - prettier
   - import
 
 rules:
-  prettier/prettier: ["error"]
-  import/no-extraneous-dependencies: ["off"]
+  curly: error
+  import/no-extraneous-dependencies:
+  - error
+  - devDependencies: ["tests*/**"]
   no-else-return: error
   prefer-const: error
   prefer-arrow-callback: error
