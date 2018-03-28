@@ -2,211 +2,211 @@ export const productsArray = [
   {
     id: 'product-1',
     type: 'product',
-    name: 'Product 1',
+    name: 'Product 1'
   },
   {
     id: 'product-2',
     type: 'product',
-    name: 'Product 2',
+    name: 'Product 2'
   },
   {
     id: 'product-3',
     type: 'product',
-    name: 'Product 3',
+    name: 'Product 3'
   },
   {
     id: 'product-4',
     type: 'product',
-    name: 'Product 4',
-  },
-];
+    name: 'Product 4'
+  }
+]
 
 export const brandsArray = [
   {
     id: 'brand-1',
     type: 'brand',
-    name: 'Brand 1',
+    name: 'Brand 1'
   },
   {
     id: 'brand-2',
     type: 'brand',
-    name: 'Brand 2',
+    name: 'Brand 2'
   },
   {
     id: 'brand-3',
     type: 'brand',
-    name: 'Brand 3',
+    name: 'Brand 3'
   },
   {
     id: 'brand-4',
     type: 'brand',
-    name: 'Brand 4',
-  },
-];
+    name: 'Brand 4'
+  }
+]
 
 export const categoriesArray = [
   {
     id: 'category-1',
     type: 'category',
-    name: 'Category 1',
+    name: 'Category 1'
   },
   {
     id: 'category-2',
     type: 'category',
-    name: 'Category 2',
+    name: 'Category 2'
   },
   {
     id: 'category-3',
     type: 'category',
-    name: 'Category 3',
+    name: 'Category 3'
   },
   {
     id: 'category-4',
     type: 'category',
-    name: 'Category 4',
-  },
-];
+    name: 'Category 4'
+  }
+]
 
 export const collectionsArray = [
   {
     id: 'collection-1',
     type: 'collection',
-    name: 'Collection 1',
+    name: 'Collection 1'
   },
   {
     id: 'collection-2',
     type: 'collection',
-    name: 'Collection 2',
+    name: 'Collection 2'
   },
   {
     id: 'collection-3',
     type: 'collection',
-    name: 'Collection 3',
+    name: 'Collection 3'
   },
   {
     id: 'collection-4',
     type: 'collection',
-    name: 'Collection 4',
-  },
-];
+    name: 'Collection 4'
+  }
+]
 
 export const currenciesArray = [
   {
     id: 'currency-1',
     type: 'currency',
-    code: 'USD',
+    code: 'USD'
   },
   {
     id: 'currency-2',
     type: 'currency',
-    code: 'GBP',
+    code: 'GBP'
   },
   {
     id: 'currency-3',
     type: 'currency',
-    code: 'YEN',
+    code: 'YEN'
   },
   {
     id: 'currency-4',
     type: 'currency',
-    code: 'EUR',
-  },
-];
+    code: 'EUR'
+  }
+]
 
 export const cartItemsArray = [
   {
     id: 'cart_item-1',
     type: 'cart_item',
-    name: 'Cart item 1',
+    name: 'Cart item 1'
   },
   {
     id: 'cart_item-2',
     type: 'cart_item',
-    name: 'Cart item 2',
+    name: 'Cart item 2'
   },
   {
     id: 'cart_item-3',
     type: 'cart_item',
-    name: 'Cart item 3',
+    name: 'Cart item 3'
   },
   {
     id: 'cart_item-4',
     type: 'cart_item',
-    name: 'Cart item 4',
-  },
-];
+    name: 'Cart item 4'
+  }
+]
 
 export const gatewaysArray = [
   {
     slug: 'braintree',
-    type: 'gateway',
+    type: 'gateway'
   },
   {
     slug: 'stripe',
-    type: 'gateway',
-  },
-];
+    type: 'gateway'
+  }
+]
 
 export const filesArray = [
   {
     id: 'file-1',
     type: 'file',
-    file_name: 'File 1',
+    file_name: 'File 1'
   },
   {
     id: 'file-2',
     type: 'file',
-    file_name: 'File 2',
+    file_name: 'File 2'
   },
   {
     id: 'file-3',
     type: 'file',
-    file_name: 'File 3',
+    file_name: 'File 3'
   },
   {
     id: 'file-4',
     type: 'file',
-    file_name: 'File 4',
-  },
-];
+    file_name: 'File 4'
+  }
+]
 
 export const ordersArray = [
   {
     id: 'order-1',
     type: 'order',
-    status: 'complete',
+    status: 'complete'
   },
   {
     id: 'order-2',
     type: 'order',
-    status: 'incomplete',
+    status: 'incomplete'
   },
   {
     id: 'order-3',
     type: 'order',
-    status: 'complete',
+    status: 'complete'
   },
   {
     id: 'order-4',
     type: 'order',
-    status: 'cancelled',
-  },
-];
+    status: 'cancelled'
+  }
+]
 
 export const orderItemsArray = [
   {
     id: 'item-1',
     type: 'order_item',
     quantity: 2,
-    product_id: 'product-1',
+    product_id: 'product-1'
   },
   {
     id: 'item-2',
     type: 'order_item',
     quantity: 1,
-    product_id: 'product-2',
-  },
-];
+    product_id: 'product-2'
+  }
+]
 
 export const orderTransactionsArray = [
   {
@@ -222,10 +222,10 @@ export const orderTransactionsArray = [
       order: {
         data: {
           type: 'order',
-          id: 'c5530906-7b68-42ee-99c3-68cfebdcd749',
-        },
-      },
-    },
+          id: 'c5530906-7b68-42ee-99c3-68cfebdcd749'
+        }
+      }
+    }
   },
   {
     id: 'transaction-2',
@@ -240,12 +240,12 @@ export const orderTransactionsArray = [
       order: {
         data: {
           type: 'order',
-          id: 'c5530906-7b68-42ee-99c3-68cfebdcd749',
-        },
-      },
-    },
-  },
-];
+          id: 'c5530906-7b68-42ee-99c3-68cfebdcd749'
+        }
+      }
+    }
+  }
+]
 
 export const customersArray = [
   {
@@ -255,7 +255,7 @@ export const customersArray = [
     name: 'test-user',
     email: 'testuser@test.com',
     password: 'securepassword',
-    token: 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0',
+    token: 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0'
   },
   {
     id: 'customer-2',
@@ -264,9 +264,9 @@ export const customersArray = [
     name: 'test-user2',
     email: 'testuser2@test.com',
     password: 'securepassword',
-    token: 'eXAiOiAiSldUIiB9.eyJzdWIiOiI0YzY',
-  },
-];
+    token: 'eXAiOiAiSldUIiB9.eyJzdWIiOiI0YzY'
+  }
+]
 
 export const inventoriesArray = [
   {
@@ -274,57 +274,57 @@ export const inventoriesArray = [
     type: 'stock',
     total: 10,
     available: 10,
-    allocated: 0,
+    allocated: 0
   },
   {
     id: 'inventory-2',
     type: 'stock',
     total: 20,
     available: 20,
-    allocated: 0,
-  },
-];
+    allocated: 0
+  }
+]
 
 export const stockTransactionsArray = [
   {
     id: 'stock-transaction-1',
     product_id: 'managed-product-1',
-    quantity: 1,
+    quantity: 1
   },
   {
     id: 'stock-transaction-2',
     product_id: 'managed-product-2',
-    quantity: 2,
-  },
-];
+    quantity: 2
+  }
+]
 
 export const flowsArray = [
   {
     id: 'flow-1',
     type: 'flow',
     name: 'Flow 1',
-    slug: 'flow-1',
+    slug: 'flow-1'
   },
   {
     id: 'flow-2',
     type: 'flow',
     name: 'Flow 2',
-    slug: 'flow-2',
-  },
-];
+    slug: 'flow-2'
+  }
+]
 
 export const flowEntriesArray = [
   {
     id: 'flow-entry-1',
     type: 'entry',
-    name: 'Flow Entry 1',
+    name: 'Flow Entry 1'
   },
   {
     id: 'flow-entry-2',
     type: 'entry',
-    name: 'Flow Entry 2',
-  },
-];
+    name: 'Flow Entry 2'
+  }
+]
 
 export const addressesArray = [
   {
@@ -339,7 +339,7 @@ export const addressesArray = [
     city: 'Newcastle upon Tyne',
     county: 'Tyne & Wear',
     postcode: 'NE1 6UF',
-    country: 'GB',
+    country: 'GB'
   },
   {
     id: 'address-2',
@@ -353,6 +353,6 @@ export const addressesArray = [
     city: 'Newcastle upon Tyne',
     county: 'Tyne & Wear',
     postcode: 'NE1 6UF',
-    country: 'GB',
-  },
-];
+    country: 'GB'
+  }
+]
