@@ -22,19 +22,19 @@ To get started, instantiate a new Moltin client with your store credentials.
 
 ```js
 // JavaScript
-import { gateway as MoltinGateway } from '@moltin/sdk';
+import { gateway as MoltinGateway } from '@moltin/sdk'
 
 const Moltin = MoltinGateway({
   client_id: 'XXX'
-});
+})
 
 // Node.js
-const MoltinGateway = require('@moltin/sdk').gateway;
+const MoltinGateway = require('@moltin/sdk').gateway
 
 const Moltin = MoltinGateway({
   client_id: 'XXX',
-  client_secret: 'XXX',
-});
+  client_secret: 'XXX'
+})
 ```
 
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
@@ -60,9 +60,9 @@ node: {
 You can now authenticate with the Moltin service 🎉
 
 ```js
-Moltin.Authenticate().then((response) => {
-  console.log('authenticated', response);
-});
+Moltin.Authenticate().then(response => {
+  console.log('authenticated', response)
+})
 ```
 
 Check out the [API reference](https://moltin.api-docs.io/v2) to learn more about authenticating and the available endpoints.
@@ -75,22 +75,20 @@ If you're an enterprise customer with your own infrastructure, you'll need to sp
 const Moltin = MoltinGateway({
   client_id: 'XXX',
   host: 'api.yourdomain.com'
-});
+})
 ```
-
 
 ## Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:
 
-1. Fork the repository
-2. Add a test for your change (it should fail)
-3. Make the tests pass
-4. Commit your changes (see note below)
-5. Submit your PR with a brief description explaining your changes
+1.  Fork the repository
+2.  Add a test for your change (it should fail)
+3.  Make the tests pass
+4.  Commit your changes (see note below)
+5.  Submit your PR with a brief description explaining your changes
 
 > **Note:** Commits should adhere to the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
-
 
 ## Development
 
@@ -103,4 +101,4 @@ npm install
 npm run build
 ```
 
-You can learn more about the Rollup API and configuration  [here](https://github.com/rollup/rollup/wiki).
+You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
