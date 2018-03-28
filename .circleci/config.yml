@@ -34,17 +34,16 @@ jobs:
       - run: npm run rollup
 
       # run tests
-      - run: mkdir junit
       - run:
           command: npm run test-output
           environment:
-            MOCHA_FILE: junit/test-results.xml
+            MOCHA_FILE: mocha/test-results.xml
           when: always
 
       - store_test_results:
-          path: junit
+          path: mocha
       - store_artifacts:
-          path: junit
+          path: mocha
 
   # run `semantic-release` for release, publishing
   release:
