@@ -1,10 +1,14 @@
-extends: airbnb-base
+extends: prettier
+
 plugins:
+  - prettier
   - import
+
 rules:
-  indent: ["error", 2, { "MemberExpression": 0 }]
-  camelcase: [0, { properties: "never" }]
-  no-undef: ["off"]
-  no-unused-expressions: ["off"]
+  prettier/prettier: ["error"]
   import/no-extraneous-dependencies: ["off"]
-  prefer-rest-params: ["off"]
+  no-else-return: error
+  prefer-const: error
+  prefer-arrow-callback: error
+  strict: error
+  no-useless-ternary: error

@@ -10,8 +10,7 @@
     "rollup": "rollup -c",
     "start": "rollup -c -w",
     "test": "mocha --compilers js:babel-core/register test/tests.js",
-    "test-output":
-      "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js"
+    "test-output": "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",
@@ -32,8 +31,9 @@
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "^4.2.0",
-    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "mocha": "^3.2.0",
     "mocha-junit-reporter": "^1.17.0",
     "nock": "^9.0.2",
@@ -64,7 +64,10 @@
     "access": "public"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,css,json,md}": ["prettier --write", "git add"]
+    "{src,test}/**/*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "singleQuote": true,
