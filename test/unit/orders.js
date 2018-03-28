@@ -45,7 +45,7 @@ describe('Moltin orders', () => {
     .get('/orders')
     .reply(200, orders);
 
-    return Moltin.Orders.All('testtoken').then((response) => {
+    return Moltin.Orders.All('testtoke').then((response) => {
       assert.lengthOf(response, 4);
       assert.propertyVal(response[0], 'id', 'order-1');
     });
