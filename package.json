@@ -6,7 +6,9 @@
   "author": "Moltin (https://moltin.com/)",
   "scripts": {
     "commit": "git-cz",
+    "precommit": "lint-staged",
     "rollup": "rollup -c",
+    "start": "rollup -c -w",
     "test": "mocha --compilers js:babel-core/register test/tests.js",
     "test-output": "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js"
   },
@@ -59,5 +61,16 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write --no-semi --single-quote",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "jsxBracketSameLine": true
   }
 }
