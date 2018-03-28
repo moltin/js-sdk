@@ -6,7 +6,7 @@
 
 📚 [API reference](https://docs.moltin.com/?javascript) &mdash; 📚 [moltin.com](https://moltin.com)
 
-## Installation
+## 🛠 Installation
 
 Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and import in your project.
 
@@ -14,7 +14,7 @@ Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and im
 npm install --save @moltin/sdk
 ```
 
-## Usage
+## ⛽️ Usage
 
 To get started, instantiate a new Moltin client with your store credentials.
 
@@ -78,7 +78,7 @@ const Moltin = MoltinGateway({
 })
 ```
 
-## Contributing
+## ❤️ Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:
 
@@ -90,7 +90,7 @@ We love community contributions. Here's a quick guide if you want to submit a pu
 
 > **Note:** Commits should adhere to the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
 
-## Development
+## ⚡️ Development
 
 The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled using [Rollup](http://rollupjs.org).
 
@@ -100,5 +100,7 @@ If you want to roll your own bundle, or make changes to any of the modules in `s
 npm install
 npm run build
 ```
+
+You can run `npm start` to watch for changes and build the dist files during development.
 
 You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
