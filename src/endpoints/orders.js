@@ -1,27 +1,30 @@
-import BaseExtend from '../extends/base';
+import BaseExtend from '../extends/base'
 
 class OrdersEndpoint extends BaseExtend {
   constructor(endpoint) {
-    super(endpoint);
+    super(endpoint)
 
-    this.endpoint = 'orders';
+    this.endpoint = 'orders'
   }
 
   Items(id) {
-    return this.request.send(`${this.endpoint}/${id}/items`, 'GET');
+    return this.request.send(`${this.endpoint}/${id}/items`, 'GET')
   }
 
   Payment(id, body) {
-    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body);
+    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body)
   }
 
   Transactions(id) {
-    return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET');
+    return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET')
   }
 
   Update(id, body) {
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', { ...body, type: 'order' });
+    return this.request.send(`${this.endpoint}/${id}`, 'PUT', {
+      ...body,
+      type: 'order'
+    })
   }
 }
 
-export default OrdersEndpoint;
+export default OrdersEndpoint
