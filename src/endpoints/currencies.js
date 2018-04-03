@@ -41,7 +41,7 @@ class CurrenciesEndpoint extends BaseExtend {
   }
 
   Active() {
-    const storage = this.storage
+    const { storage } = this
 
     const promise = new Promise((resolve, reject) => {
       const request = storage.get('mcurrency')
