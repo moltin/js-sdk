@@ -14,3 +14,4 @@ rules:
   prefer-arrow-callback: error
   strict: error
   no-useless-ternary: error
+  no-max-len: 0

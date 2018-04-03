@@ -10,8 +10,7 @@
     "rollup": "rollup -c",
     "start": "rollup -c -w",
     "test": "mocha --compilers js:babel-core/register test/tests.js",
-    "test-output":
-      "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js"
+    "test-output": "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js"
   },
   "main": "dist/moltin.cjs.js",
   "module": "src/moltin.js",
@@ -68,7 +67,10 @@
     "access": "public"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,json,md}": ["prettier --write", "git add"]
+    "{src,test}/**/*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "prettier": {
     "singleQuote": true,
