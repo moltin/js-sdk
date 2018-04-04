@@ -5,7 +5,7 @@
 class StorageFactory {
   constructor() {
     if (typeof localStorage === 'undefined' || localStorage === null) {
-      const { LocalStorage } = require('node-localstorage')
+      const LocalStorage = require('node-localstorage').LocalStorage
 
       this.localStorage = new LocalStorage('./localStorage')
     } else {
