@@ -1,6 +1,5 @@
 version: 2
 jobs:
-
   lint:
     docker:
       - image: circleci/node:8
@@ -23,13 +22,10 @@ jobs:
     steps:
       - checkout
 
-      - run: npm install
-
-      # save `npm` dependencies cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: js-sdk-dependencies-{{ checksum "package.json" }}
+      # restore `npm` dependencies cache
+      - restore_cache:
+          keys:
+            - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
       - run: npm run rollup
