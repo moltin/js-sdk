@@ -1,175 +1,191 @@
-import { pluralize, underscore } from 'inflected';
-import cuid from 'cuid';
+import { pluralize, underscore } from 'inflected'
+import cuid from 'cuid'
 
-import StorageFactory from '../factories/storage';
+import StorageFactory from '../factories/storage'
 
 export function buildRelationshipData(type, ids) {
-  let data = [];
+  let data = []
 
-  if (ids === null || ids.length === 0) return data;
+  if (ids === null || ids.length === 0) return data
 
   if (typeof ids === 'string') {
-    const obj = { type: underscore(type), id: ids };
+    const obj = { type: underscore(type), id: ids }
 
-    if (type === 'main-image') return obj;
+    if (type === 'main-image') return obj
 
-    return [obj];
+    return [obj]
   }
 
   if (Array.isArray(ids)) {
     data = ids.map(id => ({
       type: underscore(type),
-      id,
-    }));
+      id
+    }))
   }
 
-  return data;
+  return data
 }
 
 export function formatUrlResource(type) {
-  if (type === 'main-image') return type;
+  if (type === 'main-image') return type
 
-  return pluralize(type);
+  return pluralize(type)
 }
 
 export function createCartIdentifier() {
-  return cuid();
+  return cuid()
 }
 
 export function cartIdentifier() {
-  const storage = new StorageFactory();
-  const cartId = createCartIdentifier();
+  const storage = new StorageFactory()
+  const cartId = createCartIdentifier()
 
   if (storage.get('mcart') !== null) {
-    return storage.get('mcart');
+    return storage.get('mcart')
   }
 
-  storage.set('mcart', cartId);
+  storage.set('mcart', cartId)
 
-  return cartId;
+  return cartId
 }
 
 export function parseJSON(response) {
   if (response.status === 204) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       resolve({
         status: response.status,
         ok: response.ok,
-        json: '{}',
-      });
-    });
+        json: '{}'
+      })
+    })
   }
 
-  return new Promise(resolve => response.json()
-  .then(json => resolve({
-    status: response.status,
-    ok: response.ok,
-    json,
-  })));
+  return new Promise(resolve =>
+    response.json().then(json =>
+      resolve({
+        status: response.status,
+        ok: response.ok,
+        json
+      })
+    )
+  )
 }
 
 function formatFilterString(type, filter) {
-  const filterStringArray = Object.keys(filter).map((key) => {
-    const value = filter[key];
+  const filterStringArray = Object.keys(filter).map(key => {
+    const value = filter[key]
 
-    return `${type}(${key},${value})`;
-  });
+    return `${type}(${key},${value})`
+  })
 
-  return filterStringArray.join(':');
+  return filterStringArray.join(':')
 }
 
 function formatQueryString(key, value) {
   if (key === 'limit' || key === 'offset') {
-    return `page${(value)}`;
+    return `page${value}`
   }
 
   if (key === 'filter') {
-    const filterValues = Object.keys(value).map(
-      filter => formatFilterString(filter, value[filter]));
+    const filterValues = Object.keys(value).map(filter =>
+      formatFilterString(filter, value[filter])
+    )
 
-    return `${key}=${filterValues.join(':')}`;
+    return `${key}=${filterValues.join(':')}`
   }
 
-  return `${key}=${value}`;
+  return `${key}=${value}`
 }
 
 function buildQueryParams({ includes, sort, limit, offset, filter }) {
-  const query = {};
+  const query = {}
 
   if (includes) {
-    query.include = includes;
+    query.include = includes
   }
 
   if (sort) {
-    query.sort = `(${sort})`;
+    query.sort = `(${sort})`
   }
 
   if (limit) {
-    query.limit = `[limit]=${limit}`;
+    query.limit = `[limit]=${limit}`
   }
 
   if (offset) {
-    query.offset = `[offset]=${offset}`;
+    query.offset = `[offset]=${offset}`
   }
 
   if (filter) {
-    query.filter = filter;
+    query.filter = filter
   }
 
-  return Object.keys(query).map(k => formatQueryString(k, query[k])).join('&');
+  return Object.keys(query)
+    .map(k => formatQueryString(k, query[k]))
+    .join('&')
 }
 
 export function buildURL(endpoint, params) {
-  if (params.includes || params.sort || params.limit || params.offset || params.filter) {
-    const paramsString = buildQueryParams(params);
+  if (
+    params.includes ||
+    params.sort ||
+    params.limit ||
+    params.offset ||
+    params.filter
+  ) {
+    const paramsString = buildQueryParams(params)
 
-    return `${endpoint}?${paramsString}`;
+    return `${endpoint}?${paramsString}`
   }
 
-  return endpoint;
+  return endpoint
 }
 
 export function buildRequestBody(body) {
-  let parsedBody;
+  let parsedBody
 
   if (body) {
     parsedBody = `{
       "data": ${JSON.stringify(body)}
-    }`;
+    }`
   }
 
-  return parsedBody;
+  return parsedBody
 }
 
 export function buildCartItemData(id, quantity = null, type = 'cart_item') {
   const payload = {
-    type,
-  };
+    type
+  }
 
   if (type === 'cart_item') {
     Object.assign(payload, {
       id,
-      quantity: parseInt(quantity, 10),
-    });
+      quantity: parseInt(quantity, 10)
+    })
   }
 
   if (type === 'promotion_item') {
     Object.assign(payload, {
-      code: id,
-    });
+      code: id
+    })
   }
 
-  return payload;
+  return payload
 }
 
-export function buildCartCheckoutData(customer, billing_address, shipping_address) {
-  let parsedCustomer = customer;
+export function buildCartCheckoutData(
+  customer,
+  billing_address,
+  shipping_address
+) {
+  let parsedCustomer = customer
 
-  if (typeof customer === 'string') parsedCustomer = { id: customer };
+  if (typeof customer === 'string') parsedCustomer = { id: customer }
 
   return {
     customer: parsedCustomer,
     billing_address,
-    shipping_address,
-  };
+    shipping_address
+  }
 }

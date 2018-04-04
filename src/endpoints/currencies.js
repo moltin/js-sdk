@@ -1,60 +1,60 @@
-import BaseExtend from '../extends/base';
-import StorageFactory from '../factories/storage';
+import BaseExtend from '../extends/base'
+import StorageFactory from '../factories/storage'
 
 class CurrenciesEndpoint extends BaseExtend {
   constructor(endpoint) {
-    super(endpoint);
+    super(endpoint)
 
-    this.endpoint = 'currencies';
-    this.storage = new StorageFactory();
+    this.endpoint = 'currencies'
+    this.storage = new StorageFactory()
   }
 
   Create(body) {
-    return this.request.send(`${this.endpoint}`, 'POST', body);
+    return this.request.send(`${this.endpoint}`, 'POST', body)
   }
 
   Delete(id) {
-    return this.request.send(`${this.endpoint}/${id}`, 'DELETE');
+    return this.request.send(`${this.endpoint}/${id}`, 'DELETE')
   }
 
   Update(id, body) {
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', body);
+    return this.request.send(`${this.endpoint}/${id}`, 'PUT', body)
   }
 
   Set(currency) {
-    const { config, storage } = this;
+    const { config, storage } = this
 
-    storage.set('mcurrency', currency);
-    config.currency = currency;
+    storage.set('mcurrency', currency)
+    config.currency = currency
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency');
+      const request = storage.get('mcurrency')
 
       try {
-        resolve(request);
+        resolve(request)
       } catch (err) {
-        reject(new Error(err));
+        reject(new Error(err))
       }
-    });
+    })
 
-    return promise;
+    return promise
   }
 
   Active() {
-    const storage = this.storage;
+    const { storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency');
+      const request = storage.get('mcurrency')
 
       try {
-        resolve(request);
+        resolve(request)
       } catch (err) {
-        reject(new Error(err));
+        reject(new Error(err))
       }
-    });
+    })
 
-    return promise;
+    return promise
   }
 }
 
-export default CurrenciesEndpoint;
+export default CurrenciesEndpoint

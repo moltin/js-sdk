@@ -6,7 +6,7 @@
 
 📚 [API reference](https://docs.moltin.com/?javascript) &mdash; 📚 [moltin.com](https://moltin.com)
 
-## Installation
+## 🛠 Installation
 
 Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and import in your project.
 
@@ -14,7 +14,7 @@ Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and im
 npm install --save @moltin/sdk
 ```
 
-## Usage
+## ⛽️ Usage
 
 To get started, instantiate a new Moltin client with your store credentials.
 
@@ -22,19 +22,19 @@ To get started, instantiate a new Moltin client with your store credentials.
 
 ```js
 // JavaScript
-import { gateway as MoltinGateway } from '@moltin/sdk';
+import { gateway as MoltinGateway } from '@moltin/sdk'
 
 const Moltin = MoltinGateway({
   client_id: 'XXX'
-});
+})
 
 // Node.js
-const MoltinGateway = require('@moltin/sdk').gateway;
+const MoltinGateway = require('@moltin/sdk').gateway
 
 const Moltin = MoltinGateway({
   client_id: 'XXX',
-  client_secret: 'XXX',
-});
+  client_secret: 'XXX'
+})
 ```
 
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
@@ -60,9 +60,9 @@ node: {
 You can now authenticate with the Moltin service 🎉
 
 ```js
-Moltin.Authenticate().then((response) => {
-  console.log('authenticated', response);
-});
+Moltin.Authenticate().then(response => {
+  console.log('authenticated', response)
+})
 ```
 
 Check out the [API reference](https://moltin.api-docs.io/v2) to learn more about authenticating and the available endpoints.
@@ -75,24 +75,24 @@ If you're an enterprise customer with your own infrastructure, you'll need to sp
 const Moltin = MoltinGateway({
   client_id: 'XXX',
   host: 'api.yourdomain.com'
-});
+})
 ```
 
-
-## Contributing
+## ❤️ Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:
 
-1. Fork the repository
-2. Add a test for your change (it should fail)
-3. Make the tests pass
-4. Commit your changes (see note below)
-5. Submit your PR with a brief description explaining your changes
+1.  Fork the repository
+2.  Add a test for your change (it should fail)
+3.  Make the tests pass
+4.  Commit your changes (see note below)
+5.  Submit your PR with a brief description explaining your changes
 
 > **Note:** Commits should adhere to the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
 
+Make sure you have [Prettier](https://prettier.io) installed for your editor with ESLint integration enabled.
 
-## Development
+## ⚡️ Development
 
 The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled using [Rollup](http://rollupjs.org).
 
@@ -103,4 +103,6 @@ npm install
 npm run build
 ```
 
-You can learn more about the Rollup API and configuration  [here](https://github.com/rollup/rollup/wiki).
+You can run `npm start` to watch for changes and build the dist files during development.
+
+You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).

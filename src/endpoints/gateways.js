@@ -1,22 +1,22 @@
-import BaseExtend from '../extends/base';
+import BaseExtend from '../extends/base'
 
 class GatewaysEndpoint extends BaseExtend {
   constructor(endpoint) {
-    super(endpoint);
+    super(endpoint)
 
-    this.endpoint = 'gateways';
+    this.endpoint = 'gateways'
   }
 
   Update(slug, body) {
-    return this.request.send(`${this.endpoint}/${slug}`, 'PUT', body);
+    return this.request.send(`${this.endpoint}/${slug}`, 'PUT', body)
   }
 
   Enabled(slug, enabled) {
     return this.request.send(`${this.endpoint}/${slug}`, 'PUT', {
       type: 'gateway',
-      enabled,
-    });
+      enabled
+    })
   }
 }
 
-export default GatewaysEndpoint;
+export default GatewaysEndpoint

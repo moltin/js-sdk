@@ -1,11 +1,11 @@
-import CRUDExtend from '../extends/crud';
+import CRUDExtend from '../extends/crud'
 
 class BrandsEndpoint extends CRUDExtend {
   constructor(endpoint) {
-    super(endpoint);
+    super(endpoint)
 
-    this.endpoint = 'brands';
+    this.endpoint = 'brands'
   }
 }
 
-export default BrandsEndpoint;
+export default BrandsEndpoint

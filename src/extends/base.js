@@ -1,64 +1,74 @@
-import RequestFactory from '../factories/request';
-import { buildURL } from '../utils/helpers';
+import RequestFactory from '../factories/request'
+import { buildURL } from '../utils/helpers'
 
 class BaseExtend {
   constructor(config) {
-    this.request = new RequestFactory(config);
+    this.request = new RequestFactory(config)
 
-    this.config = config;
+    this.config = config
   }
 
   All(token = null) {
-    const { includes, sort, limit, offset, filter } = this;
+    const { includes, sort, limit, offset, filter } = this
 
-    this.call = this.request.send(buildURL(this.endpoint, {
-      includes,
-      sort,
-      limit,
-      offset,
-      filter,
-    }), 'GET', undefined, token);
+    this.call = this.request.send(
+      buildURL(this.endpoint, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token
+    )
 
-    return this.call;
+    return this.call
   }
 
   Get(id, token = null) {
-    this.call = this.request.send(buildURL(`${this.endpoint}/${id}`, {
-      includes: this.includes,
-    }), 'GET', undefined, token);
+    this.call = this.request.send(
+      buildURL(`${this.endpoint}/${id}`, {
+        includes: this.includes
+      }),
+      'GET',
+      undefined,
+      token
+    )
 
-    return this.call;
+    return this.call
   }
 
   Filter(filter) {
-    this.filter = filter;
+    this.filter = filter
 
-    return this;
+    return this
   }
 
   Limit(value) {
-    this.limit = value;
+    this.limit = value
 
-    return this;
+    return this
   }
 
   Offset(value) {
-    this.offset = value;
+    this.offset = value
 
-    return this;
+    return this
   }
 
   Sort(value) {
-    this.sort = value;
+    this.sort = value
 
-    return this;
+    return this
   }
 
   With(includes) {
-    if (includes) this.includes = includes.toString().toLowerCase();
+    if (includes) this.includes = includes.toString().toLowerCase()
 
-    return this;
+    return this
   }
 }
 
-export default BaseExtend;
+export default BaseExtend

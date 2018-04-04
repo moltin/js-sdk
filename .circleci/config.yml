@@ -1,5 +1,20 @@
 version: 2
 jobs:
+  lint:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout
+
+      - run: npm install
+      - run: npm run lint
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: js-sdk-dependencies-{{ checksum "package.json" }}
+
   # build on node 8
   build:
     docker:
@@ -7,13 +22,10 @@ jobs:
     steps:
       - checkout
 
-      - run: npm install
-
-      # save `npm` dependencies cache
-      - save_cache:
-          paths:
-            - node_modules
-          key: js-sdk-dependencies-{{ checksum "package.json" }}
+      # restore `npm` dependencies cache
+      - restore_cache:
+          keys:
+            - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
       - run: npm run rollup
@@ -67,7 +79,10 @@ workflows:
   version: 2
   build_test_release:
     jobs:
-      - build
+      - lint
+      - build:
+          requires:
+            - lint
       - test:
           requires:
             - build
