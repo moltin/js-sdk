@@ -90,6 +90,8 @@ We love community contributions. Here's a quick guide if you want to submit a pu
 
 > **Note:** Commits should adhere to the [Angular commit conventions](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#-git-commit-guidelines).
 
+Make sure you have [Prettier](https://prettier.io) installed for your editor with ESLint integration enabled.
+
 ## ⚡️ Development
 
 The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled using [Rollup](http://rollupjs.org).
