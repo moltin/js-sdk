@@ -123,7 +123,7 @@ class RequestFactory {
         !credentials ||
         !credentials.access_token ||
         credentials.client_id !== config.client_id ||
-        Date.now().toString() >= credentials.expires
+        Math.floor(Date.now() / 1000) >= credentials.expires
       ) {
         return this.authenticate()
           .then(req)
