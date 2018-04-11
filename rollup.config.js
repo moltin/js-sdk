@@ -11,7 +11,7 @@ export default {
   watch: {
     include: 'src/**'
   },
-  external: ['cuid', 'es6-promise', 'fetch-everywhere', 'inflected'],
+  external: ['es6-promise', 'fetch-everywhere', 'inflected'],
   plugins: [
     resolve({
       browser: true,
@@ -36,7 +36,11 @@ export default {
       file: pkg.browser,
       exports: 'named',
       format: 'umd',
-      name: 'moltin'
+      name: 'moltin',
+      globals: {
+        cuid: 'cuid',
+        inflected: 'inflected'
+      }
     }
   ]
 }
