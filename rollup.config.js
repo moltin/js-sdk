@@ -38,7 +38,6 @@ export default {
       format: 'umd',
       name: 'moltin',
       globals: {
-        cuid: 'cuid',
         inflected: 'inflected'
       }
     }
