@@ -65,6 +65,27 @@ describe('Build query params', () => {
       'products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)'
     )
   })
+
+  it('should build sort query string from object', () => {
+    const params = {
+      sort: 'created_at'
+    }
+
+    const queryString = buildURL('products', params)
+
+    expect(queryString).to.equal('products?sort=created_at')
+  })
+
+  it('should build pagination query string from object', () => {
+    const params = {
+      offset: 100,
+      limit: 20
+    }
+
+    const queryString = buildURL('products', params)
+
+    expect(queryString).to.equal('products?page[limit]=20&page[offset]=100')
+  })
 })
 
 describe('Unique cart identifier', () => {

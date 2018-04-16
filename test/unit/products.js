@@ -186,7 +186,7 @@ describe('Moltin products', () => {
     })
       .get('/products')
       .query({
-        sort: '(name)'
+        sort: 'name'
       })
       .reply(200, products)
 
