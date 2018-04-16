@@ -11,7 +11,7 @@ export default {
   watch: {
     include: 'src/**'
   },
-  external: ['es6-promise', 'fetch-everywhere', 'inflected'],
+  external: ['es6-promise', 'fetch-everywhere'],
   plugins: [
     resolve({
       browser: true,
