@@ -9,6 +9,8 @@
     "import/no-named-as-default": 0,
     "camelcase": 0,
     "prefer-rest-params": 0,
-    "import/no-extraneous-dependencies": 0
+    "import/no-extraneous-dependencies": 0,
+    "no-unused-expressions": 0,
+    "no-undef": 0
   }
 }
