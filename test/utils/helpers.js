@@ -75,6 +75,17 @@ describe('Build query params', () => {
 
     expect(queryString).to.equal('products?sort=created_at')
   })
+
+  it('should build pagination query string from object', () => {
+    const params = {
+      offset: 100,
+      limit: 20
+    }
+
+    const queryString = buildURL('products', params)
+
+    expect(queryString).to.equal('products?page[limit]=20&page[offset]=100')
+  })
 })
 
 describe('Unique cart identifier', () => {
