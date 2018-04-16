@@ -105,7 +105,7 @@ function buildQueryParams({ includes, sort, limit, offset, filter }) {
   }
 
   if (sort) {
-    query.sort = `(${sort})`
+    query.sort = `${sort}`
   }
 
   if (limit) {
