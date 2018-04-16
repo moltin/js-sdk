@@ -65,6 +65,16 @@ describe('Build query params', () => {
       'products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)'
     )
   })
+
+  it('should build sort query string from object', () => {
+    const params = {
+      sort: 'created_at'
+    }
+
+    const queryString = buildURL('products', params)
+
+    expect(queryString).to.equal('products?sort=created_at')
+  })
 })
 
 describe('Unique cart identifier', () => {
