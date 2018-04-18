@@ -40,7 +40,7 @@ const Moltin = MoltinGateway({
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
 
 ```js
-<script src="https://unpkg.com/@moltin/sdk">
+<script src="https://unpkg.com/@moltin/sdk"></script>
 
 <script>
   const Moltin = moltin.gateway({
