@@ -1,7 +1,3 @@
-/* eslint no-undef: "off",
-          global-require: "off"
-*/
-
 class StorageFactory {
   constructor() {
     if (typeof localStorage === 'undefined' || localStorage === null) {
