@@ -82,9 +82,9 @@ class RequestFactory {
 
     const promise = new Promise((resolve, reject) => {
       const credentials = JSON.parse(storage.get('moltinCredentials'))
-      const req = () => {
+      const req = ({ access_token }) => {
         const headers = {
-          Authorization: `Bearer: ${credentials.access_token}`,
+          Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version
@@ -102,7 +102,6 @@ class RequestFactory {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
 
-        /* eslint no-undef: "off" */
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
@@ -126,11 +125,10 @@ class RequestFactory {
         Math.floor(Date.now() / 1000) >= credentials.expires
       ) {
         return this.authenticate()
-          .then(req)
+          .then(() => req(JSON.parse(storage.get('moltinCredentials'))))
           .catch(error => reject(error))
       }
-
-      return req()
+      return req(credentials)
     })
 
     return promise
