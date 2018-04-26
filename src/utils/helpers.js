@@ -1,5 +1,4 @@
 import { pluralize, underscore } from 'inflected'
-import cuid from 'cuid'
 
 import StorageFactory from '../factories/storage'
 
@@ -33,7 +32,9 @@ export function formatUrlResource(type) {
 }
 
 export function createCartIdentifier() {
-  return cuid()
+  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () =>
+    ((Math.random() * 16) | 0).toString(16)
+  )
 }
 
 export function cartIdentifier() {
