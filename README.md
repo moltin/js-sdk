@@ -40,7 +40,7 @@ const Moltin = MoltinGateway({
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
 
 ```js
-<script src="https://unpkg.com/@moltin/sdk">
+<script src="https://unpkg.com/@moltin/sdk"></script>
 
 <script>
   const Moltin = moltin.gateway({
@@ -96,13 +96,11 @@ Make sure you have [Prettier](https://prettier.io) installed for your editor wit
 
 The SDK is built with [ES6 modules](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-modules/) that are bundled using [Rollup](http://rollupjs.org).
 
-If you want to roll your own bundle, or make changes to any of the modules in `src`, then you'll need to install the package dependencies and build the `dist` files.
+If you want to roll your own bundle, or make changes to any of the modules in `src`, then you'll need to install the package dependencies and run rollup while watching for changes.
 
 ```
 npm install
-npm run build
+npm start
 ```
-
-You can run `npm start` to watch for changes and build the dist files during development.
 
 You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
