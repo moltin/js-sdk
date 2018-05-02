@@ -17,6 +17,13 @@ class TransactionsEndpoint extends BaseExtend {
       'POST'
     )
   }
+
+  Refund({ order, transaction }) {
+    return this.request.send(
+      `orders/${order}/transactions/${transaction}/refund`,
+      'POST'
+    )
+  }
 }
 
 export default TransactionsEndpoint
