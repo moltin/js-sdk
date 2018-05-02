@@ -16,6 +16,9 @@ class OrdersEndpoint extends BaseExtend {
   }
 
   Transactions(id) {
+    console.warn(
+      `DeprecationWarning: 'Order.Transactions(id)' will soon be deprecated. It's recommended you use Transactions class directly to get all, capture and refund transactions.`
+    )
     return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET')
   }
 

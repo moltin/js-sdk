@@ -17,6 +17,7 @@ import InventoriesEndpoint from './endpoints/inventories'
 import FlowsEndpoint from './endpoints/flows'
 import FieldsEndpoint from './endpoints/fields'
 import AddressesEndpoint from './endpoints/addresses'
+import TransactionsEndpoint from './endpoints/transactions'
 
 import { cartIdentifier } from './utils/helpers'
 
@@ -40,6 +41,7 @@ export default class Moltin {
     this.Flows = new FlowsEndpoint(config)
     this.Fields = new FieldsEndpoint(config)
     this.Addresses = new AddressesEndpoint(config)
+    this.Transactions = new TransactionsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
