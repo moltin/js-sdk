@@ -35,7 +35,7 @@ describe('Moltin order transactions', () => {
       }
     })
       .post('/orders/order-1/transactions/transaction-1/capture')
-      .reply(200)
+      .reply(200, {})
 
     return Moltin.Transactions.Capture({
       order: 'order-1',
@@ -52,8 +52,8 @@ describe('Moltin order transactions', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/orders/order-1/transactions/transaction-1')
-      .reply(200)
+      .post('/orders/order-1/transactions/transaction-1/refund')
+      .reply(200, {})
 
     return Moltin.Transactions.Refund({
       order: 'order-1',
