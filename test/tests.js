@@ -14,6 +14,7 @@ require('./unit/gateways')
 require('./unit/inventories')
 require('./unit/orders')
 require('./unit/products')
+require('./unit/transactions')
 
 // Utilities
 require('./utils/helpers')
