@@ -1,5 +1,3 @@
-import { singularize } from 'inflected'
-
 import BaseExtend from '../extends/base'
 
 class TransactionsEndpoint extends BaseExtend {
