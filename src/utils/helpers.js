@@ -75,8 +75,14 @@ export function parseJSON(response) {
 function formatFilterString(type, filter) {
   const filterStringArray = Object.keys(filter).map(key => {
     const value = filter[key]
+    let queryString = `${key},${value}`
 
-    return `${type}(${key},${value})`
+    if (typeof value === 'object')
+      queryString = Object.keys(value).map(
+        attr => `${key}.${attr},${value[attr]}`
+      )
+
+    return `${type}(${queryString})`
   })
 
   return filterStringArray.join(':')

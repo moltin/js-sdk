@@ -66,6 +66,22 @@ describe('Build query params', () => {
     )
   })
 
+  it('should build relationship filter query string from object', () => {
+    const params = {
+      filter: {
+        eq: {
+          brand: {
+            id: '123'
+          }
+        }
+      }
+    }
+
+    const queryString = buildURL('products', params)
+
+    expect(queryString).to.equal('products?filter=eq(brand.id,123)')
+  })
+
   it('should build sort query string from object', () => {
     const params = {
       sort: 'created_at'
