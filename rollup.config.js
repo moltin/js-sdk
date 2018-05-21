@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
 
 import pkg from './package.json'
@@ -51,7 +52,10 @@ if (NODE_ENV === 'production') {
 }
 
 if (process.env.SERVE === 'true') {
-  config.plugins.push(serve({ contentBase: ['dist', 'examples'], open: true }))
+  config.plugins.push(
+    serve({ contentBase: ['dist', 'examples'], open: true }),
+    livereload()
+  )
 }
 
 config.plugins.push(json(), filesize())
