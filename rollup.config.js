@@ -3,10 +3,15 @@ import uglify from 'rollup-plugin-uglify'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
+import serve from 'rollup-plugin-serve'
+import livereload from 'rollup-plugin-livereload'
+import filesize from 'rollup-plugin-filesize'
 
-const pkg = require('./package.json')
+import pkg from './package.json'
 
-export default {
+const { NODE_ENV } = process.env
+
+const config = {
   input: 'src/moltin.js',
   watch: {
     include: 'src/**'
@@ -21,9 +26,7 @@ export default {
     buble({
       exclude: 'package.json',
       objectAssign: 'Object.assign'
-    }),
-    uglify(),
-    json()
+    })
   ],
   output: [
     {
@@ -43,3 +46,18 @@ export default {
     }
   ]
 }
+
+if (NODE_ENV === 'production') {
+  config.plugins.push(uglify())
+}
+
+if (process.env.SERVE === 'true') {
+  config.plugins.push(
+    serve({ contentBase: ['dist', 'examples'], open: true }),
+    livereload()
+  )
+}
+
+config.plugins.push(json(), filesize())
+
+export default config
