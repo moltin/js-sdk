@@ -15,8 +15,8 @@
     "lint": "eslint src"
   },
   "main": "dist/moltin.cjs.js",
-  "module": "src/moltin.esm.js",
-  "jsnext:main": "src/moltin.esm.js",
+  "module": "dist/moltin.esm.js",
+  "jsnext:main": "dist/moltin.esm.js",
   "cjs:main": "dist/moltin.cjs.js",
   "browser": "dist/moltin.js",
   "repository": {
