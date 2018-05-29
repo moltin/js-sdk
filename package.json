@@ -7,7 +7,7 @@
   "scripts": {
     "commit": "git-cz",
     "precommit": "lint-staged",
-    "build": "rollup -c",
+    "rollup": "rollup -c",
     "start": "NODE_ENV=development SERVE=true rollup -c -w",
     "test": "mocha --compilers js:babel-core/register test/tests.js",
     "test-output":
