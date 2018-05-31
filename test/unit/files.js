@@ -10,6 +10,36 @@ describe('Moltin files', () => {
     client_id: 'XXX'
   })
 
+  it('should return an array of files', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/files')
+      .reply(200, files)
+
+    return Moltin.Files.All().then(response => {
+      assert.lengthOf(response, 4)
+    })
+  })
+
+  it('should return a single file', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/files/1')
+      .reply(200, files[0])
+
+    return Moltin.Files.Get(1).then(response => {
+      assert.propertyVal(response, 'id', 'file-1')
+    })
+  })
+
   it('should create a new product-file relationship', () => {
     // Intercept the API request
     nock(apiUrl, {
