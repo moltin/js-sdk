@@ -10,7 +10,7 @@ import pkg from './package.json'
 
 const { NODE_ENV = 'development' } = process.env
 const isProd = NODE_ENV === 'production'
-const isDev = NODE_ENV === 'development'
+const isDev = NODE_ENV === 'development' && process.env.SERVE === true
 
 const baseConfig = {
   input: 'src/moltin.js',
