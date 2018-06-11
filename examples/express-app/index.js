@@ -4,7 +4,8 @@ const MoltinGateway = require('@moltin/sdk').gateway
 const app = express()
 
 const Moltin = MoltinGateway({
-  client_id: 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4'
+  client_id:
+    process.env.MOLTIN_CLIENT_ID || 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4'
 })
 
 app.get('/', async (req, res) => {
