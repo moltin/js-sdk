@@ -38,7 +38,7 @@ export default [
     },
     plugins: [
       ...baseConfig.plugins,
-      ...Object.keys(pkg.dependencies),
+      ...Object.keys(pkg.dependencies || {}),
       resolve({ browser: true }),
       commonjs(),
       isProd &&
@@ -58,7 +58,7 @@ export default [
       format: 'cjs',
       exports: 'named'
     },
-    external: [...baseConfig.external, ...Object.keys(pkg.dependencies)]
+    external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
   },
   {
     ...baseConfig,
@@ -66,6 +66,6 @@ export default [
       file: pkg.module,
       format: 'es'
     },
-    external: [...baseConfig.external, ...Object.keys(pkg.dependencies)]
+    external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
   }
 ]
