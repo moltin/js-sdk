@@ -7,11 +7,10 @@
   "scripts": {
     "commit": "git-cz",
     "precommit": "lint-staged",
-    "rollup": "NODE_ENV=production rollup -c",
+    "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "mocha --compilers js:babel-core/register test/tests.js",
-    "test-output":
-      "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js",
+    "test-output": "mocha --compilers js:babel-core/register --reporter mocha-junit-reporter test/tests.js",
     "lint": "eslint src"
   },
   "main": "dist/moltin.cjs.js",
@@ -81,6 +80,9 @@
     "access": "public"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,json,md}": ["eslint --fix src", "git add"]
+    "{src,test}/**/*.{js,json,md}": [
+      "eslint --fix src",
+      "git add"
+    ]
   }
 }
