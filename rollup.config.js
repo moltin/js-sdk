@@ -21,7 +21,11 @@ const baseConfig = {
   plugins: [
     json(),
     babel({
-      exclude: ['package.json', '**/node_modules/**']
+      exclude: ['package.json', '**/node_modules/**'],
+      presets: [
+        ['@babel/preset-env', { modules: false }],
+        '@babel/preset-stage-3'
+      ]
     }),
     filesize()
   ]
