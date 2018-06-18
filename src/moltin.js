@@ -16,6 +16,7 @@ import CustomersEndpoint from './endpoints/customers'
 import InventoriesEndpoint from './endpoints/inventories'
 import FlowsEndpoint from './endpoints/flows'
 import FieldsEndpoint from './endpoints/fields'
+import FilesEndpoint from './endpoints/files'
 import AddressesEndpoint from './endpoints/addresses'
 import TransactionsEndpoint from './endpoints/transactions'
 
@@ -38,6 +39,7 @@ export default class Moltin {
     this.Gateways = new GatewaysEndpoint(config)
     this.Customers = new CustomersEndpoint(config)
     this.Inventories = new InventoriesEndpoint(config)
+    this.Files = new FilesEndpoint(config)
     this.Flows = new FlowsEndpoint(config)
     this.Fields = new FieldsEndpoint(config)
     this.Addresses = new AddressesEndpoint(config)
