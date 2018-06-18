@@ -19,6 +19,7 @@
     })
 
     Moltin.Authenticate().then(res => console.log(res))
+    Moltin.Products.All().then(({ data }) => console.log(data))
   </script>
 </body>
 

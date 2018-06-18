@@ -1,3 +1,12 @@
 {
-  "presets": ["stage-3", "env"]
+  "presets": [
+    "@babel/preset-stage-3",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "plugins": ["transform-class-properties"]
 }

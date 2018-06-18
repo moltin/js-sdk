@@ -1,63 +1,75 @@
-import buble from 'rollup-plugin-buble'
-import uglify from 'rollup-plugin-uglify'
+import babel from 'rollup-plugin-babel'
+import { uglify } from 'rollup-plugin-uglify'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
-
 import pkg from './package.json'
 
-const { NODE_ENV } = process.env
+const { NODE_ENV = 'development' } = process.env
+const isProd = NODE_ENV === 'production'
+const isDev = NODE_ENV === 'development' && process.env.SERVE === true
 
-const config = {
+const baseConfig = {
   input: 'src/moltin.js',
   watch: {
     include: 'src/**'
   },
   external: ['es6-promise', 'fetch-everywhere'],
   plugins: [
-    resolve({
-      browser: true,
-      jsnext: true
+    json(),
+    babel({
+      exclude: ['package.json', '**/node_modules/**'],
+      presets: [
+        ['@babel/preset-env', { modules: false }],
+        '@babel/preset-stage-3'
+      ]
     }),
-    commonjs(),
-    buble({
-      exclude: 'package.json',
-      objectAssign: 'Object.assign'
-    })
-  ],
-  output: [
-    {
-      file: pkg['cjs:main'],
-      exports: 'named',
-      format: 'cjs',
-      sourcemap: true
-    },
-    {
-      file: pkg.browser,
-      exports: 'named',
-      format: 'umd',
-      name: 'moltin',
-      globals: {
-        inflected: 'inflected'
-      }
-    }
+    filesize()
   ]
 }
 
-if (NODE_ENV === 'production') {
-  config.plugins.push(uglify())
-}
-
-if (process.env.SERVE === 'true') {
-  config.plugins.push(
-    serve({ contentBase: ['dist', 'examples'], open: true }),
-    livereload()
-  )
-}
-
-config.plugins.push(json(), filesize())
-
-export default config
+export default [
+  {
+    ...baseConfig,
+    output: {
+      name: 'moltin',
+      exports: 'named',
+      file: pkg.browser,
+      format: 'umd'
+    },
+    plugins: [
+      ...baseConfig.plugins,
+      ...Object.keys(pkg.dependencies || {}),
+      resolve({ browser: true }),
+      commonjs(),
+      isProd &&
+        uglify({
+          compress: {
+            warnings: false
+          }
+        }),
+      isDev && serve({ contentBase: ['dist', 'examples'], open: true }),
+      isDev && livereload()
+    ]
+  },
+  {
+    ...baseConfig,
+    output: {
+      file: pkg['cjs:main'],
+      format: 'cjs',
+      exports: 'named'
+    },
+    external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
+  },
+  {
+    ...baseConfig,
+    output: {
+      file: pkg.module,
+      format: 'es'
+    },
+    external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
+  }
+]
