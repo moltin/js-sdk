@@ -65,7 +65,7 @@ Moltin.Authenticate().then(response => {
 })
 ```
 
-Check out the [API reference](https://moltin.api-docs.io/v2) to learn more about authenticating and the available endpoints.
+Check out the [API reference](https://docs.moltin.com) to learn more about authenticating and the available endpoints.
 
 ### Custom Host
 
