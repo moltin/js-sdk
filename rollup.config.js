@@ -6,11 +6,12 @@ import json from 'rollup-plugin-json'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
+
 import pkg from './package.json'
 
 const { NODE_ENV = 'development' } = process.env
 const isProd = NODE_ENV === 'production'
-const isDev = NODE_ENV === 'development' && process.env.SERVE === true
+const isDev = NODE_ENV === 'development' && process.env.SERVE === 'true'
 
 const baseConfig = {
   input: 'src/moltin.js',
@@ -42,7 +43,6 @@ export default [
     },
     plugins: [
       ...baseConfig.plugins,
-      ...Object.keys(pkg.dependencies || {}),
       resolve({ browser: true }),
       commonjs(),
       isProd &&
@@ -53,7 +53,7 @@ export default [
         }),
       isDev && serve({ contentBase: ['dist', 'examples'], open: true }),
       isDev && livereload()
-    ]
+    ].filter(Boolean)
   },
   {
     ...baseConfig,
