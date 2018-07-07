@@ -45,7 +45,7 @@
     "mocha": "5.2.0",
     "mocha-junit-reporter": "1.17.0",
     "nock": "9.4.1",
-    "prettier": "1.13.5",
+    "prettier": "1.13.7",
     "rimraf": "2.6.2",
     "rollup": "0.62.0",
     "rollup-plugin-babel": "4.0.0-beta.5",
