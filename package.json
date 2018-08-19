@@ -18,6 +18,7 @@
   "jsnext:main": "dist/moltin.esm.js",
   "cjs:main": "dist/moltin.cjs.js",
   "browser": "dist/moltin.js",
+  "types": "src/moltin.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/moltin/js-sdk.git"
