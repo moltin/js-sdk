@@ -18,7 +18,7 @@ import FieldsEndpoint from './endpoints/fields'
 import FilesEndpoint from './endpoints/files'
 import AddressesEndpoint from './endpoints/addresses'
 import TransactionsEndpoint from './endpoints/transactions'
-import StorageFactory from './factories/storage'
+import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
 
 import { cartIdentifier } from './utils/helpers'
@@ -61,4 +61,4 @@ export default class Moltin {
 // Export a function to instantiate the Moltin class
 const gateway = config => new Moltin(new Config(config))
 
-export { gateway, MemoryStorageFactory, StorageFactory }
+export { gateway, MemoryStorageFactory, LocalStorageFactory }

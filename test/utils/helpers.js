@@ -6,7 +6,7 @@ import {
   createCartIdentifier,
   cartIdentifier
 } from '../../src/utils/helpers'
-import StorageFactory from '../../src/factories/storage'
+import LocalStorageFactory from '../../src/factories/local-storage'
 
 describe('Build relationship payloads', () => {
   it('should return an array of relationship key value pairings', () => {
@@ -118,6 +118,6 @@ describe('Unique cart identifier', () => {
   })
 
   it('should return a valid cart identifier', () => {
-    expect(cartIdentifier(new StorageFactory())).to.be.a('string')
+    expect(cartIdentifier(new LocalStorageFactory())).to.be.a('string')
   })
 })

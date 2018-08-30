@@ -1,5 +1,5 @@
 import { version } from '../package.json'
-import StorageFactory from './factories/storage'
+import LocalStorageFactory from './factories/local-storage'
 
 class Config {
   constructor(options) {
@@ -27,7 +27,7 @@ class Config {
       version,
       language: 'JS'
     }
-    this.storage = storage || new StorageFactory()
+    this.storage = storage || new LocalStorageFactory()
   }
 }
 

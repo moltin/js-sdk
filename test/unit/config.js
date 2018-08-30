@@ -2,13 +2,13 @@ import { expect } from 'chai'
 import {
   gateway as MoltinGateway,
   MemoryStorageFactory,
-  StorageFactory
+  LocalStorageFactory
 } from '../../src/moltin'
 
 describe('storage', () => {
   it('defaults to `StorageFactory`', () => {
     const Moltin = MoltinGateway({})
-    expect(Moltin.storage).to.be.an.instanceof(StorageFactory)
+    expect(Moltin.storage).to.be.an.instanceof(LocalStorageFactory)
     expect(Moltin.config.storage).to.be.equal(Moltin.storage)
     expect(Moltin.request.storage).to.be.equal(Moltin.storage)
     expect(Moltin.Currencies.storage).to.equal(Moltin.storage)
