@@ -308,15 +308,15 @@ export namespace moltin {
   export interface Address {
     first_name: string
     last_name: string
-    company_name: string
+    company_name?: string
     line_1: string
-    line_2: string
-    city: string
+    line_2?: string
+    city?: string
     postcode: string
     county: string
     country: string
-    phone_number: string
-    instructions: string
+    phone_number?: string
+    instructions?: string
   }
 
   // NOTE: The implementation of `CartEndpoint` extends `BaseExtend` however it breaks
