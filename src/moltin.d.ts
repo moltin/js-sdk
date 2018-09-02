@@ -105,9 +105,9 @@ export namespace moltin {
     constructor(config: Config)
     All<T = any>(token?: string): Promise<T>
     Get<T = any>(id: string, token?: string): Promise<T>
-    Filter(filter: string): this
-    Limit(value: string): this
-    Offset(value: string): this
+    Filter(filter: any): this
+    Limit(value: number): this
+    Offset(value: number): this
     Sort(value: string): this
     With(includes: string | string[]): this
   }
@@ -239,9 +239,9 @@ export namespace moltin {
     request: RequestFactory
     config: Config
     constructor(config: Config)
-    Filter(filter: string): this
-    Limit(value: string): this
-    Offset(value: string): this
+    Filter(filter: any): this
+    Limit(value: number): this
+    Offset(value: number): this
     Sort(value: string): this
     With(includes: string | string[]): this
 
@@ -280,9 +280,9 @@ export namespace moltin {
     config: Config
     constructor(config: Config)
     Get<T = any>(id: string, token?: string): Promise<T>
-    Filter(filter: string): this
-    Limit(value: string): this
-    Offset(value: string): this
+    Filter(filter: any): this
+    Limit(value: number): this
+    Offset(value: number): this
     Sort(value: string): this
     With(includes: string | string[]): this
 
@@ -315,6 +315,8 @@ export namespace moltin {
     postcode: string
     county: string
     country: string
+    phone_number: string
+    instructions: string
   }
 
   // NOTE: The implementation of `CartEndpoint` extends `BaseExtend` however it breaks
@@ -327,9 +329,9 @@ export namespace moltin {
     config: Config
     // constructor(config: Config)
     All<T = any>(token?: string): Promise<T>
-    Filter(filter: string): this
-    Limit(value: string): this
-    Offset(value: string): this
+    Filter(filter: any): this
+    Limit(value: number): this
+    Offset(value: number): this
     Sort(value: string): this
     With(includes: string | string[]): this
 
