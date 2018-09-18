@@ -136,6 +136,10 @@ export const cartItemsArray = [
   }
 ]
 
+export const customCartData = {
+  image_url: 'image.link.com'
+}
+
 export const gatewaysArray = [
   {
     slug: 'braintree',
