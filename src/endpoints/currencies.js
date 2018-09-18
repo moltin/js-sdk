@@ -1,12 +1,11 @@
 import BaseExtend from '../extends/base'
-import StorageFactory from '../factories/storage'
 
 class CurrenciesEndpoint extends BaseExtend {
-  constructor(endpoint) {
-    super(endpoint)
+  constructor(config) {
+    super(config)
 
     this.endpoint = 'currencies'
-    this.storage = new StorageFactory()
+    this.storage = config.storage
   }
 
   Create(body) {

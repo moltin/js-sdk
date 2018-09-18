@@ -78,6 +78,29 @@ const Moltin = MoltinGateway({
 })
 ```
 
+### Custom Storage
+
+By default the Moltin SDK persists data to `window.localStorage` in the browser and `node-localstorage` in Node. If this doesn't suit your needs you can override the default storage with a `MemoryStorageFactory` which will persist data for the life cycle of the JavaScript VM:
+
+```js
+import { gateway as MoltinGateway, MemoryStorageFactory } from '@moltin/sdk'
+
+const Moltin = MoltinGateway({
+  client_id: 'XXX',
+  storage: new MemoryStorageFactory()
+});
+```
+
+Or alternatively, create your own storage factory by passing in an object which implements the following interface:
+
+```js
+interface StorageFactory {
+  set(key: string, value: string): void;
+  get(key: string): string | null;
+  delete(key: string): void;
+}
+```
+
 ## ❤️ Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:
