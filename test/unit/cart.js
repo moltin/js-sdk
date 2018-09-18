@@ -175,7 +175,7 @@ describe('Moltin cart', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/carts/5/items', {
+      .post('/carts/6/items', {
         data: {
           type: 'cart_item',
           id: '4',
@@ -188,7 +188,8 @@ describe('Moltin cart', () => {
         quantity: 2,
         image_url: 'image.link.com'
       })
-    return Moltin.Cart('5')
+
+    return Moltin.Cart('6')
       .AddProduct('4', 2, customData)
       .then(response => {
         assert.propertyVal(response, 'id', '4', 'image.link.com')
