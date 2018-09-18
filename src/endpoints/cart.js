@@ -19,14 +19,13 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'GET')
   }
 
-  AddProduct(productId, quantity = 1) {
+  AddProduct(productId, quantity = 1, data = {}) {
     const body = buildCartItemData(productId, quantity)
 
-    return this.request.send(
-      `${this.endpoint}/${this.cartId}/items`,
-      'POST',
-      body
-    )
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
+      ...body,
+      ...data
+    })
   }
 
   AddCustomItem(body) {
