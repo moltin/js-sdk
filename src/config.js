@@ -1,8 +1,16 @@
 import { version } from '../package.json'
+import LocalStorageFactory from './factories/local-storage'
 
 class Config {
   constructor(options) {
-    const { application, client_id, client_secret, currency, host } = options
+    const {
+      application,
+      client_id,
+      client_secret,
+      currency,
+      host,
+      storage
+    } = options
 
     this.application = application
     this.client_id = client_id
@@ -19,6 +27,7 @@ class Config {
       version,
       language: 'JS'
     }
+    this.storage = storage || new LocalStorageFactory()
   }
 }
 

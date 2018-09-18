@@ -1,4 +1,4 @@
-class StorageFactory {
+class LocalStorageFactory {
   constructor() {
     if (typeof localStorage === 'undefined' || localStorage === null) {
       const { LocalStorage } = require('node-localstorage')
@@ -22,4 +22,4 @@ class StorageFactory {
   }
 }
 
-export default StorageFactory
+export default LocalStorageFactory

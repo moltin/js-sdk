@@ -1,3 +1,4 @@
+require('./unit/config')
 require('./unit/authentication')
 
 // Classes
