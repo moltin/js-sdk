@@ -1,7 +1,10 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { cartItemsArray as items } from '../factories'
+import {
+  cartItemsArray as items,
+  customCartData as customData
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -161,6 +164,35 @@ describe('Moltin cart', () => {
       .AddProduct('4', 2)
       .then(response => {
         assert.propertyVal(response, 'id', '4')
+        assert.propertyVal(response, 'quantity', 2)
+      })
+  })
+
+  it('should add a product to the cart with custom data and with cart id argument', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/carts/6/items', {
+        data: {
+          type: 'cart_item',
+          id: '4',
+          quantity: 2,
+          image_url: 'image.link.com'
+        }
+      })
+      .reply(201, {
+        id: '4',
+        quantity: 2,
+        image_url: 'image.link.com'
+      })
+
+    return Moltin.Cart('6')
+      .AddProduct('4', 2, customData)
+      .then(response => {
+        assert.propertyVal(response, 'id', '4', 'image.link.com')
         assert.propertyVal(response, 'quantity', 2)
       })
   })

@@ -1,7 +1,5 @@
 import { pluralize, underscore } from 'inflected'
 
-import StorageFactory from '../factories/storage'
-
 export function buildRelationshipData(type, ids) {
   let data = []
 
@@ -37,8 +35,7 @@ export function createCartIdentifier() {
   )
 }
 
-export function cartIdentifier() {
-  const storage = new StorageFactory()
+export function cartIdentifier(storage) {
   const cartId = createCartIdentifier()
 
   if (storage.get('mcart') !== null) {
