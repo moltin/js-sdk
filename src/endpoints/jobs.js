@@ -6,6 +6,10 @@ class Jobs extends BaseExtend {
 
     this.endpoint = 'jobs'
   }
+
+  Create(body) {
+    return this.request.send(this.endpoint, 'POST', body)
+  }
 }
 
 export default Jobs
