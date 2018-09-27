@@ -18,6 +18,7 @@ export class Moltin {
   Gateways: moltin.GatewaysEndpoint
   Customers: moltin.CustomersEndpoint
   Inventories: moltin.InventoriesEndpoint
+  Jobs: moltin.JobsEndpoint
   Files: moltin.FilesEndpoint
   Flows: moltin.FlowsEndpoint
   Fields: moltin.FieldsEndpoint
@@ -205,6 +206,13 @@ export namespace moltin {
     AllocateStock<T = any>(productId: string, quantity: number): Promise<T>
     DeallocateStock<T = any>(productId: string, quantity: number): Promise<T>
     GetTransactions<T = any>(productId: string): Promise<T>
+  }
+
+  export interface JobsEndpoint extends BaseExtend {
+    endpoint: 'jobs'
+    Create<RequestBody = any, ResponseBody = any>(
+      body: RequestBody
+    ): Promise<ResponseBody>
   }
 
   export interface FilesEndpoint extends BaseExtend {
