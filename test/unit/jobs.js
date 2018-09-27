@@ -39,4 +39,27 @@ describe('Moltin jobs', () => {
       assert.propertyVal(response, 'id', 'job-1')
     })
   })
+
+  it('should create a new job', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/jobs', {
+        data: {
+          job_type: 'order_export',
+          filter: 'eq(status,complete)'
+        }
+      })
+      .reply(201, jobs[0])
+
+    return Moltin.Jobs.Create({
+      job_type: 'order_export',
+      filter: 'eq(status,complete)'
+    }).then(response => {
+      assert.propertyVal(response, 'id', 'job-1')
+    })
+  })
 })
