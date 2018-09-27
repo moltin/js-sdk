@@ -360,3 +360,24 @@ export const addressesArray = [
     country: 'GB'
   }
 ]
+
+export const jobsArray = [
+  {
+    id: 'job-1',
+    type: 'job',
+    job_type: 'order_export',
+    status: 'complete'
+  },
+  {
+    id: 'job-2',
+    type: 'job',
+    job_type: 'order_export',
+    status: 'pending'
+  },
+  {
+    id: 'job-3',
+    type: 'job',
+    job_type: 'order_export',
+    status: 'processing'
+  }
+]
