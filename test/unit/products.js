@@ -292,7 +292,7 @@ describe('Moltin products', () => {
     return Moltin.Products.With('brands')
       .All()
       .then(() => {
-        assert.notExists(Moltin.includes)
+        assert.notExists(Moltin.Products.includes)
       })
   })
 
