@@ -19,8 +19,14 @@ class Credentials {
 class RequestFactory {
   constructor(config) {
     this.config = config
-
     this.storage = config.storage
+  }
+
+  resetProps(instance) {
+    const inst = instance
+    ;['includes', 'sort', 'limit', 'offset', 'filter'].forEach(
+      e => delete inst[e]
+    )
   }
 
   authenticate() {
@@ -76,7 +82,7 @@ class RequestFactory {
     return promise
   }
 
-  send(uri, method, body = undefined, token = undefined) {
+  send(uri, method, body = undefined, token = undefined, instance) {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
@@ -129,6 +135,8 @@ class RequestFactory {
       }
       return req(credentials)
     })
+
+    this.resetProps(instance)
 
     return promise
   }
