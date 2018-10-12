@@ -1,4 +1,4 @@
-import { buildRequestBody, parseJSON } from '../utils/helpers'
+import { buildRequestBody, parseJSON, resetProps } from '../utils/helpers'
 
 class Credentials {
   constructor(client_id, access_token, expires) {
@@ -20,13 +20,6 @@ class RequestFactory {
   constructor(config) {
     this.config = config
     this.storage = config.storage
-  }
-
-  resetProps(instance) {
-    const inst = instance
-    ;['includes', 'sort', 'limit', 'offset', 'filter'].forEach(
-      e => delete inst[e]
-    )
   }
 
   authenticate() {
@@ -136,7 +129,7 @@ class RequestFactory {
       return req(credentials)
     })
 
-    if (instance) this.resetProps(instance)
+    if (instance) resetProps(instance)
 
     return promise
   }
