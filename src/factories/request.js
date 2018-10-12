@@ -136,7 +136,7 @@ class RequestFactory {
       return req(credentials)
     })
 
-    this.resetProps(instance)
+    if (instance) this.resetProps(instance)
 
     return promise
   }
