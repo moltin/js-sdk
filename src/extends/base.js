@@ -4,7 +4,6 @@ import { buildURL } from '../utils/helpers'
 class BaseExtend {
   constructor(config) {
     this.request = new RequestFactory(config)
-
     this.config = config
   }
 
@@ -21,7 +20,8 @@ class BaseExtend {
       }),
       'GET',
       undefined,
-      token
+      token,
+      this
     )
 
     return this.call
@@ -34,7 +34,8 @@ class BaseExtend {
       }),
       'GET',
       undefined,
-      token
+      token,
+      this
     )
 
     return this.call

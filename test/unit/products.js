@@ -271,4 +271,133 @@ describe('Moltin products', () => {
       assert.equal(response, '{}')
     })
   })
+
+  it('should not persist the includes property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products')
+      .query({
+        include: 'brands'
+      })
+      .reply(200, products)
+
+    return Moltin.Products.With('brands')
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Products.includes)
+      })
+  })
+
+  it('should not persist the sort property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products')
+      .query({
+        sort: 'name'
+      })
+      .reply(200, products)
+
+    return Moltin.Products.Sort('name')
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Products.sort)
+      })
+  })
+
+  it('should not persist the limit property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products')
+      .query({
+        page: {
+          limit: 4
+        }
+      })
+      .reply(200, products)
+
+    return Moltin.Products.Limit(4)
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Products.limit)
+      })
+  })
+
+  it('should not persist the offset property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products')
+      .query({
+        page: {
+          offset: 10
+        }
+      })
+      .reply(200, products)
+
+    return Moltin.Products.Offset(10)
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Products.offset)
+      })
+  })
+
+  it('should not persist the filter property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)')
+      .reply(200, products)
+
+    return Moltin.Products.Filter({
+      eq: {
+        status: 'live',
+        slug: 'new-slug'
+      },
+      gt: {
+        stock: 2
+      }
+    })
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Products.filter)
+      })
+  })
 })

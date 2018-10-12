@@ -193,3 +193,10 @@ export function buildCartCheckoutData(
     shipping_address
   }
 }
+
+export function resetProps(instance) {
+  const inst = instance
+  ;['includes', 'sort', 'limit', 'offset', 'filter'].forEach(
+    e => delete inst[e]
+  )
+}

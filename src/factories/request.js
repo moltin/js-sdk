@@ -1,4 +1,4 @@
-import { buildRequestBody, parseJSON } from '../utils/helpers'
+import { buildRequestBody, parseJSON, resetProps } from '../utils/helpers'
 
 class Credentials {
   constructor(client_id, access_token, expires) {
@@ -19,7 +19,6 @@ class Credentials {
 class RequestFactory {
   constructor(config) {
     this.config = config
-
     this.storage = config.storage
   }
 
@@ -76,7 +75,7 @@ class RequestFactory {
     return promise
   }
 
-  send(uri, method, body = undefined, token = undefined) {
+  send(uri, method, body = undefined, token = undefined, instance) {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
@@ -129,6 +128,8 @@ class RequestFactory {
       }
       return req(credentials)
     })
+
+    if (instance) resetProps(instance)
 
     return promise
   }

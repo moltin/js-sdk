@@ -175,4 +175,25 @@ describe('Moltin customers', () => {
       assert.propertyVal(response, 'customer_id', 'customer-1')
     })
   })
+
+  it('should not persist the filter property after request', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/customers?filter=eq(email,jonathan@moltin.com)')
+      .reply(200, customers)
+
+    return Moltin.Customers.Filter({
+      eq: {
+        email: 'jonathan@moltin.com'
+      }
+    })
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Customers.filter)
+      })
+  })
 })
