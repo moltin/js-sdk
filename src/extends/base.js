@@ -34,7 +34,8 @@ class BaseExtend {
       }),
       'GET',
       undefined,
-      token
+      token,
+      this
     )
 
     return this.call

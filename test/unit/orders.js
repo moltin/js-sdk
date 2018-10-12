@@ -218,4 +218,28 @@ describe('Moltin orders', () => {
       assert.propertyVal(response, 'shipping', 'fulfilled')
     })
   })
+
+  it('should not persist the includes property after request', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/orders')
+      .query({
+        include: 'items'
+      })
+      .reply(200, orders)
+
+    return Moltin.Orders.With('items')
+      .All()
+      .then(() => {
+        assert.notExists(Moltin.Orders.includes)
+      })
+  })
 })
