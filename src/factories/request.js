@@ -82,7 +82,7 @@ class RequestFactory {
       const credentials = JSON.parse(storage.get('moltinCredentials'))
       const req = ({ access_token }) => {
         const headers = {
-          Authorization: `Bearer: ${access_token}`,
+          Authorization: `Bearer ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version
