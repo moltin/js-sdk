@@ -1,6 +1,5 @@
 import CRUDExtend from '../extends/crud'
 
-/* eslint-disable no-unused-vars */
 class EventsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
@@ -9,4 +8,4 @@ class EventsEndpoint extends CRUDExtend {
   }
 }
 
-export default BrandsEndpoint
+export default EventsEndpoint

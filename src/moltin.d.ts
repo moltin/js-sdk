@@ -14,7 +14,7 @@ export class Moltin {
   Brands: moltin.BrandsEndpoint
   Categories: moltin.CategoriesEndpoint
   Collections: moltin.EventsEndpoint
-  Events: moltin.BrandsEndpoint
+  Events: moltin.EventsEndpoint
   Orders: moltin.OrdersEndpoint
   Gateways: moltin.GatewaysEndpoint
   Customers: moltin.CustomersEndpoint

@@ -1,5 +1,3 @@
-
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('fetch-everywhere'), require('es6-promise')) :
   typeof define === 'function' && define.amd ? define(['exports', 'fetch-everywhere', 'es6-promise'], factory) :
@@ -1132,7 +1130,7 @@
     return CurrenciesEndpoint;
   }(BaseExtend);
 
-  var BrandsEndpoint$1 =
+  var BrandsEndpoint =
   /*#__PURE__*/
   function (_CRUDExtend) {
     _inherits(BrandsEndpoint, _CRUDExtend);
@@ -1269,8 +1267,6 @@
 
     return CollectionsEndpoint;
   }(CRUDExtend);
-
-  /* eslint-disable no-unused-vars */
 
   var EventsEndpoint =
   /*#__PURE__*/
@@ -1722,10 +1718,10 @@
       this.storage = config.storage;
       this.Products = new ProductsEndpoint(config);
       this.Currencies = new CurrenciesEndpoint(config);
-      this.Brands = new BrandsEndpoint$1(config);
+      this.Brands = new BrandsEndpoint(config);
       this.Categories = new CategoriesEndpoint(config);
       this.Collections = new CollectionsEndpoint(config);
-      this.Events = new BrandsEndpoint(config);
+      this.Events = new EventsEndpoint(config);
       this.Orders = new OrdersEndpoint(config);
       this.Gateways = new GatewaysEndpoint(config);
       this.Customers = new CustomersEndpoint(config);
