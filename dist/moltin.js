@@ -885,6 +885,7 @@
               headers['X-MOLTIN-CUSTOMER-TOKEN'] = token;
             }
 
+            console.log("URL ".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri));
             fetch("".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri), {
               method: method.toUpperCase(),
               headers: headers,

@@ -108,7 +108,9 @@ class RequestFactory {
         if (token) {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
-
+        console.log(
+          `URL ${config.protocol}://${config.host}/${config.version}/${uri}`
+        )
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
