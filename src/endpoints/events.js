@@ -4,7 +4,7 @@ class EventsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
 
-    this.endpoint = 'integrations'
+    this.endpoint = 'events'
   }
 }
 

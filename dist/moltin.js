@@ -802,6 +802,8 @@
       value: function authenticate() {
         var config = this.config,
             storage = this.storage;
+        console.log('send, config' + JSON.stringify(config));
+        console.log('send, storage' + JSON.stringify(storage));
 
         if (!config.client_id) {
           throw new Error('You must have a client_id set');
@@ -855,11 +857,14 @@
         var instance = arguments.length > 4 ? arguments[4] : undefined;
         var config = this.config,
             storage = this.storage;
+        console.log('send, config' + JSON.stringify(config));
+        console.log('send, storage' + JSON.stringify(storage));
         var promise = new Promise(function (resolve, reject) {
           var credentials = JSON.parse(storage.get('moltinCredentials'));
 
           var req = function req(_ref) {
             var access_token = _ref.access_token;
+            console.log('send, access_token' + JSON.stringify(access_token));
             var headers = {
               Authorization: "Bearer: ".concat(access_token),
               'Content-Type': 'application/json',
@@ -1279,7 +1284,7 @@
       _classCallCheck(this, EventsEndpoint);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(EventsEndpoint).call(this, endpoint));
-      _this.endpoint = 'integrations';
+      _this.endpoint = 'events';
       return _this;
     }
 
