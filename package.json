@@ -21,7 +21,7 @@
   "types": "src/moltin.d.ts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/moltin/js-sdk.git"
+    "url": "git://github.com/uniquelyparticular/js-sdk.git"
   },
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"
