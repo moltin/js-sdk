@@ -883,7 +883,7 @@ function (_CRUDExtend) {
     _classCallCheck(this, EventsEndpoint);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EventsEndpoint).call(this, endpoint));
-    _this.endpoint = 'events';
+    _this.endpoint = 'integrations';
     return _this;
   }
 
