@@ -410,8 +410,6 @@ function () {
     value: function authenticate() {
       var config = this.config,
           storage = this.storage;
-      console.log("authenticate, config".concat(JSON.stringify(config)));
-      console.log("authenticate, storage".concat(JSON.stringify(storage)));
 
       if (!config.client_id) {
         throw new Error('You must have a client_id set');
@@ -465,15 +463,11 @@ function () {
       var instance = arguments.length > 4 ? arguments[4] : undefined;
       var config = this.config,
           storage = this.storage;
-      console.log("send, config".concat(JSON.stringify(config)));
-      console.log("send, storage".concat(JSON.stringify(storage)));
       var promise = new Promise(function (resolve, reject) {
         var credentials = JSON.parse(storage.get('moltinCredentials'));
-        console.log("send, credentials".concat(JSON.stringify(credentials)));
 
         var req = function req(_ref) {
           var access_token = _ref.access_token;
-          console.log("send, access_token".concat(JSON.stringify(access_token)));
           var headers = {
             Authorization: "Bearer: ".concat(access_token),
             'Content-Type': 'application/json',
@@ -493,7 +487,6 @@ function () {
             headers['X-MOLTIN-CUSTOMER-TOKEN'] = token;
           }
 
-          console.log("URL ".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri));
           fetch("".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri), {
             method: method.toUpperCase(),
             headers: headers,
@@ -894,7 +887,7 @@ function (_CRUDExtend) {
     _classCallCheck(this, EventsEndpoint);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EventsEndpoint).call(this, endpoint));
-    _this.endpoint = 'events';
+    _this.endpoint = 'integrations';
     return _this;
   }
 

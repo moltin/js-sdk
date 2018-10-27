@@ -25,9 +25,6 @@ class RequestFactory {
   authenticate() {
     const { config, storage } = this
 
-    console.log(`authenticate, config${JSON.stringify(config)}`)
-    console.log(`authenticate, storage${JSON.stringify(storage)}`)
-
     if (!config.client_id) {
       throw new Error('You must have a client_id set')
     }
@@ -81,15 +78,9 @@ class RequestFactory {
   send(uri, method, body = undefined, token = undefined, instance) {
     const { config, storage } = this
 
-    console.log(`send, config${JSON.stringify(config)}`)
-    console.log(`send, storage${JSON.stringify(storage)}`)
-
     const promise = new Promise((resolve, reject) => {
       const credentials = JSON.parse(storage.get('moltinCredentials'))
-      console.log(`send, credentials${JSON.stringify(credentials)}`)
       const req = ({ access_token }) => {
-        console.log(`send, access_token${JSON.stringify(access_token)}`)
-
         const headers = {
           Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
@@ -108,9 +99,7 @@ class RequestFactory {
         if (token) {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
-        console.log(
-          `URL ${config.protocol}://${config.host}/${config.version}/${uri}`
-        )
+
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
