@@ -487,7 +487,8 @@ function () {
             headers['X-MOLTIN-CUSTOMER-TOKEN'] = token;
           }
 
-          console.log("send, ".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri));
+          console.log("send, URL: ".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri));
+          console.log("send, BODY: ".concat(buildRequestBody(body)));
           fetch("".concat(config.protocol, "://").concat(config.host, "/").concat(config.version, "/").concat(uri), {
             method: method.toUpperCase(),
             headers: headers,
@@ -790,8 +791,8 @@ function (_BaseExtend) {
       var quantity = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
       var body = buildCartItemData(productId, quantity);
-      console.log("AddProduct, body: ".concat(body));
-      console.log("AddProduct, data: ".concat(data));
+      console.log("AddProduct, body: ".concat(JSON.stringify(body)));
+      console.log("AddProduct, data: ".concat(JSON.stringify(data)));
       return this.request.send("".concat(this.endpoint, "/").concat(this.cartId, "/items"), 'POST', _objectSpread({}, body, data));
     }
   }, {

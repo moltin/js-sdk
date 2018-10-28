@@ -101,8 +101,11 @@ class RequestFactory {
         }
 
         console.log(
-          `send, ${config.protocol}://${config.host}/${config.version}/${uri}`
+          `send, URL: ${config.protocol}://${config.host}/${
+            config.version
+          }/${uri}`
         )
+        console.log(`send, BODY: ${buildRequestBody(body)}`)
         fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
