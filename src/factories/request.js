@@ -79,7 +79,7 @@ class RequestFactory {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      const credentials = JSON.parse(storage.get('moltinCredentials'))
+      let credentials = JSON.parse(storage.get('moltinCredentials'))
       const req = ({ access_token }) => {
         const headers = {
           Authorization: `Bearer: ${access_token}`,
@@ -123,7 +123,12 @@ class RequestFactory {
         Math.floor(Date.now() / 1000) >= credentials.expires
       ) {
         return this.authenticate()
-          .then(() => req(JSON.parse(storage.get('moltinCredentials'))))
+          .then(() => {
+            credentials = JSON.parse(storage.get('moltinCredentials'))
+            /* eslint-disable no-console */
+            console.log(`credentials${JSON.stringify(credentials)}`)
+            req(credentials)
+          })
           .catch(error => reject(error))
       }
       return req(credentials)

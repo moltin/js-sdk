@@ -896,7 +896,11 @@
 
           if (!credentials || !credentials.access_token || credentials.client_id !== config.client_id || Math.floor(Date.now() / 1000) >= credentials.expires) {
             return _this.authenticate().then(function () {
-              return req(JSON.parse(storage.get('moltinCredentials')));
+              credentials = JSON.parse(storage.get('moltinCredentials'));
+              /* eslint-disable no-console */
+
+              console.log("credentials".concat(JSON.stringify(credentials)));
+              req(credentials);
             }).catch(function (error) {
               return reject(error);
             });
