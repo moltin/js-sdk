@@ -79,7 +79,7 @@ class RequestFactory {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      let credentials = JSON.parse(storage.get('moltinCredentials'))
+      const credentials = JSON.parse(storage.get('moltinCredentials'))
       const req = ({ access_token }) => {
         const headers = {
           Authorization: `Bearer: ${access_token}`,
@@ -124,10 +124,7 @@ class RequestFactory {
       ) {
         return this.authenticate()
           .then(() => {
-            credentials = JSON.parse(storage.get('moltinCredentials'))
-            /* eslint-disable no-console */
-            console.log(`credentials${JSON.stringify(credentials)}`)
-            req(credentials)
+            req(JSON.parse(storage.get('moltinCredentials')))
           })
           .catch(error => reject(error))
       }
