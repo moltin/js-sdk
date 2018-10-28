@@ -13,8 +13,8 @@ export class Moltin {
   Currencies: moltin.CurrenciesEndpoint
   Brands: moltin.BrandsEndpoint
   Categories: moltin.CategoriesEndpoint
-  Collections: moltin.EventsEndpoint
-  Events: moltin.EventsEndpoint
+  Collections: moltin.CollectionsEndpoint
+  Integrations: moltin.IntegrationsEndpoint
   Orders: moltin.OrdersEndpoint
   Gateways: moltin.GatewaysEndpoint
   Customers: moltin.CustomersEndpoint
@@ -159,8 +159,8 @@ export namespace moltin {
     Active(): Promise<string>
   }
 
-  export interface EventsEndpoint extends CRUDExtend {
-    endpoint: 'events'
+  export interface IntegrationsEndpoint extends CRUDExtend {
+    endpoint: 'integrations'
   }
 
   export interface BrandsEndpoint extends CRUDExtend {

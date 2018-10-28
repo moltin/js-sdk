@@ -876,22 +876,22 @@ function (_CRUDExtend) {
   return CollectionsEndpoint;
 }(CRUDExtend);
 
-var EventsEndpoint =
+var IntegrationsEndpoint =
 /*#__PURE__*/
 function (_CRUDExtend) {
-  _inherits(EventsEndpoint, _CRUDExtend);
+  _inherits(IntegrationsEndpoint, _CRUDExtend);
 
-  function EventsEndpoint(endpoint) {
+  function IntegrationsEndpoint(endpoint) {
     var _this;
 
-    _classCallCheck(this, EventsEndpoint);
+    _classCallCheck(this, IntegrationsEndpoint);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(EventsEndpoint).call(this, endpoint));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(IntegrationsEndpoint).call(this, endpoint));
     _this.endpoint = 'integrations';
     return _this;
   }
 
-  return EventsEndpoint;
+  return IntegrationsEndpoint;
 }(CRUDExtend);
 
 var OrdersEndpoint =
@@ -1329,7 +1329,7 @@ function () {
     this.Brands = new BrandsEndpoint(config);
     this.Categories = new CategoriesEndpoint(config);
     this.Collections = new CollectionsEndpoint(config);
-    this.Events = new EventsEndpoint(config);
+    this.Integrations = new IntegrationsEndpoint(config);
     this.Orders = new OrdersEndpoint(config);
     this.Gateways = new GatewaysEndpoint(config);
     this.Customers = new CustomersEndpoint(config);

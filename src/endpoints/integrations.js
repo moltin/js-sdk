@@ -1,6 +1,6 @@
 import CRUDExtend from '../extends/crud'
 
-class EventsEndpoint extends CRUDExtend {
+class IntegrationsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
 
@@ -8,4 +8,4 @@ class EventsEndpoint extends CRUDExtend {
   }
 }
 
-export default EventsEndpoint
+export default IntegrationsEndpoint
