@@ -1,3 +1,16 @@
+export const integrationsArray = [
+  {
+    id: 'integration-1',
+    type: 'integration',
+    name: 'Integration 1'
+  },
+  {
+    id: 'integration-2',
+    type: 'integration',
+    name: 'Integration 2'
+  }
+]
+
 export const productsArray = [
   {
     id: 'product-1',
