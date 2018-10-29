@@ -123,9 +123,7 @@ class RequestFactory {
         Math.floor(Date.now() / 1000) >= credentials.expires
       ) {
         return this.authenticate()
-          .then(() => {
-            req(JSON.parse(storage.get('moltinCredentials')))
-          })
+          .then(() => req(JSON.parse(storage.get('moltinCredentials'))))
           .catch(error => reject(error))
       }
       return req(credentials)
