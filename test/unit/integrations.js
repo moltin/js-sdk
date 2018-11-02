@@ -84,23 +84,7 @@ describe('Moltin integrations', () => {
       .reply(200, integrations)
 
     return Moltin.Integrations.All().then(response => {
-      console.log(response)
       assert.lengthOf(response, 2)
     })
   })
-
-  // it('should return a single integration', () => {
-  //   // Intercept the API request
-  //   nock(apiUrl, {
-  //     reqheaders: {
-  //       Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-  //     }
-  //   })
-  //     .get('/integration/integration-1')
-  //     .reply(200, integrations[0])
-
-  //   return Moltin.Integrations.Get(integrations[0].id).then(response => {
-  //     assert.propertyVal(response, 'name', 'Integration 1')
-  //   })
-  // })
 })
