@@ -58,6 +58,22 @@ export function parseJSON(response) {
     })
   }
 
+  if (response.status === 429) {
+    // Only the body of the response is passed back so to catch a 429
+    // we fill the JSON body with some error details to give information
+    // to the consumer
+    const error = {
+      errors: [{ status: 429 }]
+    }
+    return new Promise(resolve => {
+      resolve({
+        status: response.status,
+        ok: response.ok,
+        json: error
+      })
+    })
+  }
+
   return new Promise(resolve =>
     response.json().then(json =>
       resolve({
