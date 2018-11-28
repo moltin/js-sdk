@@ -349,7 +349,7 @@ export namespace moltin {
     constructor(request: RequestFactory, id: string)
     Get<T = any>(): Promise<T>
     Items<T = any>(): Promise<T>
-    AddProduct<T = any>(productId: string, quantity?: number): Promise<T>
+    AddProduct<T = any>(productId: string, quantity?: number, data?: any = {}): Promise<T>
     AddCustomItem<RequestBody = any, ResponseBody = any>(
       body: RequestBody
     ): Promise<ResponseBody>
