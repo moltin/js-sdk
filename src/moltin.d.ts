@@ -355,7 +355,7 @@ export namespace moltin {
     ): Promise<ResponseBody>
     AddPromotion<T = any>(code: string): Promise<T>
     RemoveItem<T = any>(itemId: string): Promise<T>
-    UpdateItemQuantity<T = any>(itemId: string, quantity: number): Promise<T>
+    UpdateItemQuantity<T = any>(itemId: string, quantity: number, data?: any = {}): Promise<T>
     Checkout<T = any>(
       customer: CheckoutCustomer | CheckoutCustomerObject,
       billingAddress: Address,
