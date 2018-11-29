@@ -57,7 +57,17 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  UpdateItemQuantity(itemId, quantity, data = {}) {
+  UpdateItemQuantity(itemId, quantity) {
+    const body = buildCartItemData(itemId, quantity)
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}`,
+      'PUT',
+      body
+    )
+  }
+
+  UpdateItem(itemId, quantity, data = {}) {
     const body = buildCartItemData(itemId, quantity)
 
     return this.request.send(
