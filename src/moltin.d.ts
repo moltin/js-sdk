@@ -327,6 +327,13 @@ export namespace moltin {
     instructions?: string
   }
 
+  export interface ItemTaxObject {
+    name: string
+    jurisdiction: string
+    code: string
+    rate: number
+  }
+
   // NOTE: The implementation of `CartEndpoint` extends `BaseExtend` however it breaks
   // polymorphism my defining an incompatible signature for `constructor` so having to
   // redeclare the BaseExtend methods.
@@ -356,6 +363,8 @@ export namespace moltin {
     AddPromotion<T = any>(code: string): Promise<T>
     RemoveItem<T = any>(itemId: string): Promise<T>
     UpdateItemQuantity<T = any>(itemId: string, quantity: number): Promise<T>
+    AddItemTax<T = any>(itemId: string, taxData: ItemTaxObject)
+    RemoveItemTax<T = any>(itemId: string, taxItemId: string)
     Checkout<T = any>(
       customer: CheckoutCustomer | CheckoutCustomerObject,
       billingAddress: Address,

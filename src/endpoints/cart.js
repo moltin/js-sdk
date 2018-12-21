@@ -1,6 +1,10 @@
 import BaseExtend from '../extends/base'
 
-import { buildCartItemData, buildCartCheckoutData } from '../utils/helpers'
+import {
+  buildCartItemData,
+  buildCartCheckoutData,
+  buildURL
+} from '../utils/helpers'
 
 class CartEndpoint extends BaseExtend {
   constructor(request, id) {
@@ -16,7 +20,20 @@ class CartEndpoint extends BaseExtend {
   }
 
   Items() {
-    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'GET')
+    const { includes, sort, limit, offset, filter } = this
+
+    this.call = this.request.send(
+      buildURL(`${this.endpoint}/${this.cartId}/items`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET'
+    )
+
+    return this.call
   }
 
   AddProduct(productId, quantity = 1, data = {}) {
@@ -64,6 +81,25 @@ class CartEndpoint extends BaseExtend {
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
       'PUT',
       body
+    )
+  }
+
+  AddItemTax(itemId, taxData) {
+    const body = Object.assign(taxData, {
+      type: 'tax_item'
+    })
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/taxes`,
+      'POST',
+      body
+    )
+  }
+
+  RemoveItemTax(itemId, taxItemId) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
+      'DELETE'
     )
   }
 
