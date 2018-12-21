@@ -345,6 +345,63 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should update a cart item', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/2', {
+        data: {
+          type: 'cart_item',
+          id: '2',
+          quantity: 6
+        }
+      })
+      .reply(200, {
+        id: '2',
+        quantity: 6
+      })
+
+    return Moltin.Cart()
+      .UpdateItem('2', 6)
+      .then(item => {
+        assert.propertyVal(item, 'id', '2')
+        assert.propertyVal(item, 'quantity', 6)
+      })
+  })
+
+  it('should update a cart item with custom data', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/2', {
+        data: {
+          type: 'cart_item',
+          id: '2',
+          quantity: 6,
+          image_url: 'image.link.com'
+        }
+      })
+      .reply(201, {
+        id: '2',
+        quantity: 6,
+        image_url: 'image.link.com'
+      })
+
+    return Moltin.Cart()
+      .UpdateItem('2', 6, customData)
+      .then(response => {
+        assert.propertyVal(response, 'id', '2')
+        assert.propertyVal(response, 'quantity', 6)
+        assert.propertyVal(response, 'image_url', 'image.link.com')
+      })
+  })
+
   it('should delete a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {

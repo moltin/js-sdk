@@ -356,12 +356,17 @@ export namespace moltin {
     constructor(request: RequestFactory, id: string)
     Get<T = any>(): Promise<T>
     Items<T = any>(): Promise<T>
-    AddProduct<T = any>(productId: string, quantity?: number): Promise<T>
+    AddProduct<T = any>(productId: string, quantity?: number, data?: any): Promise<T>
     AddCustomItem<RequestBody = any, ResponseBody = any>(
       body: RequestBody
     ): Promise<ResponseBody>
     AddPromotion<T = any>(code: string): Promise<T>
     RemoveItem<T = any>(itemId: string): Promise<T>
+    UpdateItem<T = any>(itemId: string, quantity: number, data?: any): Promise<T>
+
+    /**
+     * @deprecated Use UpdateItem method
+     */
     UpdateItemQuantity<T = any>(itemId: string, quantity: number): Promise<T>
     AddItemTax<T = any>(itemId: string, taxData: ItemTaxObject)
     RemoveItemTax<T = any>(itemId: string, taxItemId: string)
