@@ -67,6 +67,16 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  UpdateItem(itemId, quantity, data = {}) {
+    const body = buildCartItemData(itemId, quantity)
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}`,
+      'PUT',
+      { ...body, ...data }
+    )
+  }
+
   Checkout(customer, billing_address, shipping_address = billing_address) {
     const body = buildCartCheckoutData(
       customer,
