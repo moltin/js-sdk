@@ -18,19 +18,14 @@ describe('Moltin integrations', () => {
       }
     })
       .post('/integrations', {
-        data: {
-          type: 'integration',
-          name: 'A new integration'
-        }
+        data: integrations[0]
       })
       .reply(201, {
-        name: 'A new integration'
+        data: integrations[0]
       })
 
-    return Moltin.Integrations.Create({
-      name: 'A new integration'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new integration')
+    return Moltin.Integrations.Create(integrations[0]).then(response => {
+      assert.propertyVal(response.data, 'name', integrations[0].name)
     })
   })
 
@@ -41,36 +36,18 @@ describe('Moltin integrations', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .put('/integrations/integration-1', {
-        data: {
-          type: 'integration',
-          name: 'Updated integration name'
-        }
+      .put(`/integrations/${integrations[1].id}`, {
+        data: integrations[1]
       })
       .reply(200, {
-        name: 'Updated integration name'
+        data: integrations[1]
       })
 
-    return Moltin.Integrations.Update(integrations[0].id, {
-      name: 'Updated integration name'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'Updated integration name')
-    })
-  })
-
-  it('should delete a integration', () => {
-    // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+    return Moltin.Integrations.Update(integrations[1].id, integrations[1]).then(
+      response => {
+        assert.propertyVal(response.data, 'name', integrations[1].name)
       }
-    })
-      .delete('/integrations/integration-1')
-      .reply(204)
-
-    return Moltin.Integrations.Delete(integrations[0].id).then(response => {
-      assert.equal(response, '{}')
-    })
+    )
   })
 
   it('should return an array of integrations', () => {
@@ -84,7 +61,41 @@ describe('Moltin integrations', () => {
       .reply(200, integrations)
 
     return Moltin.Integrations.All().then(response => {
-      assert.lengthOf(response, 2)
+      assert.lengthOf(response, 3)
+    })
+  })
+
+  it('should return a single integration', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get(`/integrations/${integrations[2].id}`)
+      .reply(200, {
+        data: integrations[2]
+      })
+
+    return Moltin.Integrations.Get(integrations[2].id).then(response => {
+      assert.propertyVal(response.data, 'id', integrations[2].id)
+      assert.propertyVal(response.data, 'name', integrations[2].name)
+      assert.equal(response.data.observes[0], integrations[2].observes[0])
+    })
+  })
+
+  it('should delete a integration', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete(`/integrations/${integrations[0].id}`)
+      .reply(204)
+
+    return Moltin.Integrations.Delete(integrations[0].id).then(response => {
+      assert.equal(response, '{}')
     })
   })
 })
