@@ -345,6 +345,63 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should update a cart item', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/2', {
+        data: {
+          type: 'cart_item',
+          id: '2',
+          quantity: 6
+        }
+      })
+      .reply(200, {
+        id: '2',
+        quantity: 6
+      })
+
+    return Moltin.Cart()
+      .UpdateItem('2', 6)
+      .then(item => {
+        assert.propertyVal(item, 'id', '2')
+        assert.propertyVal(item, 'quantity', 6)
+      })
+  })
+
+  it('should update a cart item with custom data', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/2', {
+        data: {
+          type: 'cart_item',
+          id: '2',
+          quantity: 6,
+          image_url: 'image.link.com'
+        }
+      })
+      .reply(201, {
+        id: '2',
+        quantity: 6,
+        image_url: 'image.link.com'
+      })
+
+    return Moltin.Cart()
+      .UpdateItem('2', 6, customData)
+      .then(response => {
+        assert.propertyVal(response, 'id', '2')
+        assert.propertyVal(response, 'quantity', 6)
+        assert.propertyVal(response, 'image_url', 'image.link.com')
+      })
+  })
+
   it('should delete a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -408,6 +465,45 @@ describe('Moltin cart', () => {
 
     return Moltin.Cart('5')
       .Delete()
+      .then(response => {
+        assert.deepEqual(response, {})
+      })
+  })
+
+  it('should add a tax item to a cart item', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/carts/3/items/5/taxes')
+      .reply(200, {})
+
+    return Moltin.Cart()
+      .AddItemTax(5, {
+        code: 'CALI',
+        rate: 0.0775,
+        jurisdiction: 'CALIFORNIA',
+        name: 'California Tax'
+      })
+      .then(response => {
+        assert.deepEqual(response, {})
+      })
+  })
+
+  it('should remove a tax item to a cart item', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/carts/3/items/5/taxes/6')
+      .reply(200, {})
+
+    return Moltin.Cart()
+      .RemoveItemTax('5', '6')
       .then(response => {
         assert.deepEqual(response, {})
       })

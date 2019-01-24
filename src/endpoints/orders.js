@@ -16,6 +16,7 @@ class OrdersEndpoint extends BaseExtend {
   }
 
   Transactions(id) {
+    /* eslint-disable no-console */
     console.warn(
       `DeprecationWarning: 'Order.Transactions(id)' will soon be deprecated. It's recommended you use Transactions class directly to get all, capture and refund transactions.`
     )

@@ -13,7 +13,8 @@ export class Moltin {
   Currencies: moltin.CurrenciesEndpoint
   Brands: moltin.BrandsEndpoint
   Categories: moltin.CategoriesEndpoint
-  Collections: moltin.CategoriesEndpoint
+  Collections: moltin.CollectionsEndpoint
+  Integrations: moltin.IntegrationsEndpoint
   Orders: moltin.OrdersEndpoint
   Gateways: moltin.GatewaysEndpoint
   Customers: moltin.CustomersEndpoint
@@ -156,6 +157,10 @@ export namespace moltin {
     ): Promise<ResponseBody>
     Set(id: string): Promise<string>
     Active(): Promise<string>
+  }
+
+  export interface IntegrationsEndpoint extends CRUDExtend {
+    endpoint: 'integrations'
   }
 
   export interface BrandsEndpoint extends CRUDExtend {
@@ -327,6 +332,13 @@ export namespace moltin {
     instructions?: string
   }
 
+  export interface ItemTaxObject {
+    name: string
+    jurisdiction: string
+    code: string
+    rate: number
+  }
+
   // NOTE: The implementation of `CartEndpoint` extends `BaseExtend` however it breaks
   // polymorphism my defining an incompatible signature for `constructor` so having to
   // redeclare the BaseExtend methods.
@@ -349,13 +361,20 @@ export namespace moltin {
     constructor(request: RequestFactory, id: string)
     Get<T = any>(): Promise<T>
     Items<T = any>(): Promise<T>
-    AddProduct<T = any>(productId: string, quantity?: number): Promise<T>
+    AddProduct<T = any>(productId: string, quantity?: number, data?: any): Promise<T>
     AddCustomItem<RequestBody = any, ResponseBody = any>(
       body: RequestBody
     ): Promise<ResponseBody>
     AddPromotion<T = any>(code: string): Promise<T>
     RemoveItem<T = any>(itemId: string): Promise<T>
+    UpdateItem<T = any>(itemId: string, quantity: number, data?: any): Promise<T>
+
+    /**
+     * @deprecated Use UpdateItem method
+     */
     UpdateItemQuantity<T = any>(itemId: string, quantity: number): Promise<T>
+    AddItemTax<T = any>(itemId: string, taxData: ItemTaxObject)
+    RemoveItemTax<T = any>(itemId: string, taxItemId: string)
     Checkout<T = any>(
       customer: CheckoutCustomer | CheckoutCustomerObject,
       billingAddress: Address,

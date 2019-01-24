@@ -1,3 +1,42 @@
+export const integrationsArray = [
+  {
+    id: 'integration-1',
+    type: 'integration',
+    name: 'Integration 1',
+    description: 'Integration 1 description',
+    enabled: true,
+    observes: ['integrations.updated'],
+    integration_type: 'webhook',
+    configuration: {
+      url: 'https://moltin.com/webhooktest1'
+    }
+  },
+  {
+    id: 'integration-1',
+    type: 'integration',
+    name: 'Integration 1 Updated',
+    description: 'Integration 1 updated description',
+    enabled: true,
+    observes: ['integrations.deleted'],
+    integration_type: 'webhook',
+    configuration: {
+      url: 'https://moltin.com/webhooktest2'
+    }
+  },
+  {
+    id: 'integration-2',
+    type: 'integration',
+    name: 'Integration 2',
+    description: 'Integration 2 description',
+    enabled: true,
+    observes: ['integrations.updated'],
+    integration_type: 'webhook',
+    configuration: {
+      url: 'https://moltin.com/webhooktest2'
+    }
+  }
+]
+
 export const productsArray = [
   {
     id: 'product-1',
