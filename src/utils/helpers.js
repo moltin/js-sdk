@@ -48,25 +48,25 @@ export function cartIdentifier(storage) {
 }
 
 export function parseJSON(response) {
-  if (response.status === 204) {
-    return new Promise(resolve => {
-      resolve({
-        status: response.status,
-        ok: response.ok,
-        json: '{}'
-      })
-    })
-  }
+  return new Promise(resolve => {
+    response.text().then(body => {
+      let json = '{}'
 
-  return new Promise(resolve =>
-    response.json().then(json =>
+      if (body !== '') {
+        json = JSON.parse(body)
+      }
+
+      if (!response.ok) {
+        json = { errors: [{ status: response.status }] }
+      }
+
       resolve({
         status: response.status,
         ok: response.ok,
         json
       })
-    )
-  )
+    })
+  })
 }
 
 function formatFilterString(type, filter) {

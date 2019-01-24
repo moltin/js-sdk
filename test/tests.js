@@ -18,6 +18,7 @@ require('./unit/jobs')
 require('./unit/orders')
 require('./unit/products')
 require('./unit/transactions')
+require('./unit/error')
 
 // Utilities
 require('./utils/helpers')

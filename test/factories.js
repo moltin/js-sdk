@@ -420,3 +420,11 @@ export const jobsArray = [
     status: 'processing'
   }
 ]
+
+export const rateLimitError = {
+  errors: [
+    {
+      status: 429
+    }
+  ]
+}
