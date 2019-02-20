@@ -46,7 +46,9 @@ class RequestFactory {
       fetch(`${config.protocol}://${config.host}/${config.auth.uri}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
+          'X-MOLTIN-SDK-VERSION': config.sdk.version
         },
         body: Object.keys(body)
           .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
