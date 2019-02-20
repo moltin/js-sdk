@@ -1,9 +1,3 @@
-## Status
-
-* ✅ Ready
-* 🚧 WIP
-* ⛔ Hold
-
 ## Type
 
 * ### Feature
