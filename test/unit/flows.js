@@ -182,7 +182,7 @@ describe('Moltin flows', () => {
     return Moltin.Flows.Limit(4)
       .GetEntries('flow-1')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response, 2)
       })
   })
 
@@ -208,7 +208,7 @@ describe('Moltin flows', () => {
     return Moltin.Flows.Offset(10)
       .GetEntries('flow-1')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response, 2)
       })
   })
 
