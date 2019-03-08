@@ -160,6 +160,58 @@ describe('Moltin flows', () => {
     })
   })
 
+  it('should return a limited number of flow entries', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/flow-1/entries')
+      .query({
+        page: {
+          limit: 4
+        }
+      })
+      .reply(200, flowEntries)
+
+    return Moltin.Flows.Limit(4)
+      .GetEntries('flow-1')
+      .then(response => {
+        assert.lengthOf(response, 2)
+      })
+  })
+
+  it('should return an array flow entries offset by a value', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/flow-1/entries')
+      .query({
+        page: {
+          offset: 10
+        }
+      })
+      .reply(200, flowEntries)
+
+    return Moltin.Flows.Offset(10)
+      .GetEntries('flow-1')
+      .then(response => {
+        assert.lengthOf(response, 2)
+      })
+  })
+
   it('should create a flow entry', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'

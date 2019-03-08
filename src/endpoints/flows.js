@@ -1,5 +1,7 @@
 import CRUDExtend from '../extends/crud'
 
+import { buildURL } from '../utils/helpers'
+
 class FlowsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
@@ -8,7 +10,15 @@ class FlowsEndpoint extends CRUDExtend {
   }
 
   GetEntries(slug) {
-    return this.request.send(`${this.endpoint}/${slug}/entries`, 'GET')
+    const { limit, offset } = this
+
+    return this.request.send(
+      buildURL(`${this.endpoint}/${slug}/entries`, {
+        limit,
+        offset
+      }),
+      'GET'
+    )
   }
 
   GetEntry(slug, entryId) {
