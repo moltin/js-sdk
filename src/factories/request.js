@@ -43,17 +43,18 @@ class RequestFactory {
     }
 
     const promise = new Promise((resolve, reject) => {
-      fetch(`${config.protocol}://${config.host}/${config.auth.uri}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-          'X-MOLTIN-SDK-VERSION': config.sdk.version
-        },
-        body: Object.keys(body)
-          .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
-          .join('&')
-      })
+      config.auth.fetch
+        .bind()(`${config.protocol}://${config.host}/${config.auth.uri}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
+            'X-MOLTIN-SDK-VERSION': config.sdk.version
+          },
+          body: Object.keys(body)
+            .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
+            .join('&')
+        })
         .then(parseJSON)
         .then(response => {
           if (response.ok) {
@@ -70,6 +71,7 @@ class RequestFactory {
         config.client_id,
         response.access_token,
         response.expires
+        // Math.min(response.expires, config.auth.expires)
       )
       storage.set('moltinCredentials', JSON.stringify(credentials))
     })
