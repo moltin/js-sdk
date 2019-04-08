@@ -71,7 +71,6 @@ class RequestFactory {
         config.client_id,
         response.access_token,
         response.expires
-        // Math.min(response.expires, config.auth.expires)
       )
       storage.set('moltinCredentials', JSON.stringify(credentials))
     })
