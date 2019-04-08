@@ -10,7 +10,7 @@ class Config {
       currency,
       host,
       storage,
-      secure_fetch
+      custom_fetch
     } = options
 
     this.application = application
@@ -23,7 +23,7 @@ class Config {
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: secure_fetch || fetch
+      fetch: custom_fetch || fetch
     }
     this.sdk = {
       version,
