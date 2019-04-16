@@ -39,6 +39,7 @@ export namespace moltin {
     client_secret?: string
     currency?: string
     host?: string
+    custom_fetch?: Function
   }
 
   export interface Config {
@@ -49,6 +50,7 @@ export namespace moltin {
     protocol: 'https'
     version: 'v2'
     currency?: string
+    custom_fetch?: Function
     auth: {
       expires: 3600
       uri: 'oauth/access_token'
