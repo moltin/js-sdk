@@ -36,10 +36,13 @@ describe('Moltin config', () => {
   })
 
   it('custom_fetch will fail must be a Function', () => {
-    // const Moltin = MoltinGateway({
-    //   client_id: 'XXX',
-    //   custom_fetch: 'string'
-    // })
-    // TODO: Negative test
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+      custom_fetch: 'string'
+    })
+
+    return Moltin.Authenticate().catch(error => {
+      expect(error).to.be.an.instanceof(TypeError)
+    })
   })
 })
