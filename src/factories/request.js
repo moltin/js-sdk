@@ -66,14 +66,18 @@ class RequestFactory {
         .catch(error => reject(error))
     })
 
-    promise.then(response => {
-      const credentials = new Credentials(
-        config.client_id,
-        response.access_token,
-        response.expires
-      )
-      storage.set('moltinCredentials', JSON.stringify(credentials))
-    })
+    promise
+      .then(response => {
+        const credentials = new Credentials(
+          config.client_id,
+          response.access_token,
+          response.expires
+        )
+        storage.set('moltinCredentials', JSON.stringify(credentials))
+      })
+      .catch(() => {
+        storage.delete('moltinCredentials')
+      })
 
     return promise
   }
