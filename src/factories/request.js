@@ -75,9 +75,7 @@ class RequestFactory {
         )
         storage.set('moltinCredentials', JSON.stringify(credentials))
       })
-      .catch(() => {
-        storage.delete('moltinCredentials')
-      })
+      .catch(() => {})
 
     return promise
   }
