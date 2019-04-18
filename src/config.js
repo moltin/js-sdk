@@ -9,7 +9,8 @@ class Config {
       client_secret,
       currency,
       host,
-      storage
+      storage,
+      custom_fetch
     } = options
 
     this.application = application
@@ -21,7 +22,8 @@ class Config {
     this.currency = currency
     this.auth = {
       expires: 3600,
-      uri: 'oauth/access_token'
+      uri: 'oauth/access_token',
+      fetch: custom_fetch || fetch
     }
     this.sdk = {
       version,

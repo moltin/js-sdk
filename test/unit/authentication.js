@@ -1,5 +1,6 @@
 import { assert } from 'chai'
 import nock from 'nock'
+import fetch from 'cross-fetch'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://api.moltin.com'
@@ -46,6 +47,36 @@ describe('Moltin authentication', () => {
     )
   })
 
+  it('should return an access token using custom_fetch', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+      custom_fetch: fetch
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .post('/oauth/access_token', {
+        grant_type: 'implicit',
+        client_id: 'XXX'
+      })
+      .reply(200, {
+        access_token: 'a550d8cbd4a4627013452359ab69694cd446615a',
+        expires: '999999999999999999999'
+      })
+
+    return Moltin.Authenticate().then(response => {
+      assert.propertyVal(
+        response,
+        'access_token',
+        'a550d8cbd4a4627013452359ab69694cd446615a'
+      )
+    })
+  })
+
   it('should fallback to default API host if host is undefined during instantiation', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX',
@@ -85,7 +116,7 @@ describe('Moltin authentication', () => {
     })
 
     Moltin.Authenticate().then(() => {
-      const storage = Moltin.request.storage
+      const { storage } = Moltin.request
       assert.exists(storage.get('moltinCredentials'))
     })
   })
@@ -111,7 +142,7 @@ describe('Moltin authentication', () => {
     })
 
     return Moltin.Authenticate().then(() => {
-      let storage = Moltin.request.storage
+      const { storage } = Moltin.request
       let credentials = JSON.parse(storage.get('moltinCredentials'))
       assert.equal(
         credentials.access_token,
@@ -138,7 +169,7 @@ describe('Moltin authentication', () => {
       })
 
       return Moltin.Authenticate().then(() => {
-        storage = Moltin.request.storage
+        const { storage } = Moltin.request // eslint-disable-line no-shadow
         credentials = JSON.parse(storage.get('moltinCredentials'))
         assert.equal(
           credentials.access_token,
