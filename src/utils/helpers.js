@@ -50,20 +50,10 @@ export function cartIdentifier(storage) {
 export function parseJSON(response) {
   return new Promise(resolve => {
     response.text().then(body => {
-      let json = '{}'
-
-      if (body !== '') {
-        json = JSON.parse(body)
-      }
-
-      if (!response.ok) {
-        json = { errors: [{ status: response.status }] }
-      }
-
       resolve({
         status: response.status,
         ok: response.ok,
-        json
+        json: body !== '' ? JSON.parse(body) : '{}'
       })
     })
   })

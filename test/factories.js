@@ -428,3 +428,13 @@ export const rateLimitError = {
     }
   ]
 }
+
+export const notFoundError = {
+  errors: [
+    {
+      status: 404,
+      detail: 'The requested product could not be found',
+      title: 'Product not found'
+    }
+  ]
+}
