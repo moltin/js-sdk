@@ -133,6 +133,33 @@ describe('Moltin customers', () => {
     })
   })
 
+  it('should update a customer with X-MOLTIN-CUSTOMER-TOKEN header', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .put('/customers/customer-1', {
+        data: {
+          type: 'customer',
+          name: 'Updated customer name'
+        }
+      })
+      .reply(200, {
+        name: 'Updated customer name'
+      })
+
+    return Moltin.Customers.Update(
+      'customer-1',
+      { name: 'Updated customer name' },
+      'testtoken'
+    ).then(response => {
+      assert.propertyVal(response, 'name', 'Updated customer name')
+    })
+  })
+
   it('should delete a customer', () => {
     // Intercept the API request
     nock(apiUrl, {
