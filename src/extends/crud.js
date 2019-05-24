@@ -14,11 +14,16 @@ class CRUDExtend extends BaseExtend {
     return this.request.send(`${this.endpoint}/${id}`, 'DELETE')
   }
 
-  Update(id, body) {
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', {
-      ...body,
-      type: singularize(this.endpoint)
-    })
+  Update(id, body, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${id}`,
+      'PUT',
+      {
+        ...body,
+        type: singularize(this.endpoint)
+      },
+      token
+    )
   }
 }
 
