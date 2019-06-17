@@ -6,6 +6,10 @@ class Files extends BaseExtend {
 
     this.endpoint = 'files'
   }
+
+  Delete(id) {
+    return this.request.send(`${this.endpoint}/${id}`, 'DELETE')
+  }
 }
 
 export default Files
