@@ -268,4 +268,19 @@ describe('Moltin files', () => {
       assert.equal(response, '{}')
     })
   })
+
+  it('should delete a single file', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete(`/files/${files[0].id}`)
+      .reply(204)
+
+    return Moltin.Files.Delete(files[0].id).then(response => {
+      assert.equal(response, '{}')
+    })
+  })
 })
