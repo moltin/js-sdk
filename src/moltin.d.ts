@@ -311,6 +311,22 @@ export namespace moltin {
     Refund<T = any>(options: { order: string; transaction: string }): Promise<T>
   }
 
+  export interface SettingsEndpoint {
+    request: RequestFactory
+    config: Config
+    constructor(config: Config)
+    endpoint: 'settings'
+    All<T = any>(): Promise<T>
+    Update<T = any>(options: { body: Settings }): Promise<T>
+  }
+
+  export interface Settings {
+    additional_languages?: string[]
+    calculation_method?: string
+    list_child_products?: boolean
+    page_length?: number
+  }
+
   export interface CheckoutCustomer {
     id: string
   }
@@ -363,13 +379,21 @@ export namespace moltin {
     constructor(request: RequestFactory, id: string)
     Get<T = any>(): Promise<T>
     Items<T = any>(): Promise<T>
-    AddProduct<T = any>(productId: string, quantity?: number, data?: any): Promise<T>
+    AddProduct<T = any>(
+      productId: string,
+      quantity?: number,
+      data?: any
+    ): Promise<T>
     AddCustomItem<RequestBody = any, ResponseBody = any>(
       body: RequestBody
     ): Promise<ResponseBody>
     AddPromotion<T = any>(code: string): Promise<T>
     RemoveItem<T = any>(itemId: string): Promise<T>
-    UpdateItem<T = any>(itemId: string, quantity: number, data?: any): Promise<T>
+    UpdateItem<T = any>(
+      itemId: string,
+      quantity: number,
+      data?: any
+    ): Promise<T>
 
     /**
      * @deprecated Use UpdateItem method
