@@ -63,7 +63,7 @@ describe('Moltin settings', () => {
         }
       })
 
-    return Moltin.Settings.Update().then(response => {
+    return Moltin.Settings.Update({ page_length: 50 }).then(response => {
       assert.deepEqual(response, {
         data: {
           type: 'settings',
