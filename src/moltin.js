@@ -20,6 +20,7 @@ import FieldsEndpoint from './endpoints/fields'
 import FilesEndpoint from './endpoints/files'
 import AddressesEndpoint from './endpoints/addresses'
 import TransactionsEndpoint from './endpoints/transactions'
+import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
 
@@ -49,6 +50,7 @@ export default class Moltin {
     this.Fields = new FieldsEndpoint(config)
     this.Addresses = new AddressesEndpoint(config)
     this.Transactions = new TransactionsEndpoint(config)
+    this.Settings = new SettingsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
