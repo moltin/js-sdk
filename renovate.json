@@ -1,10 +1,7 @@
 {
-  "extends": ["config:base", ":skipStatusChecks", "docker:disable"],
+  "extends": ["config:base", ":skipStatusChecks", "docker:disable", "schedule:weekly"],
   "automerge": true,
   "major": {
     "automerge": false
-  },
-  "reviewers": [
-    "notrab", "ynnoj"
-  ]
+  }
 }
