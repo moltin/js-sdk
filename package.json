@@ -27,10 +27,10 @@
     "url": "https://github.com/moltin/js-sdk/issues"
   },
   "devDependencies": {
-    "@babel/core": "7.0.0-beta.54",
-    "@babel/preset-env": "7.0.0-beta.54",
-    "@babel/preset-stage-3": "7.0.0-beta.54",
-    "@babel/register": "7.0.0-beta.54",
+    "@babel/core": "7.5.5",
+    "@babel/preset-env": "7.5.5",
+    "@babel/preset-stage-3": "7.0.0",
+    "@babel/register": "7.5.5",
     "babel-eslint": "8.2.6",
     "babel-plugin-transform-class-properties": "6.24.1",
     "chai": "4.2.0",
