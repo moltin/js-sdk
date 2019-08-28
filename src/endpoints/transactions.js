@@ -18,6 +18,14 @@ class TransactionsEndpoint extends BaseExtend {
     )
   }
 
+  Confirm({ order, transaction, body }) {
+    return this.request.send(
+      `orders/${order}/transactions/${transaction}/confirm`,
+      'POST',
+      body
+    )
+  }
+
   Refund({ order, transaction }) {
     return this.request.send(
       `orders/${order}/transactions/${transaction}/refund`,

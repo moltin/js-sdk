@@ -73,6 +73,7 @@ describe('Moltin order transactions', () => {
       .post('/orders/order-1/transactions/transaction-1/confirm', {
         data: {
           payment: 'pm_xxx',
+          method: 'purchase',
           gateway: 'stripe_payment_intents'
         }
       })
@@ -83,6 +84,7 @@ describe('Moltin order transactions', () => {
       transaction: 'transaction-1',
       body: {
         payment: 'pm_xxx',
+        method: 'purchase',
         gateway: 'stripe_payment_intents'
       }
     }).then(response => {
