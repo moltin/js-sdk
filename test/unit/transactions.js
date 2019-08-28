@@ -62,4 +62,31 @@ describe('Moltin order transactions', () => {
       assert.isOk(response)
     })
   })
+
+  it('should confirm an order transaction', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/orders/order-1/transactions/transaction-1/confirm', {
+        data: {
+          payment: 'pm_xxx',
+          gateway: 'stripe_payment_intents'
+        }
+      })
+      .reply(200, { message: 'transaction approved' })
+
+    return Moltin.Transactions.Confirm({
+      order: 'order-1',
+      transaction: 'transaction-1',
+      body: {
+        payment: 'pm_xxx',
+        gateway: 'stripe_payment_intents'
+      }
+    }).then(response => {
+      assert.propertyVal(response, 'message', 'transaction approved')
+    })
+  })
 })
