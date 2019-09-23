@@ -54,7 +54,7 @@
     "rollup-plugin-commonjs": "9.1.8",
     "rollup-plugin-filesize": "2.0.0",
     "rollup-plugin-ignore": "1.0.3",
-    "rollup-plugin-json": "3.1.0",
+    "rollup-plugin-json": "4.0.0",
     "rollup-plugin-livereload": "0.6.0",
     "rollup-plugin-node-resolve": "3.4.0",
     "rollup-plugin-serve": "0.4.2",
