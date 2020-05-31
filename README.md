@@ -1,10 +1,15 @@
-# Moltin JavaScript SDK
+<img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
+
+# Elastic Path Commerce Cloud JavaScript SDK
 
 [![npm version](https://img.shields.io/npm/v/@moltin/sdk.svg)](https://www.npmjs.com/package/@moltin/sdk)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/moltin/js-sdk/issues)
+[![follow on Twitter](https://img.shields.io/twitter/follow/elasticpath?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=elasticpath)
 
-> A simple to use API interface to help get you off the ground quickly and efficiently with your Moltin JavaScript apps.
+> A simple to use API interface to help get you off the ground quickly and efficiently with your Elastic Path Commerce Cloud JavaScript apps.
 
-📚 [API reference](https://docs.moltin.com/?javascript) &mdash; 📚 [moltin.com](https://moltin.com)
+📚 [API reference](https://documentation.elasticpath.com/commerce-cloud/docs/developer/get-started/sdk.html#officially-supported-sdk) &mdash; 📚 [Elastic Path Commerce Cloud](https://www.elasticpath.com)
 
 ## 🛠 Installation
 
@@ -18,7 +23,7 @@ npm install --save @moltin/sdk
 
 To get started, instantiate a new Moltin client with your store credentials.
 
-> **Note:** This requires a [Moltin](http://moltin.com) account.
+> **Note:** This requires an [Elastic Path Commerce Cloud](https://www.elasticpath.com) account.
 
 ```js
 // JavaScript
@@ -65,7 +70,7 @@ Moltin.Authenticate().then(response => {
 })
 ```
 
-Check out the [API reference](https://docs.moltin.com) to learn more about authenticating and the available endpoints.
+Check out the [API reference](https://documentation.elasticpath.com/commerce-cloud/docs/api/index.html) to learn more about authenticating and the available endpoints.
 
 ### Custom Host
 
@@ -80,7 +85,7 @@ const Moltin = MoltinGateway({
 
 ### Custom Storage
 
-By default the Moltin SDK persists data to `window.localStorage` in the browser and `node-localstorage` in Node. If this doesn't suit your needs you can override the default storage with a `MemoryStorageFactory` which will persist data for the life cycle of the JavaScript VM:
+By default the Elastic Path Commerce Cloud SDK persists data to `window.localStorage` in the browser and `node-localstorage` in Node. If this doesn't suit your needs you can override the default storage with a `MemoryStorageFactory` which will persist data for the life cycle of the JavaScript VM:
 
 ```js
 import { gateway as MoltinGateway, MemoryStorageFactory } from '@moltin/sdk'
@@ -127,3 +132,8 @@ npm start
 ```
 
 You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
+
+## Terms And Conditions
+
+- Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/moltin/gatsby-demo-store/blob/master/.github/CONTRIBUTING.md).
+- For more information about the license, see [MIT License](https://github.com/moltin/js-sdk/blob/master/LICENSE).
