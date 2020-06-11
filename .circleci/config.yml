@@ -60,7 +60,7 @@ jobs:
   # run `semantic-release` for release, publishing
   release:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
 
