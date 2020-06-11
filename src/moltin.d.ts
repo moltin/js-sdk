@@ -32,6 +32,82 @@ export class Moltin {
 
 export function gateway(config: moltin.ConfigOptions): Moltin
 
+export interface ResourcePage<R> {
+  data: R[]
+  links: { [key: string]: string | null }
+  meta: {
+    page: {
+      current: number
+      limit: number
+      offset: number
+      total: number
+    }
+    results: {
+      total: number
+    }
+  }
+}
+
+export interface ResourceList<R> {
+  data: R[]
+}
+
+export interface Resource<R> {
+  data: R
+}
+
+export interface Price {
+  amount: number
+  currency: string
+  includes_tax: boolean
+}
+
+export interface FormattedPrice {
+  amount: number
+  currency: string
+  formatted: string
+}
+
+interface Relationship<T> {
+  data: {
+    id: string
+    type: T
+  }
+}
+
+export interface ProductBase {
+  id: string
+  type: string
+  name: string
+  slug: string
+  sku: string
+  manage_stock: boolean
+  description: string
+  price: Price[]
+  status?: 'draft' | 'live'
+  commodity_type:	'physical' | 'digital'
+  meta: {
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+    stock: {
+      level: number
+      availability: 'in-stock' | 'out-stock'
+    }
+    display_price: {
+      whith_tax: FormattedPrice
+      without_tax: FormattedPrice
+    }
+  }
+  relationships: {
+    main_image?: Relationship<'main_image'>
+    categories?: Relationship<'category'>[]
+    brand?: Relationship<'brand'>[]
+    parent?: Relationship<'product'>
+  }
+}
+
 export namespace moltin {
   export interface ConfigOptions {
     application?: string
@@ -116,6 +192,16 @@ export namespace moltin {
     With(includes: string | string[]): this
   }
 
+  export interface QueryableResource<R, F, S, I> {
+    All<ER extends R = R>(token?: string): Promise<ResourcePage<ER>>
+    Get<ER extends R = R>(id: string, token?: string): Promise<Resource<ER>>
+    Filter(filter: F): QueryableResource<R, F, S, I>
+    Limit(value: number): QueryableResource<R, F, S, I>
+    Offset(value: number): QueryableResource<R, F, S, I>
+    Sort(value: S): QueryableResource<R, F, S, I>
+    With(includes: I | I[]): QueryableResource<R, F, S, I>
+  }
+
   export interface CRUDExtend extends BaseExtend {
     Create<RequestBody = any, ResponseBody = any>(
       body: RequestBody
@@ -127,7 +213,56 @@ export namespace moltin {
     ): Promise<ResponseBody>
   }
 
-  export interface ProductsEndpoint extends CRUDExtend {
+  export interface ProductFilter {
+    eq?: {
+      name?: string
+      slug?: string
+      sku?: string
+      status?: string
+      commodity_type?: string
+      manage_stock?: string
+      brand?: {
+        id?: string
+      }
+      category?: {
+        id?: string
+      }
+      collection?: {
+        id?: string
+      }
+    }
+    like?: {
+      name?: string
+      slug?: string
+      sku?: string
+      status?: string
+      description?: string
+    }
+  }
+
+  type ProductSort =
+    | 'commodity_type'
+    | '-commodity_type'
+    | 'created_at'
+    | '-created_at'
+    | 'description'
+    | '-description'
+    | 'manage_stock'
+    | '-manage_stock'
+    | 'name'
+    | '-name'
+    | 'sku'
+    | '-sku'
+    | 'slug'
+    | '-slug'
+    | 'status'
+    | '-status'
+    | 'updated_at'
+    | '-updated_at'
+
+  type ProductInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections'
+
+  export interface ProductsEndpoint extends QueryableResource<ProductBase, ProductFilter, ProductSort, ProductInclude> {
     endpoint: 'products'
     CreateRelationships<T = any>(
       id: string,
