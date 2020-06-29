@@ -84,7 +84,7 @@ export namespace order {
         email?: string
       }
       customer_id?: string
-      shipping_name?:	string
+      shipping_name?: string
       shipping_postcode?: string
       billing_name?: string
       billing_postcode?: string
@@ -100,23 +100,23 @@ export namespace order {
         email?: string
       }
       customer_id?: string
-      shipping_name?:	string
+      shipping_name?: string
       shipping_postcode?: string
       billing_name?: string
       billing_postcode?: string
     },
     ge?: {
-      with_tax?:	number
+      with_tax?: number
       without_tax?: number
     },
     lt?: {
-      with_tax?:	number
+      with_tax?: number
       without_tax?: number
       created_at?: Date
       updated_at?: Date
     },
     le?: {
-      with_tax?:	number
+      with_tax?: number
       without_tax?: number
       created_at?: Date
       updated_at?: Date
@@ -134,13 +134,78 @@ export namespace order {
     name: string
     sku: string
     quantity: number
-    unit_price: {} //TODO
-    value: {} // TODO
-    links: {} // TODO
-    meta: {} // TODO
-    relationships: {} // TODO
+    unit_price: {
+      amount: number
+      currency: string
+      includes_tax: boolean
+    }
+    value: {
+      amount: number
+      currency: string
+      includes_tax: boolean
+    }
+    links: {} // TODO - docs need updating
+    meta?: {
+      display_price?: {
+        with_tax: {
+          unit: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+          value: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+        }
+        without_tax?: {
+          unit: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+          value: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+        }
+        tax?: {
+          unit: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+          value: {
+            amount: number
+            currency: string
+            formatted: string
+          }
+        }
+      }
+      timestamps?: {
+        created_at: string
+        updated_at: string
+      }
+    }
+    relationships: {
+      cart_item: {
+        data: {
+          id: string
+          type: string
+        }[]
+      }
+      taxes: {
+        data: {
+          id: string
+          type: string
+        }[]
+      }
+    }
   }
 
+  type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
   type OrderInclude = 'product' | 'customer'
 
   /**
@@ -150,8 +215,9 @@ export namespace order {
    * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/get-all-orders.html
    * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
    */
-  export interface OrdersEndpoint extends core.QueryableResource<OrderBase, OrderFilter, null, OrderInclude> {
+  export interface OrdersEndpoint extends core.QueryableResource<OrderBase, OrderFilter, OrderSort, OrderInclude> {
     endpoint: 'orders'
+
     /**
      * Get Order Items
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/order-items.html

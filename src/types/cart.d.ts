@@ -116,7 +116,7 @@ export namespace cart {
 
     AddItemTax(itemId: string, taxData: ItemTaxObject): Promise<ResourcePage<CartItem>>
 
-    RemoveItemTax<ER extends R = R>(itemId: string, taxItemId: string): Promise<ResourcePage<CartItem>>
+    RemoveItemTax(itemId: string, taxItemId: string): Promise<ResourcePage<CartItem>>
 
     Checkout(
       customer: CheckoutCustomer | CheckoutCustomerObject,

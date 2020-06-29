@@ -3,12 +3,23 @@
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
  */
-import { FormattedPrice, Price } from '../moltin'
 import { core, Relationship } from './core'
 
 export as namespace product
 
 export namespace product {
+  export interface Price {
+    amount: number
+    currency: string
+    includes_tax: boolean
+  }
+
+  export interface FormattedPrice {
+    amount: number
+    currency: string
+    formatted: string
+  }
+
   /**
    * Core Product Base Interface
    * For custom flows, extend this interface
@@ -106,7 +117,7 @@ export namespace product {
    * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/get-all-products.html
    * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/update-a-product.html
    */
-  export interface ProductsEndpoint extends core.CrudQueryableResource<ProductBase, ProductFilter, ProductSort, ProductInclude> {
+  export interface ProductsEndpoint<T extends ProductBase> extends core.CrudQueryableResource<ProductBase | T, ProductFilter, ProductSort, ProductInclude> {
     endpoint: 'products'
 
     // TODO CREATE - UPDATE - DELETE

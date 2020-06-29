@@ -44,7 +44,7 @@ export namespace core {
     With(includes: I | I[]): QueryableResource<R, F, S, I>
   }
 
-  export interface CrudQueryableResource<R, F, S, I> extends QueryableResource<R, F, S, I>{
+  export interface CrudQueryableResource<R, F, S, I> extends QueryableResource<R, F, S, I> {
     Create<ER extends R = R>(
       body: R
     ): Promise<Resource<ER>>
@@ -55,27 +55,6 @@ export namespace core {
       id: string,
       body: R
     ): Promise<ResourcePage<ER>>
-  }
-
-  export interface BaseExtend {
-    request: RequestFactory
-    config: Config
-
-    constructor(config: Config)
-
-    All<T = any>(token?: string): Promise<T>
-
-    Get<T = any>(id: string, token?: string): Promise<T>
-
-    Filter(filter: any): this
-
-    Limit(value: number): this
-
-    Offset(value: number): this
-
-    Sort(value: string): this
-
-    With(includes: string | string[]): this
   }
 
   export interface RequestFactory {
@@ -153,18 +132,5 @@ export namespace core {
     expires_in: number
     access_token: string
     token_type: 'Bearer'
-  }
-
-  export interface CRUDExtend extends core.BaseExtend {
-    Create<RequestBody = any, ResponseBody = any>(
-      body: RequestBody
-    ): Promise<ResponseBody>
-
-    Delete<T = any>(id: string): Promise<T>
-
-    Update<RequestBody = any, ResponseBody = any>(
-      id: string,
-      body: RequestBody
-    ): Promise<ResponseBody>
   }
 }
