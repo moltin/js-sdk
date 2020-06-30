@@ -1,4 +1,4 @@
-export as namespace index // not sure about this...
+export as namespace index
 export * from './product'
 export * from './core'
 export * from './order'
