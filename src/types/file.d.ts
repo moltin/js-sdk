@@ -11,7 +11,7 @@ export namespace file {
   /**
    * Core File Base Interface
    * For custom flows, extend this interface
-   * DOCS:
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
    */
   export interface FileBase {
     id?: string
@@ -38,7 +38,7 @@ export namespace file {
   }
 
   /**
-   * DOCS:
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/filtering.html
    */
   export interface FileFilter {
     eq?: {
@@ -73,12 +73,10 @@ export namespace file {
 
   /**
    * File Endpoints
-   * DOCS:
-   * Get DOCS:
-   * Get All DOCS:
-   * Create DOCS:
-   * Update DOCS:
-   * Delete DOCS:
+   * Get DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/get-a-file.html
+   * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/get-all-files.html
+   * Create DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html
+   * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/delete-a-file.html
    */
   export interface FileEndpoint extends core.CrudQueryableResource<FileBase, FileFilter, {}, {}> {
     endpoint: 'file'

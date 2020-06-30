@@ -121,7 +121,6 @@ export namespace order {
       created_at?: Date
       updated_at?: Date
     }
-
   }
 
   /**
@@ -144,7 +143,7 @@ export namespace order {
       currency: string
       includes_tax: boolean
     }
-    links: {} // TODO - docs need updating
+    links: any
     meta?: {
       display_price?: {
         with_tax: {
@@ -189,19 +188,9 @@ export namespace order {
         updated_at: string
       }
     }
-    relationships: {
-      cart_item: {
-        data: {
-          id: string
-          type: string
-        }[]
-      }
-      taxes: {
-        data: {
-          id: string
-          type: string
-        }[]
-      }
+    relationships?: {
+      cart_item: Relationship<'cart_item'>
+      taxes: Relationship<'taxes'>[]
     }
   }
 

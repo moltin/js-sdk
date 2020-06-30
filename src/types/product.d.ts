@@ -117,10 +117,8 @@ export namespace product {
    * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/get-all-products.html
    * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/update-a-product.html
    */
-  export interface ProductsEndpoint<T extends ProductBase> extends core.CrudQueryableResource<ProductBase | T, ProductFilter, ProductSort, ProductInclude> {
+  export interface ProductsEndpoint extends core.CrudQueryableResource<ProductBase, ProductFilter, ProductSort, ProductInclude> {
     endpoint: 'products'
-
-    // TODO CREATE - UPDATE - DELETE
 
     /**
      * Create Relationships

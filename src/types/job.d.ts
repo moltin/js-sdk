@@ -57,6 +57,5 @@ export namespace job {
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/get-a-job.html
      */
     Get(id: string): Promise<JobBase>
-
   }
 }

@@ -37,7 +37,7 @@ export namespace collection {
   }
 
   /**
-   * DOCS:
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/collections/filtering.html
    */
   export interface CollectionFilter {
     eq?: {

@@ -1,6 +1,7 @@
 /**
  * Inventory
- * Description: The Inventory API allows you to manage stock for products in your project catalog. Each product keeps a history of inventory transactions, enabling easier stock auditing.
+ * Description: The Inventory API allows you to manage stock for products in your project catalog. Each product keeps a
+ * history of inventory transactions, enabling easier stock auditing.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/index.html
  */
 import { core } from './core'
@@ -24,7 +25,7 @@ export namespace inventory {
    * Inventory Endpoints
    * TODO Need to check on actually functionality
    */
-  export interface InventoryEndpoint extends core.QueryableResource<InventoryBase, {}, {}, {}> {
+  export interface InventoryEndpoint extends core.QueryableResource<InventoryBase, null, null, null> {
     endpoint: 'inventory'
 
     IncrementStock(productId: string, quantity: number): Promise<InventoryBase>

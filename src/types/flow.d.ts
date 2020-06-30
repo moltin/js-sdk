@@ -11,7 +11,6 @@ export as namespace flow
 export namespace flow {
   /**
    * Core Flow Base Interface
-   * DOCS:
    */
   export interface FlowBase {
     id?: string
@@ -22,9 +21,6 @@ export namespace flow {
     enabled: boolean
   }
 
-  /**
-   * DOCS:
-   */
   export interface FlowFilter {
   }
 

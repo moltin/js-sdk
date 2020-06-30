@@ -16,11 +16,11 @@ export namespace currency {
     id?: string
     type: string
     code: string
-    exchange_rate: number // float
+    exchange_rate: number
     format: string
     decimal_point: string
     thousand_separator: string
-    decimal_places: number // int
+    decimal_places: number
     default?: boolean
     links?: {
       self: string

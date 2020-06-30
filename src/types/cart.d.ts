@@ -1,6 +1,7 @@
 /**
  * Carts
- * Description: A Cart contains the product and custom cart items that a user may wish to purchase. Once a Cart is ready for Checkout, you can use the Checkout endpoint to convert the cart to an order.
+ * Description: A Cart contains the product and custom cart items that a user may wish to purchase. Once a Cart is ready
+ * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
 import { ResourcePage } from './core'

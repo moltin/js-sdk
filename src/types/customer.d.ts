@@ -15,16 +15,16 @@ export as namespace customer
 export namespace customer {
 
   /**
-   * Core Product Base Interface
+   * Core Customer Base Interface
    * For custom flows, extend this interface
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/index.html
    */
   export interface CustomerBase {
-    id?:	string
-    type:	string
-    name:	string
+    id?: string
+    type: string
+    name: string
     email: string
-    password:	string
+    password: string
   }
 
   export interface CustomerToken {
@@ -56,7 +56,7 @@ export namespace customer {
    * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/update-a-customer.html
    * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/delete-a-customer.html
    */
-  export interface CustomersEndpoint<T extends CustomerBase> extends core.CrudQueryableResource<CustomerBase | T, CustomerFilter, CustomerSort, CustomerInclude> {
+  export interface CustomersEndpoint extends core.CrudQueryableResource<CustomerBase, CustomerFilter, CustomerSort, CustomerInclude> {
     endpoint: 'customers'
 
     /**
