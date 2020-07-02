@@ -11,7 +11,7 @@ export namespace collection {
   /**
    * Core Collection Base Interface
    * For custom flows, extend this interface
-   * DOCS:
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/collections/index.html
    */
   export interface CollectionBase {
     id?: string

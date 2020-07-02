@@ -28,7 +28,7 @@ export namespace field {
     enabled: boolean
     order: number
     relationships: Relationship<'addresses' | 'products' | 'brands' | 'collections' | 'categories' | 'customers' |
-      'cart_items' | 'orders' | 'order_items' | 'promotions'>
+      'cart_items' | 'orders' | 'order_items' | 'promotions' | 'flows'>
     omit_null: boolean
   }
 

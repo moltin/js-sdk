@@ -106,6 +106,7 @@ export namespace cart {
 
     UpdateItem(
       itemId: string,
+      type: string,
       quantity: number,
       data?: any
     ): Promise<ResourcePage<CartItem>>
