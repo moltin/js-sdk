@@ -44,7 +44,6 @@ export namespace customer {
     }
   }
 
-  type CustomerSort = '' // todo... need to check
   type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections' | 'variations'
 
   /**
@@ -56,7 +55,7 @@ export namespace customer {
    * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/update-a-customer.html
    * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/delete-a-customer.html
    */
-  export interface CustomersEndpoint extends core.CrudQueryableResource<CustomerBase, CustomerFilter, CustomerSort, CustomerInclude> {
+  export interface CustomersEndpoint extends core.CrudQueryableResource<CustomerBase, CustomerFilter, null, CustomerInclude> {
     endpoint: 'customers'
 
     /**
