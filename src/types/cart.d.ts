@@ -74,7 +74,7 @@ export namespace cart {
 
   export interface CartItem {
     id?: string
-    tax: {}[]
+    tax: {}[] // todo
     quantity?: number
     type: string
   }
@@ -106,6 +106,7 @@ export namespace cart {
 
     UpdateItem(
       itemId: string,
+      type: string,
       quantity: number,
       data?: any
     ): Promise<ResourcePage<CartItem>>
