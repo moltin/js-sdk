@@ -74,7 +74,7 @@ export namespace cart {
 
   export interface CartItem {
     id?: string
-    tax: {}[] // todo
+    tax: {}[]
     quantity?: number
     type: string
   }
