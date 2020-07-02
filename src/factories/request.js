@@ -101,6 +101,10 @@ class RequestFactory {
           headers['X-MOLTIN-CURRENCY'] = config.currency
         }
 
+        if (config.language) {
+          headers['X-MOLTIN-LANGUAGE'] = config.language
+        }
+
         if (token) {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }

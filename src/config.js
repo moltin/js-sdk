@@ -8,6 +8,7 @@ class Config {
       client_id,
       client_secret,
       currency,
+      language,
       host,
       storage,
       custom_fetch
@@ -20,6 +21,7 @@ class Config {
     this.protocol = 'https'
     this.version = 'v2'
     this.currency = currency
+    this.language = language
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
