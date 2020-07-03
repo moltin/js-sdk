@@ -106,6 +106,27 @@ interface StorageFactory {
 }
 ```
 
+### Included Headers
+
+There are currently several optional headers you can pass into the configuration, which include `application`, `language` and `currency`.
+
+You can pass them into the config used by the gateway like this:
+
+```
+// JavaScript
+import { gateway as MoltinGateway } from '@moltin/sdk'
+// const MoltinGateway = require('@moltin/sdk').gateway -> for Node
+
+const Moltin = MoltinGateway({
+    client_id: 'XXX',
+    client_secret: 'XXX'
+    currency: 'YEN',
+    language: 'en',
+    application: 'my-app'
+})
+
+``` 
+ 
 ## ❤️ Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:

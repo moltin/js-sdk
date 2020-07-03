@@ -89,7 +89,8 @@ export namespace core {
     host: string
     protocol: 'https'
     version: 'v2'
-    currency?: string
+    currency?: string,
+    language?: string,
     custom_fetch?: Function
     auth: {
       expires: 3600
