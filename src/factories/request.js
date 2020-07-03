@@ -95,7 +95,7 @@ class RequestFactory {
 
         headers['X-MOLTIN-APPLICATION'] = config.application
           ? config.application
-          : 'epcc sdk v2'
+          : 'epcc sdk'
 
         if (config.currency) {
           headers['X-MOLTIN-CURRENCY'] = config.currency
