@@ -70,7 +70,7 @@ export namespace core {
       token?: string
     ): Promise<T>
 
-    constructor(Config)
+    constructor(config: Config): void
   }
 
   export interface ConfigOptions {
@@ -101,7 +101,7 @@ export namespace core {
       language: 'JS'
     }
 
-    constructor(options: ConfigOptions)
+    constructor(options: ConfigOptions): void
   }
 
   export interface StorageFactory {
