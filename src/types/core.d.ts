@@ -70,13 +70,14 @@ export namespace core {
       token?: string
     ): Promise<T>
 
-    constructor(Config)
+    constructor(config: Config): void
   }
 
   export interface ConfigOptions {
     application?: string
     client_id: string
     client_secret?: string
+    language?: string
     currency?: string
     host?: string
     custom_fetch?: Function
@@ -89,8 +90,8 @@ export namespace core {
     host: string
     protocol: 'https'
     version: 'v2'
-    currency?: string,
-    language?: string,
+    currency?: string
+    language?: string
     custom_fetch?: Function
     auth: {
       expires: 3600
@@ -101,7 +102,7 @@ export namespace core {
       language: 'JS'
     }
 
-    constructor(options: ConfigOptions)
+    constructor(options: ConfigOptions): void
   }
 
   export interface StorageFactory {
