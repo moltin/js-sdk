@@ -127,7 +127,7 @@ const Moltin = MoltinGateway({
 
 ``` 
 ### TypeScript Support
-The Moltin SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
+The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
 
 The majority of responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info.
 
