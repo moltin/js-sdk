@@ -126,6 +126,110 @@ const Moltin = MoltinGateway({
 })
 
 ``` 
+### TypeScript Support
+The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
+
+Responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info. Additional responses may be returned in a native object structure.
+
+Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `integration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api).
+
+You can consume any of the interfaces by importing the namespace into your project. eg:
+
+```
+import { product } from '@moltin/sdk';
+
+const product: product.ProductBase = {...}
+```
+
+If you do not want to use the namespace, you can extend the interfaces and define them yourself, like so:
+
+```
+// You can name the interface anything you like
+interface Product extends product.ProductBase {
+}
+
+const product: Product = {...}
+```
+
+Here is an example of a simple product creation:
+
+```
+import { Moltin, gateway, product, Resource } from '@moltin/sdk';
+
+async function main() {
+    const g: Moltin = gateway({client_id, client_secret});
+    const auth = await g.Authenticate();
+    
+    const newProduct: product.ProductBase = {
+        type: "product",
+        name: "My Product",
+        slug: "my-prod",
+        sku: "my-prod",
+        manage_stock: false,
+        description: "Some description",
+        status: "draft",
+        commodity_type: "physical",
+        price: [
+            {
+                amount: 5499,
+                currency: "USD",
+                includes_tax: true
+            }
+        ]
+    };
+    
+    const nP: Resource<Product> = await g.Products.Create(newProduct);
+}
+```
+
+You can also extend any base interface compatible with flows to create any custom interfaces that you might be using.
+
+```
+interface CustomProduct extends product.ProductBase {
+    customFlowField?: string
+}
+
+const newProduct: CustomProduct = {
+    type: "product",
+    name: "My Product",
+    slug: "my-prod",
+    sku: "my-prod",
+    customFlowField: "My custome flow..."
+    manage_stock: false,
+    description: "Some description",
+    status: "draft",
+    commodity_type: "physical",
+    price: [
+        {
+            amount: 5499,
+            currency: "USD",
+            includes_tax: true
+        }
+    ]
+};
+``` 
+
+You can cast these custom interfaces on any of the endpoints, to ensure you expose the custom fields. 
+
+```
+const customProduct: Resource<CustomProduct> = await g.Products.Create<CustomProduct>(newProduct);
+
+console.log(`New Flow Product`, customProduct.data.customWeight); // this will pass!
+```
+
+You can also consume `filters`, `sorts` and `includes` from relevant services, to ensure you are querying the API correctly.
+
+eg: 
+
+```
+const filter: product.ProductFilter  = {
+    like: {
+        name: '...'
+    }
+}
+
+const filteredProduct = await g.Products.Filter(filter)
+```
  
 ## ❤️ Contributing
 
