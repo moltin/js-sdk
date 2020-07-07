@@ -129,9 +129,9 @@ const Moltin = MoltinGateway({
 ### TypeScript Support
 The Moltin SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
 
-Each response will likely be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info.
+The majority of responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info.
 
-Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `inergration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [docs](https://documentation.elasticpath.com/commerce-cloud/docs/api).
+Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `integration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api).
 
 You can consume any of the interfaces by importing the namespace into your project. eg:
 
@@ -217,7 +217,7 @@ const customProduct: Resource<CustomProduct> = await g.Products.Create<CustomPro
 console.log(`New Flow Product`, customProduct.data.customWeight); // this will pass!
 ```
 
-You can also consume `filters`, `sorts` and `includes` from relevant services, to ensure you are querying the api correctly.
+You can also consume `filters`, `sorts` and `includes` from relevant services, to ensure you are querying the API correctly.
 
 eg: 
 
