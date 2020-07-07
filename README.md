@@ -129,7 +129,7 @@ const Moltin = MoltinGateway({
 ### TypeScript Support
 The Moltin SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
 
-The majority of responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info.
+Responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info. Additional responses may be returned in a native object structure.
 
 Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `integration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api).
 
