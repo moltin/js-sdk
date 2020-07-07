@@ -131,7 +131,7 @@ The Moltin SDK is fully supported in Typescript. Each service is wrapped in a na
 
 Each response will likely be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info.
 
-Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collectoin`, `core`, `currencies`, `customer`, `field`, `flow`, `inergration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [docs](https://documentation.elasticpath.com/commerce-cloud/docs/api).
+Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `inergration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [docs](https://documentation.elasticpath.com/commerce-cloud/docs/api).
 
 You can consume any of the interfaces by importing the namespace into your project. eg:
 
@@ -222,7 +222,7 @@ You can also consume `filters`, `sorts` and `includes` from relevant services, t
 eg: 
 
 ```
-const filter: priduct.ProductFilter  = {
+const filter: product.ProductFilter  = {
     like: {
         name: '...'
     }
