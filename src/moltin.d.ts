@@ -7,6 +7,8 @@ import {
 
 export * from './types'
 
+// trivial change...
+
 // UMD
 export as namespace moltin
 
