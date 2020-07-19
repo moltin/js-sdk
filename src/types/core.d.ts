@@ -1,4 +1,3 @@
-export as namespace core
 
 export interface ResourcePage<R> {
   data: R[]
@@ -27,112 +26,110 @@ export interface Relationship<T> {
   }
 }
 
-export namespace core {
-  export interface QueryableResource<R, F, S, I> {
-    All<ER extends R = R>(token?: string): Promise<ResourcePage<ER>>
+export interface QueryableResource<R, F, S, I> {
+  All<ER extends R = R>(token?: string): Promise<ResourcePage<ER>>
 
-    Get<ER extends R = R>(id: string, token?: string): Promise<Resource<ER>>
+  Get<ER extends R = R>(id: string, token?: string): Promise<Resource<ER>>
 
-    Filter(filter: F): QueryableResource<R, F, S, I>
+  Filter(filter: F): QueryableResource<R, F, S, I>
 
-    Limit(value: number): QueryableResource<R, F, S, I>
+  Limit(value: number): QueryableResource<R, F, S, I>
 
-    Offset(value: number): QueryableResource<R, F, S, I>
+  Offset(value: number): QueryableResource<R, F, S, I>
 
-    Sort(value: S): QueryableResource<R, F, S, I>
+  Sort(value: S): QueryableResource<R, F, S, I>
 
-    With(includes: I | I[]): QueryableResource<R, F, S, I>
+  With(includes: I | I[]): QueryableResource<R, F, S, I>
+}
+
+export interface CrudQueryableResource<R, F, S, I> extends QueryableResource<R, F, S, I> {
+  Create<ER extends R = R>(
+    body: R
+  ): Promise<Resource<ER>>
+
+  Delete<ER extends R = R>(id: string): Promise<ResourcePage<ER>>
+
+  Update<ER extends R = R>(
+    id: string,
+    body: R
+  ): Promise<ResourcePage<ER>>
+}
+
+export interface RequestFactory {
+  config: Config
+  storage: StorageFactory
+
+  authenticate(): Promise<AuthenticateResponseBody>
+
+  send<T = any>(
+    uri: string,
+    method: HttpVerbs,
+    body?: any,
+    token?: string
+  ): Promise<T>
+
+  constructor(config: Config): void
+}
+
+export interface ConfigOptions {
+  application?: string
+  client_id: string
+  client_secret?: string
+  language?: string
+  currency?: string
+  host?: string
+  custom_fetch?: Function
+}
+
+export interface Config {
+  application?: string
+  client_id: string
+  client_secret?: string
+  host: string
+  protocol: 'https'
+  version: 'v2'
+  currency?: string
+  language?: string
+  custom_fetch?: Function
+  auth: {
+    expires: 3600
+    uri: 'oauth/access_token'
+  }
+  sdk: {
+    version: string
+    language: 'JS'
   }
 
-  export interface CrudQueryableResource<R, F, S, I> extends QueryableResource<R, F, S, I> {
-    Create<ER extends R = R>(
-      body: R
-    ): Promise<Resource<ER>>
+  constructor(options: ConfigOptions): void
+}
 
-    Delete<ER extends R = R>(id: string): Promise<ResourcePage<ER>>
+export interface StorageFactory {
+  localStorage: Storage
 
-    Update<ER extends R = R>(
-      id: string,
-      body: R
-    ): Promise<ResourcePage<ER>>
-  }
+  set(key: string, value: string): void
 
-  export interface RequestFactory {
-    config: Config
-    storage: StorageFactory
+  get(key: string): string | null
 
-    authenticate(): Promise<AuthenticateResponseBody>
+  delete(key: string): void
+}
 
-    send<T = any>(
-      uri: string,
-      method: HttpVerbs,
-      body?: any,
-      token?: string
-    ): Promise<T>
+export enum HttpVerbs {
+  Get = 'GET',
+  Post = 'POST',
+  Put = 'PUT',
+  Patch = 'PATCH',
+  Delete = 'DELETE'
+}
 
-    constructor(config: Config): void
-  }
+export enum GrantType {
+  ClientCredentials = 'client_credentials',
+  Implicit = 'implicit'
+}
 
-  export interface ConfigOptions {
-    application?: string
-    client_id: string
-    client_secret?: string
-    language?: string
-    currency?: string
-    host?: string
-    custom_fetch?: Function
-  }
-
-  export interface Config {
-    application?: string
-    client_id: string
-    client_secret?: string
-    host: string
-    protocol: 'https'
-    version: 'v2'
-    currency?: string
-    language?: string
-    custom_fetch?: Function
-    auth: {
-      expires: 3600
-      uri: 'oauth/access_token'
-    }
-    sdk: {
-      version: string
-      language: 'JS'
-    }
-
-    constructor(options: ConfigOptions): void
-  }
-
-  export interface StorageFactory {
-    localStorage: Storage
-
-    set(key: string, value: string): void
-
-    get(key: string): string | null
-
-    delete(key: string): void
-  }
-
-  export enum HttpVerbs {
-    Get = 'GET',
-    Post = 'POST',
-    Put = 'PUT',
-    Patch = 'PATCH',
-    Delete = 'DELETE'
-  }
-
-  export enum GrantType {
-    ClientCredentials = 'client_credentials',
-    Implicit = 'implicit'
-  }
-
-  export interface AuthenticateResponseBody {
-    expires: number
-    identifier: GrantType
-    expires_in: number
-    access_token: string
-    token_type: 'Bearer'
-  }
+export interface AuthenticateResponseBody {
+  expires: number
+  identifier: GrantType
+  expires_in: number
+  access_token: string
+  token_type: 'Bearer'
 }
