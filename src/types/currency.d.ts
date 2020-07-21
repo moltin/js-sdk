@@ -14,6 +14,7 @@ export interface CurrencyBase {
   type: string
   code: string
   exchange_rate: number
+  enabled: boolean
   format: string
   decimal_point: string
   thousand_separator: string

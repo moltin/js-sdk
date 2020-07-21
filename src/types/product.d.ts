@@ -3,7 +3,7 @@
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
  */
-import { Relationship, CrudQueryableResource } from './core';
+import { CrudQueryableResource, Relationship, RelationshipToMany } from './core';
 
 export interface Price {
   amount: number
@@ -23,7 +23,7 @@ export interface FormattedPrice {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
  */
 export interface ProductBase {
-  id?: string
+  id: string
   type: string
   name: string
   slug: string
@@ -33,7 +33,7 @@ export interface ProductBase {
   price: Price[]
   status?: 'draft' | 'live'
   commodity_type: 'physical' | 'digital'
-  meta?: {
+  meta: {
     timestamps: {
       created_at: string
       updated_at: string
@@ -49,6 +49,7 @@ export interface ProductBase {
   }
   relationships?: {
     main_image?: Relationship<'main_image'>
+    files?: RelationshipToMany<'file'>
     categories?: Relationship<'category'>[]
     brand?: Relationship<'brand'>[]
     parent?: Relationship<'product'>

@@ -21,6 +21,7 @@ import * as transaction from './types/transaction';
 
 export * from './types/product';
 export * from './types/core';
+export * from './types/customer';
 export * from './types/order';
 export * from './types/cart';
 export * from './types/address';

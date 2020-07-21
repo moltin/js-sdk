@@ -4,7 +4,7 @@
  * also contain other Categories, which can then be viewed in a tree structure.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/categories/index.html
  */
-import { CrudQueryableResource } from './core';
+import { CrudQueryableResource, ResourceList } from './core';
 
 /**
  * Core Category Base Interface
@@ -12,13 +12,13 @@ import { CrudQueryableResource } from './core';
  * DOCS:
  */
 export interface CategoryBase {
-  id?: string
+  id: string
   type: string
   name: string
   slug: string
   description: string
   status: string
-  children?: CategoryBase
+  children?: CategoryBase[]
   meta?: {
     timestamps: {
       created_at: string
@@ -69,5 +69,5 @@ export interface CategoryEndpoint extends CrudQueryableResource<CategoryBase, Ca
    * category in one request.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/categories/relationships/index.html
    */
-  Tree(): Promise<CategoryBase>
+  Tree(): Promise<ResourceList<CategoryBase>>
 }

@@ -1,6 +1,13 @@
 
-export interface ResourcePage<R> {
+export interface Resource<R> {
+  data: R
+}
+
+export interface ResourceList<R> {
   data: R[]
+}
+
+export interface ResourcePage<R> extends ResourceList<R> {
   links: { [key: string]: string | null }
   meta: {
     page: {
@@ -15,15 +22,18 @@ export interface ResourcePage<R> {
   }
 }
 
-export interface Resource<R> {
-  data: R
-}
-
 export interface Relationship<T> {
   data: {
     id: string
     type: T
   }
+}
+
+export interface RelationshipToMany<T> {
+  data: {
+    id: string
+    type: T
+  }[]
 }
 
 export interface QueryableResource<R, F, S, I> {
