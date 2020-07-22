@@ -1,26 +1,31 @@
+import { core, Relationship, ResourcePage } from './core'
 export as namespace realm
 
 export namespace realm {
 
-  export interface Meta {
-      created_at: Date;
-      updated_at: Date;
+  export interface RealmBase {
+    data: {
+        id: string;
+        name: string;
+        meta: {
+          created_at: Date;
+          updated_at: Date;
+        }
+        type: string;
+    }
+
+    links: {
+        self: string;
+    }
   }
 
-  export interface Data {
-      id: string;
-      name: string;
-      meta: Meta;
-      type: string;
-  }
 
-  export interface Links {
-      self: string;
-  }
-
-  export interface RealmsBase {
-      data: Data;
-      links: Links;
+/**
+   * AuthenticationRealm Endpoints
+   */
+  export interface AuthenticationRealmsEndpoint extends core.CrudQueryableResource<RealmBase, null, null, null> {
+    endpoint: 'authentication-realms'
+    storage: Storage
   }
 
 }

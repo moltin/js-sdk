@@ -1,6 +1,6 @@
 import CRUDExtend from '../extends/crud'
 
-class AuthenticationRealms extends CRUDExtend {
+class AuthenticationRealmsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
     this.endpoint = 'authentication-realms'
@@ -29,4 +29,4 @@ class AuthenticationRealms extends CRUDExtend {
   }
 }
 
-export default AuthenticationRealms
+export default AuthenticationRealmsEndpoint
