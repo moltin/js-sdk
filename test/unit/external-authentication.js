@@ -2,18 +2,12 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-// const apiUrl = 'https://auth.us-west-perf-api.molt.in/v2'
-
 const apiUrl = 'https://api.moltin.com/v2'
-// const apiUrl = 'localhost:8080'
 
 describe('Moltin Authenitcation Realms', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX'
-    // host: 'auth.us-west-perf-api.molt.in'
   })
-
-  // Moltin.config.storage.set('moltinCredentials', '{"client_id":"XXX","access_token":"1d2faf0f1a8b6117cba6841f74ec4707a4743148","expires":"999999999999999999999"}')
 
   it('Get all Realms', () => {
     nock(apiUrl, {})
@@ -73,7 +67,6 @@ describe('Moltin Authenitcation Realms', () => {
   })
 
   it('Delete a single Realm', () => {
-    // TODO:  Creates a single Realm...
     nock(apiUrl, {})
       .delete(/authentication-realms\/*/)
       .reply(201, {})
