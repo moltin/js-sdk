@@ -4,6 +4,8 @@ import BaseExtend from './base'
 
 class CRUDExtend extends BaseExtend {
   Create(body) {
+    console.log('creating!')
+    console.log(singularize(this.endpoint))
     return this.request.send(this.endpoint, 'POST', {
       ...body,
       type: singularize(this.endpoint)

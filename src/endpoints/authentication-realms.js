@@ -1,0 +1,34 @@
+import CRUDExtend from '../extends/crud'
+
+class AuthenticationRealms extends CRUDExtend {
+  constructor(endpoint) {
+    super(endpoint)
+    this.endpoint = 'authentication-realms'
+  }
+
+  Create(body) {
+    console.log('creating!')
+    console.log(this.endpoint)
+    return this.request.send(this.endpoint, 'POST', body.data)
+  }
+
+  Get({ realmId, token = null }) {
+    return this.request.send(
+      `${this.endpoint}/${realmId}`,
+      'GET',
+      undefined,
+      token
+    )
+  }
+
+  Update(realmId, body, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${realmId}`,
+      'PUT',
+      body.data,
+      token
+    )
+  }
+}
+
+export default AuthenticationRealms
