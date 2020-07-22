@@ -20,7 +20,7 @@ export namespace realm {
   }
 
 
-/**
+  /**
    * AuthenticationRealm Endpoints
    */
   export interface AuthenticationRealmsEndpoint extends core.CrudQueryableResource<RealmBase, null, null, null> {
