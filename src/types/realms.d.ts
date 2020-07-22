@@ -1,4 +1,4 @@
-import { core, Relationship, ResourcePage } from './core'
+import { core } from './core'
 export as namespace realm
 
 export namespace realm {

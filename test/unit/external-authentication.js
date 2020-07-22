@@ -2,13 +2,15 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-const apiUrl = 'https://auth.us-west-perf-api.molt.in/v2'
+// const apiUrl = 'https://auth.us-west-perf-api.molt.in/v2'
+
+const apiUrl = 'https://api.moltin.com/v2'
 // const apiUrl = 'localhost:8080'
 
 describe('Moltin Authenitcation Realms', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX',
-    host: 'auth.us-west-perf-api.molt.in'
+    client_id: 'XXX'
+    // host: 'auth.us-west-perf-api.molt.in'
   })
 
   // Moltin.config.storage.set('moltinCredentials', '{"client_id":"XXX","access_token":"1d2faf0f1a8b6117cba6841f74ec4707a4743148","expires":"999999999999999999999"}')
@@ -19,13 +21,14 @@ describe('Moltin Authenitcation Realms', () => {
       .reply(200, {})
 
     return Moltin.AuthenticationRealms.All().then(res => {
+      console.log('responding here')
       assert.isObject(res)
     })
   })
 
   it('Get a single Realm', () => {
     nock(apiUrl, {})
-      .get('/authentication-realms')
+      .get(/authentication-realms\/*/)
       .reply(200, {})
     const realmId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
     Moltin.AuthenticationRealms.Get({ realmId }).then(res => {
@@ -35,7 +38,7 @@ describe('Moltin Authenitcation Realms', () => {
 
   it('Create a single Realm', () => {
     nock(apiUrl, {})
-      .post('/authentication-realms')
+      .post(/authentication-realms\/*/)
       .reply(201, {})
 
     const body = {
@@ -52,7 +55,7 @@ describe('Moltin Authenitcation Realms', () => {
 
   it('Update a single Realm', () => {
     nock(apiUrl, {})
-      .put('/authentication-realms')
+      .put(/authentication-realms\/*/)
       .reply(201, {})
 
     const body = {
@@ -72,7 +75,7 @@ describe('Moltin Authenitcation Realms', () => {
   it('Delete a single Realm', () => {
     // TODO:  Creates a single Realm...
     nock(apiUrl, {})
-      .delete('/authentication-realms')
+      .delete(/authentication-realms\/*/)
       .reply(201, {})
 
     const realmId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
