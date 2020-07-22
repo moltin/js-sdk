@@ -7,8 +7,6 @@ class AuthenticationRealms extends CRUDExtend {
   }
 
   Create(body) {
-    console.log('creating!')
-    console.log(this.endpoint)
     return this.request.send(this.endpoint, 'POST', body.data)
   }
 

@@ -28,7 +28,6 @@ class BaseExtend {
   }
 
   Get(id, token = null) {
-    console.log('getting something in the sdk')
     this.call = this.request.send(
       buildURL(`${this.endpoint}/${id}`, {
         includes: this.includes

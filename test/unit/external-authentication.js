@@ -12,7 +12,6 @@ describe('Moltin Authenitcation Realms', () => {
   })
 
   // Moltin.config.storage.set('moltinCredentials', '{"client_id":"XXX","access_token":"1d2faf0f1a8b6117cba6841f74ec4707a4743148","expires":"999999999999999999999"}')
-  // console.log(Moltin.config.storage.get('moltinCredentials').toString())
 
   it('Get all Realms', () => {
     nock(apiUrl, {})
@@ -20,8 +19,6 @@ describe('Moltin Authenitcation Realms', () => {
       .reply(200, {})
 
     return Moltin.AuthenticationRealms.All().then(res => {
-      console.log('something coming from res')
-      console.log(res)
       assert.isObject(res)
     })
   })
