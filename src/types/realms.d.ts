@@ -1,14 +1,26 @@
-export as namespace realms
+export as namespace realm
 
-export namespace realms {
-  /**
-   * Core Product Base Interface
-   * For custom flows, extend this interface
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
-   */
-  export interface RealmsBase {
-    meta?: {}
-    data:{}
-    links:{}
+export namespace realm {
+
+  export interface Meta {
+      created_at: Date;
+      updated_at: Date;
   }
+
+  export interface Data {
+      id: string;
+      name: string;
+      meta: Meta;
+      type: string;
+  }
+
+  export interface Links {
+      self: string;
+  }
+
+  export interface RealmsBase {
+      data: Data;
+      links: Links;
+  }
+
 }
