@@ -20,7 +20,7 @@ require('./unit/products')
 require('./unit/transactions')
 require('./unit/error')
 require('./unit/settings')
-require('./unit/external-authentication')
+require('./unit/authentication-realms')
 
 // Utilities
 require('./utils/helpers')
