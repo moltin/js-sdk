@@ -1,10 +1,10 @@
 import { core } from './core'
+
 export as namespace realm
 
 export namespace realm {
 
   export interface RealmBase {
-    data: {
         id: string;
         name: string;
         meta: {
@@ -12,11 +12,6 @@ export namespace realm {
           updated_at: Date;
         }
         type: string;
-    }
-
-    links: {
-        self: string;
-    }
   }
 
 

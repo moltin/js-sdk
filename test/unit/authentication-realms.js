@@ -4,7 +4,7 @@ import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
-describe('Moltin Authenitcation Realms', () => {
+describe('Moltin Authentication Realms', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX'
   })
