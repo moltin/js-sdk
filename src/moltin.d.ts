@@ -1,11 +1,41 @@
 // Type definitions for @moltin/js-sdk
 // Project: @moltin/sdk
-import {
-  product, core, order, customer, cart, address, inventory, field, collection, category, brand, currency,
-  integration, job, file, flow, transaction
-} from './types'
 
-export * from './types'
+import * as product from './types/product';
+import * as core from './types/core';
+import * as customer from './types/customer';
+import * as order from './types/order';
+import * as cart from './types/cart';
+import * as address from './types/address';
+import * as inventory from './types/inventory';
+import * as field from './types/field';
+import * as collection from './types/collection';
+import * as category from './types/category';
+import * as brand from './types/brand';
+import * as currency from './types/currency';
+import * as integration from './types/integration';
+import * as job from './types/job';
+import * as file from './types/file';
+import * as flow from './types/flow';
+import * as transaction from './types/transaction';
+
+export * from './types/product';
+export * from './types/core';
+export * from './types/customer';
+export * from './types/order';
+export * from './types/cart';
+export * from './types/address';
+export * from './types/inventory';
+export * from './types/field';
+export * from './types/collection';
+export * from './types/category';
+export * from './types/brand';
+export * from './types/currency';
+export * from './types/integration';
+export * from './types/job';
+export * from './types/file';
+export * from './types/flow';
+export * from './types/transaction';
 
 // UMD
 export as namespace moltin
