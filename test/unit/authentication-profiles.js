@@ -84,12 +84,12 @@ describe('Authentication Profiles', () => {
   it('Delete a single authentication Profile', () => {
     nock(apiUrl, {})
       .delete(/\/authentication-realms\/(.*)\/profiles\/oidc\/(.*)/)
-      .reply(201, {})
+      .reply(204)
 
     const profileId = '7e6645ef-0084-4928-b9b4-d2fe5577f70e'
 
     Moltin.AuthenticationProfiles.Delete(realmId, profileId).then(res => {
-      assert.isObject(res)
+      assert.equal(res, '{}')
     })
   })
 })
