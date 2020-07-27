@@ -17,7 +17,7 @@ class Config {
     this.application = application
     this.client_id = client_id
     this.client_secret = client_secret
-    this.host = host || 'api.moltin.com'
+    this.host = host || 'us-west-perf-api.molt.in'
     this.protocol = 'https'
     this.version = 'v2'
     this.currency = currency

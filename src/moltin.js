@@ -25,11 +25,13 @@ import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
 import AuthenticationRealmsEndpoint from './endpoints/authentication-realms'
 import AuthenticationProfilesEndpoint from './endpoints/authentication-profiles'
+import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 
 import { cartIdentifier } from './utils/helpers'
 
 export default class Moltin {
   constructor(config) {
+    console.log('the constructor is being called in the sdk!')
     this.config = config
     this.cartId = cartIdentifier(config.storage)
 
@@ -55,6 +57,7 @@ export default class Moltin {
     this.Settings = new SettingsEndpoint(config)
     this.AuthenticationRealms = new AuthenticationRealmsEndpoint(config)
     this.AuthenticationProfiles = new AuthenticationProfilesEndpoint(config)
+    this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class

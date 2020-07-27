@@ -8,6 +8,7 @@ class CustomersEndpoint extends CRUDExtend {
   }
 
   Token(email, password) {
+    console.log('getting a customer token in the js-sdk')
     return this.request.send(`${this.endpoint}/tokens`, 'POST', {
       email,
       password,

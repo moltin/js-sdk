@@ -61,6 +61,9 @@ export class Moltin {
   Fields: field.FieldsEndpoint
   Addresses: address.AddressesEndpoint
   Transactions: transaction.TransactionEndpoint
+  AuthenticationProfiles: any
+  AuthenticationRealms: any
+  AuthenticationSettings: any
 
   Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: core.Config)
