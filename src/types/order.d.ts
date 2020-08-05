@@ -3,7 +3,9 @@
  * Description: An Order is created via the checkout endpoint within the Carts API.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
-import { Relationship, ResourcePage, QueryableResource } from './core';
+import { Identifiable, Relationship, ResourcePage, QueryableResource } from './core';
+import { AddressBase } from './address';
+import { FormattedPrice, Price } from './price';
 
 /**
  * Core Object Base Interface
@@ -11,61 +13,33 @@ import { Relationship, ResourcePage, QueryableResource } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
 export interface OrderBase {
-  id?: string
-  type: string
-  status: string
-  payment: string
-  shipping: string
+  type: string;
+  status: string;
+  payment: string;
+  shipping: string;
   customer: {
-    name: string
-    email: string
-  }
-  shipping_address: {
-    first_name: string
-    last_name: string
-    phone_number: string
-    company_name: string
-    line_1: string
-    line_2: string
-    city: string
-    postcode: string
-    county: string
-    country: string
-    instructions: string
-  }
-  billing_address: {
-    first_name: string
-    last_name: string
-    company_name: string
-    line_1: string
-    line_2: string
-    city: string
-    postcode: string
-    county: string
-    country: string
-  }
-  meta?: {
+    name: string;
+    email: string;
+  };
+  shipping_address: AddressBase;
+  billing_address: AddressBase;
+}
+
+export interface Order extends Identifiable, OrderBase {
+  meta: {
     display_price: {
-      with_tax: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      without_tax: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      timestamps: {
-        created_at: string
-        updated_at: string
-      }
-    }
-  }
+      with_tax: FormattedPrice;
+      without_tax: FormattedPrice;
+    };
+    timestamps: {
+      created_at: string;
+      updated_at: string;
+    };
+  };
   relationships?: {
-    main_image?: Relationship<'product'> []
-    categories?: Relationship<'customer'>
-  }
+    main_image?: Relationship<'product'>[];
+    categories?: Relationship<'customer'>;
+  };
 }
 
 /**
@@ -73,111 +47,81 @@ export interface OrderBase {
  */
 export interface OrderFilter {
   eq?: {
-    status?: string
-    payment?: string
-    shipping?: string
+    status?: string;
+    payment?: string;
+    shipping?: string;
     customer?: {
-      name?: string
-      email?: string
-    }
-    customer_id?: string
-    shipping_name?: string
-    shipping_postcode?: string
-    billing_name?: string
-    billing_postcode?: string
-    currency?: string
-    product_id?: string
-    product_sku?: string
-    created_at?: Date
-    updated_at?: Date
-  }
+      name?: string;
+      email?: string;
+    };
+    customer_id?: string;
+    shipping_name?: string;
+    shipping_postcode?: string;
+    billing_name?: string;
+    billing_postcode?: string;
+    currency?: string;
+    product_id?: string;
+    product_sku?: string;
+    created_at?: Date;
+    updated_at?: Date;
+  };
   like?: {
     customer?: {
-      name?: string
-      email?: string
-    }
-    customer_id?: string
-    shipping_name?: string
-    shipping_postcode?: string
-    billing_name?: string
-    billing_postcode?: string
-  },
+      name?: string;
+      email?: string;
+    };
+    customer_id?: string;
+    shipping_name?: string;
+    shipping_postcode?: string;
+    billing_name?: string;
+    billing_postcode?: string;
+  };
   ge?: {
-    with_tax?: number
-    without_tax?: number
-  },
+    with_tax?: number;
+    without_tax?: number;
+  };
   lt?: {
-    with_tax?: number
-    without_tax?: number
-    created_at?: Date
-    updated_at?: Date
-  },
+    with_tax?: number;
+    without_tax?: number;
+    created_at?: Date;
+    updated_at?: Date;
+  };
   le?: {
-    with_tax?: number
-    without_tax?: number
-    created_at?: Date
-    updated_at?: Date
-  }
+    with_tax?: number;
+    without_tax?: number;
+    created_at?: Date;
+    updated_at?: Date;
+  };
 }
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/order-items.html
  */
-export interface OrderItems {
-  id: string
-  type: string
-  product_id: string
-  name: string
-  sku: string
-  quantity: number
-  unit_price: {
-    amount: number
-    currency: string
-    includes_tax: boolean
-  }
-  value: {
-    amount: number
-    currency: string
-    includes_tax: boolean
-  }
-  links: any
+export interface OrderItemBase {
+  type: string;
+  product_id: string;
+  name: string;
+  sku: string;
+  quantity: number;
+  unit_price: Price;
+  value: Price;
+}
+
+export interface OrderItem extends Identifiable, OrderItemBase {
+  links: any;
   meta?: {
     display_price?: {
-      with_tax: {
-        unit: {
-          amount: number
-          currency: string
-          formatted: string
-        }
-        value: {
-          amount: number
-          currency: string
-          formatted: string
-        }
-      }
+      with_tax?: {
+        unit: FormattedPrice;
+        value: FormattedPrice;
+      };
       without_tax?: {
-        unit: {
-          amount: number
-          currency: string
-          formatted: string
-        }
-        value: {
-          amount: number
-          currency: string
-          formatted: string
-        }
+        unit: FormattedPrice;
+        value: FormattedPrice;
       }
       tax?: {
-        unit: {
-          amount: number
-          currency: string
-          formatted: string
-        }
-        value: {
-          amount: number
-          currency: string
-          formatted: string
-        }
+        unit: FormattedPrice;
+        value: FormattedPrice;
       }
     }
     timestamps?: {
@@ -201,21 +145,26 @@ type OrderInclude = 'product' | 'customer'
  * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/get-all-orders.html
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
  */
-export interface OrdersEndpoint extends QueryableResource<OrderBase, OrderFilter, OrderSort, OrderInclude> {
-  endpoint: 'orders'
+export interface OrdersEndpoint extends QueryableResource<
+  Order,
+  OrderFilter,
+  OrderSort,
+  OrderInclude
+> {
+  endpoint: 'orders';
 
   /**
    * Get Order Items
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/order-items.html
    * @param id - The ID of the order
    */
-  Items<T>(id: string): Promise<ResourcePage<OrderItems | T>>
+  Items(id: string): Promise<ResourcePage<OrderItem>>;
 
   //TODO: Docs ref?
   Payment<RequestBody = any, ResponseBody = any>(
     id: string,
     body: RequestBody
-  ): Promise<ResponseBody>
+  ): Promise<ResponseBody>;
 
   /**
    * Update an Order
@@ -225,8 +174,8 @@ export interface OrdersEndpoint extends QueryableResource<OrderBase, OrderFilter
    * @param body
    * @constructor
    */
-  Update<RequestBody = any, ResponseBody = any>(
+  Update(
     id: string,
-    body: RequestBody
-  ): Promise<ResponseBody>
+    body: Partial<OrderBase>
+  ): Promise<Order>;
 }

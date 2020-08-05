@@ -19,6 +19,7 @@ import * as file from './types/file';
 import * as flow from './types/flow';
 import * as transaction from './types/transaction';
 
+export * from './types/price';
 export * from './types/product';
 export * from './types/core';
 export * from './types/customer';

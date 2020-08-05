@@ -1,126 +1,130 @@
 
+export interface Identifiable {
+  id: string;
+}
+
 export interface Resource<R> {
-  data: R
+  data: R;
 }
 
 export interface ResourceList<R> {
-  data: R[]
+  data: R[];
 }
 
 export interface ResourcePage<R> extends ResourceList<R> {
-  links: { [key: string]: string | null }
+  links: { [key: string]: string | null };
   meta: {
     page: {
-      current: number
-      limit: number
-      offset: number
-      total: number
-    }
+      current: number;
+      limit: number;
+      offset: number;
+      total: number;
+    };
     results: {
-      total: number
-    }
-  }
+      total: number;
+    };
+  };
 }
 
 export interface Relationship<T> {
   data: {
-    id: string
-    type: T
-  }
+    id: string;
+    type: T;
+  };
 }
 
 export interface RelationshipToMany<T> {
   data: {
-    id: string
-    type: T
-  }[]
+    id: string;
+    type: T;
+  }[];
 }
 
 export interface QueryableResource<R, F, S, I> {
-  All<ER extends R = R>(token?: string): Promise<ResourcePage<ER>>
+  All(token?: string): Promise<ResourcePage<R>>;
 
-  Get<ER extends R = R>(id: string, token?: string): Promise<Resource<ER>>
+  Get(id: string, token?: string): Promise<Resource<R>>;
 
-  Filter(filter: F): QueryableResource<R, F, S, I>
+  Filter(filter: F): QueryableResource<R, F, S, I>;
 
-  Limit(value: number): QueryableResource<R, F, S, I>
+  Limit(value: number): QueryableResource<R, F, S, I>;
 
-  Offset(value: number): QueryableResource<R, F, S, I>
+  Offset(value: number): QueryableResource<R, F, S, I>;
 
-  Sort(value: S): QueryableResource<R, F, S, I>
+  Sort(value: S): QueryableResource<R, F, S, I>;
 
-  With(includes: I | I[]): QueryableResource<R, F, S, I>
+  With(includes: I | I[]): QueryableResource<R, F, S, I>;
 }
 
-export interface CrudQueryableResource<R, F, S, I> extends QueryableResource<R, F, S, I> {
-  Create<ER extends R = R>(
-    body: R
-  ): Promise<Resource<ER>>
+export interface CrudQueryableResource<R, C, U, F, S, I> extends QueryableResource<R, F, S, I> {
+  Create(
+    body: C
+  ): Promise<Resource<R>>;
 
-  Delete<ER extends R = R>(id: string): Promise<ResourcePage<ER>>
+  Delete(id: string): Promise<Resource<R>>;
 
-  Update<ER extends R = R>(
+  Update(
     id: string,
-    body: R
-  ): Promise<ResourcePage<ER>>
+    body: U
+  ): Promise<Resource<R>>;
 }
 
 export interface RequestFactory {
-  config: Config
-  storage: StorageFactory
+  config: Config;
+  storage: StorageFactory;
 
-  authenticate(): Promise<AuthenticateResponseBody>
+  authenticate(): Promise<AuthenticateResponseBody>;
 
   send<T = any>(
     uri: string,
     method: HttpVerbs,
     body?: any,
     token?: string
-  ): Promise<T>
+  ): Promise<T>;
 
-  constructor(config: Config): void
+  constructor(config: Config): void;
 }
 
 export interface ConfigOptions {
-  application?: string
-  client_id: string
-  client_secret?: string
-  language?: string
-  currency?: string
-  host?: string
-  custom_fetch?: Function
+  application?: string;
+  client_id: string;
+  client_secret?: string;
+  language?: string;
+  currency?: string;
+  host?: string;
+  custom_fetch?: Function;
 }
 
 export interface Config {
-  application?: string
-  client_id: string
-  client_secret?: string
-  host: string
-  protocol: 'https'
-  version: 'v2'
-  currency?: string
-  language?: string
-  custom_fetch?: Function
+  application?: string;
+  client_id: string;
+  client_secret?: string;
+  host: string;
+  protocol: 'https';
+  version: 'v2';
+  currency?: string;
+  language?: string;
+  custom_fetch?: Function;
   auth: {
-    expires: 3600
-    uri: 'oauth/access_token'
+    expires: 3600;
+    uri: 'oauth/access_token';
   }
   sdk: {
-    version: string
-    language: 'JS'
+    version: string;
+    language: 'JS';
   }
 
-  constructor(options: ConfigOptions): void
+  constructor(options: ConfigOptions): void;
 }
 
 export interface StorageFactory {
-  localStorage: Storage
+  localStorage: Storage;
 
-  set(key: string, value: string): void
+  set(key: string, value: string): void;
 
-  get(key: string): string | null
+  get(key: string): string | null;
 
-  delete(key: string): void
+  delete(key: string): void;
 }
 
 export enum HttpVerbs {
@@ -137,9 +141,9 @@ export enum GrantType {
 }
 
 export interface AuthenticateResponseBody {
-  expires: number
-  identifier: GrantType
-  expires_in: number
-  access_token: string
-  token_type: 'Bearer'
+  expires: number;
+  identifier: GrantType;
+  expires_in: number;
+  access_token: string;
+  token_type: 'Bearer';
 }
