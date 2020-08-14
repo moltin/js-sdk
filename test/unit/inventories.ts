@@ -21,10 +21,10 @@ describe('Moltin inventories', () => {
       }
     })
       .get('/inventories')
-      .reply(200, inventories)
+      .reply(200, { data: inventories })
 
     return Moltin.Inventories.All().then(response => {
-      assert.lengthOf(response, 2)
+      assert.lengthOf(response.data, 2)
     })
   })
 
@@ -58,11 +58,11 @@ describe('Moltin inventories', () => {
       }
     })
       .get('/inventories/managed-product-1/transactions')
-      .reply(200, transactions)
+      .reply(200, { data: transactions })
 
     return Moltin.Inventories.GetTransactions('managed-product-1').then(
       response => {
-        assert.lengthOf(response, 2)
+        assert.lengthOf(response.data, 2)
       }
     )
   })

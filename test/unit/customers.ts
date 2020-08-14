@@ -18,10 +18,10 @@ describe('Moltin customers', () => {
       }
     })
       .get('/customers')
-      .reply(200, customers)
+      .reply(200, { data: customers })
 
     return Moltin.Customers.All().then(response => {
-      assert.lengthOf(response, 2)
+      assert.lengthOf(response.data, 2)
     })
   })
 
@@ -35,7 +35,7 @@ describe('Moltin customers', () => {
       .get('/customers/1')
       .reply(200, customers[0])
 
-    return Moltin.Customers.Get(1).then(response => {
+    return Moltin.Customers.Get('1').then(response => {
       assert.propertyVal(response, 'id', 'customer-1')
     })
   })
@@ -51,7 +51,7 @@ describe('Moltin customers', () => {
       .get('/customers/1')
       .reply(200, customers[0])
 
-    return Moltin.Customers.Get(1, 'testtoken').then(response => {
+    return Moltin.Customers.Get('1', 'testtoken').then(response => {
       assert.propertyVal(response, 'id', 'customer-1')
     })
   })
@@ -64,7 +64,7 @@ describe('Moltin customers', () => {
       }
     })
       .get('/customers?filter=eq(email,jonathan@moltin.com)')
-      .reply(200, customers)
+      .reply(200, { data: customers })
 
     return Moltin.Customers.Filter({
       eq: {
@@ -73,39 +73,34 @@ describe('Moltin customers', () => {
     })
       .All()
       .then(response => {
-        assert.lengthOf(response, 2)
+        assert.lengthOf(response.data, 2)
       })
   })
 
   it('should create a new customer', () => {
+    const newCustomer = {
+      type: 'customer',
+      name: 'Max Power',
+      email: 'max@power.com',
+      password: 'fakepass'
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/customers', {
-        data: {
-          type: 'customer',
-          username: 'maximusPowerus',
-          name: 'Max Power',
-          email: 'max@power.com',
-          password: 'fakepass'
-        }
-      })
-      .reply(201, {
-        username: 'maximusPowerus',
-        name: 'Max Power',
-        email: 'max@power.com'
-      })
+      .post('/customers')
+      .reply(201, { data: { ...newCustomer, id: 'cus1' } });
 
-    return Moltin.Customers.Create({
-      username: 'maximusPowerus',
-      name: 'Max Power',
-      email: 'max@power.com',
-      password: 'fakepass'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'Max Power')
+    return Moltin.Customers.Create(newCustomer)
+    .then(response => {
+      assert.equal(response.data.id, 'cus1');
+      assert.equal(response.data.type, newCustomer.type);
+      assert.equal(response.data.name, newCustomer.name);
+      assert.equal(response.data.email, newCustomer.email);
+      assert.equal(response.data.password, newCustomer.password);
     })
   })
 
@@ -220,7 +215,7 @@ describe('Moltin customers', () => {
     })
       .All()
       .then(() => {
-        assert.notExists(Moltin.Customers.filter)
+        assert.notExists((Moltin.Customers as any).filter)
       })
   })
 })

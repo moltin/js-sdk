@@ -18,10 +18,10 @@ describe('Moltin files', () => {
       }
     })
       .get('/files')
-      .reply(200, files)
+      .reply(200, { data: files })
 
     return Moltin.Files.All().then(response => {
-      assert.lengthOf(response, 4)
+      assert.lengthOf(response.data, 4)
     })
   })
 
@@ -35,7 +35,7 @@ describe('Moltin files', () => {
       .get('/files/1')
       .reply(200, files[0])
 
-    return Moltin.Files.Get(1).then(response => {
+    return Moltin.Files.Get('1').then(response => {
       assert.propertyVal(response, 'id', 'file-1')
     })
   })

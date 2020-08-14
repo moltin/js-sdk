@@ -127,23 +127,19 @@ const Moltin = MoltinGateway({
 
 ``` 
 ### TypeScript Support
-The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript. Each service is wrapped in a namespace which exposes all the necessary interfaces and endpoints that can be consumed.
+The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript.
 
-Responses will be returned as either a `Response` (single object returned) or a `ResponsePage` (an array of items) - see `src/types/core.d.ts` for more info. Additional responses may be returned in a native object structure.
+Imported module will contain all interfaces needed to consume backend services. i.e:
 
-Current exposed namespaces include `address`, `brand`, `cart`, `category`, `collection`, `core`, `currencies`, `customer`, `field`, `flow`, `integration`, `inventory`, `job`, `order`, `product` and `transaction`. For further information on any of these services, please refer to the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api).
+``` TypeScript
+import * as moltin from '@moltin/sdk';
 
-You can consume any of the interfaces by importing the namespace into your project. eg:
-
-```
-import { product } from '@moltin/sdk';
-
-const product: product.ProductBase = {...}
+const product: moltin.ProductBase = {...}
 ```
 
 If you do not want to use the namespace, you can extend the interfaces and define them yourself, like so:
 
-```
+``` TypeScript
 // You can name the interface anything you like
 interface Product extends product.ProductBase {
 }
@@ -153,84 +149,69 @@ const product: Product = {...}
 
 Here is an example of a simple product creation:
 
-```
-import { Moltin, gateway, product, Resource } from '@moltin/sdk';
+``` TypeScript
+import { Moltin, gateway, ProductBase, Resource } from '@moltin/sdk';
 
 async function main() {
-    const g: Moltin = gateway({client_id, client_secret});
-    const auth = await g.Authenticate();
-    
-    const newProduct: product.ProductBase = {
-        type: "product",
-        name: "My Product",
-        slug: "my-prod",
-        sku: "my-prod",
-        manage_stock: false,
-        description: "Some description",
-        status: "draft",
-        commodity_type: "physical",
-        price: [
-            {
-                amount: 5499,
-                currency: "USD",
-                includes_tax: true
-            }
-        ]
-    };
-    
-    const nP: Resource<Product> = await g.Products.Create(newProduct);
-}
-```
-
-You can also extend any base interface compatible with flows to create any custom interfaces that you might be using.
-
-```
-interface CustomProduct extends product.ProductBase {
-    customFlowField?: string
-}
-
-const newProduct: CustomProduct = {
+  const g: Moltin = gateway({client_id, client_secret});
+  const auth = await g.Authenticate();
+  
+  const newProduct: ProductBase = {
     type: "product",
     name: "My Product",
     slug: "my-prod",
     sku: "my-prod",
-    customFlowField: "My custome flow..."
     manage_stock: false,
     description: "Some description",
     status: "draft",
     commodity_type: "physical",
     price: [
-        {
-            amount: 5499,
-            currency: "USD",
-            includes_tax: true
-        }
+      {
+        amount: 5499,
+        currency: "USD",
+        includes_tax: true
+      }
     ]
-};
-``` 
-
-You can cast these custom interfaces on any of the endpoints, to ensure you expose the custom fields. 
-
-```
-const customProduct: Resource<CustomProduct> = await g.Products.Create<CustomProduct>(newProduct);
-
-console.log(`New Flow Product`, customProduct.data.customWeight); // this will pass!
-```
-
-You can also consume `filters`, `sorts` and `includes` from relevant services, to ensure you are querying the API correctly.
-
-eg: 
-
-```
-const filter: product.ProductFilter  = {
-    like: {
-        name: '...'
-    }
+  };
+  
+  const nP: Resource<Product> = await g.Products.Create(newProduct);
 }
-
-const filteredProduct = await g.Products.Filter(filter)
 ```
- 
+
+You can also extend any base interface compatible with flows to create any custom interfaces that you might be using by re-declaring `@moltin/sdk` module. Following example adds several properties to `ProductsBase` interface that correspond to flows added to the backend.
+
+In your project add a definition file (with a `.d.ts` extension) with a following code:
+
+``` TypeScript
+import * as moltin from '@moltin/sdk';
+
+declare module '@moltin/sdk' {
+
+  interface Weight {
+    g: number;
+    kg: number;
+    lb: number;
+    oz: number;
+  }
+
+  interface ProductBase {
+    background_color: string;
+    background_colour: string | null;
+    bulb: string;
+    bulb_qty: string;
+    finish: string;
+    material: string;
+    max_watt: string;
+    new: string | null;
+    on_sale: string | null;
+    weight: Weight;
+  }
+
+}
+```
+
+This will affect base interface and all other Product interfaces that inherit from base interface so added properties will be present when creating, updating, fetching products.
+
 ## ❤️ Contributing
 
 We love community contributions. Here's a quick guide if you want to submit a pull request:

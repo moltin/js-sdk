@@ -58,10 +58,10 @@ describe('Moltin integrations', () => {
       }
     })
       .get('/integrations')
-      .reply(200, integrations)
+      .reply(200, { data: integrations })
 
     return Moltin.Integrations.All().then(response => {
-      assert.lengthOf(response, 3)
+      assert.lengthOf(response.data, 3)
     })
   })
 

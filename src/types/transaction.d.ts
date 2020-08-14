@@ -3,34 +3,40 @@
  * Description: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
  * DOCS:
  */
-import { core } from './core'
+import { Identifiable, ResourceList } from './core';
 
-export as namespace transaction
-
-export namespace transaction {
-  /**
-   * Core Transaction Base Interface
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
-   */
+/**
+ * Core Transaction Base Interface
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
+ */
 export interface TransactionBase {
-    id?: string
-    type: string
-    action: string
-    product_id: string
-    quantity: number
-  }
+  type: string;
+  reference: string;
+  gateway: string;
+  amount: number;
+  currency: string;
+  transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund';
+  status: 'complete' | 'failed';
+  relationships:	any;
+  timestamps:	any;
+}
 
-  /**
-   * Transaction Endpoints
-   */
-export interface TransactionEndpoint extends core.CrudQueryableResource<TransactionBase, null, null, null> {
-    endpoint: 'transaction'
+export interface Transaction extends Identifiable, TransactionBase {
+}
 
-    Capture<T = any>(options: {
-      order: string
-      transaction: string
-    }): Promise<T>
+/**
+ * Transaction Endpoints
+ */
+export interface TransactionEndpoint 
+{
+  endpoint: 'transaction';
 
-    Refund<T = any>(options: { order: string; transaction: string }): Promise<T>
-  }
+  All(options: { order: string }): Promise<ResourceList<Transaction>>;
+
+  Capture<T = any>(options: {
+    order: string
+    transaction: string
+  }): Promise<T>;
+
+  Refund<T = any>(options: { order: string; transaction: string }): Promise<T>
 }

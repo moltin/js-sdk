@@ -18,12 +18,12 @@ describe('Moltin order transactions', () => {
       }
     })
       .get('/orders/order-1/transactions')
-      .reply(200, transactions)
+      .reply(200, { data: transactions })
 
     return Moltin.Transactions.All({ order: 'order-1' }).then(response => {
-      assert.lengthOf(response, 2)
-      assert.propertyVal(response[0], 'id', 'transaction-1')
-      assert.propertyVal(response[1], 'id', 'transaction-2')
+      assert.lengthOf(response.data, 2)
+      assert.propertyVal(response.data[0], 'id', 'transaction-1')
+      assert.propertyVal(response.data[1], 'id', 'transaction-2')
     })
   })
 
