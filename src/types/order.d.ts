@@ -136,7 +136,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
 }
 
 type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
-type OrderInclude = 'product' | 'customer'
+type OrderInclude = 'product' | 'customer' | 'items'
 
 /**
  * Orders Endpoints

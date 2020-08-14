@@ -4,7 +4,7 @@
  * history of inventory transactions, enabling easier stock auditing.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/index.html
  */
-import { Identifiable, QueryableResource } from './core';
+import { Identifiable, QueryableResource, ResourceList } from './core';
 
 /**
  * Core Inventory Base Interface
@@ -36,5 +36,5 @@ export interface InventoryEndpoint extends QueryableResource<
   DecrementStock(productId: string, quantity: number): Promise<InventoryBase>;
   AllocateStock(productId: string, quantity: number): Promise<InventoryBase>;
   DeallocateStock(productId: string, quantity: number): Promise<InventoryBase>;
-  GetTransactions(productId: string): Promise<InventoryBase>;
+  GetTransactions(productId: string): Promise<ResourceList<InventoryBase>>;
 }

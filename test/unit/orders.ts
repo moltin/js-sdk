@@ -21,11 +21,11 @@ describe('Moltin orders', () => {
       }
     })
       .get('/orders')
-      .reply(200, orders)
+      .reply(200, { data: orders })
 
     return Moltin.Orders.All().then(response => {
-      assert.lengthOf(response, 4)
-      assert.propertyVal(response[0], 'id', 'order-1')
+      assert.lengthOf(response.data, 4)
+      assert.propertyVal(response.data[0], 'id', 'order-1')
     })
   })
 
@@ -42,11 +42,11 @@ describe('Moltin orders', () => {
       }
     })
       .get('/orders')
-      .reply(200, orders)
+      .reply(200, { data: orders })
 
     return Moltin.Orders.All('testtoken').then(response => {
-      assert.lengthOf(response, 4)
-      assert.propertyVal(response[0], 'id', 'order-1')
+      assert.lengthOf(response.data, 4)
+      assert.propertyVal(response.data[0], 'id', 'order-1')
     })
   })
 
@@ -65,12 +65,12 @@ describe('Moltin orders', () => {
       .query({
         include: 'items'
       })
-      .reply(200, orders)
+      .reply(200, { data: orders })
 
     return Moltin.Orders.With('items')
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -90,12 +90,12 @@ describe('Moltin orders', () => {
       .query({
         include: 'items'
       })
-      .reply(200, orders)
+      .reply(200, { data: orders })
 
     return Moltin.Orders.With('items')
       .All('testtoken')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -234,12 +234,12 @@ describe('Moltin orders', () => {
       .query({
         include: 'items'
       })
-      .reply(200, orders)
+      .reply(200, { data: orders })
 
     return Moltin.Orders.With('items')
       .All()
       .then(() => {
-        assert.notExists(Moltin.Orders.includes)
+        assert.notExists((Moltin.Orders as any).includes)
       })
   })
 })

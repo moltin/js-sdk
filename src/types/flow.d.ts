@@ -4,7 +4,7 @@
  * associate it with. For example a Flow with a slug of products will be applied to all Product responses in your store.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/flows.html
  */
-import { Identifiable, CrudQueryableResource } from './core';
+import { Identifiable, CrudQueryableResource, Resource, ResourcePage } from './core';
 
 
 /**
@@ -27,15 +27,30 @@ export interface FlowFilter {
 /**
  * Flow Endpoints
  */
-export interface FlowEndpoint extends CrudQueryableResource<
-  Flow,
-  FlowBase,
-  Partial<FlowBase>,
-  FlowFilter,
-  never,
-  never
-> {
+export interface FlowEndpoint {
   endpoint: 'flow';
+
+  All(token?: string): Promise<ResourcePage<Flow>>;
+
+  Get(id: string, token?: string): Promise<Resource<Flow>>;
+
+  Filter(filter: FlowFilter): FlowEndpoint;
+
+  Limit(value: number): FlowEndpoint;
+
+  Offset(value: number): FlowEndpoint;
+
+  Create(
+    body: FlowBase
+  ): Promise<Resource<Flow>>;
+
+  Delete(id: string): Promise<{}>;
+
+  Update(
+    id: string,
+    body: Partial<FlowBase>,
+    token?: string
+  ): Promise<Resource<Flow>>;
 
   GetEntries<T = any>(slug: string): Promise<T>;
 

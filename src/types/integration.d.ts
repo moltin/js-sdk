@@ -7,6 +7,13 @@ import { Identifiable, CrudQueryableResource } from './core';
  * Core Integration Base Interface
  */
 export interface IntegrationBase {
+  type: 'integration';
+  name: string;
+  description: string;
+  enabled: boolean;
+  observes: string[];
+  integration_type: string;
+  configuration: any;
 }
 
 export interface Integration extends Identifiable, IntegrationBase {

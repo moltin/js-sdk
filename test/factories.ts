@@ -1,7 +1,9 @@
+import { Address, Brand, BrandBase } from "../src/moltin"
+
 export const integrationsArray = [
   {
     id: 'integration-1',
-    type: 'integration',
+    type: 'integration' as const,
     name: 'Integration 1',
     description: 'Integration 1 description',
     enabled: true,
@@ -13,7 +15,7 @@ export const integrationsArray = [
   },
   {
     id: 'integration-1',
-    type: 'integration',
+    type: 'integration' as const,
     name: 'Integration 1 Updated',
     description: 'Integration 1 updated description',
     enabled: true,
@@ -25,7 +27,7 @@ export const integrationsArray = [
   },
   {
     id: 'integration-2',
-    type: 'integration',
+    type: 'integration' as const,
     name: 'Integration 2',
     description: 'Integration 2 description',
     enabled: true,
@@ -63,25 +65,42 @@ export const productsArray = [
 export const brandsArray = [
   {
     id: 'brand-1',
-    type: 'brand',
-    name: 'Brand 1'
+    type: 'brand' as const,
+    name: 'Brand 1',
+    slug: 'brand-1',
+    description: 'Brand 1 description',
+    status: 'live' as const
   },
   {
     id: 'brand-2',
-    type: 'brand',
-    name: 'Brand 2'
+    type: 'brand' as const,
+    name: 'Brand 2',
+    slug: 'brand-2',
+    description: 'Brand 2 description',
+    status: 'draft' as const
   },
   {
     id: 'brand-3',
-    type: 'brand',
-    name: 'Brand 3'
+    type: 'brand' as const,
+    name: 'Brand 3',
+    slug: 'brand-3',
+    description: 'Brand 3 description',
+    status: 'live' as const
   },
   {
     id: 'brand-4',
-    type: 'brand',
-    name: 'Brand 4'
+    type: 'brand' as const,
+    name: 'Brand 4',
+    slug: 'brand-4',
+    description: 'Brand 4 description',
+    status: 'live' as const
   }
-]
+];
+
+export const brandUpdate = {
+  name: 'New Name',
+  slug: 'new-name'
+};
 
 export const categoriesArray = [
   {
@@ -369,13 +388,15 @@ export const flowEntriesArray = [
   }
 ]
 
-export const addressesArray = [
+export const addressesArray: Address[] = [
   {
+    type: 'address' as const,
     id: 'address-1',
     first_name: 'Jonathan',
     last_name: 'Steele',
     name: 'Office',
     phone_number: '(555) 555-1234',
+    instructions: 'Instruction 1',
     company_name: 'Moltin',
     line_1: 'British India House',
     line_2: '15 Carliol Square',
@@ -385,11 +406,13 @@ export const addressesArray = [
     country: 'GB'
   },
   {
+    type: 'address' as const,
     id: 'address-2',
     first_name: 'Jamie',
     last_name: 'Barton',
     name: 'Office',
     phone_number: '(555) 555-1234',
+    instructions: 'Instruction 2',
     company_name: 'Moltin',
     line_1: 'British India House',
     line_2: '15 Carliol Square',
@@ -399,6 +422,11 @@ export const addressesArray = [
     country: 'GB'
   }
 ]
+
+export const addressUpdate = {
+  last_name: 'last_name_2',
+  city: 'city_2',
+};
 
 export const jobsArray = [
   {

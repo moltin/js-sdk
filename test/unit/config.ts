@@ -39,7 +39,7 @@ describe('Moltin config', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX',
       custom_fetch: 'string'
-    })
+    } as any)
 
     return Moltin.Authenticate().catch(error => {
       expect(error).to.be.an.instanceof(TypeError)

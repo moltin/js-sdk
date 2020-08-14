@@ -6,7 +6,8 @@
  * token. This is recommended for back end interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
  */
-import { Identifiable, ResourceList } from './core';
+import { Identifiable, Resource, ResourceList } from './core';
+import { WithRequired } from './util';
 
 
 /**
@@ -15,7 +16,7 @@ import { Identifiable, ResourceList } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/addresss/index.html
  */
 export interface AddressBase {
-  type: string;
+  type: 'address';
   first_name: string;
   last_name: string;
   name: string;
@@ -30,8 +31,12 @@ export interface AddressBase {
   country: string;
 }
 
-export interface Address extends Identifiable, AddressBase {
-}
+export interface Address extends Identifiable, AddressBase {}
+
+interface AddressEdit extends WithRequired<
+  Address,
+  'type' | 'first_name' | 'last_name' | 'line_1' | 'postcode' | 'county' | 'country'
+> {}
 
 /**
  * Address Endpoints
@@ -45,11 +50,13 @@ export interface Address extends Identifiable, AddressBase {
 export interface AddressesEndpoint {
   endpoint: 'addresses';
 
-  All(options: { customer: string, token: string }): Promise<ResourceList<Address>>;
+  Get(options: { customer: string, address: string, token?: string }): Promise<Resource<Address>>;
 
-  Create(options: { customer: string, body: AddressBase, token: string }): Promise<ResourceList<Address>>;
+  All(options: { customer: string, token?: string }): Promise<ResourceList<Address>>;
 
-  Update(options: { customer: string, address: string, body: Partial<AddressBase>, token: string }): Promise<Address>;
+  Create(options: { customer: string, body: AddressEdit, token?: string }): Promise<Resource<Address>>;
 
-  Delete(options: { customer: string, address: string, token: string }): Promise<void>;
+  Update(options: { customer: string, address: string, body: Identifiable & AddressEdit, token?: string }): Promise<Resource<Address>>;
+
+  Delete(options: { customer: string, address: string, token?: string }): Promise<{}>;
 }

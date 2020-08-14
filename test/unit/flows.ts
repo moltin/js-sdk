@@ -10,6 +10,14 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin flows', () => {
   it('should create a flow', () => {
+    const newFlow = {
+      slug: 'addresses' as const,
+      type: 'flow',
+      name: 'Flow 1',
+      description: 'Flow 1 description',
+      enabled: true
+    };
+
     const Moltin = MoltinGateway({
       client_id: 'XXX'
     })
@@ -19,19 +27,17 @@ describe('Moltin flows', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/flows', {
-        data: {
-          type: 'flow',
-          name: 'A new flow'
-        }
-      })
-      .reply(201, {
-        name: 'A new flow'
-      })
-    return Moltin.Flows.Create({
-      name: 'A new flow'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new flow')
+      .post('/flows')
+      .reply(201, { data: { ...newFlow, id: 'flow1' } })
+
+    return Moltin.Flows.Create(newFlow)
+    .then(response => {
+      assert.equal(response.data.id, 'flow1');
+      assert.equal(response.data.type, newFlow.type);
+      assert.equal(response.data.slug, newFlow.slug);
+      assert.equal(response.data.name, newFlow.name);
+      assert.equal(response.data.description, newFlow.description);
+      assert.equal(response.data.enabled, newFlow.enabled);
     })
   })
 
@@ -115,10 +121,10 @@ describe('Moltin flows', () => {
       }
     })
       .get('/flows')
-      .reply(200, flows)
+      .reply(200, { data: flows })
 
     return Moltin.Flows.All().then(response => {
-      assert.lengthOf(response, 2)
+      assert.lengthOf(response.data, 2)
     })
   })
 
@@ -177,12 +183,12 @@ describe('Moltin flows', () => {
           limit: 4
         }
       })
-      .reply(200, flowEntries)
+      .reply(200, { data: flowEntries })
 
     return Moltin.Flows.Limit(4)
       .GetEntries('flow-1')
       .then(response => {
-        assert.lengthOf(response, 2)
+        assert.lengthOf(response.data, 2)
       })
   })
 

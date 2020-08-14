@@ -69,6 +69,12 @@ export interface ProductFilter {
       id?: string;
     };
   };
+  lt?: {
+    stock?: number;
+  };
+  gt?: {
+    stock?: number;
+  };
   like?: {
     name?: string;
     slug?: string;
@@ -127,8 +133,8 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
    */
   CreateRelationships<T = any>(
     id: string,
-    type: ProductInclude,
-    resources: string[]
+    type: string,
+    resources: string | string[]
   ): Promise<T>;
 
   /**
@@ -142,8 +148,8 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
    */
   DeleteRelationships<T = any>(
     id: string,
-    type: ProductInclude,
-    resources: string[]
+    type: string,
+    resources: string | string[]
   ): Promise<T>;
 
   /**
@@ -157,7 +163,7 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
    */
   UpdateRelationships<T = any>(
     id: string,
-    type: ProductInclude,
-    resources: string[]
+    type: string,
+    resources?: string | string[]
   ): Promise<T>;
 }

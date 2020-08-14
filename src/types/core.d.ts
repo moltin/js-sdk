@@ -61,89 +61,11 @@ export interface CrudQueryableResource<R, C, U, F, S, I> extends QueryableResour
     body: C
   ): Promise<Resource<R>>;
 
-  Delete(id: string): Promise<Resource<R>>;
+  Delete(id: string): Promise<{}>;
 
   Update(
     id: string,
-    body: U
-  ): Promise<Resource<R>>;
-}
-
-export interface RequestFactory {
-  config: Config;
-  storage: StorageFactory;
-
-  authenticate(): Promise<AuthenticateResponseBody>;
-
-  send<T = any>(
-    uri: string,
-    method: HttpVerbs,
-    body?: any,
+    body: U,
     token?: string
-  ): Promise<T>;
-
-  constructor(config: Config): void;
-}
-
-export interface ConfigOptions {
-  application?: string;
-  client_id: string;
-  client_secret?: string;
-  language?: string;
-  currency?: string;
-  host?: string;
-  custom_fetch?: Function;
-}
-
-export interface Config {
-  application?: string;
-  client_id: string;
-  client_secret?: string;
-  host: string;
-  protocol: 'https';
-  version: 'v2';
-  currency?: string;
-  language?: string;
-  custom_fetch?: Function;
-  auth: {
-    expires: 3600;
-    uri: 'oauth/access_token';
-  }
-  sdk: {
-    version: string;
-    language: 'JS';
-  }
-
-  constructor(options: ConfigOptions): void;
-}
-
-export interface StorageFactory {
-  localStorage: Storage;
-
-  set(key: string, value: string): void;
-
-  get(key: string): string | null;
-
-  delete(key: string): void;
-}
-
-export enum HttpVerbs {
-  Get = 'GET',
-  Post = 'POST',
-  Put = 'PUT',
-  Patch = 'PATCH',
-  Delete = 'DELETE'
-}
-
-export enum GrantType {
-  ClientCredentials = 'client_credentials',
-  Implicit = 'implicit'
-}
-
-export interface AuthenticateResponseBody {
-  expires: number;
-  identifier: GrantType;
-  expires_in: number;
-  access_token: string;
-  token_type: 'Bearer';
+  ): Promise<Resource<R>>;
 }

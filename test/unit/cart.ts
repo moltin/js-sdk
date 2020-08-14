@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
+import { gateway as MoltinGateway, ItemTaxObject } from '../../src/moltin'
 import {
   cartItemsArray as items,
   customCartData as customData
@@ -88,13 +88,13 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/3/items')
-      .reply(200, items)
+      .reply(200, { data: items });
 
     return Moltin.Cart()
       .Items()
       .then(response => {
-        assert.lengthOf(response, 4)
-      })
+        assert.lengthOf(response.data, 4);
+      });
   })
 
   it('should return an array of cart items with a cart id argument', () => {
@@ -105,12 +105,12 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/5/items')
-      .reply(200, items)
+      .reply(200, { data: items });
 
     return Moltin.Cart('5')
       .Items()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -410,12 +410,12 @@ describe('Moltin cart', () => {
       }
     })
       .delete('/carts/3/items/2')
-      .reply(200, items)
+      .reply(200, { data: items })
 
     return Moltin.Cart()
       .RemoveItem('2')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -427,12 +427,12 @@ describe('Moltin cart', () => {
       }
     })
       .delete('/carts/5/items/2')
-      .reply(200, items)
+      .reply(200, { data: items })
 
     return Moltin.Cart('5')
       .RemoveItem('2')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -471,6 +471,13 @@ describe('Moltin cart', () => {
   })
 
   it('should add a tax item to a cart item', () => {
+    const itemTax: ItemTaxObject = {
+      code: 'CALI',
+      rate: 0.0775,
+      jurisdiction: 'CALIFORNIA',
+      name: 'California Tax'
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -478,17 +485,15 @@ describe('Moltin cart', () => {
       }
     })
       .post('/carts/3/items/5/taxes')
-      .reply(200, {})
+      .reply(200, { data: itemTax });
 
     return Moltin.Cart()
-      .AddItemTax(5, {
-        code: 'CALI',
-        rate: 0.0775,
-        jurisdiction: 'CALIFORNIA',
-        name: 'California Tax'
-      })
+      .AddItemTax('5', itemTax)
       .then(response => {
-        assert.deepEqual(response, {})
+        assert.equal(response.data.code, itemTax.code);
+        assert.equal(response.data.rate, itemTax.rate);
+        assert.equal(response.data.jurisdiction, itemTax.jurisdiction);
+        assert.equal(response.data.name, itemTax.name);
       })
   })
 

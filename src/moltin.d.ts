@@ -1,6 +1,10 @@
 // Type definitions for @moltin/js-sdk
 // Project: @moltin/sdk
 
+import * as config from './types/config';
+import * as storage from './types/storage';
+export * from './types/storage';
+
 import * as product from './types/product';
 import * as core from './types/core';
 import * as customer from './types/customer';
@@ -18,6 +22,10 @@ import * as job from './types/job';
 import * as file from './types/file';
 import * as flow from './types/flow';
 import * as transaction from './types/transaction';
+import * as settings from './types/settings';
+
+export * from './types/config';
+export * from './types/storage';
 
 export * from './types/price';
 export * from './types/product';
@@ -37,39 +45,41 @@ export * from './types/job';
 export * from './types/file';
 export * from './types/flow';
 export * from './types/transaction';
+export * from './types/settings';
 
 // UMD
 export as namespace moltin
 
 export class Moltin {
-  config: core.Config
-  cartId: string
-  request: core.RequestFactory
-  storage: core.StorageFactory
-  Products: product.ProductsEndpoint
-  Currencies: currency.CurrencyEndpoint
-  Brands: brand.BrandEndpoint
-  Categories: category.CategoryEndpoint
-  Collections: collection.CollectionEndpoint
-  Integrations: integration.IntegrationEndpoint
-  Orders: order.OrdersEndpoint
-  Gateways: moltin.GatewaysEndpoint
-  Customers: customer.CustomersEndpoint
-  Inventories: inventory.InventoryEndpoint
-  Jobs: job.JobEndpoint
-  Files: file.FileEndpoint
-  Flows: flow.FlowEndpoint
-  Fields: field.FieldsEndpoint
-  Addresses: address.AddressesEndpoint
-  Transactions: transaction.TransactionEndpoint
+  config: config.Config;
+  cartId: string;
+  request: config.RequestFactory;
+  storage: storage.StorageFactory;
+  Products: product.ProductsEndpoint;
+  Currencies: currency.CurrencyEndpoint;
+  Brands: brand.BrandEndpoint;
+  Categories: category.CategoryEndpoint;
+  Collections: collection.CollectionEndpoint;
+  Integrations: integration.IntegrationEndpoint;
+  Orders: order.OrdersEndpoint;
+  Gateways: moltin.GatewaysEndpoint;
+  Customers: customer.CustomersEndpoint;
+  Inventories: inventory.InventoryEndpoint;
+  Jobs: job.JobEndpoint;
+  Files: file.FileEndpoint;
+  Flows: flow.FlowEndpoint;
+  Fields: field.FieldsEndpoint;
+  Addresses: address.AddressesEndpoint;
+  Transactions: transaction.TransactionEndpoint;
+  Settings: settings.SettingsEndpoint;
 
-  Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
-  constructor(config: core.Config)
+  Cart(id?: string): cart.CartEndpoint; // This optional cart id is super worrying when using the SDK in a node server :/
+  constructor(config: config.Config);
 
-  Authenticate(): Promise<core.AuthenticateResponseBody>
+  Authenticate(): Promise<config.AuthenticateResponseBody>;
 }
 
-export function gateway(config: core.ConfigOptions): Moltin
+export function gateway(config: config.ConfigOptions): Moltin;
 
 export namespace moltin {
 
@@ -79,15 +89,15 @@ export namespace moltin {
     Update<RequestBody = any, ResponseBody = any>(
       slug: string,
       body: RequestBody
-    ): Promise<ResponseBody>
+    ): Promise<ResponseBody>;
 
-    Enabled<T>(slug: string, enabled: boolean): Promise<T>
+    Enabled<T>(slug: string, enabled: boolean): Promise<T>;
   }
 
   export interface Settings {
-    additional_languages?: string[]
-    calculation_method?: string
-    list_child_products?: boolean
-    page_length?: number
+    additional_languages?: string[];
+    calculation_method?: string;
+    list_child_products?: boolean;
+    page_length?: number;
   }
 }

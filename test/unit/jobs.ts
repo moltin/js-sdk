@@ -18,10 +18,10 @@ describe('Moltin jobs', () => {
       }
     })
       .get('/jobs')
-      .reply(200, jobs)
+      .reply(200, { data: jobs })
 
     return Moltin.Jobs.All().then(response => {
-      assert.lengthOf(response, 3)
+      assert.lengthOf(response.data, 3)
     })
   })
 
@@ -35,30 +35,32 @@ describe('Moltin jobs', () => {
       .get('/jobs/1')
       .reply(200, jobs[0])
 
-    return Moltin.Jobs.Get(1).then(response => {
+    return Moltin.Jobs.Get('1').then(response => {
       assert.propertyVal(response, 'id', 'job-1')
     })
   })
 
   it('should create a new job', () => {
+    const newJobs = {
+      type: 'job',
+      job_type: 'order_export',
+      link: {
+        href: 'url'
+      },
+      status: 'processing' as const
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/jobs', {
-        data: {
-          job_type: 'order_export',
-          filter: 'eq(status,complete)'
-        }
-      })
+      .post('/jobs', { data: newJobs })
       .reply(201, jobs[0])
 
-    return Moltin.Jobs.Create({
-      job_type: 'order_export',
-      filter: 'eq(status,complete)'
-    }).then(response => {
+    return Moltin.Jobs.Create(newJobs)
+    .then(response => {
       assert.propertyVal(response, 'id', 'job-1')
     })
   })

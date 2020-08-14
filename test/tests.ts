@@ -7,6 +7,7 @@ require('./unit/brands')
 require('./unit/cart')
 require('./unit/categories')
 require('./unit/collections')
+require('./unit/currencies')
 require('./unit/customers')
 require('./unit/fields')
 require('./unit/files')
@@ -21,5 +22,5 @@ require('./unit/transactions')
 require('./unit/error')
 require('./unit/settings')
 
-// Utilities
+// // Utilities
 require('./utils/helpers')

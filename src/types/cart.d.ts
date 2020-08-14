@@ -4,7 +4,7 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
-import { Identifiable, ResourcePage } from './core';
+import { Identifiable, ResourcePage, Resource } from './core';
 import { Address } from './address';
 
 export interface CheckoutCustomer {
@@ -82,7 +82,7 @@ export interface CartEndpoint {
     data?: any
   ): Promise<ResourcePage<CartItem>>;
 
-  AddCustomItem(body: { reference: string }): Promise<ResourcePage<CartItem>>;
+  AddCustomItem(item: any): Promise<ResourcePage<CartItem>>;
 
   AddPromotion(code: string): Promise<ResourcePage<CartItem>>;
 
@@ -90,7 +90,6 @@ export interface CartEndpoint {
 
   UpdateItem(
     itemId: string,
-    type: string,
     quantity: number,
     data?: any
   ): Promise<ResourcePage<CartItem>>;
@@ -100,15 +99,15 @@ export interface CartEndpoint {
    */
   UpdateItemQuantity(itemId: string, quantity: number): Promise<ResourcePage<CartItem>>;
 
-  AddItemTax(itemId: string, taxData: ItemTaxObject): Promise<ResourcePage<CartItem>>;
+  AddItemTax(itemId: string, taxData: ItemTaxObject): Promise<Resource<ItemTaxObject>>;
 
-  RemoveItemTax(itemId: string, taxItemId: string): Promise<ResourcePage<CartItem>>;
+  RemoveItemTax(itemId: string, taxItemId: string): Promise<{}>;
 
   Checkout(
-    customer: CheckoutCustomer | CheckoutCustomerObject,
-    billingAddress: Address,
-    shippingAddress?: Address
+    customer: string | CheckoutCustomer | CheckoutCustomerObject,
+    billingAddress: Partial<Address>,
+    shippingAddress?: Partial<Address>
   ): Promise<ResourcePage<CartItem>>;
 
-  Delete(): Promise<ResourcePage<CartItem>>;
+  Delete(): Promise<{}>;
 }

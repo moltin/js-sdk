@@ -12,7 +12,7 @@ import { Identifiable, CrudQueryableResource, RelationshipToMany } from './core'
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/index.html
  */
 export interface BrandBase {
-  type: string;
+  type: 'brand';
   name: string;
   slug: string;
   description: string;

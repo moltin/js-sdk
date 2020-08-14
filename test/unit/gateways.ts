@@ -18,10 +18,10 @@ describe('Moltin gateways', () => {
       }
     })
       .get('/gateways')
-      .reply(200, gateways)
+      .reply(200, { data: gateways })
 
     return Moltin.Gateways.All().then(response => {
-      assert.lengthOf(response, 2)
+      assert.lengthOf(response.data, 2)
     })
   })
 
