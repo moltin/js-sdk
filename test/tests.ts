@@ -22,5 +22,5 @@ require('./unit/transactions')
 require('./unit/error')
 require('./unit/settings')
 
-// // Utilities
+// Utilities
 require('./utils/helpers')
