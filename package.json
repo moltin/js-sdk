@@ -10,7 +10,7 @@
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "mocha --require @babel/register -r ts-node/register test/tests.ts",
-    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'mocha --require @babel/rester -r ts-node/register test/tests.ts'",
+    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'mocha --require @babel/register -r ts-node/register test/tests.ts'",
     "test-output": "mocha --require @babel/register -r ts-node/register --reporter mocha-junit-reporter test/tests.ts",
     "lint": "eslint src"
   },
