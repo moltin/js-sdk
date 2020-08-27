@@ -15,7 +15,7 @@ class ProductsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${id}/relationships/${parsedType}`,
       'POST',
-      body
+      type === 'main-image' ? body[0] : body
     )
   }
 
@@ -26,7 +26,7 @@ class ProductsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${id}/relationships/${parsedType}`,
       'DELETE',
-      body
+      type === 'main-image' ? body[0] : body
     )
   }
 
@@ -37,7 +37,7 @@ class ProductsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${id}/relationships/${parsedType}`,
       'PUT',
-      body
+      type === 'main-image' ? body[0] : body
     )
   }
 }
