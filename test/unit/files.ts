@@ -221,6 +221,30 @@ describe('Moltin files', () => {
     })
   })
 
+  it('should create a product-main_image relationship with an array', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/products/product-1/relationships/main-image', {
+        data: {
+          type: 'main_image',
+          id: 'file-1'
+        }
+      })
+      .reply(200, files[0])
+
+    return Moltin.Products.CreateRelationships(
+      products[0].id,
+      'main-image',
+      [files[0].id]
+    ).then(response => {
+      assert.propertyVal(response, 'id', 'file-1')
+    })
+  })
+
   it('should delete a product-main_image relationship', () => {
     // Intercept the API request
     nock(apiUrl, {

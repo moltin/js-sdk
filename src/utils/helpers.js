@@ -8,8 +8,6 @@ export function buildRelationshipData(type, ids) {
   if (typeof ids === 'string') {
     const obj = { type: underscore(type), id: ids }
 
-    if (type === 'main-image') return obj
-
     return [obj]
   }
 
