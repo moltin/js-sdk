@@ -31,7 +31,6 @@ import { cartIdentifier } from './utils/helpers'
 
 export default class Moltin {
   constructor(config) {
-    console.log('the constructor is being called in the sdk!')
     this.config = config
     this.cartId = cartIdentifier(config.storage)
 

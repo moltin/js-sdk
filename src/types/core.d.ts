@@ -85,16 +85,19 @@ export interface ConfigOptions {
   application?: string
   client_id: string
   client_secret?: string
+  store_id?: string
   language?: string
   currency?: string
   host?: string
   custom_fetch?: Function
+  protocol?: string
 }
 
 export interface Config {
   application?: string
   client_id: string
   client_secret?: string
+  store_id?: string
   host: string
   protocol: 'https'
   version: 'v2'

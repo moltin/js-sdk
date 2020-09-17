@@ -42,7 +42,13 @@ class RequestFactory {
       body.client_secret = config.client_secret
     }
 
+    console.log('about to authenticate using the SDK!')
+
     const promise = new Promise((resolve, reject) => {
+      console.log(`${config.protocol}://${config.host}/${config.auth.uri}`)
+      console.log(`${body.grant_type}`)
+      console.log(`${body.client_id}`)
+      console.log(`${body.client_secret}`)
       config.auth.fetch
         .bind()(`${config.protocol}://${config.host}/${config.auth.uri}`, {
           method: 'POST',
@@ -57,7 +63,9 @@ class RequestFactory {
         })
         .then(parseJSON)
         .then(response => {
+          console.log(response)
           if (response.ok) {
+            console.log(response.json)
             resolve(response.json)
           }
 
@@ -85,12 +93,22 @@ class RequestFactory {
 
     const promise = new Promise((resolve, reject) => {
       const credentials = JSON.parse(storage.get('moltinCredentials'))
-      const req = ({ access_token }) => {
+
+      const req = cred => {
+        const access_token = cred ? cred.access_token : null
+
         const headers = {
-          Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version
+        }
+
+        if (access_token) {
+          headers.Authorization = `Bearer: ${access_token}`
+        }
+
+        if (config.store_id) {
+          headers['X-MOLTIN-AUTH-STORE'] = config.store_id
         }
 
         headers['X-MOLTIN-APPLICATION'] = config.application
@@ -119,17 +137,17 @@ class RequestFactory {
             if (response.ok) {
               resolve(response.json)
             }
-
             reject(response.json)
           })
           .catch(error => reject(error))
       }
 
       if (
-        !credentials ||
-        !credentials.access_token ||
-        credentials.client_id !== config.client_id ||
-        Math.floor(Date.now() / 1000) >= credentials.expires
+        (!credentials ||
+          !credentials.access_token ||
+          credentials.client_id !== config.client_id ||
+          Math.floor(Date.now() / 1000) >= credentials.expires) &&
+        !config.store_id
       ) {
         return this.authenticate()
           .then(() => req(JSON.parse(storage.get('moltinCredentials'))))

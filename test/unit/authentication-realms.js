@@ -4,21 +4,28 @@ import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
+// TODO: see if we can get the authentication realms locally...
+
 describe('Moltin Authentication Realms', () => {
+  // const Moltin = MoltinGateway({
+  //   client_id: 'XXX'
+  // })
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    host: 'localhost:8080',
+    protocol: 'http'
   })
 
-  it('Get all Realms', () => {
-    nock(apiUrl, {})
-      .get('/authentication-realms')
-      .reply(200, {})
+  it('Get all Realms', () =>
+    // nock(apiUrl, {})
+    //   .get('/authentication-realms')
+    //   .reply(200, {})
 
-    return Moltin.AuthenticationRealms.All().then(res => {
-      console.log('responding here')
+    Moltin.AuthenticationRealms.All(null, {
+      'X-MOLTIN-AUTH-STORE': '15ea9633-278c-4807-80f7-2009fed63c7e'
+    }).then(res => {
       assert.isObject(res)
-    })
-  })
+    }))
 
   it('Get a single Realm', () => {
     nock(apiUrl, {})
@@ -69,7 +76,7 @@ describe('Moltin Authentication Realms', () => {
   it('Delete a single Realm', () => {
     nock(apiUrl, {})
       .delete(/authentication-realms\/*/)
-      .reply(201, {})
+      .reply(204, {})
 
     const realmId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
 

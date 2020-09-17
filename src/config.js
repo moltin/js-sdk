@@ -11,14 +11,17 @@ class Config {
       language,
       host,
       storage,
-      custom_fetch
+      custom_fetch,
+      protocol,
+      store_id
     } = options
 
     this.application = application
     this.client_id = client_id
     this.client_secret = client_secret
-    this.host = host || 'us-west-perf-api.molt.in'
-    this.protocol = 'https'
+    this.store_id = store_id
+    this.host = host || 'epcc-integration.global.ssl.fastly.net'
+    this.protocol = protocol || 'https'
     this.version = 'v2'
     this.currency = currency
     this.language = language

@@ -8,7 +8,7 @@ class AuthenticationProfilesEndpoint extends CRUDExtend {
     this.endpoint = 'authentication-realms/{{realmId}}/profiles/oidc'
   }
 
-  All(realmId, token = null) {
+  All(realmId, token = null, headers = {}) {
     const { includes, sort, limit, offset, filter } = this
 
     this.call = this.request.send(
@@ -22,7 +22,8 @@ class AuthenticationProfilesEndpoint extends CRUDExtend {
       'GET',
       undefined,
       token,
-      this
+      this,
+      headers
     )
 
     return this.call
@@ -36,12 +37,14 @@ class AuthenticationProfilesEndpoint extends CRUDExtend {
     )
   }
 
-  Get({ realmId, profileId, token = null }) {
+  Get({ realmId, profileId, token = null, headers = {} }) {
     return this.request.send(
       `${this.endpoint.replace('{{realmId}}', realmId)}/${profileId}`,
       'GET',
       undefined,
-      token
+      token,
+      this,
+      headers
     )
   }
 

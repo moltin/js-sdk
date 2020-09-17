@@ -7,13 +7,32 @@ class CustomersEndpoint extends CRUDExtend {
     this.endpoint = 'customers'
   }
 
-  Token(email, password) {
-    console.log('getting a customer token in the js-sdk')
-    return this.request.send(`${this.endpoint}/tokens`, 'POST', {
-      email,
-      password,
-      type: 'token'
-    })
+  // TODO: Maybe this should just be an object
+  Token(email, password, code, redirectUri, headers) {
+    if (code && redirectUri) {
+      return this.request.send(
+        `${this.endpoint}/tokens`,
+        'POST',
+        {
+          oauth_authorization_code: code,
+          oauth_redirect_uri: redirectUri,
+          type: 'oidc'
+        },
+        null,
+        { ...headers }
+      )
+    }
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      {
+        email,
+        password,
+        type: 'token'
+      },
+      null,
+      { ...headers }
+    )
   }
 }
 export default CustomersEndpoint

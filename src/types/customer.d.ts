@@ -62,6 +62,8 @@ export interface CustomersEndpoint extends CrudQueryableResource<CustomerBase, C
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/customer-tokens.html
    * @param email [string] email for customer
    * @param password [string] password for customer
+   * @param code [string] authorization code received from idp
+   * @param redirectUri [string] the domain from which the authentication is being made
    */
-  Token(email: string, password: string): Promise<CustomerToken>
+  Token(email: string, password: string, code?: string, redirectUri?: string, headers?:object): Promise<CustomerToken>
 }
