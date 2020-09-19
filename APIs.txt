@@ -1,0 +1,38 @@
+
+- Variations:
+  - Completely missing support for variations endpoints.
+
+- Carts
+  - Only missing a call to Update a Tax Item
+  - UpdateItem() and UpdateItemQuantity are somewhat redundant
+
+- Promotions
+  - Completely missing support for managing promotions (SDK can only apply existing promotion code to cart)
+
+- Flows
+  - Basic CRUD supported
+  - Missing support for Entry Relationships (https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/entry-relationships.html)
+
+
+- Settings
+  - Both Get() and Update() supported
+  - Needs documentation
+
+- Payments:
+  - Order.Payment() exists but has incomplete types (any)
+  - orders/:orderId/transactions/:transactionId/confirm is not surfaced in the SDK
+  - orders/:orderId/transactions/:transactionId/capture is surfaced with incomplete types (any)
+
+- Transactions:
+  - Some of the calls are in Order class (ie. Payment()) which is ok given the two are related.
+  - Missing a call to get a single Transaction. Can only get all transactions for an order.
+  - Confirm payment intent is missing
+
+- Inventory:
+  - Get(productId) is missing TypeScript signature
+  -
+
+- Field:
+  - All calls are supported
+
+
