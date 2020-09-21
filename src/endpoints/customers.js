@@ -7,7 +7,6 @@ class CustomersEndpoint extends CRUDExtend {
     this.endpoint = 'customers'
   }
 
-  // TODO: Maybe this should just be an object
   Token(email, password, code, redirectUri, headers) {
     if (code && redirectUri) {
       return this.request.send(
