@@ -16,7 +16,8 @@ class CustomersEndpoint extends CRUDExtend {
         {
           oauth_authorization_code: code,
           oauth_redirect_uri: redirectUri,
-          type: 'oidc'
+          type: 'token',
+          authentication_mechanism: 'oidc'
         },
         null,
         { ...headers }
