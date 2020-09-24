@@ -4,7 +4,10 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
-import { ResourcePage } from './core';
+import { Resource } from './core';
+import { Address } from './address';
+import { Price, FormattedPrice } from './price';
+import { Order } from './order';
 
 export interface CheckoutCustomer {
   id: string
@@ -15,113 +18,136 @@ export interface CheckoutCustomerObject {
   name: string
 }
 
-export interface Address {
-  first_name: string
-  last_name: string
-  company_name?: string
-  line_1: string
-  line_2?: string
-  city?: string
-  postcode: string
-  county: string
-  country: string
-  phone_number?: string
-  instructions?: string
-}
-
 export interface ItemTaxObject {
-  name: string
-  jurisdiction: string
-  code: string
-  rate: number
+  name: string;
+  jurisdiction: string;
+  code: string;
+  rate: number;
 }
 
 /**
  * Core Cart Base Interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
-export interface CartBase {
-  id: string
-  type: string
-  links: {}
+
+export interface Cart {
+  id: string;
+  type: string;
+  links?: {};
   meta?: {
+    display_price?: {
+      with_tax?: {
+        amount: number;
+        currency: string;
+        formatted: string;
+      };
+      display_price?: {
+        amount: number;
+        currency: string;
+        formatted: string;
+        tax: {
+          amount: number;
+          currency: string;
+          formatted: string;
+        };
+      };
+      timestamps?: {
+        created_at: string;
+        updated_at: string;
+      };
+    };
+  };
+}
+
+export interface CartItemBase {
+}
+
+export interface CartItem extends CartItemBase {
+  id: string;
+  type: string;
+  product_id: string;
+  name: string;
+  description: string;
+  sku: string;
+  slug: string;
+  image: { mime_type: string, file_name: string, href: string };
+  quantity: number;
+  manage_stock: boolean;
+  unit_price: Price;
+  value: Price;
+  links: {
+    product: string;
+  };
+  meta: {
     display_price: {
       with_tax: {
-        amount: number
-        currency: string
-        formatted: string
+        unit: FormattedPrice;
+        value: FormattedPrice;
+      };
+      without_tax: {
+        unit: FormattedPrice;
+        value: FormattedPrice;
       }
-      display_price: {
-        amount: number
-        currency: string
-        formatted: string
-        tax: {
-          amount: number
-          currency: string
-          formatted: string
-        }
+      tax: {
+        unit: FormattedPrice;
+        value: FormattedPrice;
       }
-      timestamps: {
-        created_at: string
-        updated_at: string
-      }
-    }
-  }
+    };
+    timestamps: {
+      created_at: string;
+      updated_at: string;
+    };
+  };
 }
 
-export interface CartItem {
-  id?: string
-  tax: {}[]
-  quantity?: number
-  type: string
+export interface CartItemsResponse {
+  data: CartItem[];
+  meta: {
+    display_price: {
+      with_tax: FormattedPrice;
+      without_tax: FormattedPrice;
+      tax: FormattedPrice;
+    };
+    timestamps: {
+      created_at: string;
+      updated_at: string;
+    };
+  };
 }
-
-
-type CartInclude = 'items'
 
 export interface CartEndpoint {
   // CartEndpoint
-  endpoint: 'carts'
-  cartId: string
+  endpoint: 'carts';
+  cartId: string;
 
-  Get(): Promise<CartBase>
+  Get(): Promise<Resource<Cart>>;
 
-  Items(): Promise<ResourcePage<CartItem>>
+  Items(): Promise<CartItemsResponse>;
 
-  AddProduct(
-    productId: string,
-    quantity?: number,
-    data?: any
-  ): Promise<ResourcePage<CartItem>>
+  AddProduct(productId: string, quantity?: number, data?: any): Promise<CartItemsResponse>;
 
-  AddCustomItem(body: { reference: string }): Promise<ResourcePage<CartItem>>
+  AddCustomItem(item: any): Promise<CartItemsResponse>;
 
+  AddPromotion(code: string): Promise<CartItemsResponse>;
 
-  AddPromotion(code: string): Promise<ResourcePage<CartItem>>
+  RemoveItem(itemId: string): Promise<CartItemsResponse>;
 
-  RemoveItem(itemId: string): Promise<ResourcePage<CartItem>>
-
-  UpdateItem(
-    itemId: string,
-    type: string,
-    quantity: number,
-    data?: any
-  ): Promise<ResourcePage<CartItem>>
+  UpdateItem(itemId: string, quantity: number, data?: any): Promise<CartItemsResponse>;
 
   /**
    * @deprecated Use UpdateItem method
    */
-  UpdateItemQuantity(itemId: string, quantity: number): Promise<ResourcePage<CartItem>>
+  UpdateItemQuantity(itemId: string, quantity: number): Promise<CartItemsResponse>;
 
-  AddItemTax(itemId: string, taxData: ItemTaxObject): Promise<ResourcePage<CartItem>>
+  AddItemTax(itemId: string, taxData: ItemTaxObject): Promise<Resource<ItemTaxObject>>;
 
-  RemoveItemTax(itemId: string, taxItemId: string): Promise<ResourcePage<CartItem>>
+  RemoveItemTax(itemId: string, taxItemId: string): Promise<{}>;
 
   Checkout(
-    customer: CheckoutCustomer | CheckoutCustomerObject,
-    billingAddress: Address,
-    shippingAddress?: Address
-  ): Promise<ResourcePage<CartItem>>
+    customer: string | CheckoutCustomer | CheckoutCustomerObject,
+    billingAddress: Partial<Address>,
+    shippingAddress?: Partial<Address>
+  ): Promise<Resource<Order>>;
 
-  Delete(): Promise<ResourcePage<CartItem>>
+  Delete(): Promise<{}>;
 }

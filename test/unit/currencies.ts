@@ -18,10 +18,10 @@ describe('Moltin currencies', () => {
       }
     })
       .get('/currencies')
-      .reply(200, currencies)
+      .reply(200, { data: currencies })
 
     return Moltin.Currencies.All().then(response => {
-      assert.lengthOf(response, 4)
+      assert.lengthOf(response.data, 4)
     })
   })
 
@@ -33,33 +33,47 @@ describe('Moltin currencies', () => {
       }
     })
       .get('/currencies/1')
-      .reply(200, currencies[0])
+      .reply(200, { data: currencies[0] })
 
     return Moltin.Currencies.Get('1').then(response => {
-      assert.propertyVal(response, 'code', 'USD')
+      assert.propertyVal(response.data, 'code', 'USD')
     })
   })
 
   it('should create a currency', () => {
+    const newCurrency = {
+      type: 'currency',
+      default: true,
+      code: 'USD',
+      exchange_rate: 1,
+      enabled: true,
+      format: '${price}',
+      decimal_point: '.',
+      thousand_separator: ',',
+      decimal_places: 2
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/currencies', {
-        data: {
-          code: 'USD'
-        }
-      })
-      .reply(201, {
-        code: 'USD'
-      })
+      .post('/currencies')
+      .reply(201, { data: { ...newCurrency, id: 'cur1' } });
 
-    return Moltin.Currencies.Create({
-      code: 'USD'
-    }).then(response => {
-      assert.propertyVal(response, 'code', 'USD')
+    return Moltin.Currencies.Create(newCurrency)
+    .then(response => {
+      assert.equal(response.data.id, 'cur1');
+      assert.equal(response.data.type, newCurrency.type);
+      assert.equal(response.data.default, newCurrency.default);
+      assert.equal(response.data.code, newCurrency.code);
+      assert.equal(response.data.exchange_rate, newCurrency.exchange_rate);
+      assert.equal(response.data.enabled, newCurrency.enabled);
+      assert.equal(response.data.format, newCurrency.format);
+      assert.equal(response.data.decimal_point, newCurrency.decimal_point);
+      assert.equal(response.data.thousand_separator, newCurrency.thousand_separator);
+      assert.equal(response.data.decimal_places, newCurrency.decimal_places);
     })
   })
 

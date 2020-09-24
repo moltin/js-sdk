@@ -1,9 +1,14 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { brandsArray as brands, productsArray as products } from '../factories'
+import { brandsArray as brands, productsArray as products, brandUpdate } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://api.moltin.com/v2';
+const authHeaders = {
+  reqheaders: {
+    Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+  }
+};
 
 describe('Moltin brands', () => {
   const Moltin = MoltinGateway({
@@ -12,104 +17,74 @@ describe('Moltin brands', () => {
 
   it('should return an array of brands', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .get('/brands')
-      .reply(200, brands)
+      .reply(200, { data: brands });
 
     return Moltin.Brands.All().then(response => {
-      assert.lengthOf(response, 4)
-    })
-  })
+      assert.lengthOf(response.data, 4);
+    });
+  });
 
   it('should return a single brand', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .get('/brands/brand-1')
-      .reply(200, brands[0])
+      .reply(200, { data: brands[0] });
 
     return Moltin.Brands.Get(brands[0].id).then(response => {
-      assert.propertyVal(response, 'name', 'Brand 1')
-    })
-  })
+      assert.equal(response.data.id, brands[0].id);
+      assert.equal(response.data.name, brands[0].name);
+      assert.equal(response.data.slug, brands[0].slug);
+      assert.equal(response.data.description, brands[0].description);
+      assert.equal(response.data.status, brands[0].status);
+    });
+  });
 
   it('should create a new brand', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
-      .post('/brands', {
-        data: {
-          type: 'brand',
-          name: 'A new brand'
-        }
-      })
-      .reply(201, {
-        name: 'A new brand'
-      })
+    nock(apiUrl, authHeaders)
+      .post('/brands')
+      .reply(201, { data: { ...brands[0], id: undefined } });
 
-    return Moltin.Brands.Create({
-      name: 'A new brand'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new brand')
-    })
-  })
+    return Moltin.Brands.Create({ ...brands[0] }).then(response => {
+      assert.equal(response.data.name, brands[0].name);
+      assert.equal(response.data.slug, brands[0].slug);
+      assert.equal(response.data.description, brands[0].description);
+      assert.equal(response.data.status, brands[0].status);
+    });
+  });
 
   it('should update a brand', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
-      .put('/brands/brand-1', {
-        data: {
-          type: 'brand',
-          name: 'Updated brand name'
-        }
-      })
-      .reply(200, {
-        name: 'Updated brand name'
-      })
+    nock(apiUrl, authHeaders)
+      .put('/brands/brand-1')
+      .reply(200, { data: { ...brands[0], ...brandUpdate } });
 
-    return Moltin.Brands.Update(brands[0].id, {
-      name: 'Updated brand name'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'Updated brand name')
+    return Moltin.Brands.Update(brands[0].id, { ...brands[0], ...brandUpdate }).then(response => {
+      assert.equal(response.data.id, brands[0].id);
+      assert.equal(response.data.description, brands[0].description);
+      assert.equal(response.data.status, brands[0].status);
+
+      assert.equal(response.data.name, brandUpdate.name);
+      assert.equal(response.data.slug, brandUpdate.slug);
     })
   })
 
   it('should delete a brand', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .delete('/brands/brand-1')
       .reply(204)
 
     return Moltin.Brands.Delete(brands[0].id).then(response => {
-      assert.equal(response, '{}')
+      assert.equal(response, '{}');
     })
   })
 
   it('should create a new product-brand relationship', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .post('/products/product-1/relationships/brands', {
         data: [
           {
@@ -131,11 +106,7 @@ describe('Moltin brands', () => {
 
   it('should create multiple new product-brand relationships', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .post('/products/product-1/relationships/brands', {
         data: [
           {
@@ -160,11 +131,7 @@ describe('Moltin brands', () => {
 
   it('should delete an existing product-brand relationship', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .delete('/products/product-1/relationships/brands', {
         data: [
           {
@@ -186,11 +153,7 @@ describe('Moltin brands', () => {
 
   it('should delete multiple existing product-brand relationships', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .delete('/products/product-1/relationships/brands', {
         data: [
           {
@@ -215,11 +178,7 @@ describe('Moltin brands', () => {
 
   it('should update existing product-brand relationships', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .put('/products/product-1/relationships/brands', {
         data: [
           {
@@ -241,11 +200,7 @@ describe('Moltin brands', () => {
 
   it('should remove all existing product-brand relationships', () => {
     // Intercept the API request
-    nock(apiUrl, {
-      reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
-      }
-    })
+    nock(apiUrl, authHeaders)
       .put('/products/product-1/relationships/brands', {
         data: []
       })

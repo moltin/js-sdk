@@ -21,10 +21,10 @@ describe('Moltin collections', () => {
       }
     })
       .get('/collections')
-      .reply(200, collections)
+      .reply(200, { data: collections })
 
     return Moltin.Collections.All().then(response => {
-      assert.lengthOf(response, 4)
+      assert.lengthOf(response.data, 4)
     })
   })
 
@@ -38,32 +38,37 @@ describe('Moltin collections', () => {
       .get('/collections/1')
       .reply(200, collections[0])
 
-    return Moltin.Collections.Get(1).then(response => {
+    return Moltin.Collections.Get('1').then(response => {
       assert.propertyVal(response, 'name', 'Collection 1')
     })
   })
 
   it('should create a new collection', () => {
+    const newCollection = {
+      type: 'collection;',
+      name: 'Collection 1',
+      slug: 'collection-1',
+      description: 'Collection 1 description',
+      status: 'live'
+    }
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/collections', {
-        data: {
-          type: 'collection',
-          name: 'A new collection'
-        }
-      })
-      .reply(201, {
-        name: 'A new collection'
-      })
+      .post('/collections')
+      .reply(201, { data: { ...newCollection, id: 'col1' } })
 
-    return Moltin.Collections.Create({
-      name: 'A new collection'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new collection')
+    return Moltin.Collections.Create(newCollection)
+    .then(response => {
+      assert.equal(response.data.id, 'col1');
+      assert.equal(response.data.type, newCollection.type);
+      assert.equal(response.data.name, newCollection.name);
+      assert.equal(response.data.slug, newCollection.slug);
+      assert.equal(response.data.description, newCollection.description);
+      assert.equal(response.data.status, newCollection.status);
     })
   })
 

@@ -5,7 +5,7 @@
  * validation rules.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/fields.html
  */
-import { Relationship, CrudQueryableResource } from './core';
+import { Identifiable, Relationship, CrudQueryableResource } from './core';
 
 
 /**
@@ -14,22 +14,31 @@ import { Relationship, CrudQueryableResource } from './core';
  * DOCS:
  */
 export interface FieldBase {
-  id?: string
-  type: string
-  name: string
-  slug: string
-  field_type: string
-  validation_rules: any[]
-  description: string
-  required: boolean
-  default: any
-  enabled: boolean
-  order: number
-  relationships: Relationship<'addresses' | 'products' | 'brands' | 'collections' | 'categories' | 'customers' |
-    'cart_items' | 'orders' | 'order_items' | 'promotions' | 'flows'>
-  omit_null: boolean
+  type: string;
+  name: string;
+  slug: string;
+  field_type: string;
+  validation_rules: any[];
+  description: string;
+  required: boolean;
+  default: any;
+  enabled: boolean;
+  order: number;
+  omit_null: boolean;
 }
 
-export interface FieldsEndpoint extends CrudQueryableResource<FieldBase, null, null, null> {
-  endpoint: 'fields'
+export interface Field extends Identifiable, FieldBase {
+  relationships: Relationship<'addresses' | 'products' | 'brands' | 'collections' | 'categories' | 'customers' |
+    'cart_items' | 'orders' | 'order_items' | 'promotions' | 'flows'>;
+}
+
+export interface FieldsEndpoint extends CrudQueryableResource<
+  Field,
+  FieldBase,
+  Partial<FieldBase>,
+  never,
+  never,
+  never
+> {
+  endpoint: 'fields';
 }

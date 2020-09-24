@@ -1,13 +1,22 @@
 /**
  * Integrations
  */
-import { CrudQueryableResource } from './core';
+import { Identifiable, CrudQueryableResource } from './core';
 
 /**
  * Core Integration Base Interface
  */
 export interface IntegrationBase {
-  id?: string
+  type: 'integration';
+  name: string;
+  description: string;
+  enabled: boolean;
+  observes: string[];
+  integration_type: string;
+  configuration: any;
+}
+
+export interface Integration extends Identifiable, IntegrationBase {
 }
 
 export interface IntegrationFilter {
@@ -20,6 +29,13 @@ type IntegrationInclude = ''
 /**
  * Integration Endpoints
  */
-export interface IntegrationEndpoint extends CrudQueryableResource<IntegrationBase, IntegrationFilter, IntegrationSort, IntegrationInclude> {
-  endpoint: 'integration'
+export interface IntegrationEndpoint extends CrudQueryableResource<
+  Integration,
+  IntegrationBase,
+  Partial<IntegrationBase>,
+  IntegrationFilter,
+  IntegrationSort,
+  IntegrationInclude
+> {
+  endpoint: 'integration';
 }

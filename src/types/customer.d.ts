@@ -8,7 +8,7 @@
  * interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/index.html
  */
-import { CrudQueryableResource } from './core';
+import { Identifiable, CrudQueryableResource, Resource } from './core';
 
 
 /**
@@ -17,19 +17,21 @@ import { CrudQueryableResource } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/index.html
  */
 export interface CustomerBase {
-  id?: string
-  type: string
-  name: string
-  email: string
-  password: string
+  type: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface Customer extends Identifiable, CustomerBase {
 }
 
 export interface CustomerToken {
-  type: string
-  id: string
-  customer_id: string
-  token: string
-  expires: number
+  type: string;
+  id: string;
+  customer_id: string;
+  token: string;
+  expires: number;
 }
 
 /**
@@ -37,11 +39,11 @@ export interface CustomerToken {
  */
 export interface CustomerFilter {
   eq?: {
-    email?: string
+    email?: string;
   }
 }
 
-type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections' | 'variations'
+type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections' | 'variations';
 
 /**
  * Customer Endpoints
@@ -52,8 +54,15 @@ type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'coll
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/update-a-customer.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/delete-a-customer.html
  */
-export interface CustomersEndpoint extends CrudQueryableResource<CustomerBase, CustomerFilter, null, CustomerInclude> {
-  endpoint: 'customers'
+export interface CustomersEndpoint extends CrudQueryableResource<
+  Customer,
+  CustomerBase,
+  Partial<CustomerBase>,
+  CustomerFilter,
+  never,
+  CustomerInclude
+> {
+  endpoint: 'customers';
 
   /**
    * Customer Tokens
@@ -62,8 +71,9 @@ export interface CustomersEndpoint extends CrudQueryableResource<CustomerBase, C
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/customer-tokens.html
    * @param email [string] email for customer
    * @param password [string] password for customer
-   * @param code [string] authorization code received from idp
-   * @param redirectUri [string] the domain from which the authentication is being made
+   * @param code [string] an optional oidc authorizatino code if oidc is being used
+   * @param redirectUri [string] an optional redirectUri if oidc is being used
+   * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  Token(email: string, password: string, code?: string, redirectUri?: string, headers?:object): Promise<CustomerToken>
+  Token(email: string, password: string, code?: string, redirectUri?: string, headers?: object): Promise<Resource<CustomerToken>>;
 }

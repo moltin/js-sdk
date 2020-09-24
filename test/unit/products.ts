@@ -18,10 +18,10 @@ describe('Moltin products', () => {
       }
     })
       .get('/products')
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.All().then(response => {
-      assert.lengthOf(response, 4)
+      assert.lengthOf(response.data, 4)
     })
   })
 
@@ -39,7 +39,7 @@ describe('Moltin products', () => {
       .get('/products/1')
       .reply(200, products[0])
 
-    return Moltin.Products.Get(1).then(response => {
+    return Moltin.Products.Get('1').then(response => {
       assert.propertyVal(response, 'name', 'Product 1')
     })
   })
@@ -56,7 +56,7 @@ describe('Moltin products', () => {
       }
     })
       .get('/products?filter=eq(status,live):eq(slug,new-slug):gt(stock,2)')
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.Filter({
       eq: {
@@ -69,7 +69,7 @@ describe('Moltin products', () => {
     })
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -90,12 +90,12 @@ describe('Moltin products', () => {
           limit: 4
         }
       })
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.Limit(4)
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -116,12 +116,12 @@ describe('Moltin products', () => {
           offset: 10
         }
       })
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.Offset(10)
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -140,12 +140,12 @@ describe('Moltin products', () => {
       .query({
         include: 'brands,categories,collections'
       })
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.With(['brands', 'categories', 'collections'])
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -167,7 +167,7 @@ describe('Moltin products', () => {
       .reply(200, products[0])
 
     return Moltin.Products.With(['brands', 'categories', 'collections'])
-      .Get(1)
+      .Get('1')
       .then(response => {
         assert.propertyVal(response, 'name', 'Product 1')
       })
@@ -188,16 +188,32 @@ describe('Moltin products', () => {
       .query({
         sort: 'name'
       })
-      .reply(200, products)
+      .reply(200, { data: products })
 
     return Moltin.Products.Sort('name')
       .All()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
   it('should create a new product', () => {
+    const newProduct = {
+      type: 'product' as const,
+      name: 'Product 1',
+      slug: 'product-1',
+      sku: 'product1sku',
+      manage_stock: true,
+      description: 'Product 1 description',
+      price: [{
+        amount: 123,
+        currency: 'USD',
+        includes_tax: false,
+      }],
+      status: 'live' as const,
+      commodity_type: 'physical' as const
+    };
+
     const Moltin = MoltinGateway({
       client_id: 'XXX'
     })
@@ -208,20 +224,21 @@ describe('Moltin products', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/products', {
-        data: {
-          type: 'product',
-          name: 'A new product'
-        }
-      })
-      .reply(201, {
-        name: 'A new product'
-      })
+      .post('/products')
+      .reply(201, { data: { ...newProduct, id: 'product1Id' } })
 
-    return Moltin.Products.Create({
-      name: 'A new product'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new product')
+    return Moltin.Products.Create(newProduct)
+    .then(response => {
+      assert.equal(response.data.id, 'product1Id');
+      assert.equal(response.data.type, newProduct.type);
+      assert.equal(response.data.name, newProduct.name);
+      assert.equal(response.data.slug, newProduct.slug);
+      assert.equal(response.data.sku, newProduct.sku);
+      assert.equal(response.data.manage_stock, newProduct.manage_stock);
+      assert.equal(response.data.description, newProduct.description);
+      assert.deepEqual(response.data.price, newProduct.price);
+      assert.equal(response.data.status, newProduct.status);
+      assert.equal(response.data.commodity_type, newProduct.commodity_type);
     })
   })
 
@@ -246,7 +263,7 @@ describe('Moltin products', () => {
         name: 'Updated product name'
       })
 
-    return Moltin.Products.Update(1, {
+    return Moltin.Products.Update('1', {
       name: 'Updated product name'
     }).then(response => {
       assert.propertyVal(response, 'name', 'Updated product name')
@@ -267,7 +284,7 @@ describe('Moltin products', () => {
       .delete('/products/1')
       .reply(204)
 
-    return Moltin.Products.Delete(1).then(response => {
+    return Moltin.Products.Delete('1').then(response => {
       assert.equal(response, '{}')
     })
   })
@@ -292,7 +309,7 @@ describe('Moltin products', () => {
     return Moltin.Products.With('brands')
       .All()
       .then(() => {
-        assert.notExists(Moltin.Products.includes)
+        assert.notExists((Moltin.Products as any).includes)
       })
   })
 
@@ -316,7 +333,7 @@ describe('Moltin products', () => {
     return Moltin.Products.Sort('name')
       .All()
       .then(() => {
-        assert.notExists(Moltin.Products.sort)
+        assert.notExists((Moltin.Products as any).sort)
       })
   })
 
@@ -342,7 +359,7 @@ describe('Moltin products', () => {
     return Moltin.Products.Limit(4)
       .All()
       .then(() => {
-        assert.notExists(Moltin.Products.limit)
+        assert.notExists((Moltin.Products as any).limit)
       })
   })
 
@@ -368,7 +385,7 @@ describe('Moltin products', () => {
     return Moltin.Products.Offset(10)
       .All()
       .then(() => {
-        assert.notExists(Moltin.Products.offset)
+        assert.notExists((Moltin.Products as any).offset)
       })
   })
 
@@ -397,7 +414,7 @@ describe('Moltin products', () => {
     })
       .All()
       .then(() => {
-        assert.notExists(Moltin.Products.filter)
+        assert.notExists((Moltin.Products as any).filter)
       })
   })
 })

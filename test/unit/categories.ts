@@ -21,10 +21,10 @@ describe('Moltin categories', () => {
       }
     })
       .get('/categories')
-      .reply(200, categories)
+      .reply(200, { data: categories });
 
     return Moltin.Categories.All().then(response => {
-      assert.lengthOf(response, 4)
+      assert.lengthOf(response.data, 4)
     })
   })
 
@@ -38,32 +38,36 @@ describe('Moltin categories', () => {
       .get('/categories/1')
       .reply(200, categories[0])
 
-    return Moltin.Categories.Get(1).then(response => {
+    return Moltin.Categories.Get('1').then(response => {
       assert.propertyVal(response, 'name', 'Category 1')
     })
   })
 
   it('should create a new category', () => {
+    const newCategory = {
+      type: 'category' as const,
+      name: 'Category 1',
+      slug: 'category-1',
+      description: 'Category 1 description',
+      status: 'live' as const
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/categories', {
-        data: {
-          type: 'category',
-          name: 'A new category'
-        }
-      })
-      .reply(201, {
-        name: 'A new category'
-      })
+      .post('/categories')
+      .reply(201, { data: { ...newCategory, id: 'cat1' } });
 
-    return Moltin.Categories.Create({
-      name: 'A new category'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new category')
+    return Moltin.Categories.Create(newCategory)
+    .then(response => {
+      assert.equal(response.data.id, 'cat1');
+      assert.equal(response.data.name, newCategory.name);
+      assert.equal(response.data.type, newCategory.type);
+      assert.equal(response.data.slug, newCategory.slug);
+      assert.equal(response.data.description, newCategory.description);
     })
   })
 

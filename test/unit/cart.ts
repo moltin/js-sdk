@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
+import { gateway as MoltinGateway, ItemTaxObject, CartItemsResponse } from '../../src/moltin'
 import {
   cartItemsArray as items,
   customCartData as customData
@@ -81,6 +81,107 @@ describe('Moltin cart', () => {
   })
 
   it('should return an array of cart items', () => {
+    const cartItemResponse: CartItemsResponse = {
+      data: [
+        {
+          id: 'b1622dfd-0e9d-47f3-b0d4-36659e55e282',
+          type: 'cart_item',
+          product_id: '8361826f-84c2-4e90-9dca-f9f2ea325de3',
+          name: 'Test product',
+          description: 'Test product description',
+          sku: 'test-product-sku',
+          slug: 'test-product',
+          image: {
+            mime_type: 'image/png',
+            file_name: 'product-image.png',
+            href: 'http://www.products.com/product-image.png'
+          },
+          quantity: 1,
+          manage_stock: false,
+          unit_price: {
+            amount: 234,
+            currency: 'USD',
+            includes_tax: true
+          },
+          value: {
+            amount: 234,
+            currency: 'USD',
+            includes_tax: true
+          },
+          links: {
+            product: 'https://api.moltin.com/v2/products/8361826f-84c2-4e90-9dca-f9f2ea325de3'
+          },
+          meta: {
+            display_price: {
+              with_tax: {
+                unit: {
+                  amount: 234,
+                  currency: 'USD',
+                  formatted: '$2.34'
+                },
+                value: {
+                  amount: 234,
+                  currency: 'USD',
+                  formatted: '$2.34'
+                }
+              },
+              without_tax: {
+                unit: {
+                  amount: 234,
+                  currency: 'USD',
+                  formatted: '$2.34'
+                },
+                value: {
+                  amount: 234,
+                  currency: 'USD',
+                  formatted: '$2.34'
+                }
+              },
+              tax: {
+                unit: {
+                  amount: 0,
+                  currency: 'USD',
+                  formatted: '$0.00'
+                },
+                value: {
+                  amount: 0,
+                  currency: 'USD',
+                  formatted: '$0.00'
+                }
+              }
+            },
+            timestamps: {
+              created_at: '2020-08-21T01:45:59Z',
+              updated_at: '2020-08-21T01:45:59Z'
+            }
+          }
+        }
+      ],
+      meta: {
+        display_price: {
+          with_tax: {
+            amount: 234,
+            currency: 'USD',
+            formatted: '$2.34'
+          },
+          without_tax: {
+            amount: 234,
+            currency: 'USD',
+            formatted: '$2.34'
+          },
+          tax: {
+            amount: 0,
+            currency: 'USD',
+            formatted: '$0.00'
+          }
+        },
+        timestamps: {
+          created_at: '2020-08-21T01:45:59Z',
+          updated_at: '2020-08-21T01:45:59Z'
+        }
+      }
+    }
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -88,13 +189,71 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/3/items')
-      .reply(200, items)
+      .reply(200, cartItemResponse);
 
     return Moltin.Cart()
       .Items()
       .then(response => {
-        assert.lengthOf(response, 4)
-      })
+        assert.equal(response.data.length, cartItemResponse.data.length);
+        assert.equal(response.data[0].id, cartItemResponse.data[0].id);
+        assert.equal(response.data[0].type, cartItemResponse.data[0].type);
+        assert.equal(response.data[0].product_id, cartItemResponse.data[0].product_id);
+        assert.equal(response.data[0].name, cartItemResponse.data[0].name);
+        assert.equal(response.data[0].description, cartItemResponse.data[0].description);
+        assert.equal(response.data[0].sku, cartItemResponse.data[0].sku);
+        assert.equal(response.data[0].slug, cartItemResponse.data[0].slug);
+        assert.equal(response.data[0].image.mime_type, cartItemResponse.data[0].image.mime_type);
+        assert.equal(response.data[0].image.file_name, cartItemResponse.data[0].image.file_name);
+        assert.equal(response.data[0].image.href, cartItemResponse.data[0].image.href);
+        assert.equal(response.data[0].quantity, cartItemResponse.data[0].quantity);
+        assert.equal(response.data[0].manage_stock, cartItemResponse.data[0].manage_stock);
+        assert.equal(response.data[0].unit_price.amount, cartItemResponse.data[0].unit_price.amount);
+        assert.equal(response.data[0].unit_price.currency, cartItemResponse.data[0].unit_price.currency);
+        assert.equal(response.data[0].unit_price.includes_tax, cartItemResponse.data[0].unit_price.includes_tax);
+        assert.equal(response.data[0].value.amount, cartItemResponse.data[0].value.amount);
+        assert.equal(response.data[0].value.currency, cartItemResponse.data[0].value.currency);
+        assert.equal(response.data[0].value.includes_tax, cartItemResponse.data[0].value.includes_tax);
+        assert.equal(response.data[0].links.product, cartItemResponse.data[0].links.product);
+
+        assert.equal(response.data[0].meta.display_price.with_tax.unit.amount, cartItemResponse.data[0].meta.display_price.with_tax.unit.amount);
+        assert.equal(response.data[0].meta.display_price.with_tax.unit.currency, cartItemResponse.data[0].meta.display_price.with_tax.unit.currency);
+        assert.equal(response.data[0].meta.display_price.with_tax.unit.formatted, cartItemResponse.data[0].meta.display_price.with_tax.unit.formatted);
+        assert.equal(response.data[0].meta.display_price.with_tax.value.amount, cartItemResponse.data[0].meta.display_price.with_tax.value.amount);
+        assert.equal(response.data[0].meta.display_price.with_tax.value.currency, cartItemResponse.data[0].meta.display_price.with_tax.value.currency);
+        assert.equal(response.data[0].meta.display_price.with_tax.value.formatted, cartItemResponse.data[0].meta.display_price.with_tax.value.formatted);
+
+        assert.equal(response.data[0].meta.display_price.without_tax.unit.amount, cartItemResponse.data[0].meta.display_price.without_tax.unit.amount);
+        assert.equal(response.data[0].meta.display_price.without_tax.unit.currency, cartItemResponse.data[0].meta.display_price.without_tax.unit.currency);
+        assert.equal(response.data[0].meta.display_price.without_tax.unit.formatted, cartItemResponse.data[0].meta.display_price.without_tax.unit.formatted);
+        assert.equal(response.data[0].meta.display_price.without_tax.value.amount, cartItemResponse.data[0].meta.display_price.without_tax.value.amount);
+        assert.equal(response.data[0].meta.display_price.without_tax.value.currency, cartItemResponse.data[0].meta.display_price.without_tax.value.currency);
+        assert.equal(response.data[0].meta.display_price.without_tax.value.formatted, cartItemResponse.data[0].meta.display_price.without_tax.value.formatted);
+
+        assert.equal(response.data[0].meta.display_price.tax.unit.amount, cartItemResponse.data[0].meta.display_price.tax.unit.amount);
+        assert.equal(response.data[0].meta.display_price.tax.unit.currency, cartItemResponse.data[0].meta.display_price.tax.unit.currency);
+        assert.equal(response.data[0].meta.display_price.tax.unit.formatted, cartItemResponse.data[0].meta.display_price.tax.unit.formatted);
+        assert.equal(response.data[0].meta.display_price.tax.value.amount, cartItemResponse.data[0].meta.display_price.tax.value.amount);
+        assert.equal(response.data[0].meta.display_price.tax.value.currency, cartItemResponse.data[0].meta.display_price.tax.value.currency);
+        assert.equal(response.data[0].meta.display_price.tax.value.formatted, cartItemResponse.data[0].meta.display_price.tax.value.formatted);
+
+        assert.equal(response.data[0].meta.timestamps.created_at, cartItemResponse.data[0].meta.timestamps.created_at);
+        assert.equal(response.data[0].meta.timestamps.updated_at, cartItemResponse.data[0].meta.timestamps.updated_at);
+
+        assert.equal(response.meta.display_price.with_tax.amount, cartItemResponse.meta.display_price.with_tax.amount);
+        assert.equal(response.meta.display_price.with_tax.currency, cartItemResponse.meta.display_price.with_tax.currency);
+        assert.equal(response.meta.display_price.with_tax.formatted, cartItemResponse.meta.display_price.with_tax.formatted);
+
+        assert.equal(response.meta.display_price.without_tax.amount, cartItemResponse.meta.display_price.without_tax.amount);
+        assert.equal(response.meta.display_price.without_tax.currency, cartItemResponse.meta.display_price.without_tax.currency);
+        assert.equal(response.meta.display_price.without_tax.formatted, cartItemResponse.meta.display_price.without_tax.formatted);
+
+        assert.equal(response.meta.display_price.tax.amount, cartItemResponse.meta.display_price.tax.amount);
+        assert.equal(response.meta.display_price.tax.currency, cartItemResponse.meta.display_price.tax.currency);
+        assert.equal(response.meta.display_price.tax.formatted, cartItemResponse.meta.display_price.tax.formatted);
+
+        assert.equal(response.meta.timestamps.created_at, cartItemResponse.meta.timestamps.created_at);
+        assert.equal(response.meta.timestamps.updated_at, cartItemResponse.meta.timestamps.updated_at);
+      });
   })
 
   it('should return an array of cart items with a cart id argument', () => {
@@ -105,12 +264,12 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/5/items')
-      .reply(200, items)
+      .reply(200, { data: items });
 
     return Moltin.Cart('5')
       .Items()
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -410,12 +569,12 @@ describe('Moltin cart', () => {
       }
     })
       .delete('/carts/3/items/2')
-      .reply(200, items)
+      .reply(200, { data: items })
 
     return Moltin.Cart()
       .RemoveItem('2')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -427,12 +586,12 @@ describe('Moltin cart', () => {
       }
     })
       .delete('/carts/5/items/2')
-      .reply(200, items)
+      .reply(200, { data: items })
 
     return Moltin.Cart('5')
       .RemoveItem('2')
       .then(response => {
-        assert.lengthOf(response, 4)
+        assert.lengthOf(response.data, 4)
       })
   })
 
@@ -471,6 +630,13 @@ describe('Moltin cart', () => {
   })
 
   it('should add a tax item to a cart item', () => {
+    const itemTax: ItemTaxObject = {
+      code: 'CALI',
+      rate: 0.0775,
+      jurisdiction: 'CALIFORNIA',
+      name: 'California Tax'
+    };
+
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -478,17 +644,15 @@ describe('Moltin cart', () => {
       }
     })
       .post('/carts/3/items/5/taxes')
-      .reply(200, {})
+      .reply(200, { data: itemTax });
 
     return Moltin.Cart()
-      .AddItemTax(5, {
-        code: 'CALI',
-        rate: 0.0775,
-        jurisdiction: 'CALIFORNIA',
-        name: 'California Tax'
-      })
+      .AddItemTax('5', itemTax)
       .then(response => {
-        assert.deepEqual(response, {})
+        assert.equal(response.data.code, itemTax.code);
+        assert.equal(response.data.rate, itemTax.rate);
+        assert.equal(response.data.jurisdiction, itemTax.jurisdiction);
+        assert.equal(response.data.name, itemTax.name);
       })
   })
 

@@ -4,7 +4,7 @@
  * also contain other Categories, which can then be viewed in a tree structure.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/categories/index.html
  */
-import { CrudQueryableResource, ResourceList } from './core';
+import { Identifiable, ResourceList, RelationshipToMany, CrudQueryableResource } from './core';
 
 /**
  * Core Category Base Interface
@@ -12,27 +12,24 @@ import { CrudQueryableResource, ResourceList } from './core';
  * DOCS:
  */
 export interface CategoryBase {
-  id: string
-  type: string
-  name: string
-  slug: string
-  description: string
-  status: string
-  children?: CategoryBase[]
+  type: string;
+  name: string;
+  slug: string;
+  description: string;
+  status: string;
+}
+
+export interface Category extends Identifiable, CategoryBase {
+  children?: Category[];
   meta?: {
     timestamps: {
-      created_at: string
-      updated_at: string
-    }
-  }
+      created_at: string;
+      updated_at: string;
+    };
+  };
   relationships: {
-    products: {
-      data: {
-        type: string
-        id: string
-      } []
-    }
-  }
+    products: RelationshipToMany<'product'>;
+  };
 }
 
 /**
@@ -40,25 +37,32 @@ export interface CategoryBase {
  */
 export interface CategoryFilter {
   eq?: {
-    name?: string
-    slug?: string
-    status?: string
+    name?: string;
+    slug?: string;
+    status?: string;
   },
   like?: {
-    name?: string
-    slug?: string
-  }
+    name?: string;
+    slug?: string;
+  };
 }
 
-type CategorySort = 'created_at' | 'description' | 'name' | 'slug' | 'status' | 'updated_at'
+type CategorySort = 'created_at' | 'description' | 'name' | 'slug' | 'status' | 'updated_at';
 
-type CategoryInclude = 'products'
+type CategoryInclude = 'products';
 
 /**
  * Category Endpoints
  */
-export interface CategoryEndpoint extends CrudQueryableResource<CategoryBase, CategoryFilter, CategorySort, CategoryInclude> {
-  endpoint: 'category'
+export interface CategoryEndpoint extends CrudQueryableResource<
+  Category,
+  CategoryBase,
+  Partial<CategoryBase>,
+  CategoryFilter,
+  CategorySort,
+  CategoryInclude
+> {
+  endpoint: 'category';
 
   /**
    * Title: Tree (Relationships)
@@ -69,5 +73,5 @@ export interface CategoryEndpoint extends CrudQueryableResource<CategoryBase, Ca
    * category in one request.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/categories/relationships/index.html
    */
-  Tree(): Promise<ResourceList<CategoryBase>>
+  Tree(): Promise<ResourceList<Category>>
 }

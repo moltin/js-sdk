@@ -19,7 +19,7 @@ export namespace realm {
    * AuthenticationRealm Endpoints
    */
   export interface AuthenticationRealmsEndpoint extends core.CrudQueryableResource<RealmBase, null, null, null> {
-    endpoint: 'authentication-realms'
+    endpoint: 'authentication-realm'
     storage: Storage
   }
 

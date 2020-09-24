@@ -3,7 +3,8 @@
  * Description: The immutable files API is available via the multipart/form-data Content-Type for image uploads.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
  */
-import { CrudQueryableResource } from './core';
+import { Identifiable, CrudQueryableResource } from './core';
+import { FieldBase } from './field';
 
 
 /**
@@ -12,27 +13,29 @@ import { CrudQueryableResource } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
  */
 export interface FileBase {
-  id?: string
-  type: string
+  file_name: string;
+}
+
+export interface File extends Identifiable, FieldBase {
+  type: string;
+  mime_type: string;
+  file_size: number;
+  public: boolean;
   link: {
-    href: string
-  }
-  file_name: string
-  mime_type: string
-  file_size: number
-  public: boolean
+    href: string;
+  };
+  links: {
+    self: string;
+  };
   meta?: {
     timestamps: {
-      created_at: string
-    }
+      created_at: string;
+    };
     dimensions: {
-      width: number
-      height: number
-    }
-  }
-  links: {
-    self: string
-  }
+      width: number;
+      height: number;
+    };
+  };
 }
 
 /**
@@ -40,33 +43,32 @@ export interface FileBase {
  */
 export interface FileFilter {
   eq?: {
-    file_name?: string
-    public?: boolean
-  }
+    file_name?: string;
+    public?: boolean;
+  };
   like?: {
-    file_name?: string
-  }
+    file_name?: string;
+  };
   gt?: {
-    width?: number
-    height?: number
-    file_size?: number
-  }
+    width?: number;
+    height?: number;
+    file_size?: number;
+  };
   lt?: {
-    width?: number
-    height?: number
-    file_size?: number
-  }
+    width?: number;
+    height?: number;
+    file_size?: number;
+  };
   le?: {
-    width?: number
-    height?: number
-    file_size?: number
-  }
+    width?: number;
+    height?: number;
+    file_size?: number;
+  };
   ge?: {
-    width?: number
-    height?: number
-    file_size?: number
-  }
-
+    width?: number;
+    height?: number;
+    file_size?: number;
+  };
 }
 
 /**
@@ -76,6 +78,13 @@ export interface FileFilter {
  * Create DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/delete-a-file.html
  */
-export interface FileEndpoint extends CrudQueryableResource<FileBase, FileFilter, {}, {}> {
-  endpoint: 'file'
+export interface FileEndpoint extends CrudQueryableResource<
+  File,
+  FileBase,
+  never,
+  FileFilter,
+  never,
+  never
+> {
+  endpoint: 'file';
 }

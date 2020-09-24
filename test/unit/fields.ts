@@ -6,6 +6,20 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin flow fields', () => {
   it('should create a field', () => {
+    const newField = {
+      type: 'field',
+      name: 'Field 1',
+      slug: 'field-1',
+      field_type: 'float',
+      validation_rules: [],
+      description: 'Field 1 description',
+      required: true,
+      default: 1.23,
+      enabled: true,
+      order: 0,
+      omit_null: false
+    };
+
     const Moltin = MoltinGateway({
       client_id: 'XXX'
     })
@@ -15,20 +29,22 @@ describe('Moltin flow fields', () => {
         Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/fields', {
-        data: {
-          type: 'field',
-          name: 'A new field'
-        }
-      })
-      .reply(201, {
-        name: 'A new field'
-      })
+      .post('/fields')
+      .reply(201, { data: { ...newField, id: 'field1' } })
 
-    return Moltin.Fields.Create({
-      name: 'A new field'
-    }).then(response => {
-      assert.propertyVal(response, 'name', 'A new field')
+    return Moltin.Fields.Create(newField)
+    .then(response => {
+      assert.equal(response.data.id, 'field1');
+      assert.equal(response.data.type, newField.type);
+      assert.equal(response.data.name, newField.name);
+      assert.equal(response.data.slug, newField.slug);
+      assert.equal(response.data.field_type, newField.field_type);
+      assert.equal(response.data.description, newField.description);
+      assert.equal(response.data.required, newField.required);
+      assert.equal(response.data.default, newField.default);
+      assert.equal(response.data.enabled, newField.enabled);
+      assert.equal(response.data.order, newField.order);
+      assert.equal(response.data.omit_null, newField.omit_null);
     })
   })
 
