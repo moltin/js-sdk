@@ -14,7 +14,7 @@ class CustomersEndpoint extends CRUDExtend {
       }
       if (code && redirectUri) {
         body.oauth_authorization_code = code
-        body.oauth_redirect_uri = redurectUri
+        body.oauth_redirect_uri = redirectUri
         body.authentication_mechanism = 'oidc'
       } else {
         body.email = email
