@@ -9,7 +9,7 @@ export interface AuthenticationSettingsBase {
 }
 
 /**
- * TODO: Need to write documentation for this.
+ * TODO: TODO: Need to point to documentation once ready
  * AuthenticationRealm Endpoints
  */
 export interface AuthenticationSettingsEndpoint {

@@ -60,4 +60,3 @@ export interface AddressesEndpoint {
 
   Delete(options: { customer: string, address: string, token?: string }): Promise<{}>;
 }
-

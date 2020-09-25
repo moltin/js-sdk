@@ -31,7 +31,7 @@ export interface Profile extends Resource<ProfileBase> {
 }
 
 /**
- * TODO: Need to write documentation for this
+ * TODO: Need to point to documentation once ready
  * AuthenticationRealm Endpoints
  */
 export interface AuthenticationProfileEndpoint {

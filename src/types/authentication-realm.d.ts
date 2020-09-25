@@ -21,7 +21,7 @@ export interface RealmCreateBody {
 }
 
 /**
- * TODO: Need to write documentation for this
+ * TODO: TODO: Need to point to documentation once ready
 * AuthenticationRealm Endpoints
 */
 export interface AuthenticationRealmEndpoint extends CrudQueryableResource<Realm, RealmCreateBody, RealmCreateBody, never, never, never> {

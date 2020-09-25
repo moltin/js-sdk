@@ -8,30 +8,29 @@ class CustomersEndpoint extends CRUDExtend {
   }
 
   Token(email, password, code, redirectUri, headers) {
-    if (code && redirectUri) {
-      return this.request.send(
-        `${this.endpoint}/tokens`,
-        'POST',
-        {
-          oauth_authorization_code: code,
-          oauth_redirect_uri: redirectUri,
-          type: 'token',
-          authentication_mechanism: 'oidc'
-        },
-        null,
-        { ...headers }
-      )
-    }
+    const tokenRequestBody = (() => {
+      const body = {
+        type: 'token'
+      }
+      if (code && redirectUri) {
+        body.oauth_authorization_code = code
+        body.oauth_redirect_uri = redurectUri
+        body.authentication_mechanism = 'oidc'
+      } else {
+        body.email = email
+        body.password = password
+      }
+      return body
+    })()
+
     return this.request.send(
       `${this.endpoint}/tokens`,
       'POST',
-      {
-        email,
-        password,
-        type: 'token'
-      },
+      tokenRequestBody,
       null,
-      { ...headers }
+      {
+        ...headers
+      }
     )
   }
 }
