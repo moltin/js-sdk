@@ -23,7 +23,11 @@ export interface Profile extends ProfileBase {
       updated_at: string;
     };
   };
-  links: {}
+  links: {
+    "authentication-link": string,
+    "client-discovery-url": string,
+    "self": string,
+  }
 }
 
 /**
