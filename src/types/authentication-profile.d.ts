@@ -6,6 +6,12 @@ export interface ProfileBase {
   type: string; 
   discovery_url: string;
   client_id: string;
+  meta: {
+    timestamps: {
+      created_at: string;
+      updated_at: string;
+    };
+  };
 }
 
 export interface ProfileBody {
@@ -16,13 +22,7 @@ export interface ProfileBody {
   client_secret: string;
 }
 
-export interface Profile extends ProfileBase {
-  meta: {
-    timestamps: {
-      created_at: string;
-      updated_at: string;
-    };
-  };
+export interface Profile extends Resource<ProfileBase> {
   links: {
     "authentication-link": string,
     "client-discovery-url": string,
@@ -38,20 +38,20 @@ export interface AuthenticationProfileEndpoint {
   Get({ 
     realmId,
     profileId
-  }): Promise<Resource<Profile>>
+  }): Promise<Profile>
 
   All(realmId: string): Promise<Resource<Profile>>
 
   Create(
     realmId: string, 
     body: ProfileBody
-  ): Promise<Resource<Profile>>
+  ): Promise<Resource<ProfileBody>>
 
   Update(
     realmId: string,
     profileId: string,
     body: ProfileBody
-  ): Promise<Resource<Profile>>
+  ): Promise<Resource<ProfileBody>>
 
   Delete(
     realmId: string,
