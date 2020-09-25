@@ -1,26 +1,30 @@
-import { core } from './core'
+import { CrudQueryableResource } from './core'
 
-export as namespace realm
+export interface Realm extends RealmBase {
+  meta: {
+    timestamps: {
+      created_at: string;
+      updated_at: string;
+    };
+  };
+  links:{}
+}
 
-export namespace realm {
+export interface RealmBase {
+  id: string;
+  name: string;
+}
 
-  export interface RealmBase {
-        id: string;
-        name: string;
-        meta: {
-          created_at: Date;
-          updated_at: Date;
-        }
-        type: string;
-  }
+export interface RealmCreateBody {
+  type: string;
+  name: string;
+}
 
-
-  /**
-   * AuthenticationRealm Endpoints
-   */
-  export interface AuthenticationRealmsEndpoint extends core.CrudQueryableResource<RealmBase, null, null, null> {
-    endpoint: 'authentication-realm'
-    storage: Storage
-  }
-
+/**
+ * TODO: Need to write documentation for this
+* AuthenticationRealm Endpoints
+*/
+export interface AuthenticationRealmEndpoint extends CrudQueryableResource<Realm, RealmCreateBody, RealmCreateBody, never, never, never> {
+  endpoint: 'authentication-realm'
+  storage: Storage
 }

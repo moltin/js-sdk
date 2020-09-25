@@ -23,7 +23,7 @@ import TransactionsEndpoint from './endpoints/transactions'
 import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
-import AuthenticationRealmsEndpoint from './endpoints/authentication-realms'
+import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import AuthenticationProfileEndpoint from './endpoints/authentication-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 
@@ -54,7 +54,7 @@ export default class Moltin {
     this.Addresses = new AddressesEndpoint(config)
     this.Transactions = new TransactionsEndpoint(config)
     this.Settings = new SettingsEndpoint(config)
-    this.AuthenticationRealms = new AuthenticationRealmsEndpoint(config)
+    this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.AuthenticationProfile = new AuthenticationProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
   }

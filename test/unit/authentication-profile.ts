@@ -2,16 +2,13 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-// TODO: Test with integration first... 
-// const apiUrl = 'https://api.moltin.com/v2'
-const apiUrl = 'https://epcc-integration.global.ssl.fastly.net/v2'
+const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Authentication Profiles', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX'
   })
 
-  // Random ID
   const realmId = '96764ca9-af12-4355-acce-37fa2ef4728a'
 
   it('Get all Profiles', () => {
@@ -45,13 +42,11 @@ describe('Authentication Profiles', () => {
       .reply(201, {})
 
     const body = {
-      data: {
-        name: 'Keycloak',
-        type: 'authentication-profile-oidc',
-        discovery_url: 'https://localhost:3000/discovery_url',
-        client_id: 'test-client',
-        client_secret: 'XXXXXX'
-      }
+      name: 'Keycloak',
+      type: 'authentication-profile-oidc',
+      discovery_url: 'https://localhost:3000/discovery_url',
+      client_id: 'test-client',
+      client_secret: 'XXXXXX'
     }
 
     Moltin.AuthenticationProfile.Create(realmId, body)
@@ -67,14 +62,12 @@ describe('Authentication Profiles', () => {
       .reply(201, {})
 
     const body = {
-      data: {
-        name: 'Keycloak 2',
-        type: 'authentication-profile-oidc',
-        discovery_url:
-          'http://localhost:24074/auth/realms/Sample/.well-known/openid-configuration',
-        client_id: 'openid-client',
-        client_secret: 'ba5eba11-affec7ed-c0ff1e'
-      }
+      name: 'Keycloak 2',
+      type: 'authentication-profile-oidc',
+      discovery_url:
+        'http://localhost:24074/auth/realms/Sample/.well-known/openid-configuration',
+      client_id: 'openid-client',
+      client_secret: 'ba5eba11-affec7ed-c0ff1e'
     }
 
     const profileId = 'e1b5c7fa-f2b6-48d2-b659-3d82f20968a9'

@@ -20,7 +20,7 @@ class Config {
     this.client_id = client_id
     this.client_secret = client_secret
     this.store_id = store_id
-    this.host = host || 'epcc-integration.global.ssl.fastly.net'
+    this.host = host || 'api.moltin.com'
     this.protocol = protocol || 'https'
     this.version = 'v2'
     this.currency = currency
