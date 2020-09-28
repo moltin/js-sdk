@@ -18,6 +18,12 @@ export interface CheckoutCustomerObject {
   name: string
 }
 
+export interface CreateCartObject {
+  id?: string;
+  name: string;
+  description?: string;
+}
+
 export interface ItemTaxObject {
   name: string;
   jurisdiction: string;
@@ -133,6 +139,10 @@ export interface CartEndpoint {
   RemoveItem(itemId: string): Promise<CartItemsResponse>;
 
   UpdateItem(itemId: string, quantity: number, data?: any): Promise<CartItemsResponse>;
+
+  CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>;
+
+  GetCartsList(token?: string): Promise<CartItemsResponse>;
 
   /**
    * @deprecated Use UpdateItem method
