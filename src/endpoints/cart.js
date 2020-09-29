@@ -67,6 +67,14 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  CreateCart(cartData, token) {
+    return this.request.send(`${this.endpoint}`, 'POST', cartData, token)
+  }
+
+  GetCartsList(token) {
+    return this.request.send(`${this.endpoint}`, 'GET', undefined, token)
+  }
+
   RemoveItem(itemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
