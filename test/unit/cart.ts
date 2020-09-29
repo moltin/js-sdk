@@ -1133,4 +1133,29 @@ describe('Moltin cart', () => {
         assert.propertyVal(response, 'id', '1')
       })
   })
+
+  it('should add a customer id association to the cart using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .post('/carts/5/relationships/customers', {
+        data: [
+          {
+            type: 'customer',
+            id: 'customer-1'
+          }
+        ]
+      })
+      .reply(200, {})
+
+    return Moltin.Cart('5')
+      .AddCustomerAssociation('customer-1', 'testtoken')
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
 })

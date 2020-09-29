@@ -83,6 +83,21 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}`, 'GET', undefined, token)
   }
 
+  AddCustomerAssociation(customerId, token) {
+    const body = [
+      {
+        type: 'customer',
+        id: customerId
+      }
+    ]
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/relationships/customers`,
+      'POST',
+      body,
+      token
+    )
+  }
+
   RemoveItem(itemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,

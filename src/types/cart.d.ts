@@ -170,6 +170,8 @@ export interface CartEndpoint {
 
   GetCartsList(token?: string): Promise<CartItemsResponse>;
 
+  AddCustomerAssociation(customerId: string, token: string ): Promise<CartItemsResponse>;
+
   /**
    * @deprecated Use UpdateItem method
    */
