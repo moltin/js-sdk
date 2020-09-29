@@ -145,9 +145,15 @@ export function buildRequestBody(body) {
   return parsedBody
 }
 
-export function buildCartItemData(id, quantity = null, type = 'cart_item') {
+export function buildCartItemData(
+  id,
+  quantity = null,
+  type = 'cart_item',
+  flows
+) {
   const payload = {
-    type
+    type,
+    ...flows
   }
 
   if (type === 'cart_item') {

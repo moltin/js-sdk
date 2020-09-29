@@ -87,6 +87,7 @@
   "lint-staged": {
     "{src,test}/**/*.{js,json,md}": [
       "eslint --fix src",
+      "prettier --write",
       "git add"
     ]
   }
