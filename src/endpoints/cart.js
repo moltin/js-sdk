@@ -90,6 +90,28 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  UpdateItem(itemId, quantity, data = {}) {
+    const body = buildCartItemData(itemId, quantity)
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}`,
+      'PUT',
+      { ...body, ...data }
+    )
+  }
+
+  UpdateItems(items) {
+    const body = items.map(({ id, quantity, type, ...rest }) =>
+      buildCartItemData(id, quantity, type, rest)
+    )
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'PUT',
+      body
+    )
+  }
+
   UpdateItemQuantity(itemId, quantity) {
     const body = buildCartItemData(itemId, quantity)
 
@@ -116,16 +138,6 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
       'DELETE'
-    )
-  }
-
-  UpdateItem(itemId, quantity, data = {}) {
-    const body = buildCartItemData(itemId, quantity)
-
-    return this.request.send(
-      `${this.endpoint}/${this.cartId}/items/${itemId}`,
-      'PUT',
-      { ...body, ...data }
     )
   }
 
