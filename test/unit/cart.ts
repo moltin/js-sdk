@@ -618,6 +618,69 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should add a custom item, a cart item and a promotion to the cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/carts/3/items', {
+        data: [
+          {
+            type: 'custom_item',
+            name: 'Custom Item',
+            sku: '001',
+            description: 'A new custom item',
+            quantity: 1,
+            price: {
+              amount: 20
+            }
+          },
+          {
+            type: 'cart_item',
+            id: '2',
+            quantity: 1
+          },
+          {
+            type: 'promotion_item',
+            code: 'testcode'
+          }
+        ]
+      })
+      .reply(201, {
+        name: 'Custom Item',
+        quantity: 1
+      })
+
+    return Moltin.Cart()
+      .BulkAdd([
+        {
+          type: 'custom_item',
+          name: 'Custom Item',
+          sku: '001',
+          description: 'A new custom item',
+          quantity: 1,
+          price: {
+            amount: 20
+          }
+        },
+        {
+          type: 'cart_item',
+          id: '2',
+          quantity: 1
+        },
+        {
+          type: 'promotion_item',
+          code: 'testcode'
+        }
+      ])
+      .then(response => {
+        assert.propertyVal(response, 'name', 'Custom Item')
+        assert.propertyVal(response, 'quantity', 1)
+      })
+  })
+
   it('should update the quantity of a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
