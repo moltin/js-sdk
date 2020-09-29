@@ -154,11 +154,9 @@ export interface CartEndpoint {
 
   AddPromotion(code: string): Promise<CartItemsResponse>
 
+  BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
+
   RemoveItem(itemId: string): Promise<CartItemsResponse>
-
-  BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>;
-
-  RemoveItem(itemId: string): Promise<CartItemsResponse>;
 
   UpdateItem(
     itemId: string,
