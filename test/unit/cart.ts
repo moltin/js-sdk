@@ -780,4 +780,55 @@ describe('Moltin cart', () => {
         assert.propertyVal(response, 'status', 'complete')
       })
   })
+
+  it('should create a new cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .post('/carts', {
+        data: {
+          id: '1',
+          name: 'CartName',
+          description: 'CartDescription'
+        }
+      })
+      .reply(201, { id: '1', name: 'CartName', description: 'CartDescription' })
+
+    return Moltin.Cart()
+      .CreateCart(
+        {
+          id: '1',
+          name: 'CartName',
+          description: 'CartDescription'
+        },
+        'testtoken'
+      )
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
+
+  it('should get carts list', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .get('/carts')
+      .reply(200, {
+        id: '1'
+      })
+
+    return Moltin.Cart()
+      .GetCartsList('testtoken')
+      .then(response => {
+        assert.propertyVal(response, 'id', '1')
+      })
+  })
 })
