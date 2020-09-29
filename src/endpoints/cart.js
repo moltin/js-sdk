@@ -67,6 +67,14 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  BulkAdd(body) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'POST',
+      body
+    )
+  }
+
   CreateCart(cartData, token) {
     return this.request.send(`${this.endpoint}`, 'POST', cartData, token)
   }

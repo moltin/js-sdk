@@ -124,6 +124,17 @@ export interface CartItemsResponse {
   }
 }
 
+export interface CartItemObject {
+  type: string;
+  name?: string;
+  sku?: string;
+  description?: string;
+  quantity?: number;
+  price?: any;
+  id?: string;
+  code?: string;
+}
+
 export interface CartEndpoint {
   // CartEndpoint
   endpoint: 'carts'
@@ -142,6 +153,8 @@ export interface CartEndpoint {
   AddCustomItem(item: any): Promise<CartItemsResponse>
 
   AddPromotion(code: string): Promise<CartItemsResponse>
+
+  BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
 
   RemoveItem(itemId: string): Promise<CartItemsResponse>
 
