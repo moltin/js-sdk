@@ -24,7 +24,7 @@ export interface ProfileBody {
 
 export interface Profile extends Resource<ProfileBase> {
   links: {
-    "authentication-link": string,
+    "authorization-endpoint": string,
     "client-discovery-url": string,
     "self": string,
   }
