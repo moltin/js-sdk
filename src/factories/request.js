@@ -115,7 +115,7 @@ class RequestFactory {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
 
-        const version = instance.version || config.version
+        const version = (instance && instance.version) || config.version
 
         fetch(`${config.protocol}://${config.host}/${version}/${uri}`, {
           method: method.toUpperCase(),
