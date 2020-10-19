@@ -68,7 +68,9 @@ class RequestFactory {
   authenticate() {
     const { config, storage } = this
 
-    const promise = config.authenticate() || createAuthRequest(config)
+    const promise = config.authenticate
+      ? config.authenticate()
+      : createAuthRequest(config)
 
     promise
       .then(response => {

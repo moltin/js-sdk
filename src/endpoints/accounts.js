@@ -18,6 +18,26 @@ class AccountsEndpoint extends BaseExtend {
     )
   }
 
+  Store(id) {
+    return this.request.send(
+      `${this.endpoint}/stores/${id}`,
+      'GET',
+      undefined,
+      undefined,
+      this
+    )
+  }
+
+  StoresSwitch(storeId) {
+    return this.request.send(
+      `account/stores/switch/${storeId}`,
+      'GET',
+      undefined,
+      undefined,
+      this
+    )
+  }
+
   Keys() {
     return this.request.send(
       `${this.endpoint}/keys`,
