@@ -11,7 +11,8 @@ class Config {
       language,
       host,
       storage,
-      custom_fetch
+      custom_fetch,
+      authenticate
     } = options
 
     this.application = application
@@ -32,6 +33,7 @@ class Config {
       language: 'JS'
     }
     this.storage = storage || new LocalStorageFactory()
+    this.authenticate = authenticate
   }
 }
 

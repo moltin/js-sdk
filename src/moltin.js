@@ -23,6 +23,7 @@ import TransactionsEndpoint from './endpoints/transactions'
 import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
+import AccountsEndpoint from './endpoints/accounts'
 
 import { cartIdentifier } from './utils/helpers'
 
@@ -51,6 +52,7 @@ export default class Moltin {
     this.Addresses = new AddressesEndpoint(config)
     this.Transactions = new TransactionsEndpoint(config)
     this.Settings = new SettingsEndpoint(config)
+    this.Accounts = new AccountsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
