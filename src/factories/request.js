@@ -68,8 +68,8 @@ class RequestFactory {
   authenticate() {
     const { config, storage } = this
 
-    const promise = config.authenticate
-      ? config.authenticate()
+    const promise = config.custom_authenticator
+      ? config.custom_authenticator()
       : createAuthRequest(config)
 
     promise

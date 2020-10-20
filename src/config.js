@@ -12,7 +12,7 @@ class Config {
       host,
       storage,
       custom_fetch,
-      authenticate
+      custom_authenticator
     } = options
 
     this.application = application
@@ -33,7 +33,7 @@ class Config {
       language: 'JS'
     }
     this.storage = storage || new LocalStorageFactory()
-    this.authenticate = authenticate
+    this.custom_authenticator = custom_authenticator
   }
 }
 

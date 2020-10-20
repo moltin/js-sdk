@@ -28,7 +28,7 @@ class AccountsEndpoint extends BaseExtend {
     )
   }
 
-  StoresSwitch(storeId) {
+  SwitchStore(storeId) {
     return this.request.send(
       `account/stores/switch/${storeId}`,
       'GET',
