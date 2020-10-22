@@ -5,7 +5,7 @@
  * DOCS:
  */
 
-import { Resource } from './core';
+import { QueryableResource, Resource } from './core';
 
 /**
  * Account Endpoints
@@ -15,6 +15,29 @@ export interface StoreUserAvatar {
   large: string
   medium: string
   small: string
+}
+
+export interface Account {
+  application_types: string[]
+  avatar: StoreUserAvatar
+  company: string | null
+  company_size: string | null
+  company_type: string | null
+  created_at: string
+  current_store: string | null
+  email: string
+  id: string
+  job_title: string | null
+  languages: string[]
+  name: string
+  onboarded: boolean
+  opt_in: boolean
+  organisation_id: string
+  project_timeline: string | null
+  signup_intention: string | null
+  tutorial_modal_viewed: boolean
+  updated_at: string
+  user_role: string
 }
 
 export interface StoreUser {
@@ -37,7 +60,7 @@ export interface SwitchStoreResponse {
   title: string
 }
 
-export interface StoreResponse {
+export interface Store {
   features: string[]
   id: string
   locked: boolean
@@ -52,12 +75,17 @@ export interface StoreResponse {
   uuid: string
 }
 
-export interface CartEndpoint {
+export interface AccountsEndpoint extends QueryableResource<
+  Account,
+  never,
+  never,
+  never
+  >{
   endpoint: 'accounts'
 
-  Stores(): Promise<Resource<StoreResponse[]>>
+  Stores(): Promise<Resource<Store[]>>
 
-  Store(storeId: string): Promise<Resource<StoreResponse>>
+  Store(storeId: string): Promise<Resource<Store>>
 
   SwitchStore(storeId: string): Promise<Resource<SwitchStoreResponse>>
 

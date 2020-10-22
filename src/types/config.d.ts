@@ -25,8 +25,8 @@ export interface ConfigOptions {
   currency?: string;
   host?: string;
   custom_fetch?: Function;
+  custom_authenticator?: () => Promise<CustomAuthenticatorResponseBody>;
   storage?: StorageFactory;
-  authenticate?: () => Promise<AuthenticateResponseBody>;
 }
 
 export interface Config {
@@ -39,6 +39,7 @@ export interface Config {
   currency?: string;
   language?: string;
   custom_fetch?: Function;
+  custom_authenticator?: () => Promise<CustomAuthenticatorResponseBody>;
   auth: {
     expires: 3600;
     uri: 'oauth/access_token';
@@ -73,3 +74,9 @@ export interface AuthenticateResponseBody {
   access_token: string;
   token_type: 'Bearer';
 }
+
+export interface CustomAuthenticatorResponseBody {
+  expires: number;
+  access_token: string;
+}
+

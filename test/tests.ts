@@ -21,6 +21,7 @@ require('./unit/products')
 require('./unit/transactions')
 require('./unit/error')
 require('./unit/settings')
+require('./unit/accounts')
 
 // Utilities
 require('./utils/helpers')
