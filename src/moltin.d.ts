@@ -23,6 +23,7 @@ import * as file from './types/file';
 import * as flow from './types/flow';
 import * as transaction from './types/transaction';
 import * as settings from './types/settings';
+import * as accounts from './types/accounts';
 
 export * from './types/config';
 export * from './types/storage';
@@ -46,6 +47,7 @@ export * from './types/file';
 export * from './types/flow';
 export * from './types/transaction';
 export * from './types/settings';
+export * from './types/accounts';
 
 // UMD
 export as namespace moltin
@@ -72,6 +74,7 @@ export class Moltin {
   Addresses: address.AddressesEndpoint;
   Transactions: transaction.TransactionEndpoint;
   Settings: settings.SettingsEndpoint;
+  Accounts: accounts.AccountsEndpoint;
 
   Cart(id?: string): cart.CartEndpoint; // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: config.Config);

@@ -1,4 +1,4 @@
-import { Address, Brand, BrandBase } from "../src/moltin"
+import {Address, Brand, BrandBase, KeysItemResponse as Key, Store, Account} from '../src/moltin'
 
 export const integrationsArray = [
   {
@@ -465,4 +465,79 @@ export const notFoundError = {
       title: 'Product not found'
     }
   ]
+}
+
+export const storesArray: Store[] = [
+  {
+    features: ["core"],
+    id: "store-1",
+    locked: false,
+    name: "name",
+    owner: "12312312",
+    store_status: "test",
+    stripe_customer_id: null,
+    subscription_status: null,
+    trial_end: null,
+    trial_start: null,
+    users: [],
+    uuid: "123-123-123",
+  },
+  {
+    features: ["core"],
+    id: "store-2",
+    locked: false,
+    name: "name",
+    owner: "12312312",
+    store_status: "test",
+    stripe_customer_id: null,
+    subscription_status: null,
+    trial_end: null,
+    trial_start: null,
+    users: [],
+    uuid: "123-123-123",
+  }
+]
+
+export const keysArray: Key[] = [
+  {
+    client_id: "client_id-1",
+    client_secret: "client_secret-1",
+    store_id: "store_id-1",
+    store_uuid: "store_uuid-1",
+    user_id: "user_id-1"
+  },
+  {
+    client_id: "client_id-2",
+    client_secret: "client_secret-2",
+    store_id: "store_id-2",
+    store_uuid: "store_uuid-2",
+    user_id: "user_id-2"
+  }
+]
+
+export const account: Account = {
+  application_types: [],
+  avatar: {
+    small: 'link',
+    large: 'link',
+    medium: 'link',
+  },
+  company: null,
+  company_size: null,
+  company_type: null,
+  created_at: "2020-04-06 08:16:48",
+  current_store: null,
+  email: "123@elasticpath.com",
+  id: "123",
+  job_title: null,
+  languages: [],
+  name: "John Dou",
+  onboarded: true,
+  opt_in: false,
+  organisation_id: "321",
+  project_timeline: null,
+  signup_intention: null,
+  tutorial_modal_viewed: false,
+  updated_at: "2020-04-06 08:16:48",
+  user_role: "other"
 }
