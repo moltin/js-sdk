@@ -11,7 +11,7 @@ describe('Moltin Authentication Settings', () => {
 
   it('Get all Settings', () => {
     nock(apiUrl, {})
-      .get('/customer-authentication-settings')
+      .get('/settings/customer-authentication')
       .reply(200, {})
 
     Moltin.AuthenticationSettings.Get().then(res => {

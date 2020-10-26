@@ -3,7 +3,7 @@ import CRUDExtend from '../extends/crud'
 class AuthenticationSettingsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
-    this.endpoint = 'customer-authentication-settings'
+    this.endpoint = 'settings/customer-authentication'
   }
 
   Get() {
