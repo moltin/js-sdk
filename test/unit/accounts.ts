@@ -1,24 +1,19 @@
 import { assert } from 'chai'
 import nock from 'nock'
+import { gateway as MoltinGateway } from '../../src/moltin'
 import {
-  CustomAuthenticatorResponseBody,
-  gateway as MoltinGateway
-} from '../../src/moltin'
-import { storesArray as stores, keysArray as keys, account } from '../factories'
+  storesArray as stores,
+  keysArray as keys,
+  account,
+  auth
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v1'
 const accessToken = 'testaccesstoken'
-const auth = (): Promise<CustomAuthenticatorResponseBody> =>
-  new Promise(resolve =>
-    resolve({
-      expires: 99999999999,
-      access_token: accessToken
-    })
-  )
 
 describe('Moltin accounts', () => {
   const Moltin = MoltinGateway({
-    custom_authenticator: auth
+    custom_authenticator: () => auth(accessToken)
   })
 
   it('should return an account', () => {

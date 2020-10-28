@@ -1,4 +1,31 @@
-import {Address, Brand, BrandBase, KeysItemResponse as Key, Store, Account} from '../src/moltin'
+import {
+  Address,
+  Brand,
+  BrandBase,
+  KeysItemResponse as Key,
+  Store,
+  Account,
+  CustomAuthenticatorResponseBody,
+  PromotionBase,
+  FixedDiscountSchema,
+  PercentDiscountSchema,
+  XforYSchema,
+  XforAmountSchema,
+  BundleDiscountSchema,
+  ItemFixedDiscountSchema,
+  ItemPercentDiscountSchema,
+  CurrencyAmount,
+  Promotion,
+  PromotionCode
+} from '../src/moltin'
+
+export const auth = (accessToken): Promise<CustomAuthenticatorResponseBody> =>
+  new Promise(resolve =>
+    resolve({
+      expires: 99999999999,
+      access_token: accessToken
+    })
+  )
 
 export const integrationsArray = [
   {
@@ -541,3 +568,76 @@ export const account: Account = {
   updated_at: "2020-04-06 08:16:48",
   user_role: "other"
 }
+
+export const promotionsArray: Promotion[] = [
+  {
+    type: 'promotion',
+    id: 'promotion-1',
+    name: 'promotion-1',
+    description: 'promotion-1',
+    enabled: true,
+    promotion_type: 'x_for_amount',
+    min_cart_value: [
+      {
+        currency: 'USD',
+        amount: 1233
+      }
+    ],
+    max_discount_value: [
+      {
+        currency: 'USD',
+        amount: 2211
+      }
+    ],
+    schema: {
+      x: 6,
+      currencies: [
+        {
+          currency: 'USD',
+          amount: 2200
+        }
+      ],
+      targets: [
+        'product_one'
+      ]
+    },
+    start: '2012-12-12T12:12:00Z',
+    end: '2023-12-12T12:12:00Z',
+    meta: {
+      timestamps: {
+        created_at: '2020-10-27T11:51:53.872Z',
+        updated_at: '2020-10-27T11:51:53.872Z'
+      }
+    }
+  },
+  {
+    type: 'promotion',
+    id: 'promotion-2',
+    name: 'promotion-2',
+    description: 'promotion-2',
+    enabled: true,
+    promotion_type: 'fixed_discount',
+    schema: {
+      currencies: [
+        {
+          currency: 'USD',
+          amount: 111
+        }
+      ]
+    },
+    start: '2020-01-01T04:00:00Z',
+    end: '2020-11-01T04:00:00Z',
+    meta: {
+      timestamps: {
+        created_at: '2020-04-06T08:33:10.366Z',
+        updated_at: '2020-10-27T10:06:34.787Z'
+      }
+    }
+  }
+]
+
+export const promotionCodesArray: PromotionCode[] = [
+  { code: 'auto_c55a8d1f-ac44-4e7c-ab82-f41b77783ebb' },
+  { code: 'EZQQNO' }
+]
+
