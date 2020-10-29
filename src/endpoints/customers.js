@@ -18,7 +18,7 @@ class CustomersEndpoint extends CRUDExtend {
       )
   }
 
-  TokenFromPassword(email, password, headers) {
+  TokenViaPassword(email, password, headers) {
     const body = {
       type: 'token',
       authentication_mechanism: 'password',
@@ -29,7 +29,7 @@ class CustomersEndpoint extends CRUDExtend {
     return this.sendToken(body, headers)
   }
 
-  TokenFromOpenIDConnect(code, redirectUri, codeVerifier, headers) {
+  TokenViaOIDC(code, redirectUri, codeVerifier, headers) {
     const body = {
       type: 'token',
       authentication_mechanism: 'oidc',
@@ -42,7 +42,7 @@ class CustomersEndpoint extends CRUDExtend {
   }
 
   Token(email, password) {
-    return this.TokenFromPassword(email, password)
+    return this.TokenViaPassword(email, password)
   }
 }
 export default CustomersEndpoint

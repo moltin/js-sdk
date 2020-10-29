@@ -224,7 +224,7 @@ describe('Moltin customers', () => {
         token: customers[0].token
       })
 
-    return Moltin.Customers.TokenFromOpenIDConnect(
+    return Moltin.Customers.TokenViaOIDC(
       someAuthorizationCode,
       someRedirectUri,
       someCodeVerifier

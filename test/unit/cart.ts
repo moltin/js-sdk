@@ -356,7 +356,7 @@ describe('Moltin cart', () => {
       })
   })
 
-  it('should add a product to the cart without quantity paramater', () => {
+  it('should add a product to the cart without quantity parameter', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {

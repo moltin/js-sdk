@@ -84,7 +84,7 @@ export interface CustomersEndpoint extends CrudQueryableResource<
    * @param password [string] password for customer
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenFromPassword(email: string, password: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaPassword(email: string, password: string, headers?: object): Promise<Resource<CustomerToken>>;
 
   /**
    * Customer Tokens
@@ -96,5 +96,5 @@ export interface CustomersEndpoint extends CrudQueryableResource<
    * @param codeVerifier [string] an optional codeVerifier if oidc is being used
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenFromOpenIDConnect(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaOIDC(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
 }
