@@ -180,6 +180,7 @@ describe('Moltin customers', () => {
       .post('/customers/tokens', {
         data: {
           type: 'token',
+          authentication_mechanism: "password",
           email: customers[0].email,
           password: customers[0].password
         }
@@ -223,9 +224,7 @@ describe('Moltin customers', () => {
         token: customers[0].token
       })
 
-    return Moltin.Customers.Token(
-      '',
-      '',
+    return Moltin.Customers.TokenFromOpenIDConnect(
       someAuthorizationCode,
       someRedirectUri,
       someCodeVerifier
