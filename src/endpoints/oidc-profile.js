@@ -1,10 +1,10 @@
 import CRUDExtend from '../extends/crud'
 import { buildURL } from '../utils/helpers'
 
-class AuthenticationProfileEndpoint extends CRUDExtend {
+class OidcProfileEndpoint extends CRUDExtend {
   constructor(config) {
     super(config)
-    this.endpoint = 'authentication-realms/{{realmId}}/profiles/oidc'
+    this.endpoint = 'authentication-realms/{{realmId}}/oidc-profiles'
   }
 
   All(realmId, token = null, headers = {}) {
@@ -64,4 +64,4 @@ class AuthenticationProfileEndpoint extends CRUDExtend {
   }
 }
 
-export default AuthenticationProfileEndpoint
+export default OidcProfileEndpoint

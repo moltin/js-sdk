@@ -3,7 +3,7 @@ import { Resource } from './core'
 export interface ProfileBase {
   id: string;
   name: string;
-  type: string; 
+  type: string;
   discovery_url: string;
   client_id: string;
   meta: {
@@ -34,8 +34,8 @@ export interface Profile extends Resource<ProfileBase> {
  * TODO: Need to point to documentation once ready
  * AuthenticationRealm Endpoints
  */
-export interface AuthenticationProfileEndpoint {
-  Get({ 
+export interface OidcProfileEndpoint {
+  Get({
     realmId,
     profileId
   }): Promise<Profile>
@@ -43,7 +43,7 @@ export interface AuthenticationProfileEndpoint {
   All(realmId: string): Promise<Resource<Profile>>
 
   Create(
-    realmId: string, 
+    realmId: string,
     body: ProfileBody
   ): Promise<Resource<ProfileBody>>
 

@@ -22,7 +22,7 @@ import * as transaction from './types/transaction';
 import * as settings from './types/settings';
 import * as storage from './types/storage';
 import * as authenticationSettings from './types/authentication-settings';
-import * as authenticationProfile from './types/authentication-profile';
+import * as oidcProfile from './types/oidc-profile';
 import * as authenticationRealm from './types/authentication-realm';
 
 export * from './types/config';
@@ -48,7 +48,7 @@ export * from './types/transaction';
 export * from './types/settings';
 export * from './types/storage';
 export * from './types/authentication-settings';
-export * from './types/authentication-profile';
+export * from './types/oidc-profile';
 export * from './types/authentication-realm';
 
 
@@ -78,9 +78,9 @@ export class Moltin {
   Transactions: transaction.TransactionEndpoint;
   Settings: settings.SettingsEndpoint;
   AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint;
-  AuthenticationProfile: authenticationProfile.AuthenticationProfileEndpoint;
+  OidcProfile: oidcProfile.OidcProfileEndpoint;
   AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint;
-  
+
   Cart(id?: string): cart.CartEndpoint; // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: config.Config);
 
