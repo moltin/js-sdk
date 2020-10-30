@@ -43,7 +43,7 @@ describe('Oidc Profiles', () => {
 
     const body = {
       name: 'Keycloak',
-      type: 'oidc-profile-oidc',
+      type: 'oidc-profile',
       discovery_url: 'https://localhost:3000/discovery_url',
       client_id: 'test-client',
       client_secret: 'XXXXXX'
@@ -63,7 +63,7 @@ describe('Oidc Profiles', () => {
 
     const body = {
       name: 'Keycloak 2',
-      type: 'oidc-profile-oidc',
+      type: 'oidc-profile',
       discovery_url:
         'http://localhost:24074/auth/realms/Sample/.well-known/openid-configuration',
       client_id: 'openid-client',
