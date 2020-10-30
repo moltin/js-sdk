@@ -24,7 +24,7 @@ import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
-import AuthenticationProfileEndpoint from './endpoints/authentication-profile'
+import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 
 import { cartIdentifier } from './utils/helpers'
@@ -55,7 +55,7 @@ export default class Moltin {
     this.Transactions = new TransactionsEndpoint(config)
     this.Settings = new SettingsEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
-    this.AuthenticationProfile = new AuthenticationProfileEndpoint(config)
+    this.OidcProfile = new OidcProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
   }
 
