@@ -958,6 +958,33 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should update a tax item in a cart item', () => {
+    const itemTax: ItemTaxObject = {
+      code: 'CALI',
+      rate: 0.0775,
+      jurisdiction: 'CALIFORNIA',
+      name: 'California Tax'
+    }
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/5/taxes/6')
+      .reply(200, { data: itemTax })
+
+    return Moltin.Cart()
+      .UpdateItemTax('5', '6', itemTax)
+      .then(response => {
+        assert.equal(response.data.code, itemTax.code)
+        assert.equal(response.data.rate, itemTax.rate)
+        assert.equal(response.data.jurisdiction, itemTax.jurisdiction)
+        assert.equal(response.data.name, itemTax.name)
+      })
+  })
+
   it('should remove a tax item to a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {

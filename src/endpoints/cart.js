@@ -149,6 +149,18 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  UpdateItemTax(itemId, taxItemId, taxData) {
+    const body = Object.assign(taxData, {
+      type: 'tax_item'
+    })
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
+      'put',
+      body
+    )
+  }
+
   RemoveItemTax(itemId, taxItemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
