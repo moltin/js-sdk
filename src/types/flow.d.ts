@@ -68,4 +68,24 @@ export interface FlowEndpoint {
   ): Promise<ResponseBody>;
 
   DeleteEntry<T = any>(slug: string, entryId: string): Promise<T>;
+
+  CreateEntryRelationship<RequestBody = any, ResponseBody = any>(
+    flowSlug: string,
+    entryId: string,
+    fieldSlug: string,
+    body?: RequestBody
+  ): Promise<ResponseBody>;
+
+  UpdateEntryRelationship<RequestBody = any, ResponseBody = any>(
+    flowSlug: string,
+    entryId: string,
+    fieldSlug: string,
+    body?: RequestBody
+  ): Promise<ResponseBody>;
+
+  DeleteEntryRelationship<ResponseBody = any>(
+    flowSlug: string,
+    entryId: string,
+    fieldSlug: string
+  ): Promise<ResponseBody>;
 }

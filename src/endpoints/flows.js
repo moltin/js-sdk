@@ -49,6 +49,39 @@ class FlowsEndpoint extends CRUDExtend {
       'DELETE'
     )
   }
+
+  CreateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    return this.request.send(
+      `${
+        this.endpoint
+      }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
+      'POST',
+      {
+        ...body
+      }
+    )
+  }
+
+  UpdateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    return this.request.send(
+      `${
+        this.endpoint
+      }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
+      'PUT',
+      {
+        ...body
+      }
+    )
+  }
+
+  DeleteEntryRelationship(flowSlug, entryId, fieldSlug) {
+    return this.request.send(
+      `${
+        this.endpoint
+      }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
+      'DELETE'
+    )
+  }
 }
 
 export default FlowsEndpoint
