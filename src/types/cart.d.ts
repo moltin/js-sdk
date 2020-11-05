@@ -24,6 +24,9 @@ export interface CreateCartObject {
   description?: string;
 }
 
+/**
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/index.html
+ */
 export interface ItemTaxObject {
   name: string
   jurisdiction: string
@@ -71,6 +74,9 @@ export interface CartItemBase {
   [key: string]: any
 }
 
+/**
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/index.html
+ */
 export interface CartItem extends CartItemBase {
   id: string
   type: string
@@ -140,37 +146,101 @@ export interface CartEndpoint {
   endpoint: 'carts'
   cartId: string
 
+  /**
+   * Get a Cart by reference
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/get-a-cart.html
+   */
   Get(): Promise<Resource<Cart>>
 
+  /**
+   * Get Cart Items
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/get-cart-items.html
+   */
   Items(): Promise<CartItemsResponse>
 
+  /**
+   * Add Product to Cart
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-product-to-cart.html
+   * @param productId the ID of the product you want to add to cart.
+   * @param quantity the amount of products to add to cart
+   * @param data
+   */
   AddProduct(
     productId: string,
     quantity?: number,
     data?: any
   ): Promise<CartItemsResponse>
 
+  /**
+   * Add Custom Item to Cart
+   * Description: You want to add a custom item to the cart to handle things like shipping, taxes and inventory you don’t manage with Commerce Cloud.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-custom-item-to-cart.html
+   * @param item An custom item you want to add to the cart
+   */
   AddCustomItem(item: any): Promise<CartItemsResponse>
 
+  /**
+   * Add Promotion to Cart
+   * Description: You can use the Promotions API to apply discounts to your cart as a special cart item type.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
+   * @param code the promotion code.
+   */
   AddPromotion(code: string): Promise<CartItemsResponse>
 
+  /**
+   * Bulk Add Items to Cart
+   * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
+   * @param data An cart items or custom items
+   */
   BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
 
+  /**
+   * Remove Cart Item
+   * Description: You can easily remove items from the Cart. A successful Cart item removal request returns the cart items.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/remove-cart-item.html
+   * @param itemId the unique identifier for this cart item.
+
+   */
   RemoveItem(itemId: string): Promise<CartItemsResponse>
 
+  /**
+   * Update Cart Item
+   * Description: You can easily update a Cart item. A successful update returns the cart items.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/update-cart-item.html
+   * @param itemId the unique identifier for this cart item.
+   * @param quantity The amount of products to add to cart.
+   * @param customData
+   */
   UpdateItem(
     itemId: string,
     quantity: number,
     customData?: any
   ): Promise<CartItemsResponse>
 
+  /**
+   * Bulk Update Items to Cart
+   * Description: When you enable the bulk update feature, a shopper can update an array of items to their cart in one action, rather than updating each item one at a time.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-update-to-cart.html
+   * @param items a cart items or custom items
+   */
   UpdateItems(items: CartItemBase[]): Promise<CartItemsResponse>
 
-  CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>;
+  CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
 
-  GetCartsList(token?: string): Promise<CartItemsResponse>;
+  GetCartsList(token?: string): Promise<CartItemsResponse>
 
-  AddCustomerAssociation(customerId: string, token: string ): Promise<CartItemsResponse>;
+  /**
+   * Customer Cart Associations
+   * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/customer-cart-associations.html
+   * @param customerId the id of the customer.
+   * @param token a customer token to access specific customer orders.
+   */
+  AddCustomerAssociation(
+    customerId: string,
+    token: string
+  ): Promise<CartItemsResponse>
 
   /**
    * @deprecated Use UpdateItem method
@@ -180,18 +250,58 @@ export interface CartEndpoint {
     quantity: number
   ): Promise<CartItemsResponse>
 
+  /**
+   * Create a Tax Item
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/create-a-tax-item.html
+   * @param itemId the unique identifier for this cart item.
+   * @param taxData the tax item object
+   */
   AddItemTax(
     itemId: string,
     taxData: ItemTaxObject
   ): Promise<Resource<ItemTaxObject>>
 
+  /**
+   * Update a Tax Item
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/update-a-tax-item.html
+   * @param itemId the unique identifier for this cart item.
+   * @param taxItemId ID of the tax item to update.
+   * @param taxData the tax item object
+   */
+  UpdateItemTax(
+    itemId: string,
+    taxItemId: string,
+    taxData: ItemTaxObject
+  ): Promise<Resource<ItemTaxObject>>
+
+  /**
+   * Delete a Tax Item
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/delete-a-tax-item.html
+   * @param itemId the unique identifier for this cart item.
+   * @param taxItemId ID of the tax item to update.
+   */
   RemoveItemTax(itemId: string, taxItemId: string): Promise<{}>
 
+  /**
+   * Checkout
+   * Description: Once a Cart is ready to checkout, you can easily convert your Cart to an Order.
+   * The Cart remains and can be modified and checked out again if required.
+   * Once a successful Checkout is completed, the response contains the order.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/checkout.html
+   * @param customer the customer ID or Customer object.
+   * @param billingAddress billing address
+   * @param shippingAddress shipping address, billingAddress is used if shippingAddress not provided
+   */
   Checkout(
     customer: string | CheckoutCustomer | CheckoutCustomerObject,
     billingAddress: Partial<Address>,
     shippingAddress?: Partial<Address>
   ): Promise<Resource<Order>>
 
+  /**
+   * Delete a Cart
+   * Description: You can easily remove all items from a cart.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/delete-a-cart.html
+   */
   Delete(): Promise<{}>
 }
