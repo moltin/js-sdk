@@ -228,6 +228,8 @@ export interface CartEndpoint {
 
   CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
 
+  UpdateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
+
   GetCartsList(token?: string): Promise<CartItemsResponse>
 
   /**
