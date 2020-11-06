@@ -226,8 +226,24 @@ export interface CartEndpoint {
    */
   UpdateItems(items: CartItemBase[]): Promise<CartItemsResponse>
 
+  /**
+   * Create Cart
+   * @param token a customer token to access specific customer orders.
+   * @param data a cart data.
+   */
   CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
 
+  /**
+   * Update Cart
+   * @param token a customer token to access specific customer orders.
+   * @param data a cart data.
+   */
+  UpdateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
+
+  /**
+   * Get Carts List
+   * @param token a customer token to access specific customer orders.
+   */
   GetCartsList(token?: string): Promise<CartItemsResponse>
 
   /**

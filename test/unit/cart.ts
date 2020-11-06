@@ -1141,6 +1141,38 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should update a cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .put('/carts/3', {
+        data: {
+          name: 'UpdatedCartName',
+          description: 'UpdatedCartDescription'
+        }
+      })
+      .reply(201, {
+        name: 'UpdatedCartName',
+        description: 'UpdatedCartDescription'
+      })
+
+    return Moltin.Cart()
+      .UpdateCart(
+        {
+          name: 'UpdatedCartName',
+          description: 'UpdatedCartDescription'
+        },
+        'testtoken'
+      )
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
+
   it('should get carts list', () => {
     // Intercept the API request
     nock(apiUrl, {
