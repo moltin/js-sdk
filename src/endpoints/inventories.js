@@ -7,10 +7,6 @@ class InventoriesEndpoint extends BaseExtend {
     this.endpoint = 'inventories'
   }
 
-  Get(productId) {
-    return this.request.send(`${this.endpoint}/${productId}`, 'GET')
-  }
-
   IncrementStock(productId, quantity) {
     return this.request.send(
       `${this.endpoint}/${productId}/transactions`,
