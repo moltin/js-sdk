@@ -5,6 +5,50 @@
  */
 import { Identifiable, ResourceList } from './core';
 
+export interface TransactionsResponse {
+  data: {
+    id: string
+    type: string
+    reference: string
+    gateway: string
+    amount: number
+    currency: string
+    transaction_type: string
+    status: string
+    relationships: {
+      order: {
+        data: {
+          type: string
+          id: string
+        }
+      }
+      timestamps?: {
+        created_at: string
+        updated_at: string
+      }
+    }
+    meta: {
+      display_price: {
+        amount: number,
+        currency: string
+        formatted: string
+      }
+      timestamps: {
+        created_at: string
+        updated_at: string
+      }
+      display_refunded_amount?: {
+        total: {
+          amount: number,
+          currency: string,
+          formatted: string
+        }
+      }
+    }
+  }
+}
+
+
 /**
  * Core Transaction Base Interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
@@ -26,17 +70,20 @@ export interface Transaction extends Identifiable, TransactionBase {
 
 /**
  * Transaction Endpoints
+ * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#get-get-all-transactions
+ * Capture DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-capture-payment
+ * Refund DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-refund-payment
  */
-export interface TransactionEndpoint 
+export interface TransactionEndpoint
 {
   endpoint: 'transaction';
 
   All(options: { order: string }): Promise<ResourceList<Transaction>>;
 
-  Capture<T = any>(options: {
+  Capture(options: {
     order: string
     transaction: string
-  }): Promise<T>;
+  }): Promise<TransactionsResponse>;
 
-  Refund<T = any>(options: { order: string; transaction: string }): Promise<T>
+  Refund(options: { order: string; transaction: string }): Promise<TransactionsResponse>
 }

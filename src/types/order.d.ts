@@ -135,6 +135,53 @@ export interface OrderItem extends Identifiable, OrderItemBase {
   }
 }
 
+export interface ConfirmPaymentBody {
+  method: string
+  gateway: string
+  payment: string
+  options?: {
+    customer: string
+    idempotency_key: string
+    receipt_email: string
+  };
+}
+
+export interface ConfirmPaymentResponse {
+  data: {
+    id: string
+    type: string
+    reference: string
+    gateway: string
+    amount: number
+    currency: string
+    transaction_type: string
+    status: string
+    payment_intent: {
+      client_secret: string
+      status: string
+    },
+    relationships: {
+      order: {
+        data: {
+          type: string
+          id: string
+        }
+      }
+    },
+    meta: {
+      display_price: {
+        amount: number,
+        currency: string
+        formatted: string
+      },
+      timestamps: {
+        created_at: string
+        updated_at: string
+      }
+    }
+  }
+}
+
 type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
 type OrderInclude = 'product' | 'customer' | 'items'
 
@@ -160,11 +207,29 @@ export interface OrdersEndpoint extends QueryableResource<
    */
   Items(id: string): Promise<ResourcePage<OrderItem>>;
 
-  //TODO: Docs ref?
-  Payment<RequestBody = any, ResponseBody = any>(
+  /**
+   * Confirm payment intent
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-confirm-payment-intent
+   * @param orderId - The ID of the order.
+   * @param transactionId - The ID of the transaction you want to confirm.
+   * @param body - The body of the order.
+   */
+  Confirm(
+    orderId: string,
+    transactionId: string,
+    body: ConfirmPaymentBody
+  ): Promise<ConfirmPaymentResponse>;
+
+  /**
+   * Payment
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-authorize-payment
+   * @param id - The UUID of the order that you want to authorize payment for.
+   * @param body - The body of the order
+   */
+  Payment(
     id: string,
-    body: RequestBody
-  ): Promise<ResponseBody>;
+    body: ConfirmPaymentBody
+  ): Promise<ConfirmPaymentResponse>;
 
   /**
    * Update an Order
