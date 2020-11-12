@@ -1,7 +1,8 @@
 /**
  * Transactions
- * Description: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
- * DOCS:
+ * Description: Each product has its own Inventory and stock history.
+ * This is useful when auditing product movements across your project.
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html
  */
 import { Identifiable, ResourceList } from './core';
 
@@ -51,7 +52,7 @@ export interface TransactionsResponse {
 
 /**
  * Core Transaction Base Interface
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#the-transaction-object
  */
 export interface TransactionBase {
   type: string;
@@ -71,19 +72,27 @@ export interface Transaction extends Identifiable, TransactionBase {
 /**
  * Transaction Endpoints
  * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#get-get-all-transactions
+ * Get single DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#get-get-single-transaction
  * Capture DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-capture-payment
  * Refund DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-refund-payment
  */
-export interface TransactionEndpoint
-{
-  endpoint: 'transaction';
+export interface TransactionEndpoint {
+  endpoint: 'transaction'
 
-  All(options: { order: string }): Promise<ResourceList<Transaction>>;
+  All(options: { order: string }): Promise<ResourceList<Transaction>>
+
+  Get(options: {
+    order: string
+    transaction: string
+  }): Promise<TransactionsResponse>
 
   Capture(options: {
     order: string
     transaction: string
-  }): Promise<TransactionsResponse>;
+  }): Promise<TransactionsResponse>
 
-  Refund(options: { order: string; transaction: string }): Promise<TransactionsResponse>
+  Refund(options: {
+    order: string
+    transaction: string
+  }): Promise<TransactionsResponse>
 }
