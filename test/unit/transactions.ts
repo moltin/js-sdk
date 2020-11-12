@@ -27,6 +27,24 @@ describe('Moltin order transactions', () => {
     })
   })
 
+  it('should return a single order transaction', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/orders/order-1/transactions/transaction-1')
+      .reply(200, { data: transactions[0] })
+
+    return Moltin.Transactions.Get({
+      order: 'order-1',
+      transaction: 'transaction-1'
+    }).then(response => {
+      assert.isOk(response)
+    })
+  })
+
   it('should capture an order transaction', () => {
     // Intercept the API request
     nock(apiUrl, {

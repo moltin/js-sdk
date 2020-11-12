@@ -175,7 +175,7 @@ describe('Moltin orders', () => {
         data: {
           gateway: 'braintree',
           method: 'purchase',
-          customer_id: '3'
+          payment: '3'
         }
       })
       .reply(201, {
@@ -185,7 +185,38 @@ describe('Moltin orders', () => {
     return Moltin.Orders.Payment(orders[1].id, {
       gateway: 'braintree',
       method: 'purchase',
-      customer_id: '3'
+      payment: '3'
+    }).then(response => {
+      assert.propertyVal(response, 'status', 'complete')
+    })
+  })
+
+it('should confirm a payment for an order', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    const transactionId = "1";
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/orders/order-2/transactions/1/confirm', {
+        data: {
+          gateway: 'purchase',
+          payment: 'test',
+          method: 'payment_intents',
+        }
+      })
+      .reply(201, {
+        status: 'complete'
+      })
+
+    return Moltin.Orders.Confirm(orders[1].id, transactionId, {
+      gateway: 'purchase',
+      payment: 'test',
+      method: 'payment_intents',
     }).then(response => {
       assert.propertyVal(response, 'status', 'complete')
     })
