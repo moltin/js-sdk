@@ -114,6 +114,13 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  RemoveAllItems() {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'DELETE'
+    )
+  }
+
   UpdateItem(itemId, quantity, data = {}) {
     const body = buildCartItemData(itemId, quantity)
 
