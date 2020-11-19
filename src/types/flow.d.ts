@@ -4,7 +4,7 @@
  * associate it with. For example a Flow with a slug of products will be applied to all Product responses in your store.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/flows.html
  */
-import { Identifiable, CrudQueryableResource, Resource, ResourcePage } from './core';
+import { Identifiable, CrudQueryableResource, Resource, ResourcePage, Attributes } from './core';
 
 
 /**
@@ -88,4 +88,6 @@ export interface FlowEndpoint {
     entryId: string,
     fieldSlug: string
   ): Promise<ResponseBody>;
+
+  Attributes(token?: string): Promise<Attributes>;
 }

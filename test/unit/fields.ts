@@ -1,6 +1,7 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
+import { attributeResponse } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -113,6 +114,23 @@ describe('Moltin flow fields', () => {
 
     return Moltin.Fields.Delete('1').then(response => {
       assert.equal(response, '{}')
+    })
+  })
+
+  it('should return an array of attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/fields/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Fields.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
     })
   })
 })
