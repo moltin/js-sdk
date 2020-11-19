@@ -94,4 +94,20 @@ describe('Moltin accounts', () => {
       assert.lengthOf(response.data, 2)
     })
   })
+
+  it('should delete a user from a store', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: `Bearer: ${accessToken}`
+      }
+    })
+      .delete('/accounts/stores/store-1/users/user-1')
+      .reply(204)
+
+    return Moltin.Accounts.DeleteUserFromStore('store-1', 'user-1').then(
+      response => {
+        assert.equal(response, '{}')
+      }
+    )
+  })
 })
