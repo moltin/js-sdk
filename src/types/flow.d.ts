@@ -4,8 +4,7 @@
  * associate it with. For example a Flow with a slug of products will be applied to all Product responses in your store.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/flows.html
  */
-import { Identifiable, CrudQueryableResource, Resource, ResourcePage } from './core';
-
+import { Identifiable, Resource, ResourcePage } from './core';
 
 /**
  * Core Flow Base Interface

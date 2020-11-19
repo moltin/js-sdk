@@ -16,7 +16,10 @@ import {
   ItemPercentDiscountSchema,
   CurrencyAmount,
   Promotion,
-  PromotionCode
+  PromotionCode,
+  Variation,
+  ModifierResponse,
+  OptionResponse
 } from '../src/moltin'
 
 export const auth = (accessToken): Promise<CustomAuthenticatorResponseBody> =>
@@ -641,3 +644,240 @@ export const promotionCodesArray: PromotionCode[] = [
   { code: 'EZQQNO' }
 ]
 
+export const variationsArray: Variation[] = [
+  {
+    type: 'product-variation',
+    id: 'variation-1',
+    name: 'Color',
+    options: [
+      {
+        id: 'option-1',
+        name: 'Blue',
+        description: 'Blue',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'name_append',
+            value: 'Blue'
+          },
+          {
+            id: 'modifier-2',
+            type: 'sku_append',
+            value: 'blue'
+          },
+          {
+            id: 'modifier-3',
+            type: 'slug_append',
+            value: 'blue'
+          }
+        ]
+      },
+      {
+        id: 'option-2',
+        name: 'White',
+        description: 'White',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'name_append',
+            value: 'White'
+          },
+          {
+            id: 'modifier-2',
+            type: 'sku_append',
+            value: 'white'
+          },
+          {
+            id: 'modifier-3',
+            type: 'slug_append',
+            value: 'white'
+          }
+        ]
+      }
+    ],
+    relationships: {
+      options: {
+        data: [
+          {
+            type: 'option',
+            id: 'option-1'
+          },
+          {
+            type: 'option',
+            id: 'option-2'
+          }
+        ]
+      }
+    }
+  },
+  {
+    type: 'product-variation',
+    id: 'variation-2',
+    name: 'Fixture Finish',
+    options: [
+      {
+        id: 'option-1',
+        name: 'Antique Bronze',
+        description: 'Antique Bronze',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'sku_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'AB'
+            }
+          },
+          {
+            id: 'modifier-2',
+            type: 'slug_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'antique-bronze'
+            }
+          },
+          {
+            id: 'modifier-3',
+            type: 'name_append',
+            value: ' Antique Bronze'
+          }
+        ]
+      },
+      {
+        id: 'option-2',
+        name: 'Brushed Nickel',
+        description: 'Brushed Nickel',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'sku_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'BN'
+            }
+          },
+          {
+            id: 'modifier-2',
+            type: 'slug_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'brushed-nickel'
+            }
+          },
+          {
+            id: 'modifier-3',
+            type: 'name_append',
+            value: ' Brushed Nickel'
+          }
+        ]
+      }
+    ],
+    relationships: {
+      options: {
+        data: [
+          {
+            type: 'option',
+            id: 'option-1'
+          },
+          {
+            type: 'option',
+            id: 'option-2'
+          }
+        ]
+      }
+    }
+  }
+]
+
+export const optionsArray: OptionResponse[] = [
+  {
+    type: 'option',
+    id: 'option-1',
+    name: 'Blue',
+    description: 'Blue color',
+    relationships: {
+      modifiers: {
+        data: [
+          {
+            name_append: 'Blue'
+          },
+          {
+            sku_append: 'blue'
+          },
+          {
+            slug_append: 'blue'
+          },
+          {
+            price_increment: [
+              {
+                amount: 300,
+                currency: 'USD',
+                includes_tax: true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    type: 'option',
+    id: 'option-2',
+    name: 'White',
+    description: 'White',
+    relationships: {
+      modifiers: {
+        data: [
+          {
+            name_append: 'White'
+          },
+          {
+            sku_append: 'white'
+          },
+          {
+            slug_append: 'white'
+          },
+          {
+            price_equals: [
+              {
+                amount: 20000,
+                currency: 'USD',
+                includes_tax: true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]
+
+export const modifiersArray: ModifierResponse[] = [
+  {
+    type: 'modifier',
+    id: 'modifier-1',
+    modifier_type: 'name_append',
+    value: 'White'
+  },
+  {
+    type: 'modifier',
+    id: 'modifier-2',
+    modifier_type: 'price_equals',
+    value: [
+      {
+        amount: 20000,
+        currency: 'USD',
+        includes_tax: true
+      }
+    ]
+  },
+  {
+    type: 'modifier',
+    id: 'modifier-2',
+    modifier_type: 'sku_builder',
+    value: {
+      seek: 'color',
+      set: 'white'
+    }
+  }
+]
