@@ -16,7 +16,7 @@ import {
   ItemPercentDiscountSchema,
   CurrencyAmount,
   Promotion,
-  PromotionCode
+  PromotionCode, Attributes
 } from '../src/moltin'
 
 export const auth = (accessToken): Promise<CustomAuthenticatorResponseBody> =>
@@ -641,3 +641,36 @@ export const promotionCodesArray: PromotionCode[] = [
   { code: 'EZQQNO' }
 ]
 
+export const attributeResponse: Attributes = {
+  data: [
+    {
+      label: 'Attribute 1',
+      value: 'attribute_1',
+      type: 'string',
+      required: false,
+      description: 'Attribute 1'
+    },
+    {
+      label: 'Attribute 2',
+      value: 'attribute_2',
+      type: 'string',
+      required: false,
+      description: 'Attribute 2'
+    },
+    {
+      label: 'Attribute 3',
+      value: 'attribute_3',
+      type: 'enum',
+      required: false,
+      description: 'Attribute 3',
+      options: [
+        'AX',
+        'AL',
+      ]
+    }
+  ],
+  meta: {
+    entity: 'address',
+    version: '2.0.0'
+  }
+}
