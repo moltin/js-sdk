@@ -40,6 +40,10 @@ class ProductsEndpoint extends CRUDExtend {
       type === 'main-image' ? body[0] : body
     )
   }
+
+  BuildChildProducts(id) {
+    return this.request.send(`${this.endpoint}/${id}/build`, 'POST')
+  }
 }
 
 export default ProductsEndpoint

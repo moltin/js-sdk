@@ -1,21 +1,5 @@
 import { buildRequestBody, parseJSON, resetProps } from '../utils/helpers'
 
-class Credentials {
-  constructor(client_id, access_token, expires) {
-    this.client_id = client_id
-    this.access_token = access_token
-    this.expires = expires
-  }
-
-  toObject() {
-    return {
-      client_id: this.client_id,
-      access_token: this.access_token,
-      expires: this.expires
-    }
-  }
-}
-
 const createAuthRequest = config => {
   if (!config.client_id) {
     throw new Error('You must have a client_id set')
@@ -73,12 +57,14 @@ class RequestFactory {
       : createAuthRequest(config)
 
     promise
-      .then(response => {
-        const credentials = new Credentials(
-          config.client_id,
-          response.access_token,
-          response.expires
-        )
+      .then(({ access_token, refresh_token, expires }) => {
+        const credentials = {
+          client_id: config.client_id,
+          access_token,
+          expires,
+          ...(refresh_token && { refresh_token })
+        }
+
         storage.set('moltinCredentials', JSON.stringify(credentials))
       })
       .catch(() => {})

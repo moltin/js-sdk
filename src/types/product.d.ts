@@ -166,4 +166,15 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
     type: string,
     resources?: string | string[]
   ): Promise<T>;
+
+  /**
+   * Update Relationship
+   * Description:
+   * DOCS:
+   * @param id productId
+   * @constructor
+   */
+  BuildChildProducts<T = any>(
+    id: string
+  ): Promise<T>;
 }

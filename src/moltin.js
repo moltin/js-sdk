@@ -25,6 +25,7 @@ import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
 import AccountsEndpoint from './endpoints/accounts'
 import PromotionsEndpoint from './endpoints/promotions'
+import VariationsEndpoint from './endpoints/variations'
 
 import { cartIdentifier } from './utils/helpers'
 
@@ -55,6 +56,7 @@ export default class Moltin {
     this.Settings = new SettingsEndpoint(config)
     this.Accounts = new AccountsEndpoint(config)
     this.Promotions = new PromotionsEndpoint(config)
+    this.Variations = new VariationsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
