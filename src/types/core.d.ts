@@ -11,6 +11,27 @@ export interface ResourceList<R> {
   data: R[];
 }
 
+export interface Attribute {
+  label: string;
+  value: string;
+  type: string;
+  required: boolean;
+  options?: string[];
+  description?: string;
+  validation?: {
+    regex: string;
+  };
+}
+
+export interface AttributesMeta {
+  entity: string;
+  version: string;
+}
+
+export interface Attributes extends ResourceList<Attribute> {
+  meta: AttributesMeta;
+}
+
 export interface ResourcePage<R> extends ResourceList<R> {
   links: { [key: string]: string | null };
   meta: {
@@ -54,6 +75,8 @@ export interface QueryableResource<R, F, S, I> {
   Sort(value: S): QueryableResource<R, F, S, I>;
 
   With(includes: I | I[]): QueryableResource<R, F, S, I>;
+
+  Attributes(token?: string): Promise<Attributes>;
 }
 
 export interface CrudQueryableResource<R, C, U, F, S, I> extends QueryableResource<R, F, S, I> {

@@ -70,6 +70,15 @@ class BaseExtend {
 
     return this
   }
+
+  Attributes(token = null) {
+    return this.request.send(
+      `${this.endpoint}/attributes`,
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 export default BaseExtend
