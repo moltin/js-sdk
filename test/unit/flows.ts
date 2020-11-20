@@ -332,6 +332,23 @@ describe('Moltin flows', () => {
       assert.equal(response, '{}')
     })
   })
+  it('should delete flows by id', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/flows/1')
+      .reply(204)
+
+    return Moltin.Flows.DeleteFlow('1').then(response => {
+      assert.equal(response, '{}')
+    })
+  })
 
   it('should create a flow entry relationship', () => {
     const Moltin = MoltinGateway({

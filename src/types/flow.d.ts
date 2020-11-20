@@ -34,6 +34,8 @@ export interface FlowBase {
   enabled: boolean
 }
 
+
+
 export interface Flow extends Identifiable, FlowBase {}
 
 export interface FlowFilter {}
@@ -69,6 +71,8 @@ export interface FlowEndpoint {
   GetEntry<T = any>(slug: string, entryId: string): Promise<T>
 
   GetFields<T = any>(slug: string): Promise<T>
+
+  DeleteFlow(id:string):Promise<{}>
 
   CreateEntry<RequestBody = any, ResponseBody = any>(
     slug: string,
