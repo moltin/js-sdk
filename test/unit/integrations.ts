@@ -98,4 +98,19 @@ describe('Moltin integrations', () => {
       assert.equal(response, '{}')
     })
   })
+
+  it('should return integrations logs', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get(`/integrations/123/logs`)
+      .reply(200, { data: integrations })
+
+    return Moltin.Integrations.GetLogs('123').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
+  })
 })

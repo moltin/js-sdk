@@ -167,6 +167,25 @@ describe('Moltin flows', () => {
     })
   })
 
+  it('should return fields', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/12/fields')
+      .reply(200)
+
+    return Moltin.Flows.GetFields('12').then(response => {
+      assert.lengthOf(response, 2)
+    })
+  })
+
   it('should return a limited number of flow entries', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'
