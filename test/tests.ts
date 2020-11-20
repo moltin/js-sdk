@@ -23,6 +23,7 @@ require('./unit/error')
 require('./unit/settings')
 require('./unit/accounts')
 require('./unit/promotions')
+require('./unit/variations')
 
 // Utilities
 require('./utils/helpers')

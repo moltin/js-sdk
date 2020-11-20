@@ -204,6 +204,8 @@ export interface CartEndpoint {
    */
   RemoveItem(itemId: string): Promise<CartItemsResponse>
 
+  RemoveAllItems(): Promise<CartItemsResponse>
+
   /**
    * Update Cart Item
    * Description: You can easily update a Cart item. A successful update returns the cart items.
