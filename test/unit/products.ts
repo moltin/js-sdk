@@ -417,4 +417,21 @@ describe('Moltin products', () => {
         assert.notExists((Moltin.Products as any).filter)
       })
   })
+
+  it('should get products attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products/attributes')
+      .reply(200, { data: products })
+
+    return Moltin.Products.Attributes("1")
+  })
 })
