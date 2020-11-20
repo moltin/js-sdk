@@ -86,6 +86,15 @@ class FlowsEndpoint extends CRUDExtend {
       'DELETE'
     )
   }
+
+  GetFlowTypeAttributes(flowType, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${flowType}/attributes`,
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 export default FlowsEndpoint

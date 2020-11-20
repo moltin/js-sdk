@@ -450,4 +450,21 @@ describe('Moltin flows', () => {
       assert.lengthOf(response.data, 3)
     })
   })
+
+  it('should return an array of attributes by flow type', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/flow-type-1/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Flows.GetFlowTypeAttributes('flow-type-1','testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
+  })
 })

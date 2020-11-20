@@ -108,4 +108,6 @@ export interface FlowEndpoint {
   ): Promise<ResponseBody>;
 
   Attributes(token?: string): Promise<Attributes>;
+
+  GetFlowTypeAttributes(flowType: string, token?: string): Promise<Attributes>;
 }
