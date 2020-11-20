@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { gatewaysArray as gateways } from '../factories'
+import { gatewaysArray as gateways, attributeResponse } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -83,5 +83,22 @@ describe('Moltin gateways', () => {
     }).then(response => {
       assert.propertyVal(response, 'name', 'Braintree (updated)')
     })
+  })
+
+  it('should get slug attributes', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/gateways/braintree/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Gateways.GetSlugAttributes(gateways[0].slug).then(
+      response => {
+        assert.lengthOf(response.data, 3)
+      }
+    )
   })
 })

@@ -47,6 +47,16 @@ class AccountsEndpoint extends BaseExtend {
       this
     )
   }
+
+  DeleteUserFromStore(storeId, userId) {
+    return this.request.send(
+      `${this.endpoint}/stores/${storeId}/users/${userId}`,
+      'DELETE',
+      undefined,
+      undefined,
+      this
+    )
+  }
 }
 
 export default AccountsEndpoint

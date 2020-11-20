@@ -6,6 +6,10 @@ class IntegrationsEndpoint extends CRUDExtend {
 
     this.endpoint = 'integrations'
   }
+
+  GetLogs(slug) {
+    return this.request.send(`${this.endpoint}/${slug}/logs`, 'GET')
+  }
 }
 
 export default IntegrationsEndpoint

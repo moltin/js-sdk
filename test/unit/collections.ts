@@ -2,6 +2,7 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 import {
+  attributeResponse,
   collectionsArray as collections,
   productsArray as products
 } from '../factories'
@@ -266,6 +267,20 @@ describe('Moltin collections', () => {
       'collection'
     ).then(response => {
       assert.deepEqual(response, { data: [] })
+    })
+  })
+
+  it('should return an array of attributes', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/collections/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Collections.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
     })
   })
 })

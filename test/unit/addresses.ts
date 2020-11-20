@@ -1,7 +1,11 @@
 import { assert } from 'chai';
 import nock from 'nock';
 import { gateway as MoltinGateway } from '../../src/moltin';
-import { addressesArray as addresses, addressUpdate } from '../factories';
+import {
+  addressesArray as addresses,
+  addressUpdate,
+  attributeResponse
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2';
 
@@ -250,4 +254,18 @@ describe('Moltin addresses', () => {
       assert.equal(response, '{}');
     });
   });
+
+  it('should return an array of attributes', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/addresses/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Addresses.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
+  })
 });

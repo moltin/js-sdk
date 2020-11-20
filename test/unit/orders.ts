@@ -273,4 +273,21 @@ it('should confirm a payment for an order', () => {
         assert.notExists((Moltin.Orders as any).includes)
       })
   })
+
+  it('should get orders attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/orders/attributes')
+      .reply(200, {})
+
+    return Moltin.Orders.Attributes("1")
+  })
 })

@@ -16,6 +16,7 @@ import {
   ItemPercentDiscountSchema,
   CurrencyAmount,
   Promotion,
+  Attributes,
   PromotionCode,
   Variation,
   ModifierResponse,
@@ -643,6 +644,40 @@ export const promotionCodesArray: PromotionCode[] = [
   { code: 'auto_c55a8d1f-ac44-4e7c-ab82-f41b77783ebb' },
   { code: 'EZQQNO' }
 ]
+
+export const attributeResponse: Attributes = {
+  data: [
+    {
+      label: 'Attribute 1',
+      value: 'attribute_1',
+      type: 'string',
+      required: false,
+      description: 'Attribute 1'
+    },
+    {
+      label: 'Attribute 2',
+      value: 'attribute_2',
+      type: 'string',
+      required: false,
+      description: 'Attribute 2'
+    },
+    {
+      label: 'Attribute 3',
+      value: 'attribute_3',
+      type: 'enum',
+      required: false,
+      description: 'Attribute 3',
+      options: [
+        'AX',
+        'AL',
+      ]
+    }
+  ],
+  meta: {
+    entity: 'address',
+    version: '2.0.0'
+  }
+}
 
 export const variationsArray: Variation[] = [
   {

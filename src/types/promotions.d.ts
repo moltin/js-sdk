@@ -5,7 +5,7 @@
  * or require codes, which are then used by the end user to get a discount.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html
  */
-import { CrudQueryableResource, Identifiable, Resource, ResourceList } from './core'
+import { Attributes, CrudQueryableResource, Identifiable, Resource, ResourceList } from './core'
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#fixed-discount
@@ -130,15 +130,6 @@ export interface PromotionCode {
   user?: string
 }
 
-export interface PromotionAttributesMeta {
-  entity: string
-  version: string
-}
-
-export interface PromotionAttributesResponse extends ResourceList<any> {
-  meta: PromotionAttributesMeta
-}
-
 export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
   code: string
 }
@@ -162,7 +153,7 @@ export interface PromotionsEndpoint extends CrudQueryableResource<
   >  {
   endpoint: 'promotions'
 
-  Attributes(): Promise<PromotionAttributesResponse>
+  Attributes(): Promise<Attributes>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#the-promotion-code-object

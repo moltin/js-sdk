@@ -6,9 +6,8 @@
  * token. This is recommended for back end interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
  */
-import { Identifiable, Resource, ResourceList } from './core';
+import { Attributes, Identifiable, Resource, ResourceList } from './core'
 import { WithRequired } from './util';
-
 
 /**
  * Core Address Base Interface
@@ -59,4 +58,6 @@ export interface AddressesEndpoint {
   Update(options: { customer: string, address: string, body: Identifiable & AddressEdit, token?: string }): Promise<Resource<Address>>;
 
   Delete(options: { customer: string, address: string, token?: string }): Promise<{}>;
+
+  Attributes(token?: string): Promise<Attributes>;
 }

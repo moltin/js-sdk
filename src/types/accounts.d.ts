@@ -90,4 +90,6 @@ export interface AccountsEndpoint extends QueryableResource<
   SwitchStore(storeId: string): Promise<Resource<SwitchStoreResponse>>
 
   Keys(): Promise<Resource<KeysItemResponse[]>>
+
+  DeleteUserFromStore(storeId: string, userId: string): Promise<{}>
 }

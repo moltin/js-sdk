@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { currenciesArray as currencies } from '../factories'
+import { attributeResponse, currenciesArray as currencies } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -126,6 +126,20 @@ describe('Moltin currencies', () => {
   it('should set the active currency', () => {
     Moltin.Currencies.Set(currencies[1].code).then(response => {
       assert.equal(response, 'GBP')
+    })
+  })
+
+  it('should return an array of attributes', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/currencies/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Currencies.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
     })
   })
 })

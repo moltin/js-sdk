@@ -1,7 +1,12 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { brandsArray as brands, productsArray as products, brandUpdate } from '../factories'
+import {
+  brandsArray as brands,
+  productsArray as products,
+  brandUpdate,
+  attributeResponse
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2';
 const authHeaders = {
@@ -213,5 +218,15 @@ describe('Moltin brands', () => {
         assert.deepEqual(response, { data: [] })
       }
     )
+  })
+
+  it('should return an array of attributes', () => {
+    nock(apiUrl, authHeaders)
+      .get('/brands/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Brands.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
   })
 })

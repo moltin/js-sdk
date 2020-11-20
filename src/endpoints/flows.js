@@ -28,6 +28,10 @@ class FlowsEndpoint extends CRUDExtend {
     )
   }
 
+  GetFields(slug) {
+    return this.request.send(`${this.endpoint}/${slug}/fields`, 'GET')
+  }
+
   CreateEntry(slug, body) {
     return this.request.send(`${this.endpoint}/${slug}/entries`, 'POST', {
       ...body,
@@ -80,6 +84,15 @@ class FlowsEndpoint extends CRUDExtend {
         this.endpoint
       }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
       'DELETE'
+    )
+  }
+
+  GetFlowTypeAttributes(flowType, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${flowType}/attributes`,
+      'GET',
+      undefined,
+      token
     )
   }
 }

@@ -307,4 +307,23 @@ describe('Moltin files', () => {
       assert.equal(response, '{}')
     })
   })
+
+  it('should create a new file', () => {
+    const newFile = {
+      type: 'file',
+      file_name: 'File 5'
+    }
+
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/files')
+      .reply(201, { data: { ...newFile, id: 'file-5' } })
+
+    return Moltin.Files.Create(newFile).then(response => {
+      assert.equal(response.data.id, 'file-5')
+    })
+  })
 })
