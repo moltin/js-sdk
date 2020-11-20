@@ -17,6 +17,15 @@ class GatewaysEndpoint extends BaseExtend {
       enabled
     })
   }
+
+  GetSlugAttributes(slug, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${slug}/attributes`,
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 export default GatewaysEndpoint

@@ -4,6 +4,7 @@
 import * as config from './types/config';
 import * as storage from './types/storage';
 export * from './types/storage';
+import { Attributes } from './types/core'
 
 import * as product from './types/product';
 import * as core from './types/core';
@@ -101,6 +102,8 @@ export namespace moltin {
     ): Promise<ResponseBody>;
 
     Enabled<T>(slug: string, enabled: boolean): Promise<T>;
+
+    GetSlugAttributes(flowType: string, token?: string): Promise<Attributes>
   }
 
   export interface Settings {
