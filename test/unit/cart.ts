@@ -880,6 +880,23 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should delete all cart items', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/carts/3/items')
+      .reply(200, { data: items })
+
+    return Moltin.Cart()
+      .RemoveAllItems()
+      .then(response => {
+        assert.lengthOf(response.data, 4)
+      })
+  })
+
   it('should delete a cart item with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {

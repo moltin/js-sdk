@@ -6,7 +6,6 @@
  */
 import { Identifiable, CrudQueryableResource, Resource, ResourcePage, Attributes } from './core';
 
-
 /**
  * Core Flow Base Interface
  */
