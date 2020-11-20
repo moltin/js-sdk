@@ -345,7 +345,7 @@ describe('Moltin flows', () => {
       .delete('/flows/1')
       .reply(204)
 
-    return Moltin.Flows.DeleteFlow('1').then(response => {
+    return Moltin.Flows.Delete('1').then(response => {
       assert.equal(response, '{}')
     })
   })
