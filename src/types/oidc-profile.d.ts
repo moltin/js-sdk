@@ -1,4 +1,4 @@
-import { Resource } from './core'
+import { Resource, ResourcePage } from './core'
 
 export interface ProfileBase {
   id: string;
@@ -40,7 +40,7 @@ export interface OidcProfileEndpoint {
     profileId
   }): Promise<Profile>
 
-  All(realmId: string): Promise<Resource<Profile>>
+  All(realmId: string): Promise<ResourcePage<Profile>>
 
   Create(
     realmId: string,
