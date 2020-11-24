@@ -101,6 +101,10 @@ class RequestFactory {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
 
+        if (config.headers) {
+          Object.assign(headers, config.headers)
+        }
+
         const version = (instance && instance.version) || config.version
 
         fetch(`${config.protocol}://${config.host}/${version}/${uri}`, {

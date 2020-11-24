@@ -12,7 +12,8 @@ class Config {
       host,
       storage,
       custom_fetch,
-      custom_authenticator
+      custom_authenticator,
+      headers
     } = options
 
     this.application = application
@@ -34,6 +35,7 @@ class Config {
     }
     this.storage = storage || new LocalStorageFactory()
     this.custom_authenticator = custom_authenticator
+    this.headers = headers || {}
   }
 }
 
