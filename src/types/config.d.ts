@@ -27,6 +27,7 @@ export interface ConfigOptions {
   custom_fetch?: Function;
   custom_authenticator?: () => Promise<CustomAuthenticatorResponseBody>;
   storage?: StorageFactory;
+  headers?: { [key: string]: string };
 }
 
 export interface Config {
