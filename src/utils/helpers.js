@@ -194,3 +194,18 @@ export function resetProps(instance) {
     e => delete inst[e]
   )
 }
+
+export function getCredentials(storage) {
+  return JSON.parse(storage.get('moltinCredentials'))
+}
+
+export function tokenInvalid(config) {
+  const credentials = getCredentials(config.storage)
+
+  return (
+    !credentials ||
+    !credentials.access_token ||
+    credentials.client_id !== config.client_id ||
+    Math.floor(Date.now() / 1000) >= credentials.expires
+  )
+}
