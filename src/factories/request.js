@@ -129,7 +129,7 @@ class RequestFactory {
           .catch(error => reject(error))
       }
 
-      if (tokenInvalid(config)) {
+      if (tokenInvalid(config) && config.reauth) {
         return this.authenticate()
           .then(() => req(getCredentials(storage)))
           .catch(error => reject(error))

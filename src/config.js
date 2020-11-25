@@ -14,7 +14,8 @@ class Config {
       custom_fetch,
       custom_authenticator,
       headers,
-      disableCart
+      disableCart,
+      reauth
     } = options
 
     this.application = application
@@ -38,6 +39,7 @@ class Config {
     this.custom_authenticator = custom_authenticator
     this.headers = headers || {}
     this.disableCart = disableCart || false
+    this.reauth = reauth || true
   }
 }
 

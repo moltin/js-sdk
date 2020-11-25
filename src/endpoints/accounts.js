@@ -57,6 +57,28 @@ class AccountsEndpoint extends BaseExtend {
       this
     )
   }
+
+  // Admin user endpoints
+
+  Me() {
+    return this.request.send(
+      `${this.endpoint}`,
+      'GET',
+      undefined,
+      undefined,
+      this
+    )
+  }
+
+  UpdateMe(userData) {
+    return this.request.send(
+      `${this.endpoint}/users`,
+      'PUT',
+      userData,
+      undefined,
+      this
+    )
+  }
 }
 
 export default AccountsEndpoint
