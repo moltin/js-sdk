@@ -13,7 +13,8 @@ class Config {
       storage,
       custom_fetch,
       custom_authenticator,
-      headers
+      headers,
+      disableCart
     } = options
 
     this.application = application
@@ -36,6 +37,7 @@ class Config {
     this.storage = storage || new LocalStorageFactory()
     this.custom_authenticator = custom_authenticator
     this.headers = headers || {}
+    this.disableCart = disableCart || false
   }
 }
 
