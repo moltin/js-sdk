@@ -110,4 +110,37 @@ describe('Moltin accounts', () => {
       }
     )
   })
+
+  it('should return an account', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: `Bearer: ${accessToken}`
+      }
+    })
+      .get('/accounts')
+      .reply(200, { data: account })
+
+    return Moltin.Accounts.Me().then(response => {
+      assert.propertyVal(response.data, 'id', '123')
+    })
+  })
+
+  it('should update an account', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: `Bearer: ${accessToken}`
+      }
+    })
+      .put('/accounts/users',
+        {
+          data: {
+            job_title: 'Developer',
+          }
+        })
+      .reply(204)
+
+    return Moltin.Accounts.UpdateMe({ job_title: 'Developer' }).then(response => {
+      assert.equal(response, '{}')
+    })
+  })
 })

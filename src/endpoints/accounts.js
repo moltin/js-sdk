@@ -61,13 +61,7 @@ class AccountsEndpoint extends BaseExtend {
   // Admin user endpoints
 
   Me() {
-    return this.request.send(
-      `${this.endpoint}`,
-      'GET',
-      undefined,
-      undefined,
-      this
-    )
+    return this.All()
   }
 
   UpdateMe(userData) {

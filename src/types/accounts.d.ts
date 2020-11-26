@@ -18,26 +18,26 @@ export interface StoreUserAvatar {
 }
 
 export interface Account {
-  application_types: string[]
-  avatar: StoreUserAvatar
-  company: string | null
-  company_size: string | null
-  company_type: string | null
-  created_at: string
-  current_store: string | null
-  email: string
-  id: string
-  job_title: string | null
-  languages: string[]
-  name: string
-  onboarded: boolean
-  opt_in: boolean
-  organisation_id: string
-  project_timeline: string | null
-  signup_intention: string | null
-  tutorial_modal_viewed: boolean
-  updated_at: string
-  user_role: string
+  application_types?: string[]
+  avatar?: StoreUserAvatar
+  company?: string | null
+  company_size?: string | null
+  company_type?: string | null
+  created_at?: string
+  current_store?: string | null
+  email?: string
+  id?: string
+  job_title?: string | null
+  languages?: string[]
+  name?: string
+  onboarded?: boolean
+  opt_in?: boolean
+  organisation_id?: string
+  project_timeline?: string | null
+  signup_intention?: string | null
+  tutorial_modal_viewed?: boolean
+  updated_at?: string
+  user_role?: string
 }
 
 export interface StoreUser {
@@ -92,4 +92,8 @@ export interface AccountsEndpoint extends QueryableResource<
   Keys(): Promise<Resource<KeysItemResponse[]>>
 
   DeleteUserFromStore(storeId: string, userId: string): Promise<{}>
+
+  Me(): Promise<Resource<Account>>
+
+  UpdateMe(userData: Account): Promise<null>
 }
