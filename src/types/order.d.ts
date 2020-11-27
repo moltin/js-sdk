@@ -3,7 +3,7 @@
  * Description: An Order is created via the checkout endpoint within the Carts API.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
-import { Identifiable, Relationship, ResourcePage, QueryableResource } from './core';
+import { Identifiable, Relationship, ResourcePage, QueryableResource, Resource } from './core'
 import { AddressBase } from './address';
 import { FormattedPrice, Price } from './price';
 
@@ -242,5 +242,5 @@ export interface OrdersEndpoint extends QueryableResource<
   Update(
     id: string,
     body: Partial<OrderBase>
-  ): Promise<Order>;
+  ): Promise<Resource<Order>>;
 }
