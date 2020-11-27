@@ -27,12 +27,15 @@ import AccountsEndpoint from './endpoints/accounts'
 import PromotionsEndpoint from './endpoints/promotions'
 import VariationsEndpoint from './endpoints/variations'
 
-import { cartIdentifier } from './utils/helpers'
+import { cartIdentifier, tokenInvalid } from './utils/helpers'
 
 export default class Moltin {
   constructor(config) {
     this.config = config
-    this.cartId = cartIdentifier(config.storage)
+
+    if (!config.disableCart) this.cartId = cartIdentifier(config.storage)
+
+    this.tokenInvalid = () => tokenInvalid(config)
 
     this.request = new RequestFactory(config)
     this.storage = config.storage
@@ -61,7 +64,7 @@ export default class Moltin {
 
   // Expose `Cart` class on Moltin class
   Cart(id = this.cartId) {
-    return new CartEndpoint(this.request, id)
+    return id ? new CartEndpoint(this.request, id) : null
   }
 
   // Expose `authenticate` function on the Moltin class

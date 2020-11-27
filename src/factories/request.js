@@ -1,4 +1,10 @@
-import { buildRequestBody, parseJSON, resetProps } from '../utils/helpers'
+import {
+  buildRequestBody,
+  parseJSON,
+  resetProps,
+  tokenInvalid,
+  getCredentials
+} from '../utils/helpers'
 
 const createAuthRequest = config => {
   if (!config.client_id) {
@@ -76,7 +82,7 @@ class RequestFactory {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      const credentials = JSON.parse(storage.get('moltinCredentials'))
+      const credentials = getCredentials(storage)
       const req = ({ access_token }) => {
         const headers = {
           Authorization: `Bearer: ${access_token}`,
@@ -123,14 +129,9 @@ class RequestFactory {
           .catch(error => reject(error))
       }
 
-      if (
-        !credentials ||
-        !credentials.access_token ||
-        credentials.client_id !== config.client_id ||
-        Math.floor(Date.now() / 1000) >= credentials.expires
-      ) {
+      if (tokenInvalid(config) && config.reauth) {
         return this.authenticate()
-          .then(() => req(JSON.parse(storage.get('moltinCredentials'))))
+          .then(() => req(getCredentials(storage)))
           .catch(error => reject(error))
       }
       return req(credentials)

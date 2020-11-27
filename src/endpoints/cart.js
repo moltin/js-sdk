@@ -169,7 +169,7 @@ class CartEndpoint extends BaseExtend {
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
-      'put',
+      'PUT',
       body
     )
   }
