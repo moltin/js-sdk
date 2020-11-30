@@ -64,7 +64,7 @@ export default class Moltin {
 
   // Expose `Cart` class on Moltin class
   Cart(id = this.cartId) {
-    return id ? new CartEndpoint(this.request, id) : null
+    return !this.config.disableCart ? new CartEndpoint(this.request, id) : null
   }
 
   // Expose `authenticate` function on the Moltin class
