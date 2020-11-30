@@ -7,7 +7,7 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
  */
 import { Attributes, Identifiable, Resource, ResourceList } from './core'
-import { WithRequired } from './util';
+import { WithRequired } from './util'
 
 /**
  * Core Address Base Interface
@@ -15,27 +15,34 @@ import { WithRequired } from './util';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/addresss/index.html
  */
 export interface AddressBase {
-  type: 'address';
-  first_name: string;
-  last_name: string;
-  name: string;
+  type: 'address'
+  first_name: string
+  last_name: string
+  name: string
   phone_number: string
-  instructions: string;
-  company_name: string;
-  line_1: string;
-  line_2: string;
-  city: string;
-  county: string;
-  postcode: string;
-  country: string;
+  instructions: string
+  company_name: string
+  line_1: string
+  line_2: string
+  city: string
+  county: string
+  postcode: string
+  country: string
 }
 
 export interface Address extends Identifiable, AddressBase {}
 
-interface AddressEdit extends WithRequired<
-  Address,
-  'type' | 'first_name' | 'last_name' | 'line_1' | 'postcode' | 'county' | 'country'
-> {}
+interface AddressEdit
+  extends WithRequired<
+      Address,
+      | 'type'
+      | 'first_name'
+      | 'last_name'
+      | 'line_1'
+      | 'postcode'
+      | 'county'
+      | 'country'
+    > {}
 
 /**
  * Address Endpoints
@@ -47,17 +54,37 @@ interface AddressEdit extends WithRequired<
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/delete-an-address.html
  */
 export interface AddressesEndpoint {
-  endpoint: 'addresses';
+  endpoint: 'addresses'
 
-  Get(options: { customer: string, address: string, token?: string }): Promise<Resource<Address>>;
+  Get(options: {
+    customer: string
+    address: string
+    token?: string
+  }): Promise<Resource<Address>>
 
-  All(options: { customer: string, token?: string }): Promise<ResourceList<Address>>;
+  All(options: {
+    customer: string
+    token?: string
+  }): Promise<ResourceList<Address>>
 
-  Create(options: { customer: string, body: AddressEdit, token?: string }): Promise<Resource<Address>>;
+  Create(options: {
+    customer: string
+    body: AddressEdit
+    token?: string
+  }): Promise<Resource<Address>>
 
-  Update(options: { customer: string, address: string, body: Identifiable & AddressEdit, token?: string }): Promise<Resource<Address>>;
+  Update(options: {
+    customer: string
+    address: string
+    body: Identifiable & AddressEdit
+    token?: string
+  }): Promise<Resource<Address>>
 
-  Delete(options: { customer: string, address: string, token?: string }): Promise<{}>;
+  Delete(options: {
+    customer: string
+    address: string
+    token?: string
+  }): Promise<{}>
 
-  Attributes(token?: string): Promise<Attributes>;
+  Attributes(token?: string): Promise<Attributes>
 }

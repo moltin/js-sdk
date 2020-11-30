@@ -3,9 +3,15 @@
  * Description: An Order is created via the checkout endpoint within the Carts API.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
-import { Identifiable, Relationship, ResourcePage, QueryableResource, Resource } from './core'
-import { AddressBase } from './address';
-import { FormattedPrice, Price } from './price';
+import {
+  Identifiable,
+  Relationship,
+  ResourcePage,
+  QueryableResource,
+  Resource
+} from './core'
+import { AddressBase } from './address'
+import { FormattedPrice, Price } from './price'
 
 /**
  * Core Object Base Interface
@@ -13,33 +19,33 @@ import { FormattedPrice, Price } from './price';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
 export interface OrderBase {
-  type: string;
-  status: string;
-  payment: string;
-  shipping: string;
+  type: string
+  status: string
+  payment: string
+  shipping: string
   customer: {
-    name: string;
-    email: string;
-  };
-  shipping_address: AddressBase;
-  billing_address: AddressBase;
+    name: string
+    email: string
+  }
+  shipping_address: AddressBase
+  billing_address: AddressBase
 }
 
 export interface Order extends Identifiable, OrderBase {
   meta: {
     display_price: {
-      with_tax: FormattedPrice;
-      without_tax: FormattedPrice;
-    };
+      with_tax: FormattedPrice
+      without_tax: FormattedPrice
+    }
     timestamps: {
-      created_at: string;
-      updated_at: string;
-    };
-  };
+      created_at: string
+      updated_at: string
+    }
+  }
   relationships?: {
-    main_image?: Relationship<'product'>[];
-    categories?: Relationship<'customer'>;
-  };
+    main_image?: Relationship<'product'>[]
+    categories?: Relationship<'customer'>
+  }
 }
 
 /**
@@ -47,81 +53,81 @@ export interface Order extends Identifiable, OrderBase {
  */
 export interface OrderFilter {
   eq?: {
-    status?: string;
-    payment?: string;
-    shipping?: string;
+    status?: string
+    payment?: string
+    shipping?: string
     customer?: {
-      name?: string;
-      email?: string;
-    };
-    customer_id?: string;
-    shipping_name?: string;
-    shipping_postcode?: string;
-    billing_name?: string;
-    billing_postcode?: string;
-    currency?: string;
-    product_id?: string;
-    product_sku?: string;
-    created_at?: Date;
-    updated_at?: Date;
-  };
+      name?: string
+      email?: string
+    }
+    customer_id?: string
+    shipping_name?: string
+    shipping_postcode?: string
+    billing_name?: string
+    billing_postcode?: string
+    currency?: string
+    product_id?: string
+    product_sku?: string
+    created_at?: Date
+    updated_at?: Date
+  }
   like?: {
     customer?: {
-      name?: string;
-      email?: string;
-    };
-    customer_id?: string;
-    shipping_name?: string;
-    shipping_postcode?: string;
-    billing_name?: string;
-    billing_postcode?: string;
-  };
+      name?: string
+      email?: string
+    }
+    customer_id?: string
+    shipping_name?: string
+    shipping_postcode?: string
+    billing_name?: string
+    billing_postcode?: string
+  }
   ge?: {
-    with_tax?: number;
-    without_tax?: number;
-  };
+    with_tax?: number
+    without_tax?: number
+  }
   lt?: {
-    with_tax?: number;
-    without_tax?: number;
-    created_at?: Date;
-    updated_at?: Date;
-  };
+    with_tax?: number
+    without_tax?: number
+    created_at?: Date
+    updated_at?: Date
+  }
   le?: {
-    with_tax?: number;
-    without_tax?: number;
-    created_at?: Date;
-    updated_at?: Date;
-  };
+    with_tax?: number
+    without_tax?: number
+    created_at?: Date
+    updated_at?: Date
+  }
 }
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/order-items.html
  */
 export interface OrderItemBase {
-  type: string;
-  product_id: string;
-  name: string;
-  sku: string;
-  quantity: number;
-  unit_price: Price;
-  value: Price;
+  type: string
+  product_id: string
+  name: string
+  sku: string
+  quantity: number
+  unit_price: Price
+  value: Price
 }
 
 export interface OrderItem extends Identifiable, OrderItemBase {
-  links: any;
+  links: any
   meta?: {
     display_price?: {
       with_tax?: {
-        unit: FormattedPrice;
-        value: FormattedPrice;
-      };
+        unit: FormattedPrice
+        value: FormattedPrice
+      }
       without_tax?: {
-        unit: FormattedPrice;
-        value: FormattedPrice;
+        unit: FormattedPrice
+        value: FormattedPrice
       }
       tax?: {
-        unit: FormattedPrice;
-        value: FormattedPrice;
+        unit: FormattedPrice
+        value: FormattedPrice
       }
     }
     timestamps?: {
@@ -143,7 +149,7 @@ export interface ConfirmPaymentBody {
     customer: string
     idempotency_key: string
     receipt_email: string
-  };
+  }
 }
 
 export interface ConfirmPaymentResponse {
@@ -159,7 +165,7 @@ export interface ConfirmPaymentResponse {
     payment_intent: {
       client_secret: string
       status: string
-    },
+    }
     relationships: {
       order: {
         data: {
@@ -167,13 +173,13 @@ export interface ConfirmPaymentResponse {
           id: string
         }
       }
-    },
+    }
     meta: {
       display_price: {
-        amount: number,
+        amount: number
         currency: string
         formatted: string
-      },
+      }
       timestamps: {
         created_at: string
         updated_at: string
@@ -192,20 +198,16 @@ type OrderInclude = 'product' | 'customer' | 'items'
  * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/get-all-orders.html
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
  */
-export interface OrdersEndpoint extends QueryableResource<
-  Order,
-  OrderFilter,
-  OrderSort,
-  OrderInclude
-> {
-  endpoint: 'orders';
+export interface OrdersEndpoint
+  extends QueryableResource<Order, OrderFilter, OrderSort, OrderInclude> {
+  endpoint: 'orders'
 
   /**
    * Get Order Items
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/order-items.html
    * @param id - The ID of the order
    */
-  Items(id: string): Promise<ResourcePage<OrderItem>>;
+  Items(id: string): Promise<ResourcePage<OrderItem>>
 
   /**
    * Confirm payment intent
@@ -218,7 +220,7 @@ export interface OrdersEndpoint extends QueryableResource<
     orderId: string,
     transactionId: string,
     body: ConfirmPaymentBody
-  ): Promise<ConfirmPaymentResponse>;
+  ): Promise<ConfirmPaymentResponse>
 
   /**
    * Payment
@@ -226,10 +228,7 @@ export interface OrdersEndpoint extends QueryableResource<
    * @param id - The UUID of the order that you want to authorize payment for.
    * @param body - The body of the order
    */
-  Payment(
-    id: string,
-    body: ConfirmPaymentBody
-  ): Promise<ConfirmPaymentResponse>;
+  Payment(id: string, body: ConfirmPaymentBody): Promise<ConfirmPaymentResponse>
 
   /**
    * Update an Order
@@ -239,8 +238,5 @@ export interface OrdersEndpoint extends QueryableResource<
    * @param body
    * @constructor
    */
-  Update(
-    id: string,
-    body: Partial<OrderBase>
-  ): Promise<Resource<Order>>;
+  Update(id: string, body: Partial<OrderBase>): Promise<Resource<Order>>
 }

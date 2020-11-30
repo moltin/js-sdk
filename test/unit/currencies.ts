@@ -51,7 +51,7 @@ describe('Moltin currencies', () => {
       decimal_point: '.',
       thousand_separator: ',',
       decimal_places: 2
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -60,20 +60,22 @@ describe('Moltin currencies', () => {
       }
     })
       .post('/currencies')
-      .reply(201, { data: { ...newCurrency, id: 'cur1' } });
+      .reply(201, { data: { ...newCurrency, id: 'cur1' } })
 
-    return Moltin.Currencies.Create(newCurrency)
-    .then(response => {
-      assert.equal(response.data.id, 'cur1');
-      assert.equal(response.data.type, newCurrency.type);
-      assert.equal(response.data.default, newCurrency.default);
-      assert.equal(response.data.code, newCurrency.code);
-      assert.equal(response.data.exchange_rate, newCurrency.exchange_rate);
-      assert.equal(response.data.enabled, newCurrency.enabled);
-      assert.equal(response.data.format, newCurrency.format);
-      assert.equal(response.data.decimal_point, newCurrency.decimal_point);
-      assert.equal(response.data.thousand_separator, newCurrency.thousand_separator);
-      assert.equal(response.data.decimal_places, newCurrency.decimal_places);
+    return Moltin.Currencies.Create(newCurrency).then(response => {
+      assert.equal(response.data.id, 'cur1')
+      assert.equal(response.data.type, newCurrency.type)
+      assert.equal(response.data.default, newCurrency.default)
+      assert.equal(response.data.code, newCurrency.code)
+      assert.equal(response.data.exchange_rate, newCurrency.exchange_rate)
+      assert.equal(response.data.enabled, newCurrency.enabled)
+      assert.equal(response.data.format, newCurrency.format)
+      assert.equal(response.data.decimal_point, newCurrency.decimal_point)
+      assert.equal(
+        response.data.thousand_separator,
+        newCurrency.thousand_separator
+      )
+      assert.equal(response.data.decimal_places, newCurrency.decimal_places)
     })
   })
 

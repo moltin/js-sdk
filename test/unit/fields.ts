@@ -19,7 +19,7 @@ describe('Moltin flow fields', () => {
       enabled: true,
       order: 0,
       omit_null: false
-    };
+    }
 
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -33,19 +33,18 @@ describe('Moltin flow fields', () => {
       .post('/fields')
       .reply(201, { data: { ...newField, id: 'field1' } })
 
-    return Moltin.Fields.Create(newField)
-    .then(response => {
-      assert.equal(response.data.id, 'field1');
-      assert.equal(response.data.type, newField.type);
-      assert.equal(response.data.name, newField.name);
-      assert.equal(response.data.slug, newField.slug);
-      assert.equal(response.data.field_type, newField.field_type);
-      assert.equal(response.data.description, newField.description);
-      assert.equal(response.data.required, newField.required);
-      assert.equal(response.data.default, newField.default);
-      assert.equal(response.data.enabled, newField.enabled);
-      assert.equal(response.data.order, newField.order);
-      assert.equal(response.data.omit_null, newField.omit_null);
+    return Moltin.Fields.Create(newField).then(response => {
+      assert.equal(response.data.id, 'field1')
+      assert.equal(response.data.type, newField.type)
+      assert.equal(response.data.name, newField.name)
+      assert.equal(response.data.slug, newField.slug)
+      assert.equal(response.data.field_type, newField.field_type)
+      assert.equal(response.data.description, newField.description)
+      assert.equal(response.data.required, newField.required)
+      assert.equal(response.data.default, newField.default)
+      assert.equal(response.data.enabled, newField.enabled)
+      assert.equal(response.data.order, newField.order)
+      assert.equal(response.data.omit_null, newField.omit_null)
     })
   })
 

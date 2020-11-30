@@ -4,7 +4,7 @@
  * in the category Shoes, the individual product might also be in the brand Nike.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/index.html
  */
-import { Identifiable, CrudQueryableResource, RelationshipToMany } from './core';
+import { Identifiable, CrudQueryableResource, RelationshipToMany } from './core'
 
 /**
  * Core Brand Base Interface
@@ -12,23 +12,23 @@ import { Identifiable, CrudQueryableResource, RelationshipToMany } from './core'
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/index.html
  */
 export interface BrandBase {
-  type: 'brand';
-  name: string;
-  slug: string;
-  description: string;
-  status: 'live' | 'draft';
+  type: 'brand'
+  name: string
+  slug: string
+  description: string
+  status: 'live' | 'draft'
 }
 
 export interface Brand extends Identifiable, BrandBase {
   meta: {
     timestamps: {
-      created_at: string;
-      updated_at: string;
-    };
-  };
+      created_at: string
+      updated_at: string
+    }
+  }
   relationships: {
-    products: RelationshipToMany<'product'>;
-  };
+    products: RelationshipToMany<'product'>
+  }
 }
 
 /**
@@ -36,22 +36,28 @@ export interface Brand extends Identifiable, BrandBase {
  */
 export interface BrandFilter {
   eq?: {
-    name?: string;
-    slug?: string;
-    status?: string;
-  };
+    name?: string
+    slug?: string
+    status?: string
+  }
   like?: {
-    name?: string;
-    slug?: string;
-  };
+    name?: string
+    slug?: string
+  }
 }
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/basics/sorting.html
  */
-type BrandSort = 'created_at' | 'description' | 'name' | 'slug' | 'status' | 'updated_at';
+type BrandSort =
+  | 'created_at'
+  | 'description'
+  | 'name'
+  | 'slug'
+  | 'status'
+  | 'updated_at'
 
-type BrandInclude = 'products';
+type BrandInclude = 'products'
 
 /**
  * Brand Endpoints
@@ -62,13 +68,14 @@ type BrandInclude = 'products';
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/update-a-brand.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/delete-a-brand.html
  */
-export interface BrandEndpoint extends CrudQueryableResource<
-  Brand,
-  BrandBase,
-  Identifiable & Partial<BrandBase>,
-  BrandFilter,
-  BrandSort,
-  BrandInclude
-> {
+export interface BrandEndpoint
+  extends CrudQueryableResource<
+      Brand,
+      BrandBase,
+      Identifiable & Partial<BrandBase>,
+      BrandFilter,
+      BrandSort,
+      BrandInclude
+    > {
   endpoint: 'brand'
 }

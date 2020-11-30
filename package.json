@@ -39,6 +39,7 @@
     "chai": "4.2.0",
     "commitizen": "2.10.1",
     "cross-fetch": "3.0.2",
+    "rewire": "^5.0.0",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.1.0",
@@ -70,8 +71,7 @@
     "es6-promise": "^4.0.5",
     "fetch-everywhere": "^1.0.5",
     "inflected": "^2.0.1",
-    "node-localstorage": "^1.3.0",
-    "rewire": "^5.0.0"
+    "node-localstorage": "^1.3.0"    
   },
   "config": {
     "commitizen": {
@@ -86,7 +86,7 @@
     "access": "public"
   },
   "lint-staged": {
-    "{src,test}/**/*.{js,json,md}": [
+    "{src,test}/**/*.{js,ts,json,md}": [
       "eslint --fix src",
       "prettier --write",
       "git add"

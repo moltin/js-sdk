@@ -1,12 +1,11 @@
-
 export interface Price {
-  amount: number;
-  currency: string;
-  includes_tax: boolean;
+  amount: number
+  currency: string
+  includes_tax: boolean
 }
 
 export interface FormattedPrice {
-  amount: number;
-  currency: string;
-  formatted: string;
+  amount: number
+  currency: string
+  formatted: string
 }

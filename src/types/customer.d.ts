@@ -8,8 +8,7 @@
  * interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/index.html
  */
-import { Identifiable, CrudQueryableResource, Resource } from './core';
-
+import { Identifiable, CrudQueryableResource, Resource } from './core'
 
 /**
  * Core Customer Base Interface
@@ -17,21 +16,20 @@ import { Identifiable, CrudQueryableResource, Resource } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/index.html
  */
 export interface CustomerBase {
-  type: string;
-  name: string;
-  email: string;
-  password: string;
+  type: string
+  name: string
+  email: string
+  password: string
 }
 
-export interface Customer extends Identifiable, CustomerBase {
-}
+export interface Customer extends Identifiable, CustomerBase {}
 
 export interface CustomerToken {
-  type: string;
-  id: string;
-  customer_id: string;
-  token: string;
-  expires: number;
+  type: string
+  id: string
+  customer_id: string
+  token: string
+  expires: number
 }
 
 /**
@@ -39,11 +37,17 @@ export interface CustomerToken {
  */
 export interface CustomerFilter {
   eq?: {
-    email?: string;
+    email?: string
   }
 }
 
-type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections' | 'variations';
+type CustomerInclude =
+  | 'main_images'
+  | 'files'
+  | 'brands'
+  | 'categories'
+  | 'collections'
+  | 'variations'
 
 /**
  * Customer Endpoints
@@ -54,15 +58,16 @@ type CustomerInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'coll
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/update-a-customer.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/delete-a-customer.html
  */
-export interface CustomersEndpoint extends CrudQueryableResource<
-  Customer,
-  CustomerBase,
-  Partial<CustomerBase>,
-  CustomerFilter,
-  never,
-  CustomerInclude
-> {
-  endpoint: 'customers';
+export interface CustomersEndpoint
+  extends CrudQueryableResource<
+      Customer,
+      CustomerBase,
+      Partial<CustomerBase>,
+      CustomerFilter,
+      never,
+      CustomerInclude
+    > {
+  endpoint: 'customers'
 
   /**
    * Customer Tokens
@@ -72,5 +77,5 @@ export interface CustomersEndpoint extends CrudQueryableResource<
    * @param email [string] email for customer
    * @param password [string] password for customer
    */
-  Token(email: string, password: string): Promise<Resource<CustomerToken>>;
+  Token(email: string, password: string): Promise<Resource<CustomerToken>>
 }

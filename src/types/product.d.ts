@@ -3,8 +3,13 @@
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
  */
-import { Identifiable, Relationship, RelationshipToMany, CrudQueryableResource } from './core';
-import { Price, FormattedPrice } from './price';
+import {
+  Identifiable,
+  Relationship,
+  RelationshipToMany,
+  CrudQueryableResource
+} from './core'
+import { Price, FormattedPrice } from './price'
 
 /**
  * Core Product Base Interface
@@ -12,40 +17,40 @@ import { Price, FormattedPrice } from './price';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/index.html
  */
 export interface ProductBase {
-  type: string;
-  name: string;
-  slug: string;
-  sku: string;
-  manage_stock: boolean;
-  description: string;
-  price: Price[];
-  status?: 'draft' | 'live';
-  commodity_type: 'physical' | 'digital';
+  type: string
+  name: string
+  slug: string
+  sku: string
+  manage_stock: boolean
+  description: string
+  price: Price[]
+  status?: 'draft' | 'live'
+  commodity_type: 'physical' | 'digital'
 }
 
 export interface Product extends Identifiable, ProductBase {
   meta: {
     timestamps: {
-      created_at: string;
-      updated_at: string;
-    };
+      created_at: string
+      updated_at: string
+    }
     stock: {
-      level: number;
-      availability: 'in-stock' | 'out-stock';
-    };
+      level: number
+      availability: 'in-stock' | 'out-stock'
+    }
     display_price: {
-      with_tax: FormattedPrice;
-      without_tax: FormattedPrice;
-    };
-    variations: any;
-  };
+      with_tax: FormattedPrice
+      without_tax: FormattedPrice
+    }
+    variations: any
+  }
   relationships: {
-    main_image?: Relationship<'main_image'>;
-    files?: RelationshipToMany<'file'>;
-    categories?: Relationship<'category'>[];
-    brands?: Relationship<'brand'>[];
-    parent?: Relationship<'product'>;
-  };
+    main_image?: Relationship<'main_image'>
+    files?: RelationshipToMany<'file'>
+    categories?: Relationship<'category'>[]
+    brands?: Relationship<'brand'>[]
+    parent?: Relationship<'product'>
+  }
 }
 
 /**
@@ -53,35 +58,35 @@ export interface Product extends Identifiable, ProductBase {
  */
 export interface ProductFilter {
   eq?: {
-    name?: string;
-    slug?: string;
-    sku?: string;
-    status?: string;
-    commodity_type?: string;
-    manage_stock?: string;
+    name?: string
+    slug?: string
+    sku?: string
+    status?: string
+    commodity_type?: string
+    manage_stock?: string
     brand?: {
-      id?: string;
-    };
+      id?: string
+    }
     category?: {
-      id?: string;
-    };
+      id?: string
+    }
     collection?: {
-      id?: string;
-    };
-  };
+      id?: string
+    }
+  }
   lt?: {
-    stock?: number;
-  };
+    stock?: number
+  }
   gt?: {
-    stock?: number;
-  };
+    stock?: number
+  }
   like?: {
-    name?: string;
-    slug?: string;
-    sku?: string;
-    status?: string;
-    description?: string;
-  };
+    name?: string
+    slug?: string
+    sku?: string
+    status?: string
+    description?: string
+  }
 }
 
 type ProductSort =
@@ -104,7 +109,13 @@ type ProductSort =
   | 'updated_at'
   | '-updated_at'
 
-type ProductInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'collections' | 'variations'
+type ProductInclude =
+  | 'main_images'
+  | 'files'
+  | 'brands'
+  | 'categories'
+  | 'collections'
+  | 'variations'
 
 /**
  * Product Endpoints
@@ -113,8 +124,16 @@ type ProductInclude = 'main_images' | 'files' | 'brands' | 'categories' | 'colle
  * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/get-all-products.html
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/update-a-product.html
  */
-export interface ProductsEndpoint extends CrudQueryableResource<Product, ProductBase, Partial<ProductBase>, ProductFilter, ProductSort, ProductInclude> {
-  endpoint: 'products';
+export interface ProductsEndpoint
+  extends CrudQueryableResource<
+      Product,
+      ProductBase,
+      Partial<ProductBase>,
+      ProductFilter,
+      ProductSort,
+      ProductInclude
+    > {
+  endpoint: 'products'
 
   /**
    * Create Relationships
@@ -135,7 +154,7 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
     id: string,
     type: string,
     resources: string | string[]
-  ): Promise<T>;
+  ): Promise<T>
 
   /**
    * Delete Relationship
@@ -150,7 +169,7 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
     id: string,
     type: string,
     resources: string | string[]
-  ): Promise<T>;
+  ): Promise<T>
 
   /**
    * Update Relationship
@@ -165,7 +184,7 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
     id: string,
     type: string,
     resources?: string | string[]
-  ): Promise<T>;
+  ): Promise<T>
 
   /**
    * Update Relationship
@@ -174,7 +193,5 @@ export interface ProductsEndpoint extends CrudQueryableResource<Product, Product
    * @param id productId
    * @constructor
    */
-  BuildChildProducts<T = any>(
-    id: string
-  ): Promise<T>;
+  BuildChildProducts<T = any>(id: string): Promise<T>
 }

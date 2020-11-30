@@ -4,7 +4,7 @@
  * This is useful when auditing product movements across your project.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html
  */
-import { Identifiable, ResourceList } from './core';
+import { Identifiable, ResourceList } from './core'
 
 export interface TransactionsResponse {
   data: {
@@ -30,7 +30,7 @@ export interface TransactionsResponse {
     }
     meta: {
       display_price: {
-        amount: number,
+        amount: number
         currency: string
         formatted: string
       }
@@ -40,8 +40,8 @@ export interface TransactionsResponse {
       }
       display_refunded_amount?: {
         total: {
-          amount: number,
-          currency: string,
+          amount: number
+          currency: string
           formatted: string
         }
       }
@@ -49,25 +49,23 @@ export interface TransactionsResponse {
   }
 }
 
-
 /**
  * Core Transaction Base Interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#the-transaction-object
  */
 export interface TransactionBase {
-  type: string;
-  reference: string;
-  gateway: string;
-  amount: number;
-  currency: string;
-  transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund';
-  status: 'complete' | 'failed';
-  relationships:	any;
-  timestamps:	any;
+  type: string
+  reference: string
+  gateway: string
+  amount: number
+  currency: string
+  transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
+  status: 'complete' | 'failed'
+  relationships: any
+  timestamps: any
 }
 
-export interface Transaction extends Identifiable, TransactionBase {
-}
+export interface Transaction extends Identifiable, TransactionBase {}
 
 /**
  * Transaction Endpoints

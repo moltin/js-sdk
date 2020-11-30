@@ -191,11 +191,11 @@ describe('Moltin orders', () => {
     })
   })
 
-it('should confirm a payment for an order', () => {
+  it('should confirm a payment for an order', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'
     })
-    const transactionId = "1";
+    const transactionId = '1'
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -206,7 +206,7 @@ it('should confirm a payment for an order', () => {
         data: {
           gateway: 'purchase',
           payment: 'test',
-          method: 'payment_intents',
+          method: 'payment_intents'
         }
       })
       .reply(201, {
@@ -216,7 +216,7 @@ it('should confirm a payment for an order', () => {
     return Moltin.Orders.Confirm(orders[1].id, transactionId, {
       gateway: 'purchase',
       payment: 'test',
-      method: 'payment_intents',
+      method: 'payment_intents'
     }).then(response => {
       assert.propertyVal(response, 'status', 'complete')
     })
@@ -288,6 +288,6 @@ it('should confirm a payment for an order', () => {
       .get('/orders/attributes')
       .reply(200, {})
 
-    return Moltin.Orders.Attributes("1")
+    return Moltin.Orders.Attributes('1')
   })
 })

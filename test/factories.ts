@@ -126,12 +126,12 @@ export const brandsArray = [
     description: 'Brand 4 description',
     status: 'live' as const
   }
-];
+]
 
 export const brandUpdate = {
   name: 'New Name',
   slug: 'new-name'
-};
+}
 
 export const categoriesArray = [
   {
@@ -456,8 +456,8 @@ export const addressesArray: Address[] = [
 
 export const addressUpdate = {
   last_name: 'last_name_2',
-  city: 'city_2',
-};
+  city: 'city_2'
+}
 
 export const jobsArray = [
   {
@@ -500,49 +500,49 @@ export const notFoundError = {
 
 export const storesArray: Store[] = [
   {
-    features: ["core"],
-    id: "store-1",
+    features: ['core'],
+    id: 'store-1',
     locked: false,
-    name: "name",
-    owner: "12312312",
-    store_status: "test",
+    name: 'name',
+    owner: '12312312',
+    store_status: 'test',
     stripe_customer_id: null,
     subscription_status: null,
     trial_end: null,
     trial_start: null,
     users: [],
-    uuid: "123-123-123",
+    uuid: '123-123-123'
   },
   {
-    features: ["core"],
-    id: "store-2",
+    features: ['core'],
+    id: 'store-2',
     locked: false,
-    name: "name",
-    owner: "12312312",
-    store_status: "test",
+    name: 'name',
+    owner: '12312312',
+    store_status: 'test',
     stripe_customer_id: null,
     subscription_status: null,
     trial_end: null,
     trial_start: null,
     users: [],
-    uuid: "123-123-123",
+    uuid: '123-123-123'
   }
 ]
 
 export const keysArray: Key[] = [
   {
-    client_id: "client_id-1",
-    client_secret: "client_secret-1",
-    store_id: "store_id-1",
-    store_uuid: "store_uuid-1",
-    user_id: "user_id-1"
+    client_id: 'client_id-1',
+    client_secret: 'client_secret-1',
+    store_id: 'store_id-1',
+    store_uuid: 'store_uuid-1',
+    user_id: 'user_id-1'
   },
   {
-    client_id: "client_id-2",
-    client_secret: "client_secret-2",
-    store_id: "store_id-2",
-    store_uuid: "store_uuid-2",
-    user_id: "user_id-2"
+    client_id: 'client_id-2',
+    client_secret: 'client_secret-2',
+    store_id: 'store_id-2',
+    store_uuid: 'store_uuid-2',
+    user_id: 'user_id-2'
   }
 ]
 
@@ -551,26 +551,26 @@ export const account: Account = {
   avatar: {
     small: 'link',
     large: 'link',
-    medium: 'link',
+    medium: 'link'
   },
   company: null,
   company_size: null,
   company_type: null,
-  created_at: "2020-04-06 08:16:48",
+  created_at: '2020-04-06 08:16:48',
   current_store: null,
-  email: "123@elasticpath.com",
-  id: "123",
+  email: '123@elasticpath.com',
+  id: '123',
   job_title: null,
   languages: [],
-  name: "John Dou",
+  name: 'John Dou',
   onboarded: true,
   opt_in: false,
-  organisation_id: "321",
+  organisation_id: '321',
   project_timeline: null,
   signup_intention: null,
   tutorial_modal_viewed: false,
-  updated_at: "2020-04-06 08:16:48",
-  user_role: "other"
+  updated_at: '2020-04-06 08:16:48',
+  user_role: 'other'
 }
 
 export const promotionsArray: Promotion[] = [
@@ -601,9 +601,7 @@ export const promotionsArray: Promotion[] = [
           amount: 2200
         }
       ],
-      targets: [
-        'product_one'
-      ]
+      targets: ['product_one']
     },
     start: '2012-12-12T12:12:00Z',
     end: '2023-12-12T12:12:00Z',
@@ -667,10 +665,7 @@ export const attributeResponse: Attributes = {
       type: 'enum',
       required: false,
       description: 'Attribute 3',
-      options: [
-        'AX',
-        'AL',
-      ]
+      options: ['AX', 'AL']
     }
   ],
   meta: {

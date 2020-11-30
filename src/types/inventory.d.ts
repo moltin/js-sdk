@@ -31,19 +31,14 @@ export interface InventoryBase {
   allocated: number
 }
 
-export interface Inventory extends Identifiable, InventoryBase {
-}
+export interface Inventory extends Identifiable, InventoryBase {}
 
 /**
  * Inventory Endpoints
  * TODO Need to check on actually functionality
  */
-export interface InventoryEndpoint extends QueryableResource<
-  Inventory,
-  never,
-  never,
-  never
-> {
+export interface InventoryEndpoint
+  extends QueryableResource<Inventory, never, never, never> {
   endpoint: 'inventory'
 
   /**
@@ -74,10 +69,7 @@ export interface InventoryEndpoint extends QueryableResource<
    * @param productId The ID for the product you’re performing this action on.
    * @param quantity The amount of stock affected by this transaction.
    */
-  AllocateStock(
-    productId: string,
-    quantity: number
-  ): Promise<InventoryResponse>
+  AllocateStock(productId: string, quantity: number): Promise<InventoryResponse>
 
   /**
    * Deallocate Stock

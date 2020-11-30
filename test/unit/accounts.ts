@@ -131,16 +131,17 @@ describe('Moltin accounts', () => {
         Authorization: `Bearer: ${accessToken}`
       }
     })
-      .put('/accounts/users',
-        {
-          data: {
-            job_title: 'Developer',
-          }
-        })
+      .put('/accounts/users', {
+        data: {
+          job_title: 'Developer'
+        }
+      })
       .reply(204)
 
-    return Moltin.Accounts.UpdateMe({ job_title: 'Developer' }).then(response => {
-      assert.equal(response, '{}')
-    })
+    return Moltin.Accounts.UpdateMe({ job_title: 'Developer' }).then(
+      response => {
+        assert.equal(response, '{}')
+      }
+    )
   })
 })

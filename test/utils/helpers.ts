@@ -219,7 +219,7 @@ describe('Build query params', () => {
   })
 
   it('should handle filter', () => {
-    const res = buildQueryParams({ filter: { eq: { name: 'john' }} })
+    const res = buildQueryParams({ filter: { eq: { name: 'john' } } })
 
     expect(res).to.equal('filter=eq(name,john)')
   })
@@ -239,7 +239,7 @@ describe('Build URL', () => {
   })
 
   it('should handle query params', () => {
-    const res = buildURL('/orders', { filter: { eq: { name: 'john' }} })
+    const res = buildURL('/orders', { filter: { eq: { name: 'john' } } })
 
     expect(res).to.equal('/orders?filter=eq(name,john)')
   })
@@ -259,13 +259,24 @@ describe('Build cart item data', () => {
   it('should build cart item data with quantity', () => {
     const res = buildCartItemData(1, '10', 'cart_item', { name: 'test' })
 
-    expect(res).to.deep.equal({ id: 1, quantity: 10, type: 'cart_item', name: 'test' })
+    expect(res).to.deep.equal({
+      id: 1,
+      quantity: 10,
+      type: 'cart_item',
+      name: 'test'
+    })
   })
 
   it('should build promotion item data', () => {
-    const res = buildCartItemData('promo123', 1, 'promotion_item', { name: 'test' })
+    const res = buildCartItemData('promo123', 1, 'promotion_item', {
+      name: 'test'
+    })
 
-    expect(res).to.deep.equal({ code: 'promo123', type: 'promotion_item', name: 'test' })
+    expect(res).to.deep.equal({
+      code: 'promo123',
+      type: 'promotion_item',
+      name: 'test'
+    })
   })
 })
 
@@ -273,13 +284,25 @@ describe('Build cart checkout data', () => {
   it('should return checkout data', () => {
     const res = buildCartCheckoutData('123', 'moltin office', 'moltin office')
 
-    expect(res).to.deep.equal({ customer: { id: '123' }, billing_address: 'moltin office', shipping_address: 'moltin office'})
+    expect(res).to.deep.equal({
+      customer: { id: '123' },
+      billing_address: 'moltin office',
+      shipping_address: 'moltin office'
+    })
   })
 
   it('should return checkout data', () => {
-    const res = buildCartCheckoutData({ id: 1, name: 'john' }, 'moltin office', 'moltin office')
+    const res = buildCartCheckoutData(
+      { id: 1, name: 'john' },
+      'moltin office',
+      'moltin office'
+    )
 
-    expect(res).to.deep.equal({ customer: { id: 1, name: 'john' }, billing_address: 'moltin office', shipping_address: 'moltin office'})
+    expect(res).to.deep.equal({
+      customer: { id: 1, name: 'john' },
+      billing_address: 'moltin office',
+      shipping_address: 'moltin office'
+    })
   })
 })
 
@@ -292,7 +315,7 @@ describe('Reset props', () => {
       offset: '50',
       filter: 'eq(name,test)'
     }
-    
+
     resetProps(instance)
 
     expect(instance).to.deep.equal({ id: 1 })
@@ -304,7 +327,7 @@ describe('Get credentials', () => {
     const storageMock = {
       get: () => '{ "token": "abc123" }'
     }
-    
+
     const res = getCredentials(storageMock)
 
     expect(res).to.deep.equal({ token: 'abc123' })
@@ -325,7 +348,7 @@ describe.only('Token invalid', () => {
 
   it('should return true if access token missing', () => {
     const storageMock = {
-      get: () => JSON.stringify({ token: '12345'})
+      get: () => JSON.stringify({ token: '12345' })
     }
     const config = { client_id: '12345', storage: storageMock }
 
@@ -345,10 +368,14 @@ describe.only('Token invalid', () => {
     expect(res).to.equal(true)
   })
 
-
   it('should return true if token expired', () => {
     const storageMock = {
-      get: () => JSON.stringify({ token: '12345', client_id: '54321', expires: Math.floor(Date.now() / 1000) - 1000 })
+      get: () =>
+        JSON.stringify({
+          token: '12345',
+          client_id: '54321',
+          expires: Math.floor(Date.now() / 1000) - 1000
+        })
     }
     const config = { client_id: '12345', storage: storageMock }
 
@@ -359,7 +386,12 @@ describe.only('Token invalid', () => {
 
   it('should return false if token not expired', () => {
     const storageMock = {
-      get: () => JSON.stringify({ token: '12345', client_id: '12345', expires: Math.floor(Date.now() / 1000) + 1000 })
+      get: () =>
+        JSON.stringify({
+          token: '12345',
+          client_id: '12345',
+          expires: Math.floor(Date.now() / 1000) + 1000
+        })
     }
     const config = { client_id: '12345', storage: storageMock }
 
