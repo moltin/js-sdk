@@ -19,9 +19,9 @@ export interface CheckoutCustomerObject {
 }
 
 export interface CreateCartObject {
-  id?: string;
-  name: string;
-  description?: string;
+  id?: string
+  name: string
+  description?: string
 }
 
 /**
@@ -131,14 +131,14 @@ export interface CartItemsResponse {
 }
 
 export interface CartItemObject {
-  type: string;
-  name?: string;
-  sku?: string;
-  description?: string;
-  quantity?: number;
-  price?: any;
-  id?: string;
-  code?: string;
+  type: string
+  name?: string
+  sku?: string
+  description?: string
+  quantity?: number
+  price?: any
+  id?: string
+  code?: string
 }
 
 export interface CartEndpoint {

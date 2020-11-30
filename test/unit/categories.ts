@@ -22,7 +22,7 @@ describe('Moltin categories', () => {
       }
     })
       .get('/categories')
-      .reply(200, { data: categories });
+      .reply(200, { data: categories })
 
     return Moltin.Categories.All().then(response => {
       assert.lengthOf(response.data, 4)
@@ -51,7 +51,7 @@ describe('Moltin categories', () => {
       slug: 'category-1',
       description: 'Category 1 description',
       status: 'live' as const
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -60,15 +60,14 @@ describe('Moltin categories', () => {
       }
     })
       .post('/categories')
-      .reply(201, { data: { ...newCategory, id: 'cat1' } });
+      .reply(201, { data: { ...newCategory, id: 'cat1' } })
 
-    return Moltin.Categories.Create(newCategory)
-    .then(response => {
-      assert.equal(response.data.id, 'cat1');
-      assert.equal(response.data.name, newCategory.name);
-      assert.equal(response.data.type, newCategory.type);
-      assert.equal(response.data.slug, newCategory.slug);
-      assert.equal(response.data.description, newCategory.description);
+    return Moltin.Categories.Create(newCategory).then(response => {
+      assert.equal(response.data.id, 'cat1')
+      assert.equal(response.data.name, newCategory.name)
+      assert.equal(response.data.type, newCategory.type)
+      assert.equal(response.data.slug, newCategory.slug)
+      assert.equal(response.data.description, newCategory.description)
     })
   })
 

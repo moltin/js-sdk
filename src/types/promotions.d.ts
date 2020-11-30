@@ -5,7 +5,13 @@
  * or require codes, which are then used by the end user to get a discount.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html
  */
-import { Attributes, CrudQueryableResource, Identifiable, Resource, ResourceList } from './core'
+import {
+  Attributes,
+  CrudQueryableResource,
+  Identifiable,
+  Resource,
+  ResourceList
+} from './core'
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#fixed-discount
@@ -26,7 +32,7 @@ export interface PercentDiscountSchema {
  */
 export interface XforYSchema {
   x: number
-  y:number
+  y: number
   targets: string[]
 }
 
@@ -143,14 +149,15 @@ export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/update-promotions.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/brands/delete-a-brand.html
  */
-export interface PromotionsEndpoint extends CrudQueryableResource<
-  Promotion,
-  PromotionBase,
-  Identifiable & Partial<PromotionBase>,
-  never,
-  never,
-  never
-  >  {
+export interface PromotionsEndpoint
+  extends CrudQueryableResource<
+      Promotion,
+      PromotionBase,
+      Identifiable & Partial<PromotionBase>,
+      never,
+      never,
+      never
+    > {
   endpoint: 'promotions'
 
   Attributes(): Promise<Attributes>
@@ -158,12 +165,15 @@ export interface PromotionsEndpoint extends CrudQueryableResource<
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#the-promotion-code-object
    */
-  Codes(promotionId: string):  Promise<Resource<PromotionCode[]>>
+  Codes(promotionId: string): Promise<Resource<PromotionCode[]>>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/create-promotion-codes.html
    */
-  AddCodes(promotionId: string, codes: PromotionCode[]): Promise<Resource<PromotionBase>>
+  AddCodes(
+    promotionId: string,
+    codes: PromotionCode[]
+  ): Promise<Resource<PromotionBase>>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/delete-promotion-codes.html#delete-delete-a-promotion-code
@@ -173,5 +183,8 @@ export interface PromotionsEndpoint extends CrudQueryableResource<
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/delete-promotion-codes.html#delete-delete-multiple-promotion-codes
    */
-  DeleteCodes(promotionId: string, codes: DeletePromotionCodesBodyItem[]): Promise<{}>
+  DeleteCodes(
+    promotionId: string,
+    codes: DeletePromotionCodesBodyItem[]
+  ): Promise<{}>
 }

@@ -5,7 +5,7 @@
  * DOCS:
  */
 
-import { QueryableResource, Resource } from './core';
+import { QueryableResource, Resource } from './core'
 
 /**
  * Account Endpoints
@@ -75,12 +75,8 @@ export interface Store {
   uuid: string
 }
 
-export interface AccountsEndpoint extends QueryableResource<
-  Account,
-  never,
-  never,
-  never
-  >{
+export interface AccountsEndpoint
+  extends QueryableResource<Account, never, never, never> {
   endpoint: 'accounts'
 
   Stores(): Promise<Resource<Store[]>>

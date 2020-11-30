@@ -236,11 +236,9 @@ describe('Moltin files', () => {
       })
       .reply(200, files[0])
 
-    return Moltin.Products.CreateRelationships(
-      products[0].id,
-      'main-image',
-      [files[0].id]
-    ).then(response => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'main-image', [
+      files[0].id
+    ]).then(response => {
       assert.propertyVal(response, 'id', 'file-1')
     })
   })

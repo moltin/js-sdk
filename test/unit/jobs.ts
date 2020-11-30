@@ -48,7 +48,7 @@ describe('Moltin jobs', () => {
       }
     })
       .get('/jobs/1/file')
-      .reply(200,jobs[0])
+      .reply(200, jobs[0])
 
     return Moltin.Jobs.GetFile('1').then(response => {
       assert.propertyVal(response, 'id', 'job-1')
@@ -63,7 +63,7 @@ describe('Moltin jobs', () => {
         href: 'url'
       },
       status: 'processing' as const
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -74,8 +74,7 @@ describe('Moltin jobs', () => {
       .post('/jobs', { data: newJobs })
       .reply(201, jobs[0])
 
-    return Moltin.Jobs.Create(newJobs)
-    .then(response => {
+    return Moltin.Jobs.Create(newJobs).then(response => {
       assert.propertyVal(response, 'id', 'job-1')
     })
   })

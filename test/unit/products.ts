@@ -205,14 +205,16 @@ describe('Moltin products', () => {
       sku: 'product1sku',
       manage_stock: true,
       description: 'Product 1 description',
-      price: [{
-        amount: 123,
-        currency: 'USD',
-        includes_tax: false,
-      }],
+      price: [
+        {
+          amount: 123,
+          currency: 'USD',
+          includes_tax: false
+        }
+      ],
       status: 'live' as const,
       commodity_type: 'physical' as const
-    };
+    }
 
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -227,18 +229,17 @@ describe('Moltin products', () => {
       .post('/products')
       .reply(201, { data: { ...newProduct, id: 'product1Id' } })
 
-    return Moltin.Products.Create(newProduct)
-    .then(response => {
-      assert.equal(response.data.id, 'product1Id');
-      assert.equal(response.data.type, newProduct.type);
-      assert.equal(response.data.name, newProduct.name);
-      assert.equal(response.data.slug, newProduct.slug);
-      assert.equal(response.data.sku, newProduct.sku);
-      assert.equal(response.data.manage_stock, newProduct.manage_stock);
-      assert.equal(response.data.description, newProduct.description);
-      assert.deepEqual(response.data.price, newProduct.price);
-      assert.equal(response.data.status, newProduct.status);
-      assert.equal(response.data.commodity_type, newProduct.commodity_type);
+    return Moltin.Products.Create(newProduct).then(response => {
+      assert.equal(response.data.id, 'product1Id')
+      assert.equal(response.data.type, newProduct.type)
+      assert.equal(response.data.name, newProduct.name)
+      assert.equal(response.data.slug, newProduct.slug)
+      assert.equal(response.data.sku, newProduct.sku)
+      assert.equal(response.data.manage_stock, newProduct.manage_stock)
+      assert.equal(response.data.description, newProduct.description)
+      assert.deepEqual(response.data.price, newProduct.price)
+      assert.equal(response.data.status, newProduct.status)
+      assert.equal(response.data.commodity_type, newProduct.commodity_type)
     })
   })
 
@@ -449,6 +450,6 @@ describe('Moltin products', () => {
       .get('/products/attributes')
       .reply(200, { data: products })
 
-    return Moltin.Products.Attributes("1")
+    return Moltin.Products.Attributes('1')
   })
 })

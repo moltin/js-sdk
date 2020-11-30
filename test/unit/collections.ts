@@ -62,14 +62,13 @@ describe('Moltin collections', () => {
       .post('/collections')
       .reply(201, { data: { ...newCollection, id: 'col1' } })
 
-    return Moltin.Collections.Create(newCollection)
-    .then(response => {
-      assert.equal(response.data.id, 'col1');
-      assert.equal(response.data.type, newCollection.type);
-      assert.equal(response.data.name, newCollection.name);
-      assert.equal(response.data.slug, newCollection.slug);
-      assert.equal(response.data.description, newCollection.description);
-      assert.equal(response.data.status, newCollection.status);
+    return Moltin.Collections.Create(newCollection).then(response => {
+      assert.equal(response.data.id, 'col1')
+      assert.equal(response.data.type, newCollection.type)
+      assert.equal(response.data.name, newCollection.name)
+      assert.equal(response.data.slug, newCollection.slug)
+      assert.equal(response.data.description, newCollection.description)
+      assert.equal(response.data.status, newCollection.status)
     })
   })
 

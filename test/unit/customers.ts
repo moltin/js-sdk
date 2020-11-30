@@ -83,7 +83,7 @@ describe('Moltin customers', () => {
       name: 'Max Power',
       email: 'max@power.com',
       password: 'fakepass'
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -92,15 +92,14 @@ describe('Moltin customers', () => {
       }
     })
       .post('/customers')
-      .reply(201, { data: { ...newCustomer, id: 'cus1' } });
+      .reply(201, { data: { ...newCustomer, id: 'cus1' } })
 
-    return Moltin.Customers.Create(newCustomer)
-    .then(response => {
-      assert.equal(response.data.id, 'cus1');
-      assert.equal(response.data.type, newCustomer.type);
-      assert.equal(response.data.name, newCustomer.name);
-      assert.equal(response.data.email, newCustomer.email);
-      assert.equal(response.data.password, newCustomer.password);
+    return Moltin.Customers.Create(newCustomer).then(response => {
+      assert.equal(response.data.id, 'cus1')
+      assert.equal(response.data.type, newCustomer.type)
+      assert.equal(response.data.name, newCustomer.name)
+      assert.equal(response.data.email, newCustomer.email)
+      assert.equal(response.data.password, newCustomer.password)
     })
   })
 

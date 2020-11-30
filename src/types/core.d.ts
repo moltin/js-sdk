@@ -1,94 +1,88 @@
-
 export interface Identifiable {
-  id: string;
+  id: string
 }
 
 export interface Resource<R> {
-  data: R;
+  data: R
 }
 
 export interface ResourceList<R> {
-  data: R[];
+  data: R[]
 }
 
 export interface Attribute {
-  label: string;
-  value: string;
-  type: string;
-  required: boolean;
-  options?: string[];
-  description?: string;
+  label: string
+  value: string
+  type: string
+  required: boolean
+  options?: string[]
+  description?: string
   validation?: {
-    regex: string;
-  };
+    regex: string
+  }
 }
 
 export interface AttributesMeta {
-  entity: string;
-  version: string;
+  entity: string
+  version: string
 }
 
 export interface Attributes extends ResourceList<Attribute> {
-  meta: AttributesMeta;
+  meta: AttributesMeta
 }
 
 export interface ResourcePage<R> extends ResourceList<R> {
-  links: { [key: string]: string | null };
+  links: { [key: string]: string | null }
   meta: {
     page: {
-      current: number;
-      limit: number;
-      offset: number;
-      total: number;
-    };
+      current: number
+      limit: number
+      offset: number
+      total: number
+    }
     results: {
-      total: number;
-    };
-  };
+      total: number
+    }
+  }
 }
 
 export interface Relationship<T> {
   data: {
-    id: string;
-    type: T;
-  };
+    id: string
+    type: T
+  }
 }
 
 export interface RelationshipToMany<T> {
   data: {
-    id: string;
-    type: T;
-  }[];
+    id: string
+    type: T
+  }[]
 }
 
 export interface QueryableResource<R, F, S, I> {
-  All(token?: string): Promise<ResourcePage<R>>;
+  All(token?: string): Promise<ResourcePage<R>>
 
-  Get(id: string, token?: string): Promise<Resource<R>>;
+  Get(id: string, token?: string): Promise<Resource<R>>
 
-  Filter(filter: F): QueryableResource<R, F, S, I>;
+  Filter(filter: F): QueryableResource<R, F, S, I>
 
-  Limit(value: number): QueryableResource<R, F, S, I>;
+  Limit(value: number): QueryableResource<R, F, S, I>
 
-  Offset(value: number): QueryableResource<R, F, S, I>;
+  Offset(value: number): QueryableResource<R, F, S, I>
 
-  Sort(value: S): QueryableResource<R, F, S, I>;
+  Sort(value: S): QueryableResource<R, F, S, I>
 
-  With(includes: I | I[]): QueryableResource<R, F, S, I>;
+  With(includes: I | I[]): QueryableResource<R, F, S, I>
 
-  Attributes(token?: string): Promise<Attributes>;
+  Attributes(token?: string): Promise<Attributes>
 }
 
-export interface CrudQueryableResource<R, C, U, F, S, I> extends QueryableResource<R, F, S, I> {
-  Create(
-    body: C
-  ): Promise<Resource<R>>;
+export interface CrudQueryableResource<R, C, U, F, S, I>
+  extends QueryableResource<R, F, S, I> {
+  Create(body: C): Promise<Resource<R>>
 
-  Delete(id: string): Promise<{}>;
+  Delete(id: string): Promise<{}>
 
-  Update(
-    id: string,
-    body: U,
-    token?: string
-  ): Promise<Resource<R>>;
+  Update(id: string, body: U, token?: string): Promise<Resource<R>>
 }
