@@ -48,10 +48,10 @@ export interface Cart {
       with_tax?: FormattedPrice
       without_tax?: FormattedPrice
       tax?: FormattedPrice
-      timestamps?: {
-        created_at: string
-        updated_at: string
-      }
+    }
+    timestamps?: {
+      created_at: string
+      updated_at: string
     }
   }
 }
