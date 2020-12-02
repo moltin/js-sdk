@@ -45,21 +45,9 @@ export interface Cart {
   links?: {}
   meta?: {
     display_price?: {
-      with_tax?: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      display_price?: {
-        amount: number
-        currency: string
-        formatted: string
-        tax: {
-          amount: number
-          currency: string
-          formatted: string
-        }
-      }
+      with_tax?: FormattedPrice
+      without_tax?: FormattedPrice
+      tax?: FormattedPrice
       timestamps?: {
         created_at: string
         updated_at: string
