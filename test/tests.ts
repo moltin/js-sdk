@@ -1,3 +1,4 @@
+require('./unit/authentication')
 require('./unit/config')
 
 // Classes
@@ -23,7 +24,6 @@ require('./unit/settings')
 require('./unit/accounts')
 require('./unit/promotions')
 require('./unit/variations')
-require('./unit/authentication')
 require('./unit/authentication-realm')
 require('./unit/authentication-settings')
 
