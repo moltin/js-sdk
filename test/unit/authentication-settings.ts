@@ -6,7 +6,7 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin Authentication Settings', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX',
+    client_id: 'XXX'
   })
 
   it('Get all Settings', () => {
@@ -14,8 +14,8 @@ describe('Moltin Authentication Settings', () => {
       .get('/settings/customer-authentication')
       .reply(200, {})
 
-    Moltin.AuthenticationSettings.Get().then(res => {
+    return Moltin.AuthenticationSettings.Get().then(res => {
       assert.isObject(res)
-    }).catch(err=>console.error(err))
+    })
   })
 })

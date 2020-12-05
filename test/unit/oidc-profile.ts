@@ -16,11 +16,9 @@ describe('Oidc Profiles', () => {
       .get(/\/authentication-realms\/(.*)\/oidc-profiles/)
       .reply(200, {})
 
-    Moltin.OidcProfile.All(
-      realmId
-    ).then(res => {
+    return Moltin.OidcProfile.All(realmId).then(res => {
       assert.isObject(res)
-    }).catch(err=>console.error(err))
+    })
   })
 
   it('Get a single Oidc Profile', () => {
@@ -28,12 +26,12 @@ describe('Oidc Profiles', () => {
       .get(/\/authentication-realms\/(.*)\/oidc-profiles\/(.*)/)
       .reply(200, {})
 
-    Moltin.OidcProfile.Get({
+    return Moltin.OidcProfile.Get({
       realmId,
       profileId: '4da65e78-7f9b-4248-b498-823d43120da9'
     }).then(res => {
       assert.isObject(res)
-    }).catch(err=>console.error(err))
+    })
   })
 
   it('Create a single Oidc Profile', () => {
@@ -49,11 +47,9 @@ describe('Oidc Profiles', () => {
       client_secret: 'XXXXXX'
     }
 
-    Moltin.OidcProfile.Create(realmId, body)
-    .then(res => {
+    return Moltin.OidcProfile.Create(realmId, body).then(res => {
       assert.isObject(res)
     })
-    .catch(err=>console.error(err))
   })
 
   it('Update a single Oidc Profile', () => {
@@ -72,9 +68,9 @@ describe('Oidc Profiles', () => {
 
     const profileId = 'e1b5c7fa-f2b6-48d2-b659-3d82f20968a9'
 
-    Moltin.OidcProfile.Update(realmId, profileId, body).then(res => {
+    return Moltin.OidcProfile.Update(realmId, profileId, body).then(res => {
       assert.isObject(res)
-    }).catch(err=>console.error(err))
+    })
   })
 
   it('Delete a single Oidc Profile', () => {
@@ -84,8 +80,8 @@ describe('Oidc Profiles', () => {
 
     const profileId = '7e6645ef-0084-4928-b9b4-d2fe5577f70e'
 
-    Moltin.OidcProfile.Delete(realmId, profileId).then(res => {
+    return Moltin.OidcProfile.Delete(realmId, profileId).then(res => {
       assert.equal(res, '{}')
-    }).catch(err=>console.error(err))
+    })
   })
 })

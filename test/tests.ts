@@ -1,5 +1,4 @@
 require('./unit/config')
-require('./unit/authentication')
 
 // Classes
 require('./unit/addresses')
@@ -24,6 +23,9 @@ require('./unit/settings')
 require('./unit/accounts')
 require('./unit/promotions')
 require('./unit/variations')
+require('./unit/authentication')
+require('./unit/authentication-realm')
+require('./unit/authentication-settings')
 
 // Utilities
 require('./utils/helpers')
