@@ -4,7 +4,7 @@
  * would be exporting all orders from your store.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/index.html
  */
-import { Identifiable, Resource, ResourcePage } from './core';
+import { Identifiable, Resource, ResourcePage } from './core'
 
 /**
  * Core Job Base Interface
@@ -12,19 +12,19 @@ import { Identifiable, Resource, ResourcePage } from './core';
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
  */
 export interface JobBase {
-  type: string;
-  job_type: string;
+  type: string
+  job_type: string
   link: {
-    href: string;
-  };
-  status: 'pending' | 'processing' | 'complete' | 'failed';
+    href: string
+  }
+  status: 'pending' | 'processing' | 'complete' | 'failed'
 }
 
 export interface Job extends Identifiable, JobBase {
   timestamps: {
-    created_at: string;
-    updated_at: string;
-  };
+    created_at: string
+    updated_at: string
+  }
 }
 
 /**
@@ -32,7 +32,7 @@ export interface Job extends Identifiable, JobBase {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
  */
 export interface JobEndpoint {
-  endpoint: 'job';
+  endpoint: 'job'
 
   /**
    * Title: Create
@@ -41,19 +41,19 @@ export interface JobEndpoint {
    * @param body
    * @constructor
    */
-  Create(
-    body: JobBase
-  ): Promise<Resource<JobBase>>;
+  Create(body: JobBase): Promise<Resource<JobBase>>
 
   /**
    * Title: Get All
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/get-all-jobs.html
    */
-  All(): Promise<ResourcePage<Job>>;
+  All(): Promise<ResourcePage<Job>>
 
   /**
    * Title: Get
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/get-a-job.html
    */
-  Get(id: string): Promise<Job>;
+  Get(id: string): Promise<Job>
+
+  GetFile(id: string): Promise<Job>
 }

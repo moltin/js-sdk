@@ -236,11 +236,9 @@ describe('Moltin files', () => {
       })
       .reply(200, files[0])
 
-    return Moltin.Products.CreateRelationships(
-      products[0].id,
-      'main-image',
-      [files[0].id]
-    ).then(response => {
+    return Moltin.Products.CreateRelationships(products[0].id, 'main-image', [
+      files[0].id
+    ]).then(response => {
       assert.propertyVal(response, 'id', 'file-1')
     })
   })
@@ -305,6 +303,25 @@ describe('Moltin files', () => {
 
     return Moltin.Files.Delete(files[0].id).then(response => {
       assert.equal(response, '{}')
+    })
+  })
+
+  it('should create a new file', () => {
+    const newFile = {
+      type: 'file',
+      file_name: 'File 5'
+    }
+
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/files')
+      .reply(201, { data: { ...newFile, id: 'file-5' } })
+
+    return Moltin.Files.Create(newFile).then(response => {
+      assert.equal(response.data.id, 'file-5')
     })
   })
 })

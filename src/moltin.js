@@ -23,16 +23,22 @@ import TransactionsEndpoint from './endpoints/transactions'
 import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
 import MemoryStorageFactory from './factories/memory-storage'
+import AccountsEndpoint from './endpoints/accounts'
+import PromotionsEndpoint from './endpoints/promotions'
+import VariationsEndpoint from './endpoints/variations'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 
-import { cartIdentifier } from './utils/helpers'
+import { cartIdentifier, tokenInvalid } from './utils/helpers'
 
 export default class Moltin {
   constructor(config) {
     this.config = config
-    this.cartId = cartIdentifier(config.storage)
+
+    if (!config.disableCart) this.cartId = cartIdentifier(config.storage)
+
+    this.tokenInvalid = () => tokenInvalid(config)
 
     this.request = new RequestFactory(config)
     this.storage = config.storage
@@ -54,6 +60,9 @@ export default class Moltin {
     this.Addresses = new AddressesEndpoint(config)
     this.Transactions = new TransactionsEndpoint(config)
     this.Settings = new SettingsEndpoint(config)
+    this.Accounts = new AccountsEndpoint(config)
+    this.Promotions = new PromotionsEndpoint(config)
+    this.Variations = new VariationsEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
@@ -61,7 +70,7 @@ export default class Moltin {
 
   // Expose `Cart` class on Moltin class
   Cart(id = this.cartId) {
-    return new CartEndpoint(this.request, id)
+    return !this.config.disableCart ? new CartEndpoint(this.request, id) : null
   }
 
   // Expose `authenticate` function on the Moltin class

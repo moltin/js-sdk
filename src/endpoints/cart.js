@@ -67,10 +67,76 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  BulkAdd(body) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'POST',
+      body
+    )
+  }
+
+  CreateCart(cartData, token) {
+    return this.request.send(`${this.endpoint}`, 'POST', cartData, token)
+  }
+
+  UpdateCart(cartData, token) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}`,
+      'PUT',
+      cartData,
+      token
+    )
+  }
+
+  GetCartsList(token) {
+    return this.request.send(`${this.endpoint}`, 'GET', undefined, token)
+  }
+
+  AddCustomerAssociation(customerId, token) {
+    const body = [
+      {
+        type: 'customer',
+        id: customerId
+      }
+    ]
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/relationships/customers`,
+      'POST',
+      body,
+      token
+    )
+  }
+
   RemoveItem(itemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
       'DELETE'
+    )
+  }
+
+  RemoveAllItems() {
+    return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'DELETE')
+  }
+
+  UpdateItem(itemId, quantity, data = {}) {
+    const body = buildCartItemData(itemId, quantity)
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}`,
+      'PUT',
+      { ...body, ...data }
+    )
+  }
+
+  UpdateItems(items) {
+    const body = items.map(({ id, quantity, type, ...rest }) =>
+      buildCartItemData(id, quantity, type, rest)
+    )
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'PUT',
+      body
     )
   }
 
@@ -96,20 +162,22 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  UpdateItemTax(itemId, taxItemId, taxData) {
+    const body = Object.assign(taxData, {
+      type: 'tax_item'
+    })
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
+      'PUT',
+      body
+    )
+  }
+
   RemoveItemTax(itemId, taxItemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}/taxes/${taxItemId}`,
       'DELETE'
-    )
-  }
-
-  UpdateItem(itemId, quantity, data = {}) {
-    const body = buildCartItemData(itemId, quantity)
-
-    return this.request.send(
-      `${this.endpoint}/${this.cartId}/items/${itemId}`,
-      'PUT',
-      { ...body, ...data }
     )
   }
 

@@ -11,16 +11,25 @@ class TransactionsEndpoint extends BaseExtend {
     return this.request.send(`orders/${order}/${this.endpoint}`, 'GET')
   }
 
+  Get({ order, transaction }, token = null) {
+    return this.request.send(
+      `orders/${order}/${this.endpoint}/${transaction}`,
+      'GET',
+      undefined,
+      token
+    )
+  }
+
   Capture({ order, transaction }) {
     return this.request.send(
-      `orders/${order}/transactions/${transaction}/capture`,
+      `orders/${order}/${this.endpoint}/${transaction}/capture`,
       'POST'
     )
   }
 
   Refund({ order, transaction }) {
     return this.request.send(
-      `orders/${order}/transactions/${transaction}/refund`,
+      `orders/${order}/${this.endpoint}/${transaction}/refund`,
       'POST'
     )
   }

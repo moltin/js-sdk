@@ -15,6 +15,14 @@ class OrdersEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', body)
   }
 
+  Confirm(orderId, transactionId, body) {
+    return this.request.send(
+      `${this.endpoint}/${orderId}/transactions/${transactionId}/confirm`,
+      'POST',
+      body
+    )
+  }
+
   Transactions(id) {
     /* eslint-disable no-console */
     console.warn(

@@ -1,19 +1,52 @@
-import { buildRequestBody, parseJSON, resetProps } from '../utils/helpers'
+import {
+  buildRequestBody,
+  parseJSON,
+  resetProps,
+  tokenInvalid,
+  getCredentials
+} from '../utils/helpers'
 
-class Credentials {
-  constructor(client_id, access_token, expires) {
-    this.client_id = client_id
-    this.access_token = access_token
-    this.expires = expires
+const createAuthRequest = config => {
+  if (!config.client_id) {
+    throw new Error('You must have a client_id set')
   }
 
-  toObject() {
-    return {
-      client_id: this.client_id,
-      access_token: this.access_token,
-      expires: this.expires
-    }
+  if (!config.host) {
+    throw new Error('You have not specified an API host')
   }
+
+  const body = {
+    grant_type: config.client_secret ? 'client_credentials' : 'implicit',
+    client_id: config.client_id
+  }
+
+  if (config.client_secret) {
+    body.client_secret = config.client_secret
+  }
+
+  return new Promise((resolve, reject) => {
+    config.auth.fetch
+      .bind()(`${config.protocol}://${config.host}/${config.auth.uri}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
+          'X-MOLTIN-SDK-VERSION': config.sdk.version
+        },
+        body: Object.keys(body)
+          .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
+          .join('&')
+      })
+      .then(parseJSON)
+      .then(response => {
+        if (response.ok) {
+          resolve(response.json)
+        }
+
+        reject(response.json)
+      })
+      .catch(error => reject(error))
+  })
 }
 
 class RequestFactory {
@@ -25,54 +58,19 @@ class RequestFactory {
   authenticate() {
     const { config, storage } = this
 
-    if (!config.client_id) {
-      throw new Error('You must have a client_id set')
-    }
-
-    if (!config.host) {
-      throw new Error('You have not specified an API host')
-    }
-
-    const body = {
-      grant_type: config.client_secret ? 'client_credentials' : 'implicit',
-      client_id: config.client_id
-    }
-
-    if (config.client_secret) {
-      body.client_secret = config.client_secret
-    }
-
-    const promise = new Promise((resolve, reject) => {
-      config.auth.fetch
-        .bind()(`${config.protocol}://${config.host}/${config.auth.uri}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-            'X-MOLTIN-SDK-VERSION': config.sdk.version
-          },
-          body: Object.keys(body)
-            .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(body[k])}`)
-            .join('&')
-        })
-        .then(parseJSON)
-        .then(response => {
-          if (response.ok) {
-            resolve(response.json)
-          }
-
-          reject(response.json)
-        })
-        .catch(error => reject(error))
-    })
+    const promise = config.custom_authenticator
+      ? config.custom_authenticator()
+      : createAuthRequest(config)
 
     promise
-      .then(response => {
-        const credentials = new Credentials(
-          config.client_id,
-          response.access_token,
-          response.expires
-        )
+      .then(({ access_token, refresh_token, expires }) => {
+        const credentials = {
+          client_id: config.client_id,
+          access_token,
+          expires,
+          ...(refresh_token && { refresh_token })
+        }
+
         storage.set('moltinCredentials', JSON.stringify(credentials))
       })
       .catch(() => {})
@@ -84,7 +82,7 @@ class RequestFactory {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      const credentials = JSON.parse(storage.get('moltinCredentials'))
+      const credentials = getCredentials(storage)
 
       const req = cred => {
         const access_token = cred ? cred.access_token : null
@@ -119,7 +117,13 @@ class RequestFactory {
           headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
 
-        fetch(`${config.protocol}://${config.host}/${config.version}/${uri}`, {
+        if (config.headers) {
+          Object.assign(headers, config.headers)
+        }
+
+        const version = (instance && instance.version) || config.version
+
+        fetch(`${config.protocol}://${config.host}/${version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
           body: buildRequestBody(body)
@@ -134,15 +138,9 @@ class RequestFactory {
           .catch(error => reject(error))
       }
 
-      if (
-        (!credentials ||
-          !credentials.access_token ||
-          credentials.client_id !== config.client_id ||
-          Math.floor(Date.now() / 1000) >= credentials.expires) &&
-        !config.store_id
-      ) {
+      if (tokenInvalid(config) && config.reauth && !config.store_id) {
         return this.authenticate()
-          .then(() => req(JSON.parse(storage.get('moltinCredentials'))))
+          .then(() => req(getCredentials(storage)))
           .catch(error => reject(error))
       }
       return req(credentials)

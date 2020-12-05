@@ -1,4 +1,35 @@
-import { Address, Brand, BrandBase } from "../src/moltin"
+import {
+  Address,
+  Brand,
+  BrandBase,
+  KeysItemResponse as Key,
+  Store,
+  Account,
+  CustomAuthenticatorResponseBody,
+  PromotionBase,
+  FixedDiscountSchema,
+  PercentDiscountSchema,
+  XforYSchema,
+  XforAmountSchema,
+  BundleDiscountSchema,
+  ItemFixedDiscountSchema,
+  ItemPercentDiscountSchema,
+  CurrencyAmount,
+  Promotion,
+  Attributes,
+  PromotionCode,
+  Variation,
+  ModifierResponse,
+  OptionResponse
+} from '../src/moltin'
+
+export const auth = (accessToken): Promise<CustomAuthenticatorResponseBody> =>
+  new Promise(resolve =>
+    resolve({
+      expires: 99999999999,
+      access_token: accessToken
+    })
+  )
 
 export const integrationsArray = [
   {
@@ -95,12 +126,12 @@ export const brandsArray = [
     description: 'Brand 4 description',
     status: 'live' as const
   }
-];
+]
 
 export const brandUpdate = {
   name: 'New Name',
   slug: 'new-name'
-};
+}
 
 export const categoriesArray = [
   {
@@ -425,8 +456,8 @@ export const addressesArray: Address[] = [
 
 export const addressUpdate = {
   last_name: 'last_name_2',
-  city: 'city_2',
-};
+  city: 'city_2'
+}
 
 export const jobsArray = [
   {
@@ -466,3 +497,417 @@ export const notFoundError = {
     }
   ]
 }
+
+export const storesArray: Store[] = [
+  {
+    features: ['core'],
+    id: 'store-1',
+    locked: false,
+    name: 'name',
+    owner: '12312312',
+    store_status: 'test',
+    stripe_customer_id: null,
+    subscription_status: null,
+    trial_end: null,
+    trial_start: null,
+    users: [],
+    uuid: '123-123-123'
+  },
+  {
+    features: ['core'],
+    id: 'store-2',
+    locked: false,
+    name: 'name',
+    owner: '12312312',
+    store_status: 'test',
+    stripe_customer_id: null,
+    subscription_status: null,
+    trial_end: null,
+    trial_start: null,
+    users: [],
+    uuid: '123-123-123'
+  }
+]
+
+export const keysArray: Key[] = [
+  {
+    client_id: 'client_id-1',
+    client_secret: 'client_secret-1',
+    store_id: 'store_id-1',
+    store_uuid: 'store_uuid-1',
+    user_id: 'user_id-1'
+  },
+  {
+    client_id: 'client_id-2',
+    client_secret: 'client_secret-2',
+    store_id: 'store_id-2',
+    store_uuid: 'store_uuid-2',
+    user_id: 'user_id-2'
+  }
+]
+
+export const account: Account = {
+  application_types: [],
+  avatar: {
+    small: 'link',
+    large: 'link',
+    medium: 'link'
+  },
+  company: null,
+  company_size: null,
+  company_type: null,
+  created_at: '2020-04-06 08:16:48',
+  current_store: null,
+  email: '123@elasticpath.com',
+  id: '123',
+  job_title: null,
+  languages: [],
+  name: 'John Dou',
+  onboarded: true,
+  opt_in: false,
+  organisation_id: '321',
+  project_timeline: null,
+  signup_intention: null,
+  tutorial_modal_viewed: false,
+  updated_at: '2020-04-06 08:16:48',
+  user_role: 'other'
+}
+
+export const promotionsArray: Promotion[] = [
+  {
+    type: 'promotion',
+    id: 'promotion-1',
+    name: 'promotion-1',
+    description: 'promotion-1',
+    enabled: true,
+    promotion_type: 'x_for_amount',
+    min_cart_value: [
+      {
+        currency: 'USD',
+        amount: 1233
+      }
+    ],
+    max_discount_value: [
+      {
+        currency: 'USD',
+        amount: 2211
+      }
+    ],
+    schema: {
+      x: 6,
+      currencies: [
+        {
+          currency: 'USD',
+          amount: 2200
+        }
+      ],
+      targets: ['product_one']
+    },
+    start: '2012-12-12T12:12:00Z',
+    end: '2023-12-12T12:12:00Z',
+    meta: {
+      timestamps: {
+        created_at: '2020-10-27T11:51:53.872Z',
+        updated_at: '2020-10-27T11:51:53.872Z'
+      }
+    }
+  },
+  {
+    type: 'promotion',
+    id: 'promotion-2',
+    name: 'promotion-2',
+    description: 'promotion-2',
+    enabled: true,
+    promotion_type: 'fixed_discount',
+    schema: {
+      currencies: [
+        {
+          currency: 'USD',
+          amount: 111
+        }
+      ]
+    },
+    start: '2020-01-01T04:00:00Z',
+    end: '2020-11-01T04:00:00Z',
+    meta: {
+      timestamps: {
+        created_at: '2020-04-06T08:33:10.366Z',
+        updated_at: '2020-10-27T10:06:34.787Z'
+      }
+    }
+  }
+]
+
+export const promotionCodesArray: PromotionCode[] = [
+  { code: 'auto_c55a8d1f-ac44-4e7c-ab82-f41b77783ebb' },
+  { code: 'EZQQNO' }
+]
+
+export const attributeResponse: Attributes = {
+  data: [
+    {
+      label: 'Attribute 1',
+      value: 'attribute_1',
+      type: 'string',
+      required: false,
+      description: 'Attribute 1'
+    },
+    {
+      label: 'Attribute 2',
+      value: 'attribute_2',
+      type: 'string',
+      required: false,
+      description: 'Attribute 2'
+    },
+    {
+      label: 'Attribute 3',
+      value: 'attribute_3',
+      type: 'enum',
+      required: false,
+      description: 'Attribute 3',
+      options: ['AX', 'AL']
+    }
+  ],
+  meta: {
+    entity: 'address',
+    version: '2.0.0'
+  }
+}
+
+export const variationsArray: Variation[] = [
+  {
+    type: 'product-variation',
+    id: 'variation-1',
+    name: 'Color',
+    options: [
+      {
+        id: 'option-1',
+        name: 'Blue',
+        description: 'Blue',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'name_append',
+            value: 'Blue'
+          },
+          {
+            id: 'modifier-2',
+            type: 'sku_append',
+            value: 'blue'
+          },
+          {
+            id: 'modifier-3',
+            type: 'slug_append',
+            value: 'blue'
+          }
+        ]
+      },
+      {
+        id: 'option-2',
+        name: 'White',
+        description: 'White',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'name_append',
+            value: 'White'
+          },
+          {
+            id: 'modifier-2',
+            type: 'sku_append',
+            value: 'white'
+          },
+          {
+            id: 'modifier-3',
+            type: 'slug_append',
+            value: 'white'
+          }
+        ]
+      }
+    ],
+    relationships: {
+      options: {
+        data: [
+          {
+            type: 'option',
+            id: 'option-1'
+          },
+          {
+            type: 'option',
+            id: 'option-2'
+          }
+        ]
+      }
+    }
+  },
+  {
+    type: 'product-variation',
+    id: 'variation-2',
+    name: 'Fixture Finish',
+    options: [
+      {
+        id: 'option-1',
+        name: 'Antique Bronze',
+        description: 'Antique Bronze',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'sku_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'AB'
+            }
+          },
+          {
+            id: 'modifier-2',
+            type: 'slug_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'antique-bronze'
+            }
+          },
+          {
+            id: 'modifier-3',
+            type: 'name_append',
+            value: ' Antique Bronze'
+          }
+        ]
+      },
+      {
+        id: 'option-2',
+        name: 'Brushed Nickel',
+        description: 'Brushed Nickel',
+        modifiers: [
+          {
+            id: 'modifier-1',
+            type: 'sku_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'BN'
+            }
+          },
+          {
+            id: 'modifier-2',
+            type: 'slug_builder',
+            value: {
+              seek: 'COLOR',
+              set: 'brushed-nickel'
+            }
+          },
+          {
+            id: 'modifier-3',
+            type: 'name_append',
+            value: ' Brushed Nickel'
+          }
+        ]
+      }
+    ],
+    relationships: {
+      options: {
+        data: [
+          {
+            type: 'option',
+            id: 'option-1'
+          },
+          {
+            type: 'option',
+            id: 'option-2'
+          }
+        ]
+      }
+    }
+  }
+]
+
+export const optionsArray: OptionResponse[] = [
+  {
+    type: 'option',
+    id: 'option-1',
+    name: 'Blue',
+    description: 'Blue color',
+    relationships: {
+      modifiers: {
+        data: [
+          {
+            name_append: 'Blue'
+          },
+          {
+            sku_append: 'blue'
+          },
+          {
+            slug_append: 'blue'
+          },
+          {
+            price_increment: [
+              {
+                amount: 300,
+                currency: 'USD',
+                includes_tax: true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    type: 'option',
+    id: 'option-2',
+    name: 'White',
+    description: 'White',
+    relationships: {
+      modifiers: {
+        data: [
+          {
+            name_append: 'White'
+          },
+          {
+            sku_append: 'white'
+          },
+          {
+            slug_append: 'white'
+          },
+          {
+            price_equals: [
+              {
+                amount: 20000,
+                currency: 'USD',
+                includes_tax: true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]
+
+export const modifiersArray: ModifierResponse[] = [
+  {
+    type: 'modifier',
+    id: 'modifier-1',
+    modifier_type: 'name_append',
+    value: 'White'
+  },
+  {
+    type: 'modifier',
+    id: 'modifier-2',
+    modifier_type: 'price_equals',
+    value: [
+      {
+        amount: 20000,
+        currency: 'USD',
+        includes_tax: true
+      }
+    ]
+  },
+  {
+    type: 'modifier',
+    id: 'modifier-2',
+    modifier_type: 'sku_builder',
+    value: {
+      seek: 'color',
+      set: 'white'
+    }
+  }
+]

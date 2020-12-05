@@ -3,7 +3,8 @@ import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 import {
   flowsArray as flows,
-  flowEntriesArray as flowEntries
+  flowEntriesArray as flowEntries,
+  attributeResponse
 } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
@@ -16,7 +17,7 @@ describe('Moltin flows', () => {
       name: 'Flow 1',
       description: 'Flow 1 description',
       enabled: true
-    };
+    }
 
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -30,14 +31,13 @@ describe('Moltin flows', () => {
       .post('/flows')
       .reply(201, { data: { ...newFlow, id: 'flow1' } })
 
-    return Moltin.Flows.Create(newFlow)
-    .then(response => {
-      assert.equal(response.data.id, 'flow1');
-      assert.equal(response.data.type, newFlow.type);
-      assert.equal(response.data.slug, newFlow.slug);
-      assert.equal(response.data.name, newFlow.name);
-      assert.equal(response.data.description, newFlow.description);
-      assert.equal(response.data.enabled, newFlow.enabled);
+    return Moltin.Flows.Create(newFlow).then(response => {
+      assert.equal(response.data.id, 'flow1')
+      assert.equal(response.data.type, newFlow.type)
+      assert.equal(response.data.slug, newFlow.slug)
+      assert.equal(response.data.name, newFlow.name)
+      assert.equal(response.data.description, newFlow.description)
+      assert.equal(response.data.enabled, newFlow.enabled)
     })
   })
 
@@ -162,6 +162,25 @@ describe('Moltin flows', () => {
       .reply(200, flowEntries)
 
     return Moltin.Flows.GetEntries('flow-1').then(response => {
+      assert.lengthOf(response, 2)
+    })
+  })
+
+  it('should return fields', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/12/fields')
+      .reply(200)
+
+    return Moltin.Flows.GetFields('12').then(response => {
       assert.lengthOf(response, 2)
     })
   })
@@ -311,5 +330,142 @@ describe('Moltin flows', () => {
     return Moltin.Flows.DeleteEntry('flow-1', '1').then(response => {
       assert.equal(response, '{}')
     })
+  })
+  it('should delete flows by id', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/flows/1')
+      .reply(204)
+
+    return Moltin.Flows.Delete('1').then(response => {
+      assert.equal(response, '{}')
+    })
+  })
+
+  it('should create a flow entry relationship', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/flows/flow-1/entries/entry-1/relationships/field-1', {
+        data: {
+          type: 'brand'
+        }
+      })
+      .reply(201, {
+        type: 'brand'
+      })
+
+    return Moltin.Flows.CreateEntryRelationship(
+      'flow-1',
+      'entry-1',
+      'field-1',
+      {
+        type: 'brand'
+      }
+    ).then(response => {
+      assert.propertyVal(response, 'type', 'brand')
+    })
+  })
+
+  it('should update a flow entry relationship', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/flows/flow-1/entries/entry-1/relationships/field-1', {
+        data: {
+          type: 'new'
+        }
+      })
+      .reply(201, {
+        type: 'new'
+      })
+
+    return Moltin.Flows.UpdateEntryRelationship(
+      'flow-1',
+      'entry-1',
+      'field-1',
+      {
+        type: 'new'
+      }
+    ).then(response => {
+      assert.propertyVal(response, 'type', 'new')
+    })
+  })
+
+  it('should update a flow entry relationship', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/flows/flow-1/entries/entry-1/relationships/field-1')
+      .reply(204)
+
+    return Moltin.Flows.DeleteEntryRelationship(
+      'flow-1',
+      'entry-1',
+      'field-1'
+    ).then(response => {
+      assert.equal(response, '{}')
+    })
+  })
+
+  it('should return an array of attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Flows.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
+  })
+
+  it('should return an array of attributes by flow type', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/flows/flow-type-1/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Flows.GetFlowTypeAttributes('flow-type-1', 'testtoken').then(
+      response => {
+        assert.lengthOf(response.data, 3)
+      }
+    )
   })
 })

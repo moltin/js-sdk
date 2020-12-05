@@ -1,6 +1,7 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
+import { attributeResponse } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -18,7 +19,7 @@ describe('Moltin flow fields', () => {
       enabled: true,
       order: 0,
       omit_null: false
-    };
+    }
 
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -32,19 +33,18 @@ describe('Moltin flow fields', () => {
       .post('/fields')
       .reply(201, { data: { ...newField, id: 'field1' } })
 
-    return Moltin.Fields.Create(newField)
-    .then(response => {
-      assert.equal(response.data.id, 'field1');
-      assert.equal(response.data.type, newField.type);
-      assert.equal(response.data.name, newField.name);
-      assert.equal(response.data.slug, newField.slug);
-      assert.equal(response.data.field_type, newField.field_type);
-      assert.equal(response.data.description, newField.description);
-      assert.equal(response.data.required, newField.required);
-      assert.equal(response.data.default, newField.default);
-      assert.equal(response.data.enabled, newField.enabled);
-      assert.equal(response.data.order, newField.order);
-      assert.equal(response.data.omit_null, newField.omit_null);
+    return Moltin.Fields.Create(newField).then(response => {
+      assert.equal(response.data.id, 'field1')
+      assert.equal(response.data.type, newField.type)
+      assert.equal(response.data.name, newField.name)
+      assert.equal(response.data.slug, newField.slug)
+      assert.equal(response.data.field_type, newField.field_type)
+      assert.equal(response.data.description, newField.description)
+      assert.equal(response.data.required, newField.required)
+      assert.equal(response.data.default, newField.default)
+      assert.equal(response.data.enabled, newField.enabled)
+      assert.equal(response.data.order, newField.order)
+      assert.equal(response.data.omit_null, newField.omit_null)
     })
   })
 
@@ -113,6 +113,23 @@ describe('Moltin flow fields', () => {
 
     return Moltin.Fields.Delete('1').then(response => {
       assert.equal(response, '{}')
+    })
+  })
+
+  it('should return an array of attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/fields/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Fields.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
     })
   })
 })

@@ -40,6 +40,21 @@ describe('Moltin jobs', () => {
     })
   })
 
+  it('should return a file', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/jobs/1/file')
+      .reply(200, jobs[0])
+
+    return Moltin.Jobs.GetFile('1').then(response => {
+      assert.propertyVal(response, 'id', 'job-1')
+    })
+  })
+
   it('should create a new job', () => {
     const newJobs = {
       type: 'job',
@@ -48,7 +63,7 @@ describe('Moltin jobs', () => {
         href: 'url'
       },
       status: 'processing' as const
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -59,8 +74,7 @@ describe('Moltin jobs', () => {
       .post('/jobs', { data: newJobs })
       .reply(201, jobs[0])
 
-    return Moltin.Jobs.Create(newJobs)
-    .then(response => {
+    return Moltin.Jobs.Create(newJobs).then(response => {
       assert.propertyVal(response, 'id', 'job-1')
     })
   })

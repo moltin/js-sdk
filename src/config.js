@@ -12,6 +12,10 @@ class Config {
       host,
       storage,
       custom_fetch,
+      custom_authenticator,
+      headers,
+      disableCart,
+      reauth,
       protocol,
       store_id
     } = options
@@ -35,6 +39,10 @@ class Config {
       language: 'JS'
     }
     this.storage = storage || new LocalStorageFactory()
+    this.custom_authenticator = custom_authenticator
+    this.headers = headers || {}
+    this.disableCart = disableCart || false
+    this.reauth = reauth || true
   }
 }
 

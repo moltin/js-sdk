@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
 
-      - run: npm install
-      - run: npm run lint
+      - run: yarn install
+      - run: yarn run lint
 
       - save_cache:
           paths:
@@ -28,7 +28,7 @@ jobs:
             - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
-      - run: npm run rollup
+      - run: yarn run rollup
 
   # test on node 8
   test:
@@ -43,11 +43,11 @@ jobs:
             - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
-      - run: npm run rollup
+      - run: yarn run rollup
 
       # run tests
       - run:
-          command: npm run test-output
+          command: yarn run test-output
           environment:
             MOCHA_FILE: test-results/mocha/test-results.xml
           when: always
@@ -70,7 +70,7 @@ jobs:
             - js-sdk-dependencies-{{ checksum "package.json" }}
 
       # build bundles
-      - run: npm run rollup
+      - run: yarn run rollup
 
       # release, publish package
       - run: npx semantic-release

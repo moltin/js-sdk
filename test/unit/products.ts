@@ -205,14 +205,16 @@ describe('Moltin products', () => {
       sku: 'product1sku',
       manage_stock: true,
       description: 'Product 1 description',
-      price: [{
-        amount: 123,
-        currency: 'USD',
-        includes_tax: false,
-      }],
+      price: [
+        {
+          amount: 123,
+          currency: 'USD',
+          includes_tax: false
+        }
+      ],
       status: 'live' as const,
       commodity_type: 'physical' as const
-    };
+    }
 
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -227,18 +229,17 @@ describe('Moltin products', () => {
       .post('/products')
       .reply(201, { data: { ...newProduct, id: 'product1Id' } })
 
-    return Moltin.Products.Create(newProduct)
-    .then(response => {
-      assert.equal(response.data.id, 'product1Id');
-      assert.equal(response.data.type, newProduct.type);
-      assert.equal(response.data.name, newProduct.name);
-      assert.equal(response.data.slug, newProduct.slug);
-      assert.equal(response.data.sku, newProduct.sku);
-      assert.equal(response.data.manage_stock, newProduct.manage_stock);
-      assert.equal(response.data.description, newProduct.description);
-      assert.deepEqual(response.data.price, newProduct.price);
-      assert.equal(response.data.status, newProduct.status);
-      assert.equal(response.data.commodity_type, newProduct.commodity_type);
+    return Moltin.Products.Create(newProduct).then(response => {
+      assert.equal(response.data.id, 'product1Id')
+      assert.equal(response.data.type, newProduct.type)
+      assert.equal(response.data.name, newProduct.name)
+      assert.equal(response.data.slug, newProduct.slug)
+      assert.equal(response.data.sku, newProduct.sku)
+      assert.equal(response.data.manage_stock, newProduct.manage_stock)
+      assert.equal(response.data.description, newProduct.description)
+      assert.deepEqual(response.data.price, newProduct.price)
+      assert.equal(response.data.status, newProduct.status)
+      assert.equal(response.data.commodity_type, newProduct.commodity_type)
     })
   })
 
@@ -416,5 +417,39 @@ describe('Moltin products', () => {
       .then(() => {
         assert.notExists((Moltin.Products as any).filter)
       })
+  })
+
+  it('should build child products', () => {
+    const Moltin = MoltinGateway({ client_id: 'XXX' })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/products/1/build')
+      .reply(200, products[0])
+
+    return Moltin.Products.BuildChildProducts('1').then(response => {
+      assert.propertyVal(response, 'name', 'Product 1')
+    })
+  })
+
+  it('should get products attributes', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products/attributes')
+      .reply(200, { data: products })
+
+    return Moltin.Products.Attributes('1')
   })
 })

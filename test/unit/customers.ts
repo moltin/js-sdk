@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { customersArray as customers } from '../factories'
+import { attributeResponse, customersArray as customers } from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -83,7 +83,7 @@ describe('Moltin customers', () => {
       name: 'Max Power',
       email: 'max@power.com',
       password: 'fakepass'
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -92,15 +92,14 @@ describe('Moltin customers', () => {
       }
     })
       .post('/customers')
-      .reply(201, { data: { ...newCustomer, id: 'cus1' } });
+      .reply(201, { data: { ...newCustomer, id: 'cus1' } })
 
-    return Moltin.Customers.Create(newCustomer)
-    .then(response => {
-      assert.equal(response.data.id, 'cus1');
-      assert.equal(response.data.type, newCustomer.type);
-      assert.equal(response.data.name, newCustomer.name);
-      assert.equal(response.data.email, newCustomer.email);
-      assert.equal(response.data.password, newCustomer.password);
+    return Moltin.Customers.Create(newCustomer).then(response => {
+      assert.equal(response.data.id, 'cus1')
+      assert.equal(response.data.type, newCustomer.type)
+      assert.equal(response.data.name, newCustomer.name)
+      assert.equal(response.data.email, newCustomer.email)
+      assert.equal(response.data.password, newCustomer.password)
     })
   })
 
@@ -254,5 +253,19 @@ describe('Moltin customers', () => {
       .then(() => {
         assert.notExists((Moltin.Customers as any).filter)
       })
+  })
+
+  it('should return an array of attributes', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/customers/attributes')
+      .reply(200, attributeResponse)
+
+    return Moltin.Customers.Attributes('testtoken').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
   })
 })

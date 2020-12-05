@@ -1,6 +1,10 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway, ItemTaxObject, CartItemsResponse } from '../../src/moltin'
+import {
+  gateway as MoltinGateway,
+  ItemTaxObject,
+  CartItemsResponse
+} from '../../src/moltin'
 import {
   cartItemsArray as items,
   customCartData as customData
@@ -109,7 +113,8 @@ describe('Moltin cart', () => {
             includes_tax: true
           },
           links: {
-            product: 'https://api.moltin.com/v2/products/8361826f-84c2-4e90-9dca-f9f2ea325de3'
+            product:
+              'https://api.moltin.com/v2/products/8361826f-84c2-4e90-9dca-f9f2ea325de3'
           },
           meta: {
             display_price: {
@@ -189,71 +194,207 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/3/items')
-      .reply(200, cartItemResponse);
+      .reply(200, cartItemResponse)
 
     return Moltin.Cart()
       .Items()
       .then(response => {
-        assert.equal(response.data.length, cartItemResponse.data.length);
-        assert.equal(response.data[0].id, cartItemResponse.data[0].id);
-        assert.equal(response.data[0].type, cartItemResponse.data[0].type);
-        assert.equal(response.data[0].product_id, cartItemResponse.data[0].product_id);
-        assert.equal(response.data[0].name, cartItemResponse.data[0].name);
-        assert.equal(response.data[0].description, cartItemResponse.data[0].description);
-        assert.equal(response.data[0].sku, cartItemResponse.data[0].sku);
-        assert.equal(response.data[0].slug, cartItemResponse.data[0].slug);
-        assert.equal(response.data[0].image.mime_type, cartItemResponse.data[0].image.mime_type);
-        assert.equal(response.data[0].image.file_name, cartItemResponse.data[0].image.file_name);
-        assert.equal(response.data[0].image.href, cartItemResponse.data[0].image.href);
-        assert.equal(response.data[0].quantity, cartItemResponse.data[0].quantity);
-        assert.equal(response.data[0].manage_stock, cartItemResponse.data[0].manage_stock);
-        assert.equal(response.data[0].unit_price.amount, cartItemResponse.data[0].unit_price.amount);
-        assert.equal(response.data[0].unit_price.currency, cartItemResponse.data[0].unit_price.currency);
-        assert.equal(response.data[0].unit_price.includes_tax, cartItemResponse.data[0].unit_price.includes_tax);
-        assert.equal(response.data[0].value.amount, cartItemResponse.data[0].value.amount);
-        assert.equal(response.data[0].value.currency, cartItemResponse.data[0].value.currency);
-        assert.equal(response.data[0].value.includes_tax, cartItemResponse.data[0].value.includes_tax);
-        assert.equal(response.data[0].links.product, cartItemResponse.data[0].links.product);
+        assert.equal(response.data.length, cartItemResponse.data.length)
+        assert.equal(response.data[0].id, cartItemResponse.data[0].id)
+        assert.equal(response.data[0].type, cartItemResponse.data[0].type)
+        assert.equal(
+          response.data[0].product_id,
+          cartItemResponse.data[0].product_id
+        )
+        assert.equal(response.data[0].name, cartItemResponse.data[0].name)
+        assert.equal(
+          response.data[0].description,
+          cartItemResponse.data[0].description
+        )
+        assert.equal(response.data[0].sku, cartItemResponse.data[0].sku)
+        assert.equal(response.data[0].slug, cartItemResponse.data[0].slug)
+        assert.equal(
+          response.data[0].image.mime_type,
+          cartItemResponse.data[0].image.mime_type
+        )
+        assert.equal(
+          response.data[0].image.file_name,
+          cartItemResponse.data[0].image.file_name
+        )
+        assert.equal(
+          response.data[0].image.href,
+          cartItemResponse.data[0].image.href
+        )
+        assert.equal(
+          response.data[0].quantity,
+          cartItemResponse.data[0].quantity
+        )
+        assert.equal(
+          response.data[0].manage_stock,
+          cartItemResponse.data[0].manage_stock
+        )
+        assert.equal(
+          response.data[0].unit_price.amount,
+          cartItemResponse.data[0].unit_price.amount
+        )
+        assert.equal(
+          response.data[0].unit_price.currency,
+          cartItemResponse.data[0].unit_price.currency
+        )
+        assert.equal(
+          response.data[0].unit_price.includes_tax,
+          cartItemResponse.data[0].unit_price.includes_tax
+        )
+        assert.equal(
+          response.data[0].value.amount,
+          cartItemResponse.data[0].value.amount
+        )
+        assert.equal(
+          response.data[0].value.currency,
+          cartItemResponse.data[0].value.currency
+        )
+        assert.equal(
+          response.data[0].value.includes_tax,
+          cartItemResponse.data[0].value.includes_tax
+        )
+        assert.equal(
+          response.data[0].links.product,
+          cartItemResponse.data[0].links.product
+        )
 
-        assert.equal(response.data[0].meta.display_price.with_tax.unit.amount, cartItemResponse.data[0].meta.display_price.with_tax.unit.amount);
-        assert.equal(response.data[0].meta.display_price.with_tax.unit.currency, cartItemResponse.data[0].meta.display_price.with_tax.unit.currency);
-        assert.equal(response.data[0].meta.display_price.with_tax.unit.formatted, cartItemResponse.data[0].meta.display_price.with_tax.unit.formatted);
-        assert.equal(response.data[0].meta.display_price.with_tax.value.amount, cartItemResponse.data[0].meta.display_price.with_tax.value.amount);
-        assert.equal(response.data[0].meta.display_price.with_tax.value.currency, cartItemResponse.data[0].meta.display_price.with_tax.value.currency);
-        assert.equal(response.data[0].meta.display_price.with_tax.value.formatted, cartItemResponse.data[0].meta.display_price.with_tax.value.formatted);
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.unit.amount,
+          cartItemResponse.data[0].meta.display_price.with_tax.unit.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.unit.currency,
+          cartItemResponse.data[0].meta.display_price.with_tax.unit.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.unit.formatted,
+          cartItemResponse.data[0].meta.display_price.with_tax.unit.formatted
+        )
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.value.amount,
+          cartItemResponse.data[0].meta.display_price.with_tax.value.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.value.currency,
+          cartItemResponse.data[0].meta.display_price.with_tax.value.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.with_tax.value.formatted,
+          cartItemResponse.data[0].meta.display_price.with_tax.value.formatted
+        )
 
-        assert.equal(response.data[0].meta.display_price.without_tax.unit.amount, cartItemResponse.data[0].meta.display_price.without_tax.unit.amount);
-        assert.equal(response.data[0].meta.display_price.without_tax.unit.currency, cartItemResponse.data[0].meta.display_price.without_tax.unit.currency);
-        assert.equal(response.data[0].meta.display_price.without_tax.unit.formatted, cartItemResponse.data[0].meta.display_price.without_tax.unit.formatted);
-        assert.equal(response.data[0].meta.display_price.without_tax.value.amount, cartItemResponse.data[0].meta.display_price.without_tax.value.amount);
-        assert.equal(response.data[0].meta.display_price.without_tax.value.currency, cartItemResponse.data[0].meta.display_price.without_tax.value.currency);
-        assert.equal(response.data[0].meta.display_price.without_tax.value.formatted, cartItemResponse.data[0].meta.display_price.without_tax.value.formatted);
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.unit.amount,
+          cartItemResponse.data[0].meta.display_price.without_tax.unit.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.unit.currency,
+          cartItemResponse.data[0].meta.display_price.without_tax.unit.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.unit.formatted,
+          cartItemResponse.data[0].meta.display_price.without_tax.unit.formatted
+        )
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.value.amount,
+          cartItemResponse.data[0].meta.display_price.without_tax.value.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.value.currency,
+          cartItemResponse.data[0].meta.display_price.without_tax.value.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.without_tax.value.formatted,
+          cartItemResponse.data[0].meta.display_price.without_tax.value
+            .formatted
+        )
 
-        assert.equal(response.data[0].meta.display_price.tax.unit.amount, cartItemResponse.data[0].meta.display_price.tax.unit.amount);
-        assert.equal(response.data[0].meta.display_price.tax.unit.currency, cartItemResponse.data[0].meta.display_price.tax.unit.currency);
-        assert.equal(response.data[0].meta.display_price.tax.unit.formatted, cartItemResponse.data[0].meta.display_price.tax.unit.formatted);
-        assert.equal(response.data[0].meta.display_price.tax.value.amount, cartItemResponse.data[0].meta.display_price.tax.value.amount);
-        assert.equal(response.data[0].meta.display_price.tax.value.currency, cartItemResponse.data[0].meta.display_price.tax.value.currency);
-        assert.equal(response.data[0].meta.display_price.tax.value.formatted, cartItemResponse.data[0].meta.display_price.tax.value.formatted);
+        assert.equal(
+          response.data[0].meta.display_price.tax.unit.amount,
+          cartItemResponse.data[0].meta.display_price.tax.unit.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.tax.unit.currency,
+          cartItemResponse.data[0].meta.display_price.tax.unit.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.tax.unit.formatted,
+          cartItemResponse.data[0].meta.display_price.tax.unit.formatted
+        )
+        assert.equal(
+          response.data[0].meta.display_price.tax.value.amount,
+          cartItemResponse.data[0].meta.display_price.tax.value.amount
+        )
+        assert.equal(
+          response.data[0].meta.display_price.tax.value.currency,
+          cartItemResponse.data[0].meta.display_price.tax.value.currency
+        )
+        assert.equal(
+          response.data[0].meta.display_price.tax.value.formatted,
+          cartItemResponse.data[0].meta.display_price.tax.value.formatted
+        )
 
-        assert.equal(response.data[0].meta.timestamps.created_at, cartItemResponse.data[0].meta.timestamps.created_at);
-        assert.equal(response.data[0].meta.timestamps.updated_at, cartItemResponse.data[0].meta.timestamps.updated_at);
+        assert.equal(
+          response.data[0].meta.timestamps.created_at,
+          cartItemResponse.data[0].meta.timestamps.created_at
+        )
+        assert.equal(
+          response.data[0].meta.timestamps.updated_at,
+          cartItemResponse.data[0].meta.timestamps.updated_at
+        )
 
-        assert.equal(response.meta.display_price.with_tax.amount, cartItemResponse.meta.display_price.with_tax.amount);
-        assert.equal(response.meta.display_price.with_tax.currency, cartItemResponse.meta.display_price.with_tax.currency);
-        assert.equal(response.meta.display_price.with_tax.formatted, cartItemResponse.meta.display_price.with_tax.formatted);
+        assert.equal(
+          response.meta.display_price.with_tax.amount,
+          cartItemResponse.meta.display_price.with_tax.amount
+        )
+        assert.equal(
+          response.meta.display_price.with_tax.currency,
+          cartItemResponse.meta.display_price.with_tax.currency
+        )
+        assert.equal(
+          response.meta.display_price.with_tax.formatted,
+          cartItemResponse.meta.display_price.with_tax.formatted
+        )
 
-        assert.equal(response.meta.display_price.without_tax.amount, cartItemResponse.meta.display_price.without_tax.amount);
-        assert.equal(response.meta.display_price.without_tax.currency, cartItemResponse.meta.display_price.without_tax.currency);
-        assert.equal(response.meta.display_price.without_tax.formatted, cartItemResponse.meta.display_price.without_tax.formatted);
+        assert.equal(
+          response.meta.display_price.without_tax.amount,
+          cartItemResponse.meta.display_price.without_tax.amount
+        )
+        assert.equal(
+          response.meta.display_price.without_tax.currency,
+          cartItemResponse.meta.display_price.without_tax.currency
+        )
+        assert.equal(
+          response.meta.display_price.without_tax.formatted,
+          cartItemResponse.meta.display_price.without_tax.formatted
+        )
 
-        assert.equal(response.meta.display_price.tax.amount, cartItemResponse.meta.display_price.tax.amount);
-        assert.equal(response.meta.display_price.tax.currency, cartItemResponse.meta.display_price.tax.currency);
-        assert.equal(response.meta.display_price.tax.formatted, cartItemResponse.meta.display_price.tax.formatted);
+        assert.equal(
+          response.meta.display_price.tax.amount,
+          cartItemResponse.meta.display_price.tax.amount
+        )
+        assert.equal(
+          response.meta.display_price.tax.currency,
+          cartItemResponse.meta.display_price.tax.currency
+        )
+        assert.equal(
+          response.meta.display_price.tax.formatted,
+          cartItemResponse.meta.display_price.tax.formatted
+        )
 
-        assert.equal(response.meta.timestamps.created_at, cartItemResponse.meta.timestamps.created_at);
-        assert.equal(response.meta.timestamps.updated_at, cartItemResponse.meta.timestamps.updated_at);
-      });
+        assert.equal(
+          response.meta.timestamps.created_at,
+          cartItemResponse.meta.timestamps.created_at
+        )
+        assert.equal(
+          response.meta.timestamps.updated_at,
+          cartItemResponse.meta.timestamps.updated_at
+        )
+      })
   })
 
   it('should return an array of cart items with a cart id argument', () => {
@@ -264,7 +405,7 @@ describe('Moltin cart', () => {
       }
     })
       .get('/carts/5/items')
-      .reply(200, { data: items });
+      .reply(200, { data: items })
 
     return Moltin.Cart('5')
       .Items()
@@ -477,6 +618,69 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should add a custom item, a cart item and a promotion to the cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/carts/3/items', {
+        data: [
+          {
+            type: 'custom_item',
+            name: 'Custom Item',
+            sku: '001',
+            description: 'A new custom item',
+            quantity: 1,
+            price: {
+              amount: 20
+            }
+          },
+          {
+            type: 'cart_item',
+            id: '2',
+            quantity: 1
+          },
+          {
+            type: 'promotion_item',
+            code: 'testcode'
+          }
+        ]
+      })
+      .reply(201, {
+        name: 'Custom Item',
+        quantity: 1
+      })
+
+    return Moltin.Cart()
+      .BulkAdd([
+        {
+          type: 'custom_item',
+          name: 'Custom Item',
+          sku: '001',
+          description: 'A new custom item',
+          quantity: 1,
+          price: {
+            amount: 20
+          }
+        },
+        {
+          type: 'cart_item',
+          id: '2',
+          quantity: 1
+        },
+        {
+          type: 'promotion_item',
+          code: 'testcode'
+        }
+      ])
+      .then(response => {
+        assert.propertyVal(response, 'name', 'Custom Item')
+        assert.propertyVal(response, 'quantity', 1)
+      })
+  })
+
   it('should update the quantity of a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -561,6 +765,104 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should update cart items', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items', {
+        data: [
+          {
+            type: 'cart_item',
+            id: '4',
+            quantity: 6
+          },
+          {
+            type: 'cart_item',
+            id: '5',
+            quantity: 7
+          }
+        ]
+      })
+      .reply(200, [{ id: '4', quantity: 6 }, { id: '5', quantity: 7 }])
+
+    return Moltin.Cart()
+      .UpdateItems([
+        {
+          type: 'cart_item',
+          id: '4',
+          quantity: 6
+        },
+        {
+          type: 'cart_item',
+          id: '5',
+          quantity: 7
+        }
+      ])
+      .then(items => {
+        assert.propertyVal(items[0], 'id', '4')
+        assert.propertyVal(items[0], 'quantity', 6)
+        assert.propertyVal(items[1], 'id', '5')
+        assert.propertyVal(items[1], 'quantity', 7)
+      })
+  })
+
+  it('should update cart items with custom data', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items', {
+        data: [
+          {
+            type: 'cart_item',
+            id: '4',
+            quantity: 6,
+            image_url: 'example.jpg'
+          },
+          {
+            type: 'cart_item',
+            id: '5',
+            quantity: 7,
+            image_url: 'example-2.jpg'
+          }
+        ]
+      })
+      .reply(200, [
+        { id: '4', quantity: 6, image_url: 'example.jpg' },
+        { id: '5', quantity: 7, image_url: 'example-2.jpg' }
+      ])
+
+    return Moltin.Cart()
+      .UpdateItems([
+        {
+          type: 'cart_item',
+          id: '4',
+          quantity: 6,
+          image_url: 'example.jpg'
+        },
+        {
+          type: 'cart_item',
+          id: '5',
+          quantity: 7,
+          image_url: 'example-2.jpg'
+        }
+      ])
+      .then(items => {
+        assert.propertyVal(items[0], 'id', '4')
+        assert.propertyVal(items[0], 'quantity', 6)
+        assert.propertyVal(items[0], 'image_url', 'example.jpg')
+
+        assert.propertyVal(items[1], 'id', '5')
+        assert.propertyVal(items[1], 'quantity', 7)
+        assert.propertyVal(items[1], 'image_url', 'example-2.jpg')
+      })
+  })
+
   it('should delete a cart item', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -573,6 +875,23 @@ describe('Moltin cart', () => {
 
     return Moltin.Cart()
       .RemoveItem('2')
+      .then(response => {
+        assert.lengthOf(response.data, 4)
+      })
+  })
+
+  it('should delete all cart items', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .delete('/carts/3/items')
+      .reply(200, { data: items })
+
+    return Moltin.Cart()
+      .RemoveAllItems()
       .then(response => {
         assert.lengthOf(response.data, 4)
       })
@@ -635,7 +954,7 @@ describe('Moltin cart', () => {
       rate: 0.0775,
       jurisdiction: 'CALIFORNIA',
       name: 'California Tax'
-    };
+    }
 
     // Intercept the API request
     nock(apiUrl, {
@@ -644,15 +963,42 @@ describe('Moltin cart', () => {
       }
     })
       .post('/carts/3/items/5/taxes')
-      .reply(200, { data: itemTax });
+      .reply(200, { data: itemTax })
 
     return Moltin.Cart()
       .AddItemTax('5', itemTax)
       .then(response => {
-        assert.equal(response.data.code, itemTax.code);
-        assert.equal(response.data.rate, itemTax.rate);
-        assert.equal(response.data.jurisdiction, itemTax.jurisdiction);
-        assert.equal(response.data.name, itemTax.name);
+        assert.equal(response.data.code, itemTax.code)
+        assert.equal(response.data.rate, itemTax.rate)
+        assert.equal(response.data.jurisdiction, itemTax.jurisdiction)
+        assert.equal(response.data.name, itemTax.name)
+      })
+  })
+
+  it('should update a tax item in a cart item', () => {
+    const itemTax: ItemTaxObject = {
+      code: 'CALI',
+      rate: 0.0775,
+      jurisdiction: 'CALIFORNIA',
+      name: 'California Tax'
+    }
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/carts/3/items/5/taxes/6')
+      .reply(200, { data: itemTax })
+
+    return Moltin.Cart()
+      .UpdateItemTax('5', '6', itemTax)
+      .then(response => {
+        assert.equal(response.data.code, itemTax.code)
+        assert.equal(response.data.rate, itemTax.rate)
+        assert.equal(response.data.jurisdiction, itemTax.jurisdiction)
+        assert.equal(response.data.name, itemTax.name)
       })
   })
 
@@ -778,6 +1124,114 @@ describe('Moltin cart', () => {
       .then(response => {
         assert.propertyVal(response, 'id', '1')
         assert.propertyVal(response, 'status', 'complete')
+      })
+  })
+
+  it('should create a new cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .post('/carts', {
+        data: {
+          id: '1',
+          name: 'CartName',
+          description: 'CartDescription'
+        }
+      })
+      .reply(201, { id: '1', name: 'CartName', description: 'CartDescription' })
+
+    return Moltin.Cart()
+      .CreateCart(
+        {
+          id: '1',
+          name: 'CartName',
+          description: 'CartDescription'
+        },
+        'testtoken'
+      )
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
+
+  it('should update a cart', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .put('/carts/3', {
+        data: {
+          name: 'UpdatedCartName',
+          description: 'UpdatedCartDescription'
+        }
+      })
+      .reply(201, {
+        name: 'UpdatedCartName',
+        description: 'UpdatedCartDescription'
+      })
+
+    return Moltin.Cart()
+      .UpdateCart(
+        {
+          name: 'UpdatedCartName',
+          description: 'UpdatedCartDescription'
+        },
+        'testtoken'
+      )
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
+
+  it('should get carts list', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .get('/carts')
+      .reply(200, {
+        id: '1'
+      })
+
+    return Moltin.Cart()
+      .GetCartsList('testtoken')
+      .then(response => {
+        assert.propertyVal(response, 'id', '1')
+      })
+  })
+
+  it('should add a customer id association to the cart using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
+      }
+    })
+      .post('/carts/5/relationships/customers', {
+        data: [
+          {
+            type: 'customer',
+            id: 'customer-1'
+          }
+        ]
+      })
+      .reply(200, {})
+
+    return Moltin.Cart('5')
+      .AddCustomerAssociation('customer-1', 'testtoken')
+      .then(response => {
+        assert.isObject(response)
       })
   })
 })

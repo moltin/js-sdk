@@ -145,9 +145,15 @@ export function buildRequestBody(body) {
   return parsedBody
 }
 
-export function buildCartItemData(id, quantity = null, type = 'cart_item') {
+export function buildCartItemData(
+  id,
+  quantity = null,
+  type = 'cart_item',
+  flows
+) {
   const payload = {
-    type
+    type,
+    ...flows
   }
 
   if (type === 'cart_item') {
@@ -186,5 +192,20 @@ export function resetProps(instance) {
   const inst = instance
   ;['includes', 'sort', 'limit', 'offset', 'filter'].forEach(
     e => delete inst[e]
+  )
+}
+
+export function getCredentials(storage) {
+  return JSON.parse(storage.get('moltinCredentials'))
+}
+
+export function tokenInvalid(config) {
+  const credentials = getCredentials(config.storage)
+
+  return (
+    !credentials ||
+    !credentials.access_token ||
+    credentials.client_id !== config.client_id ||
+    Math.floor(Date.now() / 1000) >= credentials.expires
   )
 }
