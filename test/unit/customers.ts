@@ -179,6 +179,7 @@ describe('Moltin customers', () => {
       .post('/customers/tokens', {
         data: {
           type: 'token',
+          authentication_mechanism: "password",
           email: customers[0].email,
           password: customers[0].password
         }
@@ -196,6 +197,42 @@ describe('Moltin customers', () => {
       assert.propertyVal(response, 'customer_id', 'customer-1')
     })
   })
+
+  it('should authenticate a customer and return a JWT when using oidc', () => {
+    const someAuthorizationCode = "c87fec2c-5b08-4cd8-842c-2b3816240dce"
+    const someCodeVerifier = "6Z4X0ZPqz~LKQ.R~8ILi54xKXKK5WQF2W~OI-Wq7AIvOuG25AhrHkR2-bOP~5oKOTXspmpAgYidnvP9KnKxPFvgTzXBWi4rYtq428zW4aGRY1SXGargvLYBj39DWKvHf"
+    const someRedirectUri = "https://www.elasticpath.com"
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/customers/tokens', {
+        data: {
+          type: 'token',
+          authentication_mechanism: "oidc",
+          oauth_authorization_code: someAuthorizationCode,
+          oauth_redirect_uri: someRedirectUri,
+          oauth_code_verifier: someCodeVerifier,
+        }
+      })
+      .reply(201, {
+        customer_id: customers[0].id,
+        token: customers[0].token
+      })
+
+    return Moltin.Customers.TokenViaOIDC(
+      someAuthorizationCode,
+      someRedirectUri,
+      someCodeVerifier
+    ).then(response => {
+      assert.propertyVal(response, 'token', 'eyAgICJhbGciOiAiSFMyNTYiLCAgICJ0')
+      assert.propertyVal(response, 'customer_id', 'customer-1')
+    })
+  })
+
 
   it('should not persist the filter property after request', () => {
     // Intercept the API request

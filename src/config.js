@@ -15,14 +15,17 @@ class Config {
       custom_authenticator,
       headers,
       disableCart,
-      reauth
+      reauth,
+      protocol,
+      store_id
     } = options
 
     this.application = application
     this.client_id = client_id
     this.client_secret = client_secret
+    this.store_id = store_id
     this.host = host || 'api.moltin.com'
-    this.protocol = 'https'
+    this.protocol = protocol || 'https'
     this.version = 'v2'
     this.currency = currency
     this.language = language

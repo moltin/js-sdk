@@ -60,6 +60,13 @@ export interface RelationshipToMany<T> {
   }[]
 }
 
+export interface RelationshipToOne<T> {
+  data: {
+    id: string;
+    type: T;
+  };
+}
+
 export interface QueryableResource<R, F, S, I> {
   All(token?: string): Promise<ResourcePage<R>>
 

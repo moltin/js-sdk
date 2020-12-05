@@ -3,9 +3,6 @@
 
 import * as config from './types/config'
 import * as storage from './types/storage'
-export * from './types/storage'
-import { Attributes } from './types/core'
-
 import * as product from './types/product'
 import * as core from './types/core'
 import * as customer from './types/customer'
@@ -27,10 +24,12 @@ import * as settings from './types/settings'
 import * as accounts from './types/accounts'
 import * as promotions from './types/promotions'
 import * as variations from './types/variations'
+import * as authenticationSettings from './types/authentication-settings';
+import * as oidcProfile from './types/oidc-profile';
+import * as authenticationRealm from './types/authentication-realm';
 
 export * from './types/config'
 export * from './types/storage'
-
 export * from './types/price'
 export * from './types/product'
 export * from './types/core'
@@ -53,6 +52,9 @@ export * from './types/settings'
 export * from './types/accounts'
 export * from './types/promotions'
 export * from './types/variations'
+export * from './types/authentication-settings'
+export * from './types/oidc-profile'
+export * from './types/authentication-realm'
 
 // UMD
 export as namespace moltin
@@ -82,6 +84,9 @@ export class Moltin {
   Accounts: accounts.AccountsEndpoint
   Promotions: promotions.PromotionsEndpoint
   Variations: variations.VariationsEndpoint
+  AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint
+  OidcProfile: oidcProfile.OidcProfileEndpoint
+  AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint
 
   Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: config.Config)
@@ -103,7 +108,7 @@ export namespace moltin {
 
     Enabled<T>(slug: string, enabled: boolean): Promise<T>
 
-    GetSlugAttributes(flowType: string, token?: string): Promise<Attributes>
+    GetSlugAttributes(flowType: string, token?: string): Promise<core.Attributes>
   }
 
   export interface Settings {

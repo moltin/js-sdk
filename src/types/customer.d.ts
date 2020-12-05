@@ -76,6 +76,30 @@ export interface CustomersEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/customer-tokens.html
    * @param email [string] email for customer
    * @param password [string] password for customer
+   * @deprecated
    */
-  Token(email: string, password: string): Promise<Resource<CustomerToken>>
+  Token(email: string, password: string): Promise<Resource<CustomerToken>>;
+
+  /**
+   * Customer Tokens
+   * Description: We provide a basic /tokens endpoint that allows you authenticate customers by email and password so
+   * you can easily allow customers to manage their addresses or get orders by customer.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/customer-tokens.html
+   * @param email [string] email for customer
+   * @param password [string] password for customer
+   * @param headers [object] an optional header parameter if headers would like to be included with the request
+   */
+  TokenViaPassword(email: string, password: string, headers?: object): Promise<Resource<CustomerToken>>;
+
+  /**
+   * Customer Tokens
+   * Description: We provide a basic /tokens endpoint that allows you authenticate customers by email and password so
+   * you can easily allow customers to manage their addresses or get orders by customer.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/customers/customer-tokens.html
+   * @param code [string] an optional oidc authorization code if oidc is being used
+   * @param redirectUri [string] an optional redirectUri if oidc is being used	   * @param redirectUri [string] an optional redirectUri if oidc is being used
+   * @param codeVerifier [string] an optional codeVerifier if oidc is being used
+   * @param headers [object] an optional header parameter if headers would like to be included with the request
+   */
+  TokenViaOIDC(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
 }

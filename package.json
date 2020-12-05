@@ -28,7 +28,7 @@
     "url": "https://github.com/moltin/js-sdk/issues"
   },
   "devDependencies": {
-    "@babel/core": "7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.54",
     "@babel/preset-env": "7.0.0-beta.54",
     "@babel/preset-stage-3": "7.0.0-beta.54",
     "@babel/register": "7.0.0-beta.54",

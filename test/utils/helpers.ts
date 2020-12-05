@@ -16,9 +16,9 @@ import {
   tokenInvalid
 } from '../../src/utils/helpers'
 
-const mod = rewire('../../src/utils/helpers')
-
 import LocalStorageFactory from '../../src/factories/local-storage'
+
+const mod = rewire('../../src/utils/helpers')
 
 describe('Build relationship payloads', () => {
   it('should return an array of relationship key value pairings', () => {
@@ -334,7 +334,7 @@ describe('Get credentials', () => {
   })
 })
 
-describe.only('Token invalid', () => {
+describe('Token invalid', () => {
   it('should return true if no credentials', () => {
     const storageMock = {
       get: () => false

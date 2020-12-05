@@ -26,6 +26,9 @@ import MemoryStorageFactory from './factories/memory-storage'
 import AccountsEndpoint from './endpoints/accounts'
 import PromotionsEndpoint from './endpoints/promotions'
 import VariationsEndpoint from './endpoints/variations'
+import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
+import OidcProfileEndpoint from './endpoints/oidc-profile'
+import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
 
@@ -60,6 +63,9 @@ export default class Moltin {
     this.Accounts = new AccountsEndpoint(config)
     this.Promotions = new PromotionsEndpoint(config)
     this.Variations = new VariationsEndpoint(config)
+    this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
+    this.OidcProfile = new OidcProfileEndpoint(config)
+    this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class

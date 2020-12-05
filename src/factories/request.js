@@ -83,12 +83,22 @@ class RequestFactory {
 
     const promise = new Promise((resolve, reject) => {
       const credentials = getCredentials(storage)
-      const req = ({ access_token }) => {
+
+      const req = cred => {
+        const access_token = cred ? cred.access_token : null
+
         const headers = {
-          Authorization: `Bearer: ${access_token}`,
           'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version
+        }
+
+        if (access_token) {
+          headers.Authorization = `Bearer: ${access_token}`
+        }
+
+        if (config.store_id) {
+          headers['X-MOLTIN-AUTH-STORE'] = config.store_id
         }
 
         headers['X-MOLTIN-APPLICATION'] = config.application
@@ -123,13 +133,12 @@ class RequestFactory {
             if (response.ok) {
               resolve(response.json)
             }
-
             reject(response.json)
           })
           .catch(error => reject(error))
       }
 
-      if (tokenInvalid(config) && config.reauth) {
+      if (tokenInvalid(config) && config.reauth && !config.store_id) {
         return this.authenticate()
           .then(() => req(getCredentials(storage)))
           .catch(error => reject(error))

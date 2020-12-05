@@ -5,13 +5,7 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/flows.html
  */
 
-import {
-  Identifiable,
-  CrudQueryableResource,
-  Resource,
-  ResourcePage,
-  Attributes
-} from './core'
+import { Identifiable, Resource, ResourcePage, Attributes } from './core';
 
 /**
  * Core Flow Base Interface
