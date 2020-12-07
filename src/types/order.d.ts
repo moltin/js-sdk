@@ -43,8 +43,8 @@ export interface Order extends Identifiable, OrderBase {
     }
   }
   relationships?: {
-    main_image?: Relationship<'product'>[]
-    categories?: Relationship<'customer'>
+    items?: Relationship<'product'>[]
+    customer?: Relationship<'customer'>
   }
 }
 
