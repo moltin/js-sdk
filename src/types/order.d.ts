@@ -8,7 +8,8 @@ import {
   Relationship,
   ResourcePage,
   QueryableResource,
-  Resource
+  Resource,
+  RelationshipToMany
 } from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
@@ -43,7 +44,7 @@ export interface Order extends Identifiable, OrderBase {
     }
   }
   relationships?: {
-    items?: Relationship<'product'>[]
+    items?: RelationshipToMany<'product'>
     customer?: Relationship<'customer'>
   }
 }
