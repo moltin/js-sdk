@@ -6,7 +6,6 @@
   "author": "Moltin (https://moltin.com/)",
   "scripts": {
     "commit": "git-cz",
-    "precommit": "lint-staged",
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "mocha --require @babel/register -r ts-node/register test/tests.ts",
