@@ -144,7 +144,6 @@ export function buildRequestBody(body) {
       }`
     }
     else {
-      console.log("without")
       parsedBody = `{
         "data": ${JSON.stringify(body)}
       }`
