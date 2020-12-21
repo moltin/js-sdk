@@ -67,12 +67,14 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  BulkAdd(body, options) {
-    const payload = options ? { data: body, options } : body
+  BulkAdd(body) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items`,
       'POST',
-      payload
+      {
+        data: body,
+        options: { add_all_or_nothing: false}
+      }
     )
   }
 
