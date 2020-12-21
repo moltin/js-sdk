@@ -140,8 +140,7 @@ export function buildRequestBody(body) {
     {
       parsedBody = `{
         "data": ${JSON.stringify(body.data)},
-        "options" : ${JSON.stringify({ add_all_or_nothing: false})}
-       
+        "options" : ${JSON.stringify(body.options)}
       }`
     }
     else {
