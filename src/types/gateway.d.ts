@@ -1,6 +1,7 @@
 /**
  * Gateways
- * Description: You can configure payment gateways using the Gateways endpoint. You can enable and disable built-in payment gateways.
+ * Description: You can configure payment gateways using the Gateways endpoint.
+ * You can enable and disable built-in payment gateways.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/gateways/index.html
  */
 import { Attributes, QueryableResource} from './core'
@@ -44,7 +45,8 @@ export interface GatewaysEndpoint extends QueryableResource<Gateway, never, neve
    * Enabled
    * Description: This endpoint allows you update your settings to enable or disable the gateways.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/gateways/update-gateway-settings.html
-   * @param SLUG [string] The slug of the gateway to be updated.
+   * @param slug [string] The slug of the gateway to be updated.
+   * @param enabled [boolean] true or false depending on the enabled status.
    */
   Enabled<T>(slug: string, enabled: boolean): Promise<T>
 
