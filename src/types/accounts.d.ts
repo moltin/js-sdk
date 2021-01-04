@@ -60,6 +60,11 @@ export interface SwitchStoreResponse {
   title: string
 }
 
+export interface CreateStoreResponse {
+  data: string
+  status: boolean
+}
+
 export interface Store {
   features: string[]
   id: string
@@ -75,6 +80,12 @@ export interface Store {
   uuid: string
 }
 
+export interface StoreUserData {
+  name: string
+  email: string
+  role: number | string
+}
+
 export interface AccountsEndpoint
   extends QueryableResource<Account, never, never, never> {
   endpoint: 'accounts'
@@ -88,6 +99,8 @@ export interface AccountsEndpoint
   Keys(): Promise<Resource<KeysItemResponse[]>>
 
   DeleteUserFromStore(storeId: string, userId: string): Promise<{}>
+
+  AddUserToStore(storeId: string, userData: StoreUserData): Promise<CreateStoreResponse>
 
   Me(): Promise<Resource<Account>>
 
