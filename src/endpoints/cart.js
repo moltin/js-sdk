@@ -73,7 +73,7 @@ class CartEndpoint extends BaseExtend {
       'POST',
       {
         data: body,
-        options: { add_all_or_nothing: false}
+        options: { add_all_or_nothing: false }
       }
     )
   }
