@@ -27,6 +27,7 @@ import * as variations from './types/variations'
 import * as authenticationSettings from './types/authentication-settings';
 import * as oidcProfile from './types/oidc-profile';
 import * as authenticationRealm from './types/authentication-realm';
+import * as paymentGateway from './types/gateway'
 
 export * from './types/config'
 export * from './types/storage'
@@ -55,6 +56,7 @@ export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
 export * from './types/authentication-realm'
+export * from './types/gateway'
 
 // UMD
 export as namespace moltin
@@ -71,7 +73,7 @@ export class Moltin {
   Collections: collection.CollectionEndpoint
   Integrations: integration.IntegrationEndpoint
   Orders: order.OrdersEndpoint
-  Gateways: moltin.GatewaysEndpoint
+  Gateways: paymentGateway.GatewaysEndpoint
   Customers: customer.CustomersEndpoint
   Inventories: inventory.InventoryEndpoint
   Jobs: job.JobEndpoint
@@ -97,20 +99,6 @@ export class Moltin {
 export function gateway(config: config.ConfigOptions): Moltin
 
 export namespace moltin {
-  export interface GatewaysEndpoint
-    extends core.QueryableResource<null, null, null, null> {
-    endpoint: 'gateways'
-
-    Update<RequestBody = any, ResponseBody = any>(
-      slug: string,
-      body: RequestBody
-    ): Promise<ResponseBody>
-
-    Enabled<T>(slug: string, enabled: boolean): Promise<T>
-
-    GetSlugAttributes(flowType: string, token?: string): Promise<core.Attributes>
-  }
-
   export interface Settings {
     additional_languages?: string[]
     calculation_method?: string
