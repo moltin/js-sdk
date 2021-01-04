@@ -111,6 +111,25 @@ describe('Moltin accounts', () => {
     )
   })
 
+  it('should add a user to a store', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: `Bearer: ${accessToken}`
+      }
+    })
+      .post('/accounts/stores/store-1/users')
+      .reply(200, { data: 'User added to store', status: true })
+
+    return Moltin.Accounts.AddUserToStore('store-1', {
+      name: 'test-user',
+      email: 'testuser@test.com',
+      role: 1
+    }).then(response => {
+      assert.propertyVal(response, 'data', 'User added to store')
+      assert.propertyVal(response, 'status', true)
+    })
+  })
+
   it('should return an account', () => {
     nock(apiUrl, {
       reqheaders: {
