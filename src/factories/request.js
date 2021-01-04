@@ -78,7 +78,14 @@ class RequestFactory {
     return promise
   }
 
-  send(uri, method, body = undefined, token = undefined, instance) {
+  send(
+    uri,
+    method,
+    body = undefined,
+    token = undefined,
+    instance,
+    wrapBody = true
+  ) {
     const { config, storage } = this
 
     const promise = new Promise((resolve, reject) => {
@@ -126,7 +133,7 @@ class RequestFactory {
         fetch(`${config.protocol}://${config.host}/${version}/${uri}`, {
           method: method.toUpperCase(),
           headers,
-          body: buildRequestBody(body)
+          body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
         })
           .then(parseJSON)
           .then(response => {

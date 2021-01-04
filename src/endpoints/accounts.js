@@ -58,6 +58,17 @@ class AccountsEndpoint extends BaseExtend {
     )
   }
 
+  AddUserToStore(storeId, userData) {
+    return this.request.send(
+      `${this.endpoint}/stores/${storeId}/users`,
+      'POST',
+      userData,
+      undefined,
+      this,
+      false
+    )
+  }
+
   // Admin user endpoints
 
   Me() {
