@@ -250,8 +250,8 @@ describe('Build request body', () => {
     const res = buildRequestBody({ id: 1, desc: 'dummy data' })
 
     expect(res).to.equal(`{
-      "data": {"id":1,"desc":"dummy data"}
-    }`)
+        "data": {"id":1,"desc":"dummy data"}
+      }`)
   })
 })
 
