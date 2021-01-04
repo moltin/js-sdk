@@ -59,6 +59,7 @@ export interface Cart {
 export interface CartItemBase {
   id: string
   quantity: number
+
   [key: string]: any
 }
 
@@ -180,13 +181,16 @@ export interface CartEndpoint {
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/get-a-cart.html
    */
   Get(): Promise<Resource<Cart>>
+
   /**
    * Bulk Add Items to Cart
    * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
    * @param data An cart items or custom items
    */
-  BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
+  BulkAdd(data: CartItemObject[], options?: {
+    'add_all_or_nothing': false
+  }): Promise<CartItemsResponse>
 
   /**
    * Remove Cart Item
@@ -194,7 +198,7 @@ export interface CartEndpoint {
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/remove-cart-item.html
    * @param itemId the unique identifier for this cart item.
 
-  /**
+   /**
    * Get Cart Items
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/get-cart-items.html
    */
@@ -214,6 +218,7 @@ export interface CartEndpoint {
     quantity?: number,
     data?: any
   ): Promise<CartItemsResponse>
+
   RemoveAllItems(): Promise<CartItemsResponse>
 
   /**
@@ -223,6 +228,7 @@ export interface CartEndpoint {
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
+
   /**
    * Update Cart Item
    * Description: You can easily update a Cart item. A successful update returns the cart items.
@@ -244,6 +250,7 @@ export interface CartEndpoint {
    * @param code the promotion code.
    */
   AddPromotion(code: string): Promise<CartItemsResponse>
+
   /**
    * Bulk Update Items to Cart
    * Description: When you enable the bulk update feature, a shopper can update an array of items to their cart in one action, rather than updating each item one at a time.
@@ -273,6 +280,7 @@ export interface CartEndpoint {
    * @param data An cart items or custom items
    */
   BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
+
   /**
    * Get Carts List
    * @param token a customer token to access specific customer orders.
@@ -343,6 +351,7 @@ export interface CartEndpoint {
     customerId: string,
     token: string
   ): Promise<CartItemsResponse>
+
   /**
    * Customer Cart Associations
    * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
