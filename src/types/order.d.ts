@@ -86,6 +86,7 @@ export interface OrderFilter {
   ge?: {
     with_tax?: number
     without_tax?: number
+    created_at?: number
   }
   lt?: {
     with_tax?: number
