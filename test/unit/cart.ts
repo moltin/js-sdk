@@ -646,7 +646,8 @@ describe('Moltin cart', () => {
             type: 'promotion_item',
             code: 'testcode'
           }
-        ]
+        ], 
+        options: { add_all_or_nothing: false }
       })
       .reply(201, {
         name: 'Custom Item',

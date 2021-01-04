@@ -183,16 +183,6 @@ export interface CartEndpoint {
   Get(): Promise<Resource<Cart>>
 
   /**
-   * Bulk Add Items to Cart
-   * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
-   * @param data An cart items or custom items
-   */
-  BulkAdd(data: CartItemObject[], options?: {
-    'add_all_or_nothing': false
-  }): Promise<CartItemsResponse>
-
-  /**
    * Remove Cart Item
    * Description: You can easily remove items from the Cart. A successful Cart item removal request returns the cart items.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/remove-cart-item.html

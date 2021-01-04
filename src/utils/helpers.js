@@ -135,11 +135,17 @@ export function buildURL(endpoint, params) {
 
 export function buildRequestBody(body) {
   let parsedBody
-
   if (body) {
-    parsedBody = `{
-      "data": ${JSON.stringify(body)}
-    }`
+    if (body.options) {
+      parsedBody = `{
+        "data": ${JSON.stringify(body.data)},
+        "options" : ${JSON.stringify(body.options)}
+      }`
+    } else {
+      parsedBody = `{
+        "data": ${JSON.stringify(body)}
+      }`
+    }
   }
 
   return parsedBody
