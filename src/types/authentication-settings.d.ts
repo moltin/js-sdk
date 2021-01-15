@@ -1,4 +1,15 @@
-import { Resource, RelationshipToOne } from './core'
+/**
+ * Customer Authentication Settings
+ * Description: You can use the Customer Authentication Settings endpoint to retrieve
+ * settings controlling customer authentication.
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/customer-authentication-settings/index.html
+ */
+import { Resource, RelationshipToOne, Identifiable } from './core'
+
+/**
+ * The Customer Authentication Settings Interface
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/customer-authentication-settings/index.html#the-customer-authentication-settings-object
+ */
 
 export interface AuthenticationSettingsBase {
   type: string
@@ -8,10 +19,17 @@ export interface AuthenticationSettingsBase {
   }
 }
 
+export interface AuthenticationSettings
+  extends AuthenticationSettingsBase,
+    Identifiable {}
+
 /**
- * TODO: TODO: Need to point to documentation once ready
  * AuthenticationRealm Endpoints
  */
 export interface AuthenticationSettingsEndpoint {
-  Get(): Promise<Resource<AuthenticationSettingsBase>>
+  /**
+   * Get Customer Authentication Settings
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/customer-authentication-settings/get-customer-authentication-settings.html
+   */
+  Get(): Promise<Resource<AuthenticationSettings>>
 }

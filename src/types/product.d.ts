@@ -187,9 +187,12 @@ export interface ProductsEndpoint
   ): Promise<T>
 
   /**
-   * Update Relationship
-   * Description:
-   * DOCS:
+   * Build Child Products
+   * Description: This endpoint builds your child/variation products. After you have a base product and have attached
+   * some variations, this endpoint triggers the process that applies those variations to the base product.
+   * The result is a list of child products that each have one combination of the variation options applied to it.
+   * The id you should use in the url is that of the base product.
+   * DOCS:https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/build-child-products.html#docsNav
    * @param id productId
    * @constructor
    */
