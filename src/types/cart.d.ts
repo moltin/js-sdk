@@ -4,7 +4,7 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
-import { Resource } from './core'
+import { Resource, QueryableResource } from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
@@ -62,6 +62,8 @@ export interface CartItemBase {
 
   [key: string]: any
 }
+
+
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/index.html
@@ -130,8 +132,9 @@ export interface CartItemObject {
   code?: string
 }
 
-export interface CartEndpoint {
-  // CartEndpoint
+
+export interface CartEndpoint
+  extends QueryableResource<Cart, never, never, never> {
   endpoint: 'carts'
   cartId: string
 
