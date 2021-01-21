@@ -1,4 +1,5 @@
 import { StorageFactory } from './storage'
+import { Moltin } from '../moltin'
 
 export interface RequestFactory {
   config: Config
@@ -10,7 +11,9 @@ export interface RequestFactory {
     uri: string,
     method: HttpVerbs,
     body?: any,
-    token?: string
+    token?: string,
+    instance?: Moltin,
+    wrapBody?: Boolean
   ): Promise<T>
 
   constructor(config: Config): void
