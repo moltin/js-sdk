@@ -40,15 +40,6 @@ class AuthenticationRealmsEndpoint extends CRUDExtend {
       token
     )
   }
-
-  Update(realmId, body, token = null) {
-    return this.request.send(
-      `${this.endpoint}/${realmId}`,
-      'PUT',
-      body.data,
-      token
-    )
-  }
 }
 
 export default AuthenticationRealmsEndpoint
