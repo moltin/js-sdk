@@ -17,6 +17,7 @@ export interface Attribute {
   required: boolean
   options?: string[]
   description?: string
+  validation_rules?: any
   validation?: {
     regex: string
   }
