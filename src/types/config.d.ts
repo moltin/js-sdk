@@ -13,7 +13,8 @@ export interface RequestFactory {
     body?: any,
     token?: string,
     instance?: Moltin,
-    wrapBody?: Boolean
+    wrapBody?: Boolean,
+    version?: 'v1' | 'v2' | 'v3'
   ): Promise<T>
 
   constructor(config: Config): void
@@ -40,7 +41,7 @@ export interface Config {
   client_secret?: string
   host: string
   protocol: 'https'
-  version: 'v2'
+  version: 'v1' | 'v2' | 'v3'
   currency?: string
   language?: string
   custom_fetch?: Function
@@ -59,13 +60,7 @@ export interface Config {
   constructor(options: ConfigOptions): void
 }
 
-export enum HttpVerbs {
-  Get = 'GET',
-  Post = 'POST',
-  Put = 'PUT',
-  Patch = 'PATCH',
-  Delete = 'DELETE'
-}
+export type HttpVerbs = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export enum GrantType {
   ClientCredentials = 'client_credentials',
