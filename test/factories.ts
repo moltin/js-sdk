@@ -495,33 +495,6 @@ export const notFoundError = {
   ]
 }
 
-export const account: Account = {
-  application_types: [],
-  avatar: {
-    small: 'link',
-    large: 'link',
-    medium: 'link'
-  },
-  company: null,
-  company_size: null,
-  company_type: null,
-  created_at: '2020-04-06 08:16:48',
-  current_store: null,
-  email: '123@elasticpath.com',
-  id: '123',
-  job_title: null,
-  languages: [],
-  name: 'John Dou',
-  onboarded: true,
-  opt_in: false,
-  organisation_id: '321',
-  project_timeline: null,
-  signup_intention: null,
-  tutorial_modal_viewed: false,
-  updated_at: '2020-04-06 08:16:48',
-  user_role: 'other'
-}
-
 export const promotionsArray: Promotion[] = [
   {
     type: 'promotion',
