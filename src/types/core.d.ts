@@ -17,9 +17,16 @@ export interface Attribute {
   required: boolean
   options?: string[]
   description?: string
+  validation_rules?: Validation[]
   validation?: {
     regex: string
   }
+}
+
+export interface Validation {
+  type: string,
+  to?: string,
+  options?: any
 }
 
 export interface AttributesMeta {
