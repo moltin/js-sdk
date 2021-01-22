@@ -21,12 +21,11 @@ import * as file from './types/file'
 import * as flow from './types/flow'
 import * as transaction from './types/transaction'
 import * as settings from './types/settings'
-import * as accounts from './types/accounts'
 import * as promotions from './types/promotions'
 import * as variations from './types/variations'
-import * as authenticationSettings from './types/authentication-settings';
-import * as oidcProfile from './types/oidc-profile';
-import * as authenticationRealm from './types/authentication-realm';
+import * as authenticationSettings from './types/authentication-settings'
+import * as oidcProfile from './types/oidc-profile'
+import * as authenticationRealm from './types/authentication-realm'
 import * as paymentGateway from './types/gateway'
 
 export * from './types/config'
@@ -50,7 +49,6 @@ export * from './types/file'
 export * from './types/flow'
 export * from './types/transaction'
 export * from './types/settings'
-export * from './types/accounts'
 export * from './types/promotions'
 export * from './types/variations'
 export * from './types/authentication-settings'
@@ -83,7 +81,6 @@ export class Moltin {
   Addresses: address.AddressesEndpoint
   Transactions: transaction.TransactionEndpoint
   Settings: settings.SettingsEndpoint
-  Accounts: accounts.AccountsEndpoint
   Promotions: promotions.PromotionsEndpoint
   Variations: variations.VariationsEndpoint
   AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint

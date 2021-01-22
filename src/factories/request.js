@@ -84,7 +84,8 @@ class RequestFactory {
     body = undefined,
     token = undefined,
     instance,
-    wrapBody = true
+    wrapBody = true,
+    version = null
   ) {
     const { config, storage } = this
 
@@ -128,13 +129,15 @@ class RequestFactory {
           Object.assign(headers, config.headers)
         }
 
-        const version = (instance && instance.version) || config.version
-
-        fetch(`${config.protocol}://${config.host}/${version}/${uri}`, {
-          method: method.toUpperCase(),
-          headers,
-          body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
-        })
+        fetch(
+          `${config.protocol}://${config.host}/${version ||
+            config.version}/${uri}`,
+          {
+            method: method.toUpperCase(),
+            headers,
+            body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
+          }
+        )
           .then(parseJSON)
           .then(response => {
             if (response.ok) {
