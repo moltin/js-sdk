@@ -2,9 +2,6 @@ import {
   Address,
   Brand,
   BrandBase,
-  KeysItemResponse as Key,
-  Store,
-  Account,
   CustomAuthenticatorResponseBody,
   PromotionBase,
   FixedDiscountSchema,
@@ -497,54 +494,6 @@ export const notFoundError = {
     }
   ]
 }
-
-export const storesArray: Store[] = [
-  {
-    features: ['core'],
-    id: 'store-1',
-    locked: false,
-    name: 'name',
-    owner: '12312312',
-    store_status: 'test',
-    stripe_customer_id: null,
-    subscription_status: null,
-    trial_end: null,
-    trial_start: null,
-    users: [],
-    uuid: '123-123-123'
-  },
-  {
-    features: ['core'],
-    id: 'store-2',
-    locked: false,
-    name: 'name',
-    owner: '12312312',
-    store_status: 'test',
-    stripe_customer_id: null,
-    subscription_status: null,
-    trial_end: null,
-    trial_start: null,
-    users: [],
-    uuid: '123-123-123'
-  }
-]
-
-export const keysArray: Key[] = [
-  {
-    client_id: 'client_id-1',
-    client_secret: 'client_secret-1',
-    store_id: 'store_id-1',
-    store_uuid: 'store_uuid-1',
-    user_id: 'user_id-1'
-  },
-  {
-    client_id: 'client_id-2',
-    client_secret: 'client_secret-2',
-    store_id: 'store_id-2',
-    store_uuid: 'store_uuid-2',
-    user_id: 'user_id-2'
-  }
-]
 
 export const account: Account = {
   application_types: [],
