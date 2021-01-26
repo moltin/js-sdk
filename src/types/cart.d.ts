@@ -160,7 +160,8 @@ export interface CartEndpoint
   AddProduct(
     productId: string,
     quantity?: number,
-    data?: any
+    data?: any, 
+    isSku?: boolean
   ): Promise<CartItemsResponse>
 
   /**
