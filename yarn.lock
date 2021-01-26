@@ -4928,10 +4928,10 @@ rollup-plugin-filesize@2.0.0:
     filesize "^3.5.6"
     gzip-size "^3.0.0"
 
-rollup-plugin-ignore@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-ignore/-/rollup-plugin-ignore-1.0.3.tgz#9a3caac6709e481471ce4498a48164bbc2359e3d"
-  integrity sha1-mjyqxnCeSBRxzkSYpIFku8I1nj0=
+rollup-plugin-ignore@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-ignore/-/rollup-plugin-ignore-1.0.9.tgz#62a692d387d543395ad2fbcc443c9b3549582844"
+  integrity sha512-+Q2jmD4gbO3ByFuljkDEfpEcYvll7J5+ZadUuk/Pu35x2KGrbHxKtt3+s+dPIgXX1mG7zCxG4s/NdRqztR5Ruw==
 
 rollup-plugin-json@3.1.0:
   version "3.1.0"
