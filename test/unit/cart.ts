@@ -424,19 +424,19 @@ describe('Moltin cart', () => {
       .post('/carts/3/items', {
         data: {
           type: 'cart_item',
-          id: '4',
+          id: '553f5378-1211-4efa-b575-b95247f7e4c6',
           quantity: 2
         }
       })
       .reply(201, {
-        id: '4',
+        id: '553f5378-1211-4efa-b575-b95247f7e4c6',
         quantity: 2
       })
 
     return Moltin.Cart()
-      .AddProduct('4', 2)
+      .AddProduct('553f5378-1211-4efa-b575-b95247f7e4c6', 2)
       .then(response => {
-        assert.propertyVal(response, 'id', '4')
+        assert.propertyVal(response, 'id', '553f5378-1211-4efa-b575-b95247f7e4c6')
         assert.propertyVal(response, 'quantity', 2)
       })
   })
@@ -451,19 +451,19 @@ describe('Moltin cart', () => {
       .post('/carts/5/items', {
         data: {
           type: 'cart_item',
-          id: '4',
+          id: '553f5378-1211-4efa-b575-b95247f7e4c6',
           quantity: 2
         }
       })
       .reply(201, {
-        id: '4',
+        id: '553f5378-1211-4efa-b575-b95247f7e4c6',
         quantity: 2
       })
 
     return Moltin.Cart('5')
-      .AddProduct('4', 2)
+      .AddProduct('553f5378-1211-4efa-b575-b95247f7e4c6', 2)
       .then(response => {
-        assert.propertyVal(response, 'id', '4')
+        assert.propertyVal(response, 'id', '553f5378-1211-4efa-b575-b95247f7e4c6')
         assert.propertyVal(response, 'quantity', 2)
       })
   })
@@ -478,21 +478,21 @@ describe('Moltin cart', () => {
       .post('/carts/6/items', {
         data: {
           type: 'cart_item',
-          id: '4',
+          id: '553f5378-1211-4efa-b575-b95247f7e4c6',
           quantity: 2,
           image_url: 'image.link.com'
         }
       })
       .reply(201, {
-        id: '4',
+        id: '553f5378-1211-4efa-b575-b95247f7e4c6',
         quantity: 2,
         image_url: 'image.link.com'
       })
 
     return Moltin.Cart('6')
-      .AddProduct('4', 2, customData)
+      .AddProduct('553f5378-1211-4efa-b575-b95247f7e4c6', 2, customData)
       .then(response => {
-        assert.propertyVal(response, 'id', '4', 'image.link.com')
+        assert.propertyVal(response, 'id', '553f5378-1211-4efa-b575-b95247f7e4c6', 'image.link.com')
         assert.propertyVal(response, 'quantity', 2)
       })
   })
@@ -507,19 +507,19 @@ describe('Moltin cart', () => {
       .post('/carts/3/items', {
         data: {
           type: 'cart_item',
-          id: '4',
+          id: '553f5378-1211-4efa-b575-b95247f7e4c6',
           quantity: 1
         }
       })
       .reply(201, {
-        id: '4',
+        id: '553f5378-1211-4efa-b575-b95247f7e4c6',
         quantity: 1
       })
 
     return Moltin.Cart()
-      .AddProduct('4')
+      .AddProduct('553f5378-1211-4efa-b575-b95247f7e4c6')
       .then(response => {
-        assert.propertyVal(response, 'id', '4')
+        assert.propertyVal(response, 'id', '553f5378-1211-4efa-b575-b95247f7e4c6')
         assert.propertyVal(response, 'quantity', 1)
       })
   })

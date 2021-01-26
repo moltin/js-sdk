@@ -152,9 +152,9 @@ export function buildRequestBody(body) {
 }
 
 export function buildCartItemData(
-  IsId,
   id,
   quantity = null,
+  isId,
   type = 'cart_item',
   flows
 ) {
@@ -164,7 +164,7 @@ export function buildCartItemData(
   }
 
   if (type === 'cart_item') {
-    if (IsId)
+    if (isId)
       Object.assign(payload, {
         id,
         quantity: parseInt(quantity, 10)

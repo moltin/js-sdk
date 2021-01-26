@@ -38,9 +38,9 @@ class CartEndpoint extends BaseExtend {
 
   AddProduct(productIdentity, quantity = 1, data = {}) {
     const isProductId = productIdentity.match(
-      '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      '/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/i'
     )
-    const body = buildCartItemData(isProductId, productIdentity, quantity)
+    const body = buildCartItemData(productIdentity, quantity, isProductId)
 
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       ...body,
@@ -61,7 +61,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   AddPromotion(code) {
-    const body = buildCartItemData(code, null, 'promotion_item')
+    const body = buildCartItemData(code, null, null, 'promotion_item')
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items`,
@@ -121,7 +121,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   UpdateItem(itemId, quantity, data = {}) {
-    const body = buildCartItemData(itemId, quantity)
+    const body = buildCartItemData(itemId, quantity, true)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
@@ -143,7 +143,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   UpdateItemQuantity(itemId, quantity) {
-    const body = buildCartItemData(itemId, quantity)
+    const body = buildCartItemData(itemId, quantity, true)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
