@@ -154,6 +154,7 @@ export function buildRequestBody(body) {
 export function buildCartItemData(
   id,
   quantity = null,
+  isSku,
   type = 'cart_item',
   flows
 ) {
@@ -163,10 +164,16 @@ export function buildCartItemData(
   }
 
   if (type === 'cart_item') {
-    Object.assign(payload, {
-      id,
-      quantity: parseInt(quantity, 10)
-    })
+    if (isSku)
+      Object.assign(payload, {
+        sku: id,
+        quantity: parseInt(quantity, 10)
+      })
+    else
+      Object.assign(payload, {
+        id,
+        quantity: parseInt(quantity, 10)
+      })
   }
 
   if (type === 'promotion_item') {

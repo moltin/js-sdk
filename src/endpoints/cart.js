@@ -36,8 +36,8 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
-  AddProduct(productId, quantity = 1, data = {}) {
-    const body = buildCartItemData(productId, quantity)
+  AddProduct(productId, quantity = 1, data = {}, isSku) {
+    const body = buildCartItemData(productId, quantity, isSku)
 
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       ...body,
@@ -58,7 +58,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   AddPromotion(code) {
-    const body = buildCartItemData(code, null, 'promotion_item')
+    const body = buildCartItemData(code, null, false, 'promotion_item')
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items`,
@@ -118,7 +118,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   UpdateItem(itemId, quantity, data = {}) {
-    const body = buildCartItemData(itemId, quantity)
+    const body = buildCartItemData(itemId, quantity, false)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
@@ -129,7 +129,7 @@ class CartEndpoint extends BaseExtend {
 
   UpdateItems(items) {
     const body = items.map(({ id, quantity, type, ...rest }) =>
-      buildCartItemData(id, quantity, type, rest)
+      buildCartItemData(id, quantity, false, type, rest)
     )
 
     return this.request.send(
@@ -140,7 +140,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   UpdateItemQuantity(itemId, quantity) {
-    const body = buildCartItemData(itemId, quantity)
+    const body = buildCartItemData(itemId, quantity, false)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
