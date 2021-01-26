@@ -154,9 +154,9 @@ export function buildRequestBody(body) {
 export function buildCartItemData(
   id,
   quantity = null,
-  isSku,
   type = 'cart_item',
-  flows
+  flows,
+  isSku = false
 ) {
   const payload = {
     type,

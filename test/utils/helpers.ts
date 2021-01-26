@@ -39,7 +39,7 @@ describe('Build relationship payloads', () => {
 
 describe('Build cart payloads', () => {
   it('should return a promotion item payload', () => {
-    const payload = buildCartItemData('testcode', null,false, 'promotion_item')
+    const payload = buildCartItemData('testcode', null, 'promotion_item')
 
     expect(payload).to.include({
       type: 'promotion_item',
@@ -48,7 +48,7 @@ describe('Build cart payloads', () => {
   })
 
   it('should return a cart item payload', () => {
-    const payload = buildCartItemData('123', 4, false)
+    const payload = buildCartItemData('123', 4)
 
     expect(payload).to.include({
       type: 'cart_item',
@@ -257,7 +257,7 @@ describe('Build request body', () => {
 
 describe('Build cart item data', () => {
   it('should build cart item data with quantity', () => {
-    const res = buildCartItemData(1, '10', false, 'cart_item', { name: 'test' })
+    const res = buildCartItemData(1, '10', 'cart_item', { name: 'test' })
 
     expect(res).to.deep.equal({
       id: 1,
@@ -268,7 +268,7 @@ describe('Build cart item data', () => {
   })
 
   it('should build cart item data with quantity by SKU', () => {
-    const res = buildCartItemData(2, '10', true, 'cart_item', { name: 'test' })
+    const res = buildCartItemData(2, '10', 'cart_item', { name: 'test' }, true)
 
     expect(res).to.deep.equal({
       sku: 2,
@@ -279,7 +279,7 @@ describe('Build cart item data', () => {
   })
 
   it('should build promotion item data', () => {
-    const res = buildCartItemData('promo123', 1,false, 'promotion_item', {
+    const res = buildCartItemData('promo123', 1, 'promotion_item', {
       name: 'test'
     })
 
