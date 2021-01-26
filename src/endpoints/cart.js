@@ -36,8 +36,11 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
-  AddProduct(productId, quantity = 1, data = {}) {
-    const body = buildCartItemData(productId, quantity)
+  AddProduct(productIdentity, quantity = 1, data = {}) {
+    const isProductId = productIdentity.match(
+      '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+    )
+    const body = buildCartItemData(isProductId, productIdentity, quantity)
 
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       ...body,
