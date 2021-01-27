@@ -39,7 +39,7 @@ export interface ProfileListItem extends Profile {
   }
 }
 
-export interface ProfileReaponse extends Resource<ProfileBase> {
+export interface ProfileResponse extends Resource<ProfileBase> {
   links: {
     'authorization-endpoint': string
     'client-discovery-url': string
@@ -66,7 +66,7 @@ export interface OidcProfileEndpoint {
    * @param realmId - The ID for the authentication-realm containing the OpenID Connect profiles.
    * @param profileId - The ID for the requested OpenID Connect profile.
    */
-  Get({ realmId, profileId }): Promise<ProfileReaponse>
+  Get({ realmId, profileId }): Promise<ProfileResponse>
 
   /**
    * Create an OpenID Connect Profile
@@ -74,7 +74,7 @@ export interface OidcProfileEndpoint {
    * @param realmId - The ID for the authentication-realm containing the OpenID Connect profiles.
    * @param body - The OpenID Connect Profile object
    */
-  Create(realmId: string, body: { data: ProfileBody }): Promise<ProfileReaponse>
+  Create(realmId: string, body: { data: ProfileBody }): Promise<ProfileResponse>
 
   /**
    * Update an OpenID Connect Profile
@@ -87,7 +87,7 @@ export interface OidcProfileEndpoint {
     realmId: string,
     profileId: string,
     body: { data: ProfileBody }
-  ): Promise<ProfileReaponse>
+  ): Promise<ProfileResponse>
 
   /**
    * Delete an OpenID Connect Profile
