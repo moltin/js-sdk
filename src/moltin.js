@@ -7,6 +7,7 @@ import ProductsEndpoint from './endpoints/products'
 import CurrenciesEndpoint from './endpoints/currencies'
 import BrandsEndpoint from './endpoints/brands'
 import CartEndpoint from './endpoints/cart'
+import PCMEndpoint from './endpoints/pcm'
 import CategoriesEndpoint from './endpoints/categories'
 import CollectionsEndpoint from './endpoints/collections'
 import IntegrationsEndpoint from './endpoints/integrations'
@@ -43,6 +44,7 @@ export default class Moltin {
     this.storage = config.storage
 
     this.Products = new ProductsEndpoint(config)
+    this.PCM = new PCMEndpoint(config)
     this.Currencies = new CurrenciesEndpoint(config)
     this.Brands = new BrandsEndpoint(config)
     this.Categories = new CategoriesEndpoint(config)
