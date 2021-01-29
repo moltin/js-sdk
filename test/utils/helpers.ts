@@ -267,6 +267,17 @@ describe('Build cart item data', () => {
     })
   })
 
+  it('should build cart item data with quantity by SKU', () => {
+    const res = buildCartItemData(2, '10', 'cart_item', { name: 'test' }, true)
+
+    expect(res).to.deep.equal({
+      sku: 2,
+      quantity: 10,
+      type: 'cart_item',
+      name: 'test'
+    })
+  })
+
   it('should build promotion item data', () => {
     const res = buildCartItemData('promo123', 1, 'promotion_item', {
       name: 'test'

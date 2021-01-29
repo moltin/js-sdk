@@ -414,7 +414,7 @@ describe('Moltin cart', () => {
       })
   })
 
-  it('should add a product to the cart', () => {
+  it('should add a product to the cart by productId', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
@@ -437,6 +437,33 @@ describe('Moltin cart', () => {
       .AddProduct('4', 2)
       .then(response => {
         assert.propertyVal(response, 'id', '4')
+        assert.propertyVal(response, 'quantity', 2)
+      })
+  })
+
+  it('should add a product to the cart by ProductSKU', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/carts/3/items', {
+        data: {
+          type: 'cart_item',
+          sku: '4',
+          quantity: 2
+        }
+      })
+      .reply(201, {
+        sku: '4',
+        quantity: 2
+      })
+
+    return Moltin.Cart()
+      .AddProduct('4', 2, {}, true)
+      .then(response => {
+        assert.propertyVal(response, 'sku', '4')
         assert.propertyVal(response, 'quantity', 2)
       })
   })
