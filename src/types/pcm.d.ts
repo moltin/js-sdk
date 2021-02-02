@@ -31,7 +31,6 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
   }
 }
 
-
 export interface PcmProductFilter {
   // TODO
 }
