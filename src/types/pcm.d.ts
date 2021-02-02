@@ -29,7 +29,7 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
     // TODO
   }
-}extends/base.js
+}
 
 
 export interface PcmProductFilter {
