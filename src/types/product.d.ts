@@ -50,6 +50,7 @@ export interface Product extends Identifiable, ProductBase {
     categories?: Relationship<'category'>[]
     brands?: Relationship<'brand'>[]
     parent?: Relationship<'product'>
+    children?: RelationshipToMany<'product'>
   }
 }
 
