@@ -26,6 +26,8 @@ import { AuthenticationSettingsEndpoint } from './types/authentication-settings'
 import { OidcProfileEndpoint } from './types/oidc-profile'
 import { AuthenticationRealmEndpoint } from './types/authentication-realm'
 import { CartEndpoint } from './types/cart'
+import { HierarchiesEndpoint } from './types/hierarchies'
+import { CatalogsEndpoint } from './types/catalogs'
 
 export * from './types/config'
 export * from './types/storage'
@@ -38,18 +40,21 @@ export * from './types/cart'
 export * from './types/address'
 export * from './types/inventory'
 export * from './types/field'
+export * from './types/nodes'
 export * from './types/collection'
 export * from './types/category'
 export * from './types/brand'
 export * from './types/currency'
 export * from './types/pcm'
 export * from './types/integration'
+export * from './types/hierarchies'
 export * from './types/job'
 export * from './types/file'
 export * from './types/flow'
 export * from './types/transaction'
 export * from './types/settings'
 export * from './types/promotions'
+export * from './types/catalogs'
 export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
@@ -66,6 +71,8 @@ export class Moltin {
   storage: StorageFactory
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
+  Catalogs: CatalogsEndpoint
+  Hierarchies: HierarchiesEndpoint
   Currencies: CurrencyEndpoint
   Brands: BrandEndpoint
   Categories: CategoryEndpoint
