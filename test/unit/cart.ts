@@ -157,7 +157,8 @@ describe('Moltin cart', () => {
             },
             timestamps: {
               created_at: '2020-08-21T01:45:59Z',
-              updated_at: '2020-08-21T01:45:59Z'
+              updated_at: '2020-08-21T01:45:59Z',
+              expires_at: '2020-08-28T01:45:59Z',
             }
           }
         }
@@ -182,7 +183,8 @@ describe('Moltin cart', () => {
         },
         timestamps: {
           created_at: '2020-08-21T01:45:59Z',
-          updated_at: '2020-08-21T01:45:59Z'
+          updated_at: '2020-08-21T01:45:59Z',
+          expires_at: '2020-08-28T01:45:59Z',
         }
       }
     }

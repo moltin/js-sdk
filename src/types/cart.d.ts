@@ -52,6 +52,7 @@ export interface Cart {
     timestamps?: {
       created_at: string
       updated_at: string
+      expires_at: string
     }
   }
 }
@@ -102,6 +103,7 @@ export interface CartItem extends CartItemBase {
     timestamps: {
       created_at: string
       updated_at: string
+      expires_at: string
     }
   }
 }
@@ -117,6 +119,7 @@ export interface CartItemsResponse {
     timestamps: {
       created_at: string
       updated_at: string
+      expires_at: string
     }
   }
 }
