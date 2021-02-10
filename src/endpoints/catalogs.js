@@ -1,9 +1,10 @@
-import CRUDExtend from '../extends/crud'
 import { singularize } from 'inflected'
+import CRUDExtend from '../extends/crud'
 
 class Nodes {
   constructor(endpoint) {
-    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    config.version = 'experimental'
   }
 
   All({ hierarchyId, token = null }) {
