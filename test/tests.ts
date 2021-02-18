@@ -25,6 +25,7 @@ require('./unit/promotions')
 require('./unit/variations')
 // require('./unit/authentication-realm')
 // require('./unit/authentication-settings')
+require('./unit/accounts')
 
 // Utilities
 require('./utils/helpers')
