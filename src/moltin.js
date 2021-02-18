@@ -38,6 +38,7 @@ import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 
+
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
 import CatalogEndpoint from './endpoints/catalog'
@@ -82,6 +83,7 @@ export default class Moltin {
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
+
     this.MerchantRealmMappings = new MerchantRealmMappingsEndpoint(config)
     this.Accounts = new Accounts(config)
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
