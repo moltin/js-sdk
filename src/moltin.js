@@ -32,6 +32,7 @@ import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import HierarchiesEndpoint from './endpoints/hierarchies'
 import MerchantRealmMappingsEndpoint from './endpoints/merchant-realm-mappings'
+import Accounts from './endpoints/accounts'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -77,6 +78,7 @@ export default class Moltin {
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
     this.MerchantRealmMappings = new MerchantRealmMappingsEndpoint(config)
+    this.Account = new Accounts(config)
   }
 
   // Expose `Cart` class on Moltin class
