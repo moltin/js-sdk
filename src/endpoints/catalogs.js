@@ -4,7 +4,7 @@ import CRUDExtend from '../extends/crud'
 class Nodes {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'experimental'
+    this.config.version = 'experimental'
   }
 
   All({ hierarchyId, token = null }) {
