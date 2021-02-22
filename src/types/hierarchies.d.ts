@@ -4,9 +4,10 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource
+  CrudQueryableResource, ResourceList
 } from './core'
-import { NodesEndpoint } from './nodes'
+import { NodesEndpoint, Node } from './nodes'
+import { NodeRelationshipsEndpoint } from './node-relationships'
 
 /**
  * Core PCM Product Base Interface
@@ -54,4 +55,6 @@ export interface HierarchiesEndpoint
     HierarchyInclude> {
   endpoint: 'hierarchies'
   Nodes: NodesEndpoint
+  Relationships: NodeRelationshipsEndpoint
+  Children(id: string, token?: string): Promise<ResourceList<Node>>
 }

@@ -17,6 +17,7 @@ import CustomersEndpoint from './endpoints/customers'
 import InventoriesEndpoint from './endpoints/inventories'
 import JobsEndpoint from './endpoints/jobs'
 import FlowsEndpoint from './endpoints/flows'
+import PriceBooksEndpoint from './endpoints/price-books'
 import FieldsEndpoint from './endpoints/fields'
 import FilesEndpoint from './endpoints/files'
 import AddressesEndpoint from './endpoints/addresses'
@@ -32,6 +33,7 @@ import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import HierarchiesEndpoint from './endpoints/heirarchies'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
+import CatalogEndpoint from './endpoints/catalogs'
 
 export default class Moltin {
   constructor(config) {
@@ -46,8 +48,10 @@ export default class Moltin {
 
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
+    this.Catalogs = new CatalogEndpoint(config)
     this.Currencies = new CurrenciesEndpoint(config)
     this.Brands = new BrandsEndpoint(config)
+    this.PriceBooks = new PriceBooksEndpoint(config)
     this.Categories = new CategoriesEndpoint(config)
     this.Hierarchies = new HierarchiesEndpoint(config)
     this.Collections = new CollectionsEndpoint(config)
