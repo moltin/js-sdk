@@ -31,7 +31,7 @@
     "@babel/preset-env": "7.0.0-beta.54",
     "@babel/preset-stage-3": "7.0.0-beta.54",
     "@babel/register": "7.0.0-beta.54",
-    "@types/chai": "4.2.14",
+    "@types/chai": "4.2.15",
     "@types/mocha": "8.0.1",
     "babel-eslint": "8.2.6",
     "babel-plugin-transform-class-properties": "6.24.1",
