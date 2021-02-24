@@ -28,7 +28,7 @@ import { AuthenticationRealmEndpoint } from './types/authentication-realm'
 import { CartEndpoint } from './types/cart'
 import { HierarchiesEndpoint } from './types/hierarchies'
 import { CatalogsEndpoint } from './types/catalogs'
-import { PriceBook } from './types/price-books'
+import { PriceBooksEndpoint } from './types/price-books'
 
 export * from './types/config'
 export * from './types/storage'
@@ -73,7 +73,7 @@ export class Moltin {
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
-  PriceBooks: PriceBook
+  PriceBooks: PriceBooksEndpoint
   Hierarchies: HierarchiesEndpoint
   Currencies: CurrencyEndpoint
   Brands: BrandEndpoint

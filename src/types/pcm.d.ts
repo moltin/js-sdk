@@ -20,7 +20,7 @@ export interface PcmProductBase {
     sku: string
     status?: string
     commodity_type?: string
-    upc_ean?: number
+    upc_ean?: string
     mpn?: string
   }
 }
