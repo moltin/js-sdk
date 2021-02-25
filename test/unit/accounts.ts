@@ -8,14 +8,6 @@ describe('Moltin Accounts', () => {
     const Moltin = MoltinGateway({
         client_id: 'XXX',
     })
-    // TODO MT-6474 Implement this test after MT-6474 is done (Accounts GET /v2/accounts)
-    // it('Get all Accounts', () => {
-    //     nock(apiUrl, {}).get('/accounts').reply(200, {})
-    //
-    //     return Moltin.Account.All().then((res) => {
-    //         assert.isObject(res)
-    //     })
-    // })
 
     it('Get a single account', () => {
         nock(apiUrl, {})
