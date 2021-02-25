@@ -6,29 +6,6 @@ class AccountsEndpoint extends CRUDExtend {
     this.endpoint = 'accounts'
   }
 
-  // TODO verify after MT-6474 (implement GET /v2/accounts) is done
-  //
-  // All(token = null, headers = {}) {
-  //   const { includes, sort, limit, offset, filter } = this
-  //
-  //   this.call = this.request.send(
-  //     buildURL(this.endpoint, {
-  //       includes,
-  //       sort,
-  //       limit,
-  //       offset,
-  //       filter
-  //     }),
-  //     'GET',
-  //     undefined,
-  //     token,
-  //     this,
-  //     headers
-  //   )
-  //
-  //   return this.call
-  // }
-
   Create(body) {
     return this.request.send(this.endpoint, 'POST', body.data)
   }
