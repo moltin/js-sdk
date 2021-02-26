@@ -7,8 +7,12 @@ class Jobs extends BaseExtend {
     this.endpoint = 'jobs'
   }
 
+  All() {
+    return this.request.send(`${this.endpoint}`, 'GET')
+  }
+
   Create(body) {
-    return this.request.send(this.endpoint, 'POST', body)
+    return this.request.send(`${this.endpoint}`, 'POST', body)
   }
 
   GetFile(fileId) {

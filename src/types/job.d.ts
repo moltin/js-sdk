@@ -53,7 +53,7 @@ export interface JobEndpoint {
    * Title: Get
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/get-a-job.html
    */
-  Get(id: string): Promise<Job>
+  Get(id: string): Promise<Resource<Job>>
 
-  GetFile(id: string): Promise<Job>
+  GetFile(id: string): Promise<Resource<Job>>
 }
