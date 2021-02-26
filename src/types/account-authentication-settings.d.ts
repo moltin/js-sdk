@@ -19,9 +19,7 @@ export interface AccountAuthenticationSettingsBase {
   }
 }
 
-export interface AccountAuthenticationSettings
-  extends AccountAuthenticationSettingsBase,
-    Identifiable {}
+export interface AccountAuthenticationSettings extends AccountAuthenticationSettingsBase, Identifiable {}
 
 /**
  * AuthenticationRealm Endpoints

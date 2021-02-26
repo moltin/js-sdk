@@ -1,8 +1,8 @@
-import CRUDExtend from '../extends/crud'
+import RequestFactory from '../factories/request'
 
-class AccountAuthenticationSettingsEndpoint extends CRUDExtend {
-  constructor(endpoint) {
-    super(endpoint)
+class AccountAuthenticationSettingsEndpoint {
+  constructor(config) {
+    this.request = new RequestFactory(config)
     this.endpoint = 'settings/account-authentication'
   }
 
