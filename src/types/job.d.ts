@@ -51,7 +51,7 @@ export interface JobEndpoint {
    * @param body
    * @constructor
    */
-  Create(body: createJob): Promise<Resource<JobBase>>
+  Create(body: createJob): Promise<Resource<Job>>
 
   /**
    * Title: Get All
