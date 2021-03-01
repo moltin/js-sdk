@@ -27,6 +27,10 @@ export interface Job extends Identifiable, JobBase {
   }
 }
 
+export interface FileHref {
+  href: string
+}
+
 /**
  * Job Endpoints
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
@@ -55,5 +59,5 @@ export interface JobEndpoint {
    */
   Get(id: string): Promise<Resource<Job>>
 
-  GetFile(id: string): Promise<Resource<Job>>
+  GetFile(id: string): Promise<FileHref>
 }

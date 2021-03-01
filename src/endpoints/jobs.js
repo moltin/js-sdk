@@ -18,6 +18,10 @@ class Jobs extends BaseExtend {
   GetFile(fileId) {
     return this.request.send(`${this.endpoint}/${fileId}/file`, 'Get')
   }
+
+  Get(fileId) {
+    return this.request.send(`${this.endpoint}/${fileId}`, 'Get')
+  }
 }
 
 export default Jobs
