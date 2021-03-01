@@ -31,6 +31,12 @@ export interface FileHref {
   href: string
 }
 
+export interface createJob {
+  filter: string
+  job_type: string
+  type?: string
+}
+
 /**
  * Job Endpoints
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
@@ -45,7 +51,7 @@ export interface JobEndpoint {
    * @param body
    * @constructor
    */
-  Create(body: JobBase): Promise<Resource<JobBase>>
+  Create(body: createJob): Promise<Resource<JobBase>>
 
   /**
    * Title: Get All
