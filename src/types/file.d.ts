@@ -15,7 +15,7 @@ export interface FileBase {
   file_name: string
 }
 
-export interface File extends Identifiable, FieldBase {
+export interface File extends Identifiable, FileBase {
   type: string
   mime_type: string
   file_size: number

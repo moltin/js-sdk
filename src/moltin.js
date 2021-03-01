@@ -32,7 +32,7 @@ import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import HierarchiesEndpoint from './endpoints/heirarchies'
 
-import { cartIdentifier, tokenInvalid } from './utils/helpers'
+import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogEndpoint from './endpoints/catalogs'
 
 export default class Moltin {
@@ -45,6 +45,7 @@ export default class Moltin {
 
     this.request = new RequestFactory(config)
     this.storage = config.storage
+    this.credentials = () => getCredentials(config.storage)
 
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
