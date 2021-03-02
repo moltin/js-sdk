@@ -41,13 +41,14 @@ type PcmProductSort = // TODO
 type PcmProductInclude = // TODO
   | 'price'
 
+export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
   extends CrudQueryableResource<PcmProduct,
     PcmProductBase,
-    Partial<PcmProductBase>,
+    PcmProductUpdateBody,
     PcmProductFilter,
     PcmProductSort,
     PcmProductInclude> {
