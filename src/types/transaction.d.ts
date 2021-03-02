@@ -92,5 +92,7 @@ export interface TransactionEndpoint {
   Refund(options: {
     order: string
     transaction: string
-  }): Promise<TransactionsResponse>
+  },
+  body?: { amount: number }
+  ): Promise<TransactionsResponse>
 }

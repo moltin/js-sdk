@@ -27,10 +27,11 @@ class TransactionsEndpoint extends BaseExtend {
     )
   }
 
-  Refund({ order, transaction }) {
+  Refund({ order, transaction }, body) {
     return this.request.send(
       `orders/${order}/${this.endpoint}/${transaction}/refund`,
-      'POST'
+      'POST',
+      body
     )
   }
 }
