@@ -18,8 +18,8 @@ export interface CatalogBase {
     description?: string
     hierarchy_ids: string[]
     pricebook_id: string
-    created_at: string
-    updated_at: string
+    created_at?: string
+    updated_at?: string
   }
 }
 
