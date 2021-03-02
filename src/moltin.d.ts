@@ -71,6 +71,7 @@ export class Moltin {
   cartId?: string
   request: RequestFactory
   storage: StorageFactory
+  credentials: AuthenticateResponseBody
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
