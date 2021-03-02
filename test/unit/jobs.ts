@@ -57,12 +57,8 @@ describe('Moltin jobs', () => {
 
   it('should create a new job', () => {
     const newJobs = {
-      type: 'job',
-      job_type: 'order_export',
-      link: {
-        href: 'url'
-      },
-      status: 'processing' as const
+      filter: "",
+      job_type: "order_export"
     }
 
     // Intercept the API request
