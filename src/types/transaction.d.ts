@@ -59,6 +59,7 @@ export interface TransactionBase {
   gateway: string
   amount: number
   currency: string
+  refunded_amount: number
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
   status: 'complete' | 'failed'
   relationships: any
