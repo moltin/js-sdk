@@ -29,18 +29,9 @@ class NodeRelationshipsEndpoint {
 
   Update({ hierarchyId, nodeId, body, token = null }) {
     return this.request.send(
-      `hierarchies/${hierarchyId}/nodes/${nodeId}/${this.endpoint}`,
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
       'PUT',
       { ...body, type: singularize(this.endpoint) },
-      token
-    )
-  }
-
-  Products({ hierarchyId, nodeId, token = null }) {
-    return this.request.send(
-      `hierarchies/${hierarchyId}/nodes/${nodeId}/products`,
-      'GET',
-      null,
       token
     )
   }

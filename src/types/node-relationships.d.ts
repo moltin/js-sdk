@@ -36,10 +36,4 @@ export interface NodeRelationshipsEndpoint {
     body: NodeRelationshipBase[]
     token?: string
   }): Promise<{}>
-
-  Products(options: {
-    hierarchyId: string
-    nodeId: string
-    token?: string
-  }): Promise<Resource<Product[]>>
 }
