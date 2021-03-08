@@ -64,8 +64,6 @@ export interface CartItemBase {
   [key: string]: any
 }
 
-
-
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/index.html
  */
@@ -135,7 +133,6 @@ export interface CartItemObject {
   code?: string
 }
 
-
 export interface CartEndpoint
   extends QueryableResource<Cart, never, never, never> {
   endpoint: 'carts'
@@ -163,7 +160,7 @@ export interface CartEndpoint
   AddProduct(
     productId: string,
     quantity?: number,
-    data?: any, 
+    data?: any,
     isSku?: boolean
   ): Promise<CartItemsResponse>
 
@@ -181,7 +178,7 @@ export interface CartEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
    * @param code the promotion code.
    */
-  AddPromotion(code: string): Promise<CartItemsResponse>
+  AddPromotion(code: string, customerToken?: string): Promise<CartItemsResponse>
 
   /**
    * Get a Cart by reference
