@@ -177,8 +177,9 @@ export interface CartEndpoint
    * Description: You can use the Promotions API to apply discounts to your cart as a special cart item type.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
    * @param code the promotion code.
+   * @param token a customer token to apply customer specific promotions.
    */
-  AddPromotion(code: string, customerToken?: string): Promise<CartItemsResponse>
+  AddPromotion(code: string, token?: string): Promise<CartItemsResponse>
 
   /**
    * Get a Cart by reference
