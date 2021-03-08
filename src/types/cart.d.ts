@@ -64,8 +64,6 @@ export interface CartItemBase {
   [key: string]: any
 }
 
-
-
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/index.html
  */
@@ -135,7 +133,6 @@ export interface CartItemObject {
   code?: string
 }
 
-
 export interface CartEndpoint
   extends QueryableResource<Cart, never, never, never> {
   endpoint: 'carts'
@@ -163,7 +160,7 @@ export interface CartEndpoint
   AddProduct(
     productId: string,
     quantity?: number,
-    data?: any, 
+    data?: any,
     isSku?: boolean
   ): Promise<CartItemsResponse>
 
@@ -180,8 +177,9 @@ export interface CartEndpoint
    * Description: You can use the Promotions API to apply discounts to your cart as a special cart item type.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
    * @param code the promotion code.
+   * @param token a customer token to apply customer specific promotions.
    */
-  AddPromotion(code: string): Promise<CartItemsResponse>
+  AddPromotion(code: string, token?: string): Promise<CartItemsResponse>
 
   /**
    * Get a Cart by reference

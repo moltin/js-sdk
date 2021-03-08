@@ -158,7 +158,7 @@ describe('Moltin cart', () => {
             timestamps: {
               created_at: '2020-08-21T01:45:59Z',
               updated_at: '2020-08-21T01:45:59Z',
-              expires_at: '2020-08-28T01:45:59Z',
+              expires_at: '2020-08-28T01:45:59Z'
             }
           }
         }
@@ -184,7 +184,7 @@ describe('Moltin cart', () => {
         timestamps: {
           created_at: '2020-08-21T01:45:59Z',
           updated_at: '2020-08-21T01:45:59Z',
-          expires_at: '2020-08-28T01:45:59Z',
+          expires_at: '2020-08-28T01:45:59Z'
         }
       }
     }
@@ -621,6 +621,30 @@ describe('Moltin cart', () => {
       })
   })
 
+  it('should add a promotion to the cart with a customer token', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        'X-MOLTIN-CUSTOMER-TOKEN': 'abcd-1234'
+      }
+    })
+      .post('/carts/3/items', {
+        data: {
+          type: 'promotion_item',
+          code: 'testcode'
+        }
+      })
+      .reply(201, { name: 'Custom Item', quantity: 1 })
+
+    return Moltin.Cart()
+      .AddPromotion('testcode', 'abcd-1234')
+      .then(response => {
+        assert.propertyVal(response, 'name', 'Custom Item')
+        assert.propertyVal(response, 'quantity', 1)
+      })
+  })
+
   it('should add a promotion to the cart with a cart id argument', () => {
     // Intercept the API request
     nock(apiUrl, {
@@ -675,7 +699,7 @@ describe('Moltin cart', () => {
             type: 'promotion_item',
             code: 'testcode'
           }
-        ], 
+        ],
         options: { add_all_or_nothing: false }
       })
       .reply(201, {
