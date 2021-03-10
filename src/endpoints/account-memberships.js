@@ -1,12 +1,12 @@
 import CRUDExtend from '../extends/crud'
 
 class AccountMembershipsEndpoint extends CRUDExtend {
-
   Create(accountId, body, token = null) {
     return this.request.send(
       `accounts/${accountId}/account-memberships`,
       'POST',
-      body.data
+      body.data,
+      token
     )
   }
 
