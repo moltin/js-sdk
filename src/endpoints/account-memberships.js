@@ -1,9 +1,6 @@
 import CRUDExtend from '../extends/crud'
 
 class AccountMembershipsEndpoint extends CRUDExtend {
-  constructor(endpoint) {
-    super(endpoint)
-  }
 
   Create(accountId, body, token = null) {
     return this.request.send(
