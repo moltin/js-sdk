@@ -29,6 +29,7 @@ import * as authenticationRealm from './types/authentication-realm'
 import * as paymentGateway from './types/gateway'
 import * as accounts from './types/accounts'
 import * as accountAuthenticationSettings from './types/account-authentication-settings'
+import * as accountMembers from './types/account-members'
 
 export * from './types/config'
 export * from './types/storage'
@@ -59,6 +60,8 @@ export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/accounts'
 export * from './types/account-authentication-settings'
+export * from './types/account-members'
+
 
 // UMD
 export as namespace moltin
@@ -91,6 +94,7 @@ export class Moltin {
   OidcProfile: oidcProfile.OidcProfileEndpoint
   AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint
   Account: accounts.AccountEndpoint
+  AccountMember: accountMembers.AccountMemberEndpoint
   AccountAuthenticationSettings: accountAuthenticationSettings.AccountAuthenticationSettingsEndpoint
 
   Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
