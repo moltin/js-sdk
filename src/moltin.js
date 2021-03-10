@@ -33,6 +33,7 @@ import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import HierarchiesEndpoint from './endpoints/hierarchies'
 import MerchantRealmMappingsEndpoint from './endpoints/merchant-realm-mappings'
 import Accounts from './endpoints/accounts'
+import AccountMembers from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
@@ -83,6 +84,7 @@ export default class Moltin {
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
       config
     )
+    this.AccountMember = new AccountMembers(config)
   }
 
   // Expose `Cart` class on Moltin class
