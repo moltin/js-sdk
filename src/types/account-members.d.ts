@@ -2,7 +2,6 @@
  * Account Members
  */
 import {Identifiable, Resource, ResourceList} from './core'
-
 /**
  * The Account Member object Interface
  */
@@ -12,7 +11,6 @@ export interface AccountMemberBase extends Identifiable {
     name?: string
     email?: string
 }
-
 
 export interface AccountMember extends AccountMemberBase, Identifiable {
     meta: {
