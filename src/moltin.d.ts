@@ -38,7 +38,6 @@ import { AccountAuthenticationSettingsEndpoint } from './types/account-authentic
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
 
-
 export * from './types/config'
 export * from './types/storage'
 export * from './types/price'

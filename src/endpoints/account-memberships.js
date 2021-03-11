@@ -29,6 +29,7 @@ class AccountMembershipsEndpoint extends BaseExtend {
     return this.call
   }
 
+
   Get(accountId, accountMembershipId, token = null) {
     return this.request.send(
       `accounts/${accountId}/account-memberships/${accountMembershipId}`,
