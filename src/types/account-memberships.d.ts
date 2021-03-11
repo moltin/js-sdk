@@ -1,7 +1,7 @@
 /**
  * Account Memberships
  */
-import {CrudQueryableResource, Resource,} from './core'
+import {Resource,} from './core'
 
 /**
  * The Account Membership object Interface
@@ -33,14 +33,7 @@ export interface AccountMembershipCreateBody {
 /**
  * Account Memberships Endpoints
  */
-export interface AccountMembershipsEndpoint
-    extends Omit<CrudQueryableResource<AccountMembership,
-        AccountMembershipCreateBody,
-        never,
-        never,
-        never,
-        never>,
-        'Delete' | 'Create' | 'Get'> {
+export interface AccountMembershipsEndpoint {
     endpoint: 'account-member'
     storage: Storage
 

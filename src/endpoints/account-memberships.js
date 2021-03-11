@@ -1,6 +1,6 @@
-import CRUDExtend from '../extends/crud'
+import BaseExtend from '../extends/base'
 
-class AccountMembershipsEndpoint extends CRUDExtend {
+class AccountMembershipsEndpoint extends BaseExtend {
   Create(accountId, body, token = null) {
     return this.request.send(
       `accounts/${accountId}/account-memberships`,
