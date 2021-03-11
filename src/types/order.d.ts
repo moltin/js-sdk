@@ -85,19 +85,19 @@ export interface OrderFilter {
   ge?: {
     with_tax?: number
     without_tax?: number
-    created_at?: number
+    created_at?: number | string
   }
   lt?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   le?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
 }
 
