@@ -8,6 +8,7 @@ import {
   ResourceList
 } from './core'
 
+
 /**
  * The Account Membership object Interface
  */
@@ -37,6 +38,7 @@ export interface AccountMembershipCreateBody {
 /**
  * Account Memberships Endpoints
  */
+
 export interface AccountMembershipsEndpoint
   extends Omit<
       CrudQueryableResource<
