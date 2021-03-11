@@ -68,8 +68,8 @@ export interface OrderFilter {
     currency?: string
     product_id?: string
     product_sku?: string
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   like?: {
     customer?: {
