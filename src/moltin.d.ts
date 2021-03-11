@@ -35,6 +35,7 @@ import { CatalogEndpoint } from './types/catalog'
 import { AccountEndpoint } from './types/accounts'
 import { AccountMemberEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
+import { AccountMembershipsEndpoint } from './types/account-memberships'
 
 export * from './types/config'
 export * from './types/storage'
@@ -76,6 +77,7 @@ export * from "./types/pcm-file-relationship"
 export * from './types/accounts'
 export * from './types/account-authentication-settings'
 export * from './types/account-members'
+export * from './types/account-memberships'
 
 // UMD
 export as namespace moltin
@@ -118,6 +120,7 @@ export class Moltin {
   Account: AccountEndpoint
   AccountMember: AccountMemberEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
+  AccountMemberships: AccountMembershipsEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
