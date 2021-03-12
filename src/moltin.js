@@ -29,7 +29,7 @@ import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import Accounts from './endpoints/accounts'
-import AccountMembers from './endpoints/account-members'
+import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 
@@ -72,7 +72,7 @@ export default class Moltin {
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
       config
     )
-    this.AccountMember = new AccountMembers(config)
+    this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
   }
 
