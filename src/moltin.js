@@ -33,7 +33,7 @@ import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import HierarchiesEndpoint from './endpoints/hierarchies'
 import MerchantRealmMappingsEndpoint from './endpoints/merchant-realm-mappings'
 import Accounts from './endpoints/accounts'
-import AccountMembers from './endpoints/account-members'
+import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 
@@ -85,7 +85,7 @@ export default class Moltin {
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
       config
     )
-    this.AccountMember = new AccountMembers(config)
+    this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
   }
 

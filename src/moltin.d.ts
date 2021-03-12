@@ -118,7 +118,7 @@ export class Moltin {
   AuthenticationRealm: AuthenticationRealmEndpoint
   MerchantRealmMappings: MerchantRealmMappingsEndpoint
   Account: AccountEndpoint
-  AccountMember: AccountMemberEndpoint
+  AccountMembers: AccountMemberEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
 
