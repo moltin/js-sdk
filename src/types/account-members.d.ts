@@ -1,8 +1,7 @@
 /**
  * Account Members
  */
-import {CrudQueryableResource, Identifiable, Resource, ResourceList,} from './core'
-import {Account, AccountBase} from "./accounts";
+import {Identifiable, Resource, ResourceList} from './core'
 
 /**
  * The Account Member object Interface
