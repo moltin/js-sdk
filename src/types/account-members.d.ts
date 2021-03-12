@@ -42,10 +42,8 @@ export interface AccountMembersEndpoint
 
     /**
      * Get All Account Members
-     * @param token - The Bearer token to grant access to the API.
-     * @param headers
      */
-    All(token?: string, headers?): Promise<ResourceList<AccountMember>>
+    All(): Promise<ResourceList<AccountMember>>
 
     /**
      * Get an Account Member by reference

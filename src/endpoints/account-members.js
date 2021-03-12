@@ -16,7 +16,7 @@ class AccountMembersEndpoint extends CRUDExtend {
     )
   }
 
-  All({ token = null, headers = {} }) {
+  All() {
     const { limit, offset } = this
 
     this.call = this.request.send(
@@ -25,10 +25,7 @@ class AccountMembersEndpoint extends CRUDExtend {
         offset: { offset }
       }),
       'GET',
-      undefined,
-      token,
-      this,
-      headers
+      undefined
     )
 
     return this.call
