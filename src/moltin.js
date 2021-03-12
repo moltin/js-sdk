@@ -29,12 +29,11 @@ import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import Accounts from './endpoints/accounts'
-import AccountMembers from './endpoints/account-members'
+import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
-import AccountMembersEndpoint from "./endpoints/account-members";
 
 export default class Moltin {
   constructor(config) {
