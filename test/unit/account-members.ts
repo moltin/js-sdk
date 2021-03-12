@@ -26,6 +26,10 @@ describe('Moltin Account Members', () => {
 
   it('Get all Account Members', () => {
     nock(apiUrl, {})
+      .post('/oauth/access_token')
+      .reply(200, {
+        access_token: 'a550d8cbd4a4627013452359ab69694cd446615a'
+      })
       .get('/account-members')
       .reply(200, {})
 
