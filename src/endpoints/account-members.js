@@ -1,4 +1,3 @@
-import CRUDExtend from '../extends/crud'
 import { buildURL } from '../utils/helpers'
 import BaseExtend from '../extends/base'
 
