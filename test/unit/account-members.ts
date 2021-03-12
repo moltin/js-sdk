@@ -26,7 +26,7 @@ describe('Moltin Account Members', () => {
 
   it('Get all Account Members', () => {
     nock(apiUrl, {})
-      .get('/account-members')
+      .get(/account-members\/*/)
       .reply(200, {})
 
     return Moltin.AccountMembers.All().then(res => {

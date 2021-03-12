@@ -29,21 +29,16 @@ export interface AccountMember extends AccountMemberBase, Identifiable {
 /**
  * Account Member Endpoints
  */
-export interface AccountMembersEndpoint
-    extends Omit<CrudQueryableResource<AccountMember,
-        never,
-        never,
-        never,
-        never,
-        never>,
-        'All' | 'Get' > {
+export interface AccountMembersEndpoint {
     endpoint: 'account-member'
     storage: Storage
 
     /**
      * Get All Account Members
+     * @param token - The Bearer token to grant access to the API.
+     * @param headers
      */
-    All(): Promise<ResourceList<AccountMember>>
+    All(token?: string, headers?): Promise<ResourceList<AccountMember>>
 
     /**
      * Get an Account Member by reference

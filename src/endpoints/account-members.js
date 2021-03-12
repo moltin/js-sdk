@@ -1,7 +1,8 @@
 import CRUDExtend from '../extends/crud'
 import { buildURL } from '../utils/helpers'
+import BaseExtend from '../extends/base'
 
-class AccountMembersEndpoint extends CRUDExtend {
+class AccountMembersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
     this.endpoint = 'account-members'
@@ -16,16 +17,19 @@ class AccountMembersEndpoint extends CRUDExtend {
     )
   }
 
-  All() {
+  All(token = null, headers = {}) {
     const { limit, offset } = this
 
     this.call = this.request.send(
       buildURL(this.endpoint, {
-        limit: { limit },
-        offset: { offset }
+        limit,
+        offset
       }),
       'GET',
-      undefined
+      undefined,
+      token,
+      this,
+      headers
     )
 
     return this.call
