@@ -34,6 +34,7 @@ import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentic
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
+import AccountMembersEndpoint from "./endpoints/account-members";
 
 export default class Moltin {
   constructor(config) {
@@ -72,7 +73,7 @@ export default class Moltin {
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
       config
     )
-    this.AccountMember = new AccountMembers(config)
+    this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
   }
 
