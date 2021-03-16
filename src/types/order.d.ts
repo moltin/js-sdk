@@ -57,10 +57,8 @@ export interface OrderFilter {
     status?: string
     payment?: string
     shipping?: string
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
     shipping_name?: string
     shipping_postcode?: string
@@ -73,10 +71,8 @@ export interface OrderFilter {
     updated_at?: number | string
   }
   like?: {
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
     shipping_name?: string
     shipping_postcode?: string
