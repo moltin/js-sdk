@@ -38,13 +38,15 @@ type PriceBookSort = // TODO
 type PriceBookInclude = // TODO
   | 'price'
 
+export type PriceBooksUpdateBody = Partial<PriceBookBase> & Identifiable
+
 /**
  * PCM Product Endpoints
  */
 export interface PriceBooksEndpoint
   extends CrudQueryableResource<PriceBook,
     PriceBookBase,
-    Partial<PriceBookBase>,
+    PriceBooksUpdateBody,
     PriceBookFilter,
     PriceBookSort,
     PriceBookInclude> {
