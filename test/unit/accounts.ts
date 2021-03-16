@@ -19,7 +19,7 @@ describe('Moltin Accounts', () => {
       .reply(200, {})
     const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
 
-    return Moltin.Account.Get(accountId).then(res => {
+    return Moltin.Accounts.Get(accountId).then(res => {
       assert.isObject(res)
     })
   })
@@ -41,7 +41,7 @@ describe('Moltin Accounts', () => {
       registration_id: '00000000-0000-1000-8000-000000000000'
     }
 
-    return Moltin.Account.Create(body).then(res => {
+    return Moltin.Accounts.Create(body).then(res => {
       assert.isObject(res)
     })
   })
@@ -51,7 +51,7 @@ describe('Moltin Accounts', () => {
       .get(/accounts\/*/)
       .reply(200, {})
 
-    return Moltin.Account.All().then(res => {
+    return Moltin.Accounts.All().then(res => {
       assert.isObject(res)
     })
   })
@@ -74,7 +74,7 @@ describe('Moltin Accounts', () => {
 
     const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
 
-    return Moltin.Account.Update(accountId, body).then(res => {
+    return Moltin.Accounts.Update(accountId, body).then(res => {
       assert.isObject(res)
     })
   })
@@ -91,7 +91,7 @@ describe('Moltin Accounts', () => {
       .delete(/accounts\/*/)
       .reply(204, {})
 
-    return Moltin.Account.Delete(accountId).then(res => {
+    return Moltin.Accounts.Delete(accountId).then(res => {
       assert.isObject(res)
     })
   })
