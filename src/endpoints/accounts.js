@@ -29,6 +29,24 @@ class AccountsEndpoint extends CRUDExtend {
 
     return this.call
   }
+
+  All(token = null, headers = {}) {
+    const { limit, offset } = this
+
+    this.call = this.request.send(
+      buildURL(this.endpoint, {
+        limit,
+        offset
+      }),
+      'GET',
+      undefined,
+      token,
+      this,
+      headers
+    )
+
+    return this.call
+  }
 }
 
 export default AccountsEndpoint
