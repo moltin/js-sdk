@@ -68,7 +68,7 @@ export default class Moltin {
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
-    this.Account = new Accounts(config)
+    this.Accounts = new Accounts(config)
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
       config
     )
