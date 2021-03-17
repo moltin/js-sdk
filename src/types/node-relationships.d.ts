@@ -13,6 +13,11 @@ export interface NodeRelationship extends NodeRelationshipBase {
   relationships: {}
 }
 
+export interface NodeRelationshipParent {
+  type: 'node'
+  id: string
+}
+
 export interface NodeRelationshipsEndpoint {
   endpoint: 'relationships/products'
 
@@ -42,4 +47,11 @@ export interface NodeRelationshipsEndpoint {
     nodeId: string
     token?: string
   }): Promise<Resource<Product[]>>
+
+  ChangeParent(options: {
+    hierarchyId: string
+    nodeId: string
+    body: NodeRelationshipParent
+    token?: string
+  }): Promise<Resource<void>>
 }
