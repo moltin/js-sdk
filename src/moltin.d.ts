@@ -33,7 +33,7 @@ import { PriceBooksEndpoint } from './types/price-books'
 import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
 import { CatalogEndpoint } from './types/catalog'
 import { AccountEndpoint } from './types/accounts'
-import { AccountMemberEndpoint } from './types/account-members'
+import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 
@@ -118,7 +118,7 @@ export class Moltin {
   AuthenticationRealm: AuthenticationRealmEndpoint
   MerchantRealmMappings: MerchantRealmMappingsEndpoint
   Account: AccountEndpoint
-  AccountMembers: AccountMemberEndpoint
+  AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
 
