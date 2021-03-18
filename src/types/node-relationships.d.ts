@@ -53,5 +53,5 @@ export interface NodeRelationshipsEndpoint {
     nodeId: string
     body: NodeRelationshipParent
     token?: string
-  }): Promise<Resource<void>>
+  }): Promise<void>
 }
