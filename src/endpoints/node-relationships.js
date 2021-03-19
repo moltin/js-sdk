@@ -44,6 +44,15 @@ class NodeRelationshipsEndpoint {
       token
     )
   }
+
+  ChangeParent({ hierarchyId, nodeId, body, token = null }) {
+    return this.request.send(
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
+      'PUT',
+      body,
+      token
+    )
+  }
 }
 
 export default NodeRelationshipsEndpoint
