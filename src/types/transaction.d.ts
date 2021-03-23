@@ -63,6 +63,24 @@ export interface TransactionBase {
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
   status: 'complete' | 'failed'
   relationships: any
+  meta: {
+    display_price: {
+      amount: number
+      currency: string
+      formatted: string
+    }
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+    display_refunded_amount?: {
+      total: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+  }
   timestamps: any
 }
 
