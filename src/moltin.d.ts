@@ -63,6 +63,7 @@ export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/price-books'
 export * from './types/price-book-prices'
+export * from './types/node-relationships'
 
 // UMD
 export as namespace moltin
