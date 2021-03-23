@@ -6,7 +6,7 @@ import {
   Identifiable,
   CrudQueryableResource
 } from './core'
-import { PriceBookPrice } from './price-book-prices'
+import { PriceBookPricesEndpoint } from './price-book-prices'
 
 /**
  * Core PCM Product Base Interface
@@ -49,5 +49,5 @@ export interface PriceBooksEndpoint
     PriceBookSort,
     PriceBookInclude> {
   endpoint: 'pricebooks'
-  Price: PriceBookPrice
+  Prices: PriceBookPricesEndpoint
 }

@@ -62,6 +62,7 @@ export * from './types/oidc-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/price-books'
+export * from './types/price-book-prices'
 
 // UMD
 export as namespace moltin
