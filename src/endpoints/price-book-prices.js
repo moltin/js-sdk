@@ -32,7 +32,7 @@ class PriceBookPricesEndpoint {
     return this.request.send(
       `pricebooks/${pricebookId}/${this.endpoint}`,
       'POST',
-      { ...body, type: singularize(this.endpoint) },
+      { ...body },
       token
     )
   }
