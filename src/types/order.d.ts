@@ -57,10 +57,8 @@ export interface OrderFilter {
     status?: string
     payment?: string
     shipping?: string
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
     shipping_name?: string
     shipping_postcode?: string
@@ -69,14 +67,12 @@ export interface OrderFilter {
     currency?: string
     product_id?: string
     product_sku?: string
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   like?: {
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
     shipping_name?: string
     shipping_postcode?: string
@@ -86,19 +82,19 @@ export interface OrderFilter {
   ge?: {
     with_tax?: number
     without_tax?: number
-    created_at?: number
+    created_at?: number | string
   }
   lt?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   le?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
 }
 

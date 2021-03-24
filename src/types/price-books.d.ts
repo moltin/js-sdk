@@ -6,7 +6,7 @@ import {
   Identifiable,
   CrudQueryableResource
 } from './core'
-import { PriceBookPrice } from './price-book-prices'
+import { PriceBookPricesEndpoint } from './price-book-prices'
 
 /**
  * Core PCM Product Base Interface
@@ -38,16 +38,18 @@ type PriceBookSort = // TODO
 type PriceBookInclude = // TODO
   | 'price'
 
+export type PriceBooksUpdateBody = Partial<PriceBookBase> & Identifiable
+
 /**
  * PCM Product Endpoints
  */
 export interface PriceBooksEndpoint
   extends CrudQueryableResource<PriceBook,
     PriceBookBase,
-    Partial<PriceBookBase>,
+    PriceBooksUpdateBody,
     PriceBookFilter,
     PriceBookSort,
     PriceBookInclude> {
   endpoint: 'pricebooks'
-  Price: PriceBookPrice
+  Prices: PriceBookPricesEndpoint
 }
