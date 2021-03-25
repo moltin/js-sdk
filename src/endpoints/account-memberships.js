@@ -1,4 +1,5 @@
 import BaseExtend from '../extends/base'
+import { buildURL } from '../utils/helpers'
 
 class AccountMembershipsEndpoint extends BaseExtend {
   Create(accountId, body, token = null) {
@@ -8,6 +9,24 @@ class AccountMembershipsEndpoint extends BaseExtend {
       body.data,
       token
     )
+  }
+
+  All(accountId, token = null, headers = {}) {
+    const { limit, offset } = this
+
+    this.call = this.request.send(
+      buildURL(`accounts/${accountId}/account-memberships`, {
+        limit,
+        offset
+      }),
+      'GET',
+      undefined,
+      token,
+      this,
+      headers
+    )
+
+    return this.call
   }
 
   Get(accountId, accountMembershipId, token = null) {
