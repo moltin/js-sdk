@@ -53,10 +53,12 @@ export interface AccountMembershipsEndpoint {
    * Get all Account Memberships for an account
    * @param accountId - The ID for the account
    * @param token - The Bearer token to grant access to the API
+   * @param headers
    */
   All(
     accountId: string,
-    token?: string
+    token?: string,
+    headers?
   ): Promise<ResourceList<AccountMembership>>
 
   /**
