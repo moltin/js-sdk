@@ -6,7 +6,7 @@ import {
   Identifiable,
   CrudQueryableResource
 } from './core'
-
+import { CatalogsNodesEndpoint } from './catalogs-nodes'
 /**
  * Core PCM Product Base Interface
  * For custom flows, extend this interface
@@ -47,12 +47,16 @@ type CatalogInclude = // TODO
 /**
  * PCM Product Endpoints
  */
+
+export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
+
 export interface CatalogsEndpoint
   extends CrudQueryableResource<Catalog,
     CatalogBase,
-    Partial<CatalogBase>,
+    CatalogUpdateBody,
     CatalogFilter,
     CatalogSort,
     CatalogInclude> {
   endpoint: 'catalogs'
+  Nodes: CatalogsNodesEndpoint
 }

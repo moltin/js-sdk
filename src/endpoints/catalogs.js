@@ -1,10 +1,11 @@
-import { singularize } from 'inflected'
 import CRUDExtend from '../extends/crud'
+import BaseExtend from '../extends/base'
 
-class Nodes {
+class Nodes extends BaseExtend {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.config.version = 'experimental'
+    super(config)
     this.endpoint = 'nodes'
   }
 
@@ -26,7 +27,7 @@ class Nodes {
     )
   }
 
-  GetChildren({ nodeId, token = null }) {
+  GetNodeChildren({ nodeId, token = null }) {
     return this.request.send(
       `catalogs/${this.endpoint}/${nodeId}/relationships/children`,
       'GET',
@@ -35,7 +36,12 @@ class Nodes {
     )
   }
 
-  GetCatalogChildren({ catalogId, releaseId, nodeId, token = null }) {
+  GetNodeChildrenFromCatalogReleases({
+    catalogId,
+    releaseId,
+    nodeId,
+    token = null
+  }) {
     return this.request.send(
       `catalogs/${catalogId}/releases/${releaseId}/${
         this.endpoint
@@ -55,7 +61,7 @@ class Nodes {
     )
   }
 
-  GetCatalogNode({ catalogId, releaseId, nodeId, token = null }) {
+  GetNodeInCatalogRelease({ catalogId, releaseId, nodeId, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${nodeId}`,
       'GET',
@@ -156,11 +162,10 @@ class Releases {
     )
   }
 
-  Create({ catalogId, body, token = null }) {
+  Create({ catalogId, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/${this.endpoint}`,
       'POST',
-      { ...body, type: singularize(this.endpoint) },
       token
     )
   }
