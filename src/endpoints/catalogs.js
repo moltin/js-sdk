@@ -3,9 +3,9 @@ import BaseExtend from '../extends/base'
 
 class Nodes extends BaseExtend {
   constructor(endpoint) {
+    super(config)
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.config.version = 'experimental'
-    super(config)
     this.endpoint = 'nodes'
   }
 
