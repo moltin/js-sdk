@@ -1,9 +1,7 @@
 import CRUDExtend from '../extends/crud'
-import BaseExtend from '../extends/base'
 
-class Nodes extends BaseExtend {
+class Nodes {
   constructor(endpoint) {
-    super(config)
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.config.version = 'experimental'
     this.endpoint = 'nodes'

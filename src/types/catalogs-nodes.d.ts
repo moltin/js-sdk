@@ -1,4 +1,4 @@
-import { Identifiable, QueryableResource, Resource, ResourceList } from './core'
+import { Identifiable, Resource, ResourceList } from './core'
 
 export interface NodeBaseResponse extends Identifiable {
   type: 'node'
@@ -38,8 +38,12 @@ export interface NodesResponse extends NodeBaseResponse {
   }
 }
 
-export interface CatalogsNodesEndpoint extends Omit<QueryableResource<NodeBaseResponse, never, never, never>, 'All' | 'Get' > {
+export interface CatalogsNodesEndpoint {
   endpoint: 'nodes'
+
+  Limit(value: number): CatalogsNodesEndpoint
+  
+  Offset(value: number): CatalogsNodesEndpoint
 
   Get(options: {
     nodeId: string
