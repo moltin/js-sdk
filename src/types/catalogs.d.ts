@@ -7,6 +7,9 @@ import {
   CrudQueryableResource
 } from './core'
 import { CatalogsNodesEndpoint } from './catalogs-nodes'
+import { CatalogsProductsEndpoint } from './catalogs-products'
+import { CatalogsReleasesEndpoint } from './catalogs-releases'
+
 /**
  * Core PCM Product Base Interface
  * For custom flows, extend this interface
@@ -59,4 +62,6 @@ export interface CatalogsEndpoint
     CatalogInclude> {
   endpoint: 'catalogs'
   Nodes: CatalogsNodesEndpoint
+  Products: CatalogsProductsEndpoint
+  Releases: CatalogsReleasesEndpoint
 }

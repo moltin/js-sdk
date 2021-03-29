@@ -42,17 +42,17 @@ export interface CatalogsNodesEndpoint {
   endpoint: 'nodes'
 
   Limit(value: number): CatalogsNodesEndpoint
-  
+
   Offset(value: number): CatalogsNodesEndpoint
+
+  All(options: {
+    token?: string
+  }): Promise<ResourceList<NodesResponse>>
 
   Get(options: {
     nodeId: string
     token?: string
   }): Promise<Resource<NodeBaseResponse>>
-
-  All(options: {
-    token?: string
-  }): Promise<ResourceList<NodesResponse>>
 
   GetNodeChildren(options: {
     nodeId: string

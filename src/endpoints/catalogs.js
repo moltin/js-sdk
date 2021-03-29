@@ -116,7 +116,7 @@ class Products {
     )
   }
 
-  GetNodeProducts({ nodeId, token = null }) {
+  GetProductsByNode({ nodeId, token = null }) {
     return this.request.send(
       `catalogs/nodes/${nodeId}/relationships/${this.endpoint}`,
       'GET',
