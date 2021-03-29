@@ -34,6 +34,7 @@ export interface PriceBookFilter {
 
 type PriceBookSort = // TODO
   | 'name'
+  | '-name'
 
 type PriceBookInclude = // TODO
   | 'price'
