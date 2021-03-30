@@ -1,4 +1,3 @@
-import { singularize } from 'inflected'
 import RequestFactory from '../factories/request'
 
 class PriceBookPricesEndpoint {
