@@ -1,13 +1,12 @@
 /**
  * Account Memberships
  */
-import { Resource, ResourceList } from './core'
+import { Identifiable, Resource, ResourceList } from './core'
 
 /**
  * The Account Membership object Interface
  */
-
-export interface AccountMembership {
+export interface AccountMembership extends Identifiable {
   type: string
   meta: {
     timestamps: {
@@ -52,14 +51,8 @@ export interface AccountMembershipsEndpoint {
   /**
    * Get all Account Memberships for an account
    * @param accountId - The ID for the account
-   * @param token - The Bearer token to grant access to the API
-   * @param headers
    */
-  All(
-    accountId: string,
-    token?: string,
-    headers?
-  ): Promise<ResourceList<AccountMembership>>
+  All(accountId: string): Promise<ResourceList<AccountMembership>>
 
   /**
    * Create an Account Membership
