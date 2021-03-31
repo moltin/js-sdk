@@ -1,4 +1,3 @@
-import { singularize } from 'inflected'
 import RequestFactory from '../factories/request'
 
 class PriceBookPricesEndpoint {
@@ -32,7 +31,7 @@ class PriceBookPricesEndpoint {
     return this.request.send(
       `pricebooks/${pricebookId}/${this.endpoint}`,
       'POST',
-      { ...body },
+      { ...body, type: 'product-price' },
       token
     )
   }
@@ -50,7 +49,7 @@ class PriceBookPricesEndpoint {
     return this.request.send(
       `pricebooks/${pricebookId}/${this.endpoint}/${priceId}`,
       'PUT',
-      { ...body, type: singularize(this.endpoint) },
+      { ...body, type: 'product-price' },
       token
     )
   }

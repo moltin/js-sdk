@@ -17,13 +17,16 @@ export interface PriceBookBase {
   attributes: {
     name: string
     description?: string
+    created_at?: string
+    updated_at?: string
+    meta?: {
+      // TODO
+    }
   }
 }
 
 export interface PriceBook extends Identifiable, PriceBookBase {
-  create_at: string
-  updated_at: string
-  meta: {
+  meta?: {
     // TODO
   }
 }
@@ -39,7 +42,7 @@ type PriceBookSort = // TODO
 type PriceBookInclude = // TODO
   | 'price'
 
-export type PriceBooksUpdateBody = Partial<PriceBookBase> & Identifiable
+export type PriceBooksUpdateBody = PriceBookBase & Identifiable
 
 /**
  * PCM Product Endpoints

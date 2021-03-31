@@ -8,12 +8,8 @@ export interface PriceBookPriceBase {
   attributes: {
     currencies: {
       [key: string]: {
-        code: string
-        exchange_rate: number
-        format: string
-        decimal_point: string
-        thousand_separator: string
-        decimal_places: number
+        includes_tax: boolean
+        amount: number
       }
     }
     sku: string
