@@ -1,7 +1,12 @@
 /**
  * Account Memberships
  */
-import { Identifiable, Resource, ResourceList } from './core'
+import {
+  CrudQueryableResource,
+  Identifiable,
+  Resource,
+  ResourceList
+} from './core'
 
 /**
  * The Account Membership object Interface
@@ -32,7 +37,18 @@ export interface AccountMembershipCreateBody {
 /**
  * Account Memberships Endpoints
  */
-export interface AccountMembershipsEndpoint {
+export interface AccountMembershipsEndpoint
+  extends Omit<
+      CrudQueryableResource<
+        AccountMembership,
+        AccountMembershipCreateBody,
+        never,
+        never,
+        never,
+        never
+      >,
+      'Get' | 'All' | 'Create' | 'Delete' | 'Update'
+    > {
   endpoint: 'account-member'
   storage: Storage
 
@@ -52,7 +68,10 @@ export interface AccountMembershipsEndpoint {
    * Get all Account Memberships for an account
    * @param accountId - The ID for the account
    */
-  All(accountId: string): Promise<ResourceList<AccountMembership>>
+  All(
+    accountId: string,
+    token?: string
+  ): Promise<ResourceList<AccountMembership>>
 
   /**
    * Create an Account Membership

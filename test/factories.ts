@@ -833,3 +833,60 @@ export const modifiersArray: ModifierResponse[] = [
     }
   }
 ]
+
+export const accountMembershipsArray = [
+  {
+    id: 'b7a4b745-094d-42cd-bd52-99dd5e411d4b',
+    type: 'account-membership',
+    meta: {
+      timestamps: {
+        created_at: '2021-03-31T15:54:12.883Z',
+        updated_at: '2021-03-31T15:54:12.883Z'
+      }
+    },
+    relationships: {
+      'account-member': {
+        data: {
+          id: '69a1c07b-b9b8-4a9f-b91c-d613bb260fc3',
+          type: 'account-member'
+        }
+      }
+    }
+  },
+  {
+    id: '707dceba-5d76-4e87-a025-c1416eac6367',
+    type: 'account-membership',
+    meta: {
+      timestamps: {
+        created_at: '2021-03-31T15:54:12.883Z',
+        updated_at: '2021-03-31T15:54:12.883Z'
+      }
+    },
+    relationships: {
+      'account-member': {
+        data: {
+          id: 'ff061d14-c8f4-4c56-b6f7-9f3582fb29b2',
+          type: 'account-member'
+        }
+      }
+    }
+  },
+  {
+    id: '2c45e4ec-26e0-4043-86e4-c15b9cf985a3',
+    type: 'account-membership',
+    meta: {
+      timestamps: {
+        created_at: '2021-03-31T15:54:12.883Z',
+        updated_at: '2021-03-31T15:54:12.883Z'
+      }
+    },
+    relationships: {
+      'account-member': {
+        data: {
+          id: '3221552e-73ae-4ce3-b8a2-db3d8e033e9e',
+          type: 'account-member'
+        }
+      }
+    }
+  }
+]

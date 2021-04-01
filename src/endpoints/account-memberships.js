@@ -11,7 +11,7 @@ class AccountMembershipsEndpoint extends BaseExtend {
     )
   }
 
-  All(accountId, token = null, headers = {}) {
+  All(accountId, token = null) {
     const { includes, sort, limit, offset, filter } = this
 
     this.call = this.request.send(
@@ -25,8 +25,7 @@ class AccountMembershipsEndpoint extends BaseExtend {
       'GET',
       undefined,
       token,
-      this,
-      headers
+      this
     )
 
     return this.call
