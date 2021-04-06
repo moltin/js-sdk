@@ -20,7 +20,7 @@ export interface AccountMembership extends Identifiable {
     }
   }
   relationships: {
-    'account-member': {
+    'account_member': {
       data: {
         id: string
         type: string
