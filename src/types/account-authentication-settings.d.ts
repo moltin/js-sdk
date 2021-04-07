@@ -15,7 +15,7 @@ export interface AccountAuthenticationSettingsBase {
   type: string
   meta: object
   relationships: {
-    'authentication-realm': RelationshipToOne<'authentication-realm'>
+    'authentication_realm': RelationshipToOne<'authentication_realm'>
   }
 }
 

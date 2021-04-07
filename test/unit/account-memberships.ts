@@ -80,7 +80,7 @@ describe('Moltin Account Memberships', () => {
 
     const body: AccountMembershipCreateBody = {
       account_member_id: '64f35045-2a76-4bcf-b6ba-02bb12090d30',
-      type: 'account-membership'
+      type: 'account_membership'
     }
     return Moltin.AccountMemberships.Create(accountId, body).then(res => {
       assert.isObject(res)
