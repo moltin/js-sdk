@@ -42,7 +42,6 @@ export interface AccountBase {
   type: string
   name: string
   legal_name: string
-  company_address?: string
   parent_id?: string
 }
 

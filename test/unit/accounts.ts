@@ -37,7 +37,6 @@ describe('Moltin Accounts', () => {
       type: 'account',
       name: 'sub-acc-test-create-name-1',
       legal_name: 'sub-acc-test-create-legal-name-1',
-      company_address: '123',
       registration_id: '00000000-0000-1000-8000-000000000000'
     }
 
@@ -69,7 +68,6 @@ describe('Moltin Accounts', () => {
       type: 'account',
       name: 'sub-acc-test-create-name-1',
       legal_name: 'sub-acc-test-create-legal-name-1',
-      company_address: '123'
     }
 
     const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
