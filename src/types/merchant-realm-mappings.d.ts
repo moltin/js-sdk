@@ -1,7 +1,5 @@
 /**
  * Merchant Realm Mappings
- * Description:
- * DOCS:
  */
 import { Resource } from './core'
 
