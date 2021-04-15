@@ -3,7 +3,7 @@ import CRUDExtend from '../extends/crud'
 class Nodes {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'nodes'
   }
 
@@ -72,7 +72,7 @@ class Nodes {
 class Products {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'products'
   }
 
@@ -138,7 +138,7 @@ class Products {
 class Releases {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'releases'
   }
 
@@ -172,7 +172,7 @@ class Releases {
 class CatalogEndpoint extends CRUDExtend {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'experimental'
+    config.version = 'pcm'
     super(config)
     this.Nodes = new Nodes(endpoint)
     this.Products = new Products(endpoint)
