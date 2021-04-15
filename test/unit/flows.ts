@@ -25,7 +25,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/flows')
@@ -49,7 +49,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/flows/flow-1', {
@@ -77,7 +77,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1')
@@ -98,7 +98,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/flows/flow-1')
@@ -117,7 +117,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows')
@@ -136,7 +136,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1')
@@ -155,7 +155,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1/entries')
@@ -174,7 +174,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/12/fields')
@@ -193,7 +193,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1/entries')
@@ -219,7 +219,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1/entries')
@@ -244,7 +244,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/flows/flow-1/entries', {
@@ -272,7 +272,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/flows/flow-1/entries/1', {
@@ -300,7 +300,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-1/entries/1')
@@ -321,7 +321,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/flows/flow-1/entries/1')
@@ -338,7 +338,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/flows/1')
@@ -356,7 +356,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/flows/flow-1/entries/entry-1/relationships/field-1', {
@@ -387,7 +387,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/flows/flow-1/entries/entry-1/relationships/field-1', {
@@ -418,7 +418,7 @@ describe('Moltin flows', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/flows/flow-1/entries/entry-1/relationships/field-1')
@@ -439,7 +439,7 @@ describe('Moltin flows', () => {
     })
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/attributes')
@@ -456,7 +456,7 @@ describe('Moltin flows', () => {
     })
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/flows/flow-type-1/attributes')

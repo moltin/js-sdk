@@ -6,7 +6,7 @@ import { buildURL } from '../utils/helpers'
 class HierarchiesEndpoint extends CRUDExtend {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'experimental'
+    config.version = 'pcm'
     super(config)
     this.Nodes = new NodesEndpoint(config)
     this.Relationships = new NodeRelationships(config)

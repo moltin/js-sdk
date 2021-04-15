@@ -5,7 +5,7 @@ class NodesEndpoint {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(config)
-    config.version = 'experimental'
+    config.version = 'pcm'
     this.endpoint = 'nodes'
   }
 

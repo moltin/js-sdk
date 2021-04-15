@@ -18,7 +18,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/customers/customer-1/addresses')
@@ -33,7 +33,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
@@ -52,7 +52,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/customers/customer-1/addresses/address-1')
@@ -70,7 +70,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
@@ -90,7 +90,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/customers/customer-1/addresses')
@@ -120,7 +120,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
@@ -153,7 +153,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/customers/customer-1/addresses/address-1')
@@ -186,7 +186,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
@@ -221,7 +221,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/customers/customer-1/addresses/address-1')
@@ -239,7 +239,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
@@ -258,7 +258,7 @@ describe('Moltin addresses', () => {
   it('should return an array of attributes', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/addresses/attributes')

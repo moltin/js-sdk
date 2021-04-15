@@ -6,6 +6,7 @@ class Nodes {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'nodes'
   }
 
@@ -76,6 +77,7 @@ class Products {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'products'
   }
 
@@ -143,6 +145,7 @@ class Releases {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
+    this.config.version = 'pcm'
     this.endpoint = 'releases'
   }
 
@@ -176,7 +179,7 @@ class Releases {
 class CatalogEndpoint extends CRUDExtend {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'experimental'
+    config.version = 'pcm'
     super(config)
     this.Nodes = new Nodes(endpoint)
     this.Products = new Products(endpoint)
