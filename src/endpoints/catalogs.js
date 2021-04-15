@@ -1,8 +1,10 @@
 import CRUDExtend from '../extends/crud'
+import RequestFactory from '../factories/request'
 
 class Nodes {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
     this.endpoint = 'nodes'
   }
@@ -72,6 +74,7 @@ class Nodes {
 class Products {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
     this.endpoint = 'products'
   }
@@ -138,6 +141,7 @@ class Products {
 class Releases {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.request = new RequestFactory(this.config)
     this.config.version = 'experimental'
     this.endpoint = 'releases'
   }
