@@ -17,7 +17,7 @@ describe('Moltin inventories', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/inventories')
@@ -36,7 +36,7 @@ describe('Moltin inventories', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/inventories/inventory-1')
@@ -54,7 +54,7 @@ describe('Moltin inventories', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/inventories/managed-product-1/transactions')
@@ -74,7 +74,7 @@ describe('Moltin inventories', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/inventories/managed-product-1/transactions', {
@@ -108,7 +108,7 @@ describe('Moltin inventories', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/inventories/managed-product-1/transactions', {
@@ -142,7 +142,7 @@ describe('Moltin inventories', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/inventories/managed-product-1/transactions', {
@@ -176,7 +176,7 @@ describe('Moltin inventories', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/inventories/managed-product-1/transactions', {
