@@ -5,7 +5,6 @@ class Nodes {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
-    this.config.version = 'experimental'
     this.config.version = 'pcm'
     this.endpoint = 'nodes'
   }
@@ -76,7 +75,6 @@ class Products {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
-    this.config.version = 'experimental'
     this.config.version = 'pcm'
     this.endpoint = 'products'
   }
@@ -144,7 +142,6 @@ class Releases {
   constructor(endpoint) {
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
-    this.config.version = 'experimental'
     this.config.version = 'pcm'
     this.endpoint = 'releases'
   }
