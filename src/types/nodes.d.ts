@@ -27,12 +27,18 @@ export interface Node extends Identifiable, NodeBase {
       links: {
         related: string
       }
-    },
+    }
     products: {
       data: {
         type: 'product'
         id: string
       }[]
+    }
+    parent: {
+      data: {
+        type: string;
+        id: string
+      }
     }
   }
 }
@@ -74,7 +80,7 @@ export interface NodesEndpoint {
   Update(options: {
     hierarchyId: string
     nodeId: string
-    body: Identifiable & Node
+    body: Identifiable & NodeBase
     token?: string
   }): Promise<Resource<Node>>
 
