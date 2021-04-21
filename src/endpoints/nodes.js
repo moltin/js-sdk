@@ -54,6 +54,15 @@ class NodesEndpoint {
       token
     )
   }
+
+  GetNodeChildren({ hierarchyId, nodeId, token = null }) {
+    return this.request.send(
+      `hierarchies/${hierarchyId}/${this.endpoint}/${nodeId}/children`,
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 export default NodesEndpoint
