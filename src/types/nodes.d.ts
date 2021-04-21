@@ -2,6 +2,7 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
+
 import {
   Identifiable,
   Resource, ResourceList
