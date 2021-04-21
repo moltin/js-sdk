@@ -84,4 +84,9 @@ export interface NodesEndpoint {
     token?: string
   }): Promise<{}>
 
+  GetNodeChildren(options: {
+    hierarchyId: string
+    nodeId: string
+    token?: string
+  }): Promise<ResourceList<Node>>
 }
