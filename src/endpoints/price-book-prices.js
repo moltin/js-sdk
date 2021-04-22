@@ -1,11 +1,10 @@
-import { singularize } from 'inflected'
 import RequestFactory from '../factories/request'
 
 class PriceBookPricesEndpoint {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(config)
-    config.version = 'experimental'
+    config.version = 'pcm'
     this.endpoint = 'prices'
   }
 
@@ -32,7 +31,7 @@ class PriceBookPricesEndpoint {
     return this.request.send(
       `pricebooks/${pricebookId}/${this.endpoint}`,
       'POST',
-      { ...body, type: singularize(this.endpoint) },
+      { ...body, type: 'product-price' },
       token
     )
   }
@@ -50,7 +49,7 @@ class PriceBookPricesEndpoint {
     return this.request.send(
       `pricebooks/${pricebookId}/${this.endpoint}/${priceId}`,
       'PUT',
-      { ...body, type: singularize(this.endpoint) },
+      { ...body, type: 'product-price' },
       token
     )
   }

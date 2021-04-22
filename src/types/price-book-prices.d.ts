@@ -8,12 +8,11 @@ export interface PriceBookPriceBase {
   attributes: {
     currencies: {
       [key: string]: {
-        description?: string
-        amount: number
         includes_tax: boolean
+        amount: number
       }
     }
-    product_id: string
+    sku: string
   }
 }
 

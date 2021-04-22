@@ -5,7 +5,7 @@ class NodeRelationshipsEndpoint {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(config)
-    config.version = 'experimental'
+    config.version = 'pcm'
     this.endpoint = 'relationships/products'
   }
 
@@ -29,7 +29,7 @@ class NodeRelationshipsEndpoint {
 
   Update({ hierarchyId, nodeId, body, token = null }) {
     return this.request.send(
-      `hierarchies/${hierarchyId}/nodes/${nodeId}/${this.endpoint}`,
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
       'PUT',
       { ...body, type: singularize(this.endpoint) },
       token
@@ -41,6 +41,15 @@ class NodeRelationshipsEndpoint {
       `hierarchies/${hierarchyId}/nodes/${nodeId}/products`,
       'GET',
       null,
+      token
+    )
+  }
+
+  ChangeParent({ hierarchyId, nodeId, body, token = null }) {
+    return this.request.send(
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
+      'PUT',
+      body,
       token
     )
   }

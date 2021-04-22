@@ -29,6 +29,7 @@ import { CartEndpoint } from './types/cart'
 import { HierarchiesEndpoint } from './types/hierarchies'
 import { CatalogsEndpoint } from './types/catalogs'
 import { PriceBooksEndpoint } from './types/price-books'
+import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
 
 export * from './types/config'
 export * from './types/storage'
@@ -62,6 +63,9 @@ export * from './types/oidc-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/price-books'
+export * from './types/price-book-prices'
+export * from './types/node-relationships'
+export * from './types/merchant-realm-mappings'
 
 // UMD
 export as namespace moltin
@@ -98,6 +102,7 @@ export class Moltin {
   AuthenticationSettings: AuthenticationSettingsEndpoint
   OidcProfile: OidcProfileEndpoint
   AuthenticationRealm: AuthenticationRealmEndpoint
+  MerchantRealmMappings: MerchantRealmMappingsEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

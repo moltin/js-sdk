@@ -102,7 +102,7 @@ class RequestFactory {
         }
 
         if (access_token) {
-          headers.Authorization = `Bearer: ${access_token}`
+          headers.Authorization = `Bearer ${access_token}`
         }
 
         if (config.store_id) {

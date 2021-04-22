@@ -7,6 +7,7 @@
 import {
   CrudQueryableResource,
   Identifiable,
+  RelationshipToOne,
   Resource,
   ResourceList
 } from './core'
@@ -24,6 +25,9 @@ export interface Realm extends RealmBase, Identifiable {
     }
   }
   links: {}
+  relationships: {
+    origin: RelationshipToOne<'merchant-realm-mappings'>
+  }
 }
 
 export interface RealmBase {

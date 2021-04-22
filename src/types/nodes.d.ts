@@ -2,6 +2,7 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
+
 import {
   Identifiable,
   Resource, ResourceList
@@ -27,12 +28,18 @@ export interface Node extends Identifiable, NodeBase {
       links: {
         related: string
       }
-    },
+    }
     products: {
       data: {
         type: 'product'
         id: string
       }[]
+    }
+    parent: {
+      data: {
+        type: string;
+        id: string
+      }
     }
   }
 }
@@ -74,7 +81,7 @@ export interface NodesEndpoint {
   Update(options: {
     hierarchyId: string
     nodeId: string
-    body: Identifiable & Node
+    body: Identifiable & NodeBase
     token?: string
   }): Promise<Resource<Node>>
 
@@ -84,4 +91,9 @@ export interface NodesEndpoint {
     token?: string
   }): Promise<{}>
 
+  GetNodeChildren(options: {
+    hierarchyId: string
+    nodeId: string
+    token?: string
+  }): Promise<ResourceList<Node>>
 }
