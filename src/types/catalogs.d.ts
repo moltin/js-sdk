@@ -20,6 +20,9 @@ export interface CatalogBase {
     pricebook_id: string
     created_at?: string
     updated_at?: string
+    customer_ids?: string[]
+    channels?: string[]
+    tags?: string[]
   }
 }
 
