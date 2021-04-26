@@ -24,7 +24,6 @@ export interface RuleBase {
 }
 
 export interface Rule extends Identifiable,RuleBase  {
-  id: string
   links: {
     self: string
   }
@@ -44,10 +43,10 @@ type RuleInclude = // TODO
 
 export type RuleUpdateBody = Partial<RuleBase> & Identifiable
 
-export interface CartEndpoint
+export interface RulesEndpoint
 extends CrudQueryableResource<Rule, RuleBase, RuleUpdateBody, RuleFilter, RuleSort, RuleInclude> {
   endpoint: 'catalogs/rules'
-  ruleId: string
+  id: string
 }
 
 
