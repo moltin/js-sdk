@@ -1,8 +1,7 @@
 import {
-  Identifiable,
-  Resource, ResourceList
+  Resource,
 } from './core'
-import { Product } from './product'
+import { PcmProduct } from "./pcm";
 
 export interface NodeRelationshipBase {
   type: 'product'
@@ -46,7 +45,7 @@ export interface NodeRelationshipsEndpoint {
     hierarchyId: string
     nodeId: string
     token?: string
-  }): Promise<Resource<Product[]>>
+  }): Promise<Resource<PcmProduct[]>>
 
   ChangeParent(options: {
     hierarchyId: string
