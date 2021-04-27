@@ -9,6 +9,7 @@ import {
 import { CatalogsNodesEndpoint } from './catalogs-nodes'
 import { CatalogsProductsEndpoint } from './catalogs-products'
 import { CatalogsReleasesEndpoint } from './catalogs-releases'
+import { CatalogsRulesEndpoint } from './catalogs-rules'
 
 /**
  * Core PCM Product Base Interface
@@ -64,4 +65,5 @@ export interface CatalogsEndpoint
   Nodes: CatalogsNodesEndpoint
   Products: CatalogsProductsEndpoint
   Releases: CatalogsReleasesEndpoint
+  Rules: CatalogsRulesEndpoint
 }

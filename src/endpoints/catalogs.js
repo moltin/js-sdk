@@ -173,6 +173,48 @@ class Releases {
   }
 }
 
+class Rules {
+  constructor(endpoint) {
+    this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.request = new RequestFactory(this.config)
+    this.config.version = 'pcm'
+    this.endpoint = 'rules'
+  }
+
+  All({ token = null }) {
+    return this.request.send(`${this.endpoint}`, 'GET', undefined, token)
+  }
+
+  Get({ catalogRuleId, token = null }) {
+    return this.request.send(
+      `${this.endpoint}/${catalogRuleId}`,
+      'GET',
+      undefined,
+      token
+    )
+  }
+
+  Create({ token = null }) {
+    return this.request.send(`catalogs/${this.endpoint}`, 'POST', token)
+  }
+
+  Update({ catalogRuleId, token = null }) {
+    return this.request.send(
+      `catalogs/${this.endpoint}/${catalogRuleId}`,
+      `PUT`,
+      token
+    )
+  }
+
+  Delete({ catalogRuleId, token = null }) {
+    return this.request.send(
+      `catalogs/${this.endpoint}/${catalogRuleId}`,
+      `DELETE`,
+      token
+    )
+  }
+}
+
 class CatalogEndpoint extends CRUDExtend {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -181,6 +223,7 @@ class CatalogEndpoint extends CRUDExtend {
     this.Nodes = new Nodes(endpoint)
     this.Products = new Products(endpoint)
     this.Releases = new Releases(endpoint)
+    this.Rules = new Rules(endpoint)
     this.endpoint = 'catalogs'
   }
 }
