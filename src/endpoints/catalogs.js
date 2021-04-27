@@ -194,14 +194,15 @@ class Rules {
     )
   }
 
-  Create({ token = null }) {
-    return this.request.send(`catalogs/${this.endpoint}`, 'POST', token)
+  Create(body, token = null) {
+    return this.request.send(`catalogs/${this.endpoint}`, 'POST', body, token)
   }
 
-  Update({ catalogRuleId, token = null }) {
+  Update({ catalogRuleId, body, token = null }) {
     return this.request.send(
       `catalogs/${this.endpoint}/${catalogRuleId}`,
       `PUT`,
+      body,
       token
     )
   }
