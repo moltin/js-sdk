@@ -35,6 +35,22 @@ export interface AccountMembershipCreateBody {
 }
 
 /**
+ * possible filter for accounts
+ */
+export interface AccountFilter {
+  eq?: {
+    name?: string
+    legal_name?: string
+    registration_id?: string
+  }
+  like?: {
+    name?: string
+    legal_name?: string
+    registration_id?: string
+  }
+}
+
+/**
  * Account Memberships Endpoints
  */
 export interface AccountMembershipsEndpoint
@@ -43,7 +59,7 @@ export interface AccountMembershipsEndpoint
         AccountMembership,
         AccountMembershipCreateBody,
         never,
-        never,
+        AccountFilter,
         never,
         never
       >,
