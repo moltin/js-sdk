@@ -1,6 +1,7 @@
 import {
-  Resource,
-} from './core'
+  ResourcePage,
+  Resource
+} from "./core";
 import { PcmProduct } from "./pcm";
 
 export interface NodeRelationshipBase {
@@ -45,7 +46,7 @@ export interface NodeRelationshipsEndpoint {
     hierarchyId: string
     nodeId: string
     token?: string
-  }): Promise<Resource<PcmProduct[]>>
+  }): Promise<ResourcePage<PcmProduct>>
 
   ChangeParent(options: {
     hierarchyId: string
@@ -53,4 +54,8 @@ export interface NodeRelationshipsEndpoint {
     body: NodeRelationshipParent
     token?: string
   }): Promise<void>
+
+  Limit(value: number): NodeRelationshipsEndpoint
+
+  Offset(value: number): NodeRelationshipsEndpoint
 }
