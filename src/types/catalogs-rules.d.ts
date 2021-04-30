@@ -45,7 +45,7 @@ export type RuleUpdateBody = Partial<RuleBase> & Identifiable
 
 export interface CatalogsRulesEndpoint
 extends CrudQueryableResource<Rule, RuleBase, RuleUpdateBody, RuleFilter, RuleSort, RuleInclude> {
-  endpoint: 'catalogs/rules'
+  endpoint: 'rules'
   id: string
 }
 

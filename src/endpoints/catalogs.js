@@ -182,12 +182,13 @@ class Rules {
   }
 
   All({ token = null }) {
-    return this.request.send(`${this.endpoint}`, 'GET', undefined, token)
+    console.log('hello')
+    return this.request.send(`catalogs/${this.endpoint}`, 'GET', undefined, token)
   }
 
   Get({ catalogRuleId, token = null }) {
     return this.request.send(
-      `${this.endpoint}/${catalogRuleId}`,
+      `catalogs/${this.endpoint}/${catalogRuleId}`,
       'GET',
       undefined,
       token
