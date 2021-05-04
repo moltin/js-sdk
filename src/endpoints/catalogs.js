@@ -190,7 +190,7 @@ class Rules {
     )
   }
 
-  Get(catalogRuleId, token = null ) {
+  Get(catalogRuleId, token = null) {
     return this.request.send(
       `catalogs/${this.endpoint}/${catalogRuleId}`,
       'GET',
@@ -203,7 +203,7 @@ class Rules {
     return this.request.send(`catalogs/${this.endpoint}`, 'POST', body, token)
   }
 
-  Update(catalogRuleId, body, token = null ) {
+  Update(catalogRuleId, body, token = null) {
     return this.request.send(
       `catalogs/${this.endpoint}/${catalogRuleId}`,
       `PUT`,
@@ -212,7 +212,7 @@ class Rules {
     )
   }
 
-  Delete( catalogRuleId, token = null ) {
+  Delete(catalogRuleId, token = null) {
     return this.request.send(
       `catalogs/${this.endpoint}/${catalogRuleId}`,
       `DELETE`,
