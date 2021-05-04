@@ -28,6 +28,7 @@ import { AuthenticationRealmEndpoint } from './types/authentication-realm'
 import { CartEndpoint } from './types/cart'
 import { HierarchiesEndpoint } from './types/hierarchies'
 import { CatalogsEndpoint } from './types/catalogs'
+import { CatalogsRulesEndpoint } from './types/catalogs-rules'
 import { PriceBooksEndpoint } from './types/price-books'
 import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
 
@@ -57,6 +58,7 @@ export * from './types/transaction'
 export * from './types/settings'
 export * from './types/promotions'
 export * from './types/catalogs'
+export * from './types/catalogs-rules'
 export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
@@ -79,6 +81,7 @@ export class Moltin {
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
+  Rules: CatalogsRulesEndpoint
   PriceBooks: PriceBooksEndpoint
   Hierarchies: HierarchiesEndpoint
   Currencies: CurrencyEndpoint

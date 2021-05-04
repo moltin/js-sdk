@@ -17,13 +17,14 @@ export interface RuleBase {
     name: string
     description?: string
     catalog_id: string
-    customer_ids: string[]
+    customer_ids?: string[]
     channels?: string[]
     tags?: string[]
   }
 }
 
 export interface Rule extends Identifiable,RuleBase  {
+  id: string
   links: {
     self: string
   }
@@ -41,7 +42,9 @@ type RuleSort = // TODO
 type RuleInclude = // TODO
 | ''
 
-export type RuleUpdateBody = Partial<RuleBase> & Identifiable
+export interface RuleUpdateBody extends RuleBase {
+  id: string
+}
 
 export interface CatalogsRulesEndpoint
 extends CrudQueryableResource<Rule, RuleBase, RuleUpdateBody, RuleFilter, RuleSort, RuleInclude> {
