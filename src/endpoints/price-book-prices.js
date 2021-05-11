@@ -19,7 +19,8 @@ class PriceBookPricesEndpoint {
       }),
       'GET',
       undefined,
-      token
+      token,
+      this
     )
   }
 
