@@ -1,4 +1,5 @@
 import RequestFactory from '../factories/request'
+import { buildURL } from '../utils/helpers'
 
 class PriceBookPricesEndpoint {
   constructor(endpoint) {
@@ -10,12 +11,21 @@ class PriceBookPricesEndpoint {
 
   // TODO: API - currently not working! (can get from pricebook relationships)
   All({ pricebookId, token = null }) {
+    const { filter } = this
+
     return this.request.send(
-      `pricebooks/${pricebookId}/${this.endpoint}`,
+      buildURL(`pricebooks/${pricebookId}/${this.endpoint}`, {
+        filter
+      }),
       'GET',
       undefined,
       token
     )
+  }
+
+  Filter(filter) {
+    this.filter = filter
+    return this
   }
 
   Get({ pricebookId, priceId, token = null }) {

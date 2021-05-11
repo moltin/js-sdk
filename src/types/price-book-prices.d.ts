@@ -20,6 +20,8 @@ export interface PriceBookPrice extends Identifiable, PriceBookPriceBase {
   relationships: {}
 }
 
+export interface PricesFilter {}
+
 export interface PriceBookPricesEndpoint {
   endpoint: 'prices'
 
@@ -34,6 +36,8 @@ export interface PriceBookPricesEndpoint {
     pricebookId: string
     token?: string
   }): Promise<ResourceList<PriceBookPrice>>
+
+  Filter(filter: PricesFilter): PriceBookPricesEndpoint
 
   Create(options: {
     pricebookId: string
