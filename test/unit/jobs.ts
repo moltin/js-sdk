@@ -14,7 +14,7 @@ describe('Moltin jobs', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/jobs')
@@ -29,7 +29,7 @@ describe('Moltin jobs', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/jobs/1')
@@ -44,7 +44,7 @@ describe('Moltin jobs', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/jobs/1/file')
@@ -57,18 +57,14 @@ describe('Moltin jobs', () => {
 
   it('should create a new job', () => {
     const newJobs = {
-      type: 'job',
-      job_type: 'order_export',
-      link: {
-        href: 'url'
-      },
-      status: 'processing' as const
+      filter: "",
+      job_type: "order_export"
     }
 
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/jobs', { data: newJobs })

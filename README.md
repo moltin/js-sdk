@@ -1,5 +1,7 @@
 <img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
 
+# Beta
+
 # Elastic Path Commerce Cloud JavaScript SDK
 
 [![npm version](https://img.shields.io/npm/v/@moltin/sdk.svg)](https://www.npmjs.com/package/@moltin/sdk)
@@ -93,7 +95,7 @@ import { gateway as MoltinGateway, MemoryStorageFactory } from '@moltin/sdk'
 const Moltin = MoltinGateway({
   client_id: 'XXX',
   storage: new MemoryStorageFactory()
-});
+})
 ```
 
 Or alternatively, create your own storage factory by passing in an object which implements the following interface:
@@ -124,14 +126,15 @@ const Moltin = MoltinGateway({
     language: 'en',
     application: 'my-app'
 })
+```
 
-``` 
 ### TypeScript Support
+
 The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript.
 
 Imported module will contain all interfaces needed to consume backend services. i.e:
 
-``` TypeScript
+```TypeScript
 import * as moltin from '@moltin/sdk';
 
 const product: moltin.ProductBase = {...}
@@ -139,7 +142,7 @@ const product: moltin.ProductBase = {...}
 
 If you do not want to use the namespace, you can extend the interfaces and define them yourself, like so:
 
-``` TypeScript
+```TypeScript
 // You can name the interface anything you like
 interface Product extends product.ProductBase {
 }
@@ -149,13 +152,13 @@ const product: Product = {...}
 
 Here is an example of a simple product creation:
 
-``` TypeScript
+```TypeScript
 import { Moltin, gateway, ProductBase, Resource } from '@moltin/sdk';
 
 async function main() {
   const g: Moltin = gateway({client_id, client_secret});
   const auth = await g.Authenticate();
-  
+
   const newProduct: ProductBase = {
     type: "product",
     name: "My Product",
@@ -173,7 +176,7 @@ async function main() {
       }
     ]
   };
-  
+
   const nP: Resource<Product> = await g.Products.Create(newProduct);
 }
 ```
@@ -182,7 +185,7 @@ You can also extend any base interface compatible with flows to create any custo
 
 In your project add a definition file (with a `.d.ts` extension) with a following code:
 
-``` TypeScript
+```TypeScript
 import * as moltin from '@moltin/sdk';
 
 declare module '@moltin/sdk' {
@@ -243,3 +246,4 @@ You can learn more about the Rollup API and configuration [here](https://github.
 
 - Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/moltin/gatsby-demo-store/blob/master/.github/CONTRIBUTING.md).
 - For more information about the license, see [MIT License](https://github.com/moltin/js-sdk/blob/master/LICENSE).
+

@@ -41,7 +41,7 @@ export interface Config {
   client_secret?: string
   host: string
   protocol: 'https'
-  version: 'v1' | 'v2' | 'v3'
+  version: 'v1' | 'v2' | 'v3' | 'pcm'
   currency?: string
   language?: string
   custom_fetch?: Function

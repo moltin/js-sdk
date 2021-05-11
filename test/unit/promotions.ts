@@ -19,7 +19,7 @@ describe('Moltin promotions', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/promotions')
@@ -34,7 +34,7 @@ describe('Moltin promotions', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/promotions/1')
@@ -67,7 +67,7 @@ describe('Moltin promotions', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .post('/promotions', { data: newPromotion })
@@ -82,7 +82,7 @@ describe('Moltin promotions', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/promotions/1/codes')
@@ -98,7 +98,7 @@ describe('Moltin promotions', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .post('/promotions/1/codes', {

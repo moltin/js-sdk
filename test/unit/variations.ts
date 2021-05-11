@@ -19,7 +19,7 @@ describe('Moltin variations', () => {
   it('should return an a single variation', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations')
@@ -33,7 +33,7 @@ describe('Moltin variations', () => {
   it('should return an array of variations', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations/variation-1')
@@ -47,7 +47,7 @@ describe('Moltin variations', () => {
   it('should create variation', () => {
     const newVariation = { name: 'Color' }
 
-    nock(apiUrl, { reqheaders: { Authorization: `Bearer: ${accessToken}` } })
+    nock(apiUrl, { reqheaders: { Authorization: `Bearer ${accessToken}` } })
       .post('/variations')
       .reply(200, { data: { ...newVariation, id: 'newVariation' } })
 
@@ -60,7 +60,7 @@ describe('Moltin variations', () => {
   it('should update variation', () => {
     const variation = { name: 'Color' }
 
-    nock(apiUrl, { reqheaders: { Authorization: `Bearer: ${accessToken}` } })
+    nock(apiUrl, { reqheaders: { Authorization: `Bearer ${accessToken}` } })
       .put('/variations/variation-1')
       .reply(200, { data: { ...variation, id: 'variation-1' } })
 
@@ -73,7 +73,7 @@ describe('Moltin variations', () => {
   it('should delete variation', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .delete('/variations/variation-1')
@@ -87,7 +87,7 @@ describe('Moltin variations', () => {
   it('should return an a single option', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations/variation-1/options/option-1')
@@ -103,7 +103,7 @@ describe('Moltin variations', () => {
   it('should return an array of options', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations/variation-1/options')
@@ -121,7 +121,7 @@ describe('Moltin variations', () => {
     }
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .post('/variations/variation-1/options')
@@ -141,7 +141,7 @@ describe('Moltin variations', () => {
     }
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .put('/variations/variation-1/options/option-1')
@@ -159,7 +159,7 @@ describe('Moltin variations', () => {
   it('should delete option', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .delete('/variations/variation-1/options/option-1')
@@ -175,7 +175,7 @@ describe('Moltin variations', () => {
   it('should return an a single modifier', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations/variation-1/options/option-1/modifiers/modifier-1')
@@ -193,7 +193,7 @@ describe('Moltin variations', () => {
   it('should an array of modifiers', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .get('/variations/variation-1/options/option-1/modifiers')
@@ -214,7 +214,7 @@ describe('Moltin variations', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .post('/variations/variation-1/options/option-1/modifiers')
@@ -237,7 +237,7 @@ describe('Moltin variations', () => {
 
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .put('/variations/variation-1/options/option-1/modifiers/modifier-1')
@@ -256,7 +256,7 @@ describe('Moltin variations', () => {
   it('should delete modifier', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer ${accessToken}`
       }
     })
       .delete('/variations/variation-1/options/option-1/modifiers/modifier-1')
