@@ -32,6 +32,7 @@ export interface Realm extends RealmBase, Identifiable {
 
 export interface RealmBase {
   name: string
+  duplicate_email_policy: string
   redirect_uris: string[]
 }
 
