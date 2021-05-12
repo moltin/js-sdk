@@ -6,6 +6,7 @@ import {
   Identifiable,
   CrudQueryableResource
 } from './core'
+import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 
 /**
  * Core PCM Product Base Interface
@@ -53,4 +54,6 @@ export interface PcmProductsEndpoint
     PcmProductSort,
     PcmProductInclude> {
   endpoint: 'products'
+
+  FileRelationships: PcmFileRelationshipEndpoint
 }

@@ -68,6 +68,7 @@ export * from './types/price-books'
 export * from './types/price-book-prices'
 export * from './types/node-relationships'
 export * from './types/merchant-realm-mappings'
+export * from "./types/pcm-file-relationship"
 
 // UMD
 export as namespace moltin
