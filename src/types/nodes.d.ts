@@ -19,6 +19,14 @@ export interface NodeBase {
     description?: string
     slug?: string
   }
+  relationships?: {
+    parent: {
+      data: {
+        type: string;
+        id: string
+      }
+    }
+  }
 }
 
 export interface Node extends Identifiable, NodeBase {
