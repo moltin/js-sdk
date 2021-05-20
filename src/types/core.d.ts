@@ -2,7 +2,8 @@ export interface Identifiable {
   id: string
 }
 
-export interface Resource<R> {
+export interface Resource<R, E> {
+  included?: E
   data: R
 }
 
