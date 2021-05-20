@@ -136,7 +136,6 @@ describe('Moltin orders', () => {
     return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then(response => {
       assert.propertyVal(response, 'id', 'order-1')
       assert.propertyVal(response, 'status', 'complete')
-      const { included } =  response
       assert.lengthOf(response.included.accounts, 1)
       assert.lengthOf(response.included.account_members, 1)
     })
