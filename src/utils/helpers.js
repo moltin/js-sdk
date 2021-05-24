@@ -212,13 +212,28 @@ export function getCredentials(storage) {
   return JSON.parse(storage.get('moltinCredentials'))
 }
 
-export function tokenInvalid(config) {
-  const credentials = getCredentials(config.storage)
+export function tokenInvalid({ storage, client_id }) {
+  const credentials = getCredentials(storage)
 
-  return (
-    !credentials ||
-    !credentials.access_token ||
-    credentials.client_id !== config.client_id ||
-    Math.floor(Date.now() / 1000) >= credentials.expires
-  )
+  if (!credentials) {
+    console.error('Token error: credentials do not exist')
+    return true
+  }
+
+  if (!credentials.access_token) {
+    console.error('Token error: credentials missing access_token')
+    return true
+  }
+
+  if (credentials.client_id !== client_id) {
+    console.error('Token error: client_id mismatch')
+    return true
+  }
+
+  if (Math.floor(Date.now() / 1000) >= credentials.expires) {
+    console.error('Token error: credentials expired')
+    return true
+  }
+
+  return false
 }

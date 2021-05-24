@@ -36,6 +36,7 @@ export interface Order extends Identifiable, OrderBase {
     display_price: {
       with_tax: FormattedPrice
       without_tax: FormattedPrice
+      tax: FormattedPrice
     }
     timestamps: {
       created_at: string
