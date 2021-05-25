@@ -16,13 +16,13 @@ export interface PcmProductBase {
   type: string
   attributes: {
     name: string
-    description?: string
-    slug: string
+    description?: string | null
+    slug?: string | null
     sku: string
     status?: string
     commodity_type?: string
-    upc_ean?: string
-    mpn?: string
+    upc_ean?: string | null
+    mpn?: string | null
   }
 }
 
