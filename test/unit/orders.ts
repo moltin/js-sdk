@@ -133,7 +133,7 @@ describe('Moltin orders', () => {
         .get('/orders/order-1?include=account,account_member')
         .reply(200, orders[0])
 
-    return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then(response => {
+    return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then((response:any) => {
       assert.propertyVal(response, 'id', 'order-1')
       assert.propertyVal(response, 'status', 'complete')
       assert.lengthOf(response.included.accounts, 1)
