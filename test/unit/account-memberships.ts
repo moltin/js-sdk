@@ -107,4 +107,25 @@ describe('Moltin Account Memberships', () => {
       assert.isObject(res)
     })
   })
+
+  it('should filter accounts', () => {
+    nock(apiUrl, {})
+      .post('/oauth/access_token')
+      .reply(200, {
+        access_token: 'a550d8cbd4a4627013452359ab69694cd446615a'
+      })
+      .get(/accounts\/.*\/account-memberships/)
+      .reply(200, {})
+    const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
+
+    return Moltin.AccountMemberships.Filter({
+      eq: {
+        name: 'bluefuse'
+      }
+    })
+      .All(accountId)
+      .then(res => {
+        assert.isObject(res)
+      })
+  })
 })
