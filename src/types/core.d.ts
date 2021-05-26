@@ -3,7 +3,6 @@ export interface Identifiable {
 }
 
 export interface Resource<R, E> {
-  included?: E
   data: R
 }
 
