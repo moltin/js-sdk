@@ -117,7 +117,7 @@ export class Moltin {
   OidcProfile: OidcProfileEndpoint
   AuthenticationRealm: AuthenticationRealmEndpoint
   MerchantRealmMappings: MerchantRealmMappingsEndpoint
-  Account: AccountEndpoint
+  Accounts: AccountEndpoint
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
