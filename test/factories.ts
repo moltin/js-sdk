@@ -264,7 +264,37 @@ export const ordersArray = [
   {
     id: 'order-1',
     type: 'order',
-    status: 'complete'
+    status: 'complete',
+    relationships: {
+      account: {
+        data: {
+          type: 'account',
+          id: '1c45e4ec-26e0-4043-86e4-c15b9cf985a1'
+        }
+      },
+      account_member: {
+        data: {
+          type: 'account_member',
+          id: '7c45e4ec-26e0-4043-86e4-c15b9cf985a1'
+        }
+      }
+    },
+    included:{
+      accounts: [{
+          type: 'account',
+          id: '1c45e4ec-26e0-4043-86e4-c15b9cf985a1',
+          legal_name: 'my legal name',
+          name: 'my name',
+        }
+      ],
+      account_members: [{
+          type: 'account_member',
+          id: '7c45e4ec-26e0-4043-86e4-c15b9cf985a1',
+          email: 'test@ep.com',
+          name: 'test account'
+        }
+      ]
+    }
   },
   {
     id: 'order-2',
