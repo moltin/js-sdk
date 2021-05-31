@@ -4,7 +4,7 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourceList
+  CrudQueryableResource, ResourceList, ResourcePage
 } from './core'
 import { NodesEndpoint, Node } from './nodes'
 import { NodeRelationshipsEndpoint } from './node-relationships'
@@ -56,5 +56,7 @@ export interface HierarchiesEndpoint
   endpoint: 'hierarchies'
   Nodes: NodesEndpoint
   Relationships: NodeRelationshipsEndpoint
-  Children(id: string, token?: string): Promise<ResourceList<Node>>
+  Children(id: string, token?: string): Promise<ResourcePage<Node>>
+  Limit(value: number): HierarchiesEndpoint
+  Offset(value: number): HierarchiesEndpoint
 }
