@@ -14,14 +14,16 @@ class HierarchiesEndpoint extends CRUDExtend {
   }
 
   Children(id, token = null) {
+    const { limit, offset } = this
+
     this.call = this.request.send(
       buildURL(`${this.endpoint}/${id}/children`, {
-        includes: this.includes
+        limit,
+        offset
       }),
       'GET',
-      undefined,
-      token,
-      this
+      null,
+      token
     )
 
     return this.call
