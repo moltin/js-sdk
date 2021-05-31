@@ -59,6 +59,15 @@ class NodeRelationshipsEndpoint {
     )
   }
 
+  DeleteParent({ hierarchyId, nodeId, token = null }) {
+    return this.request.send(
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
+      'DELETE',
+      undefined,
+      token
+    )
+  }
+
   Limit(value) {
     this.limit = value
     return this
