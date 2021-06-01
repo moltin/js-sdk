@@ -55,6 +55,12 @@ export interface NodeRelationshipsEndpoint {
     token?: string
   }): Promise<void>
 
+  DeleteParent(options: {
+    hierarchyId: string
+    nodeId: string
+    token?: string
+  }): Promise<void>
+
   Limit(value: number): NodeRelationshipsEndpoint
 
   Offset(value: number): NodeRelationshipsEndpoint
