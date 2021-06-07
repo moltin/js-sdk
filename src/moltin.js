@@ -27,6 +27,7 @@ import PromotionsEndpoint from './endpoints/promotions'
 import VariationsEndpoint from './endpoints/variations'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
+import PasswordProfileEndpoint from './endpoints/password-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import Accounts from './endpoints/accounts'
 import AccountMembersEndpoint from './endpoints/account-members'
@@ -67,6 +68,7 @@ export default class Moltin {
     this.Variations = new VariationsEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
+    this.PasswordProfile = new PasswordProfileEndpoint(config)
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
     this.Accounts = new Accounts(config)
     this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(

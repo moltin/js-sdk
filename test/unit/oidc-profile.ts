@@ -47,7 +47,7 @@ describe('Oidc Profiles', () => {
       client_secret: 'XXXXXX'
     }
 
-    return Moltin.OidcProfile.Create(realmId, body).then(res => {
+    return Moltin.OidcProfile.Create(realmId, {data:body}).then(res => {
       assert.isObject(res)
     })
   })
@@ -68,8 +68,8 @@ describe('Oidc Profiles', () => {
 
     const profileId = 'e1b5c7fa-f2b6-48d2-b659-3d82f20968a9'
 
-    return Moltin.OidcProfile.Update(realmId, profileId, body).then(res => {
-      assert.isObject(res)
+    return Moltin.OidcProfile.Update(realmId, profileId, {data:body}).then(res => {
+        assert.isObject(res)
     })
   })
 
