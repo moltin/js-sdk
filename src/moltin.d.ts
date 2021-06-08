@@ -31,6 +31,7 @@ import { CatalogsEndpoint } from './types/catalogs'
 import { CatalogsRulesEndpoint } from './types/catalogs-rules'
 import { PriceBooksEndpoint } from './types/price-books'
 import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
+import { CatalogEndpoint } from './types/catalog'
 
 export * from './types/config'
 export * from './types/storage'
@@ -82,6 +83,7 @@ export class Moltin {
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
+  Catalog: CatalogEndpoint
   Rules: CatalogsRulesEndpoint
   PriceBooks: PriceBooksEndpoint
   Hierarchies: HierarchiesEndpoint

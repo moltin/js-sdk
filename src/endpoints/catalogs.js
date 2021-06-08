@@ -221,7 +221,7 @@ class Rules {
   }
 }
 
-class CatalogEndpoint extends CRUDExtend {
+class CatalogsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
     config.version = 'pcm'
@@ -234,4 +234,4 @@ class CatalogEndpoint extends CRUDExtend {
   }
 }
 
-export default CatalogEndpoint
+export default CatalogsEndpoint

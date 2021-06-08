@@ -30,11 +30,12 @@ import VariationsEndpoint from './endpoints/variations'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
-import HierarchiesEndpoint from './endpoints/heirarchies'
+import HierarchiesEndpoint from './endpoints/hierarchies'
 import MerchantRealmMappingsEndpoint from './endpoints/merchant-realm-mappings'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
-import CatalogEndpoint from './endpoints/catalogs'
+import CatalogsEndpoint from './endpoints/catalogs'
+import CatalogEndpoint from './endpoints/catalog'
 
 export default class Moltin {
   constructor(config) {
@@ -50,7 +51,8 @@ export default class Moltin {
 
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
-    this.Catalogs = new CatalogEndpoint(config)
+    this.Catalogs = new CatalogsEndpoint(config)
+    this.Catalog = new CatalogEndpoint(config)
     this.Currencies = new CurrenciesEndpoint(config)
     this.Brands = new BrandsEndpoint(config)
     this.PriceBooks = new PriceBooksEndpoint(config)
