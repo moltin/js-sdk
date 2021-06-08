@@ -1,17 +1,9 @@
-/**
- * Products
- * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
- */
 import {
   Identifiable,
   CrudQueryableResource, ResourceList, Resource
 } from './core'
 import { ProductResponse } from './catalogs-products'
 import { Catalog, CatalogBase, CatalogFilter, CatalogInclude, CatalogSort } from './catalogs'
-
-/**
- * PCM Product Endpoints
- */
 
 export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
 

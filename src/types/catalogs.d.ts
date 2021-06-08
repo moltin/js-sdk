@@ -4,7 +4,7 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, Resource, ResourcePage
+  CrudQueryableResource
 } from './core'
 import { CatalogsNodesEndpoint } from './catalogs-nodes'
 import { CatalogsProductsEndpoint } from './catalogs-products'
@@ -42,21 +42,28 @@ export interface CatalogFilter {
   // TODO
 }
 
-export type CatalogSort = // TODO
+type CatalogSort = // TODO
   | ''
 
-export type CatalogInclude = // TODO
+type CatalogInclude = // TODO
   | ''
 
 /**
  * PCM Product Endpoints
  */
-export interface CatalogsEndpoint {
-  endpoint: 'catalogs'
-  // Nodes: CatalogsNodesEndpoint
-  // Products: CatalogsProductsEndpoint
-  // Releases: CatalogsReleasesEndpoint
-  // Rules: CatalogsRulesEndpoint
 
-  All(token?: string): Promise<ResourcePage<Catalog[]>>
+export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
+
+export interface CatalogsEndpoint
+  extends CrudQueryableResource<Catalog,
+    CatalogBase,
+    CatalogUpdateBody,
+    CatalogFilter,
+    CatalogSort,
+    CatalogInclude> {
+  endpoint: 'catalogs'
+  Nodes: CatalogsNodesEndpoint
+  Products: CatalogsProductsEndpoint
+  Releases: CatalogsReleasesEndpoint
+  Rules: CatalogsRulesEndpoint
 }
