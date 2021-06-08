@@ -47,7 +47,7 @@ export interface PasswordProfileEndpoint {
      * Create an Password Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/create-a-password-profile.html
      * @param realmId - The ID for the authentication-realm containing the Password profiles.
-     * @param profileId - The ID for the requested Password profile.
+     * @param body - The Password Profiles object
      */
     Create(realmId: string, body: { data: PasswordProfileBody }): Promise<PasswordProfileResponse>
 
