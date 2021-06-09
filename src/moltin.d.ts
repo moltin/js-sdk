@@ -25,6 +25,7 @@ import * as promotions from './types/promotions'
 import * as variations from './types/variations'
 import * as authenticationSettings from './types/authentication-settings'
 import * as oidcProfile from './types/oidc-profile'
+import * as passwordProfile from './types/password-profile'
 import * as authenticationRealm from './types/authentication-realm'
 import * as paymentGateway from './types/gateway'
 import * as accounts from './types/accounts'
@@ -58,6 +59,7 @@ export * from './types/promotions'
 export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
+export * from './types/password-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/accounts'
@@ -95,12 +97,13 @@ export class Moltin {
   Variations: variations.VariationsEndpoint
   AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint
   OidcProfile: oidcProfile.OidcProfileEndpoint
+  PasswordProfile: passwordProfile.PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: userAuthenticationPasswordProfile.UserAuthenticationPasswordProfileEndpoint;
   AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint
   Accounts: accounts.AccountEndpoint
   AccountMembers: accountMembers.AccountMembersEndpoint
   AccountAuthenticationSettings: accountAuthenticationSettings.AccountAuthenticationSettingsEndpoint
   AccountMemberships: accountMemberships.AccountMembershipsEndpoint
-  UserAuthenticationPasswordProfile: userAuthenticationPasswordProfile.UserAuthenticationPasswordProfileEndpoint;
 
   Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: config.Config)
