@@ -28,12 +28,12 @@ import VariationsEndpoint from './endpoints/variations'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import PasswordProfileEndpoint from './endpoints/password-profile'
+import UserAuthenticationPasswordProfileEndpoint from './endpoints/user-authentication-password-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import Accounts from './endpoints/accounts'
 import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
-import UserAuthenticationPasswordProfileEndpoint from './endpoints/user-authentication-password-profile'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
 

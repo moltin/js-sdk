@@ -63,14 +63,14 @@ export interface UserAuthenticationPasswordProfileEndpoint {
      * @param userAuthenticationPasswordProfileId - The ID for the user authentication password profile info.
      * @param body - The User Authentication Password Profile object
      */
-    Update(realmId: string, userAuthenticationInfoId: string,userAuthenticationPasswordProfileId: string, body: { data: UserAuthenticationPasswordProfileBody }, token?: string): Promise<UserAuthenticationPasswordProfileResponse>
+    Update(realmId: string, userAuthenticationInfoId: string, userAuthenticationPasswordProfileId: string, body: { data: UserAuthenticationPasswordProfileBody }, token?: string): Promise<UserAuthenticationPasswordProfileResponse>
 
     /**
      * Delete an User Authentication Password Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/delete-a-user-authentication-password-profile.html
      * @param realmId - The ID for the authentication-realm containing the Password profiles.
+     * @param userAuthenticationInfoId - The ID for the user authentication info.
      * @param userAuthenticationPasswordProfileId - The ID for the user authentication password profile info.
-     * @param profileId - The ID for the requested Password profile.
      */
-    Delete(realmId: string, userAuthenticationInfoId: string,userAuthenticationPasswordProfileId: string, token?: string)
+    Delete(realmId: string, userAuthenticationInfoId: string, userAuthenticationPasswordProfileId: string, token?: string)
 }
