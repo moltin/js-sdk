@@ -380,6 +380,59 @@ describe('Moltin flows', () => {
     })
   })
 
+  it('should create one-to-many flow entry relationships', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .post('/flows/flow-1/entries/entry-1/relationships/field-1', {
+        data: [
+          {
+            type: 'brand',
+            id: 'id1',
+          },
+          {
+            type: 'brand',
+            id: 'id2',
+          }
+        ]
+      })
+      .reply(201, [
+        {
+          type: 'brand',
+          id: 'id1',
+        },
+        {
+          type: 'brand',
+          id: 'id2',
+        }
+      ])
+
+    return Moltin.Flows.CreateEntryRelationship(
+      'flow-1',
+      'entry-1',
+      'field-1',
+      [
+        {
+          type: 'brand',
+          id: 'id1',
+        },
+        {
+          type: 'brand',
+          id: 'id2',
+        }
+      ]
+    ).then(response => {
+      assert.propertyVal(response[0], 'id', 'id1')
+      assert.propertyVal(response[1], 'id', 'id2')
+    })
+  })
+
   it('should update a flow entry relationship', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'
@@ -408,6 +461,59 @@ describe('Moltin flows', () => {
       }
     ).then(response => {
       assert.propertyVal(response, 'type', 'new')
+    })
+  })
+
+  it('should update one-to-many flow entry relationships', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .put('/flows/flow-1/entries/entry-1/relationships/field-1', {
+        data: [
+          {
+            type: 'brand',
+            id: 'new-id1',
+          },
+          {
+            type: 'brand',
+            id: 'new-id2',
+          }
+        ]
+      })
+      .reply(201, [
+        {
+          type: 'brand',
+          id: 'new-id1',
+        },
+        {
+          type: 'brand',
+          id: 'new-id2',
+        }
+      ])
+
+    return Moltin.Flows.UpdateEntryRelationship(
+      'flow-1',
+      'entry-1',
+      'field-1',
+      [
+        {
+          type: 'brand',
+          id: 'new-id1',
+        },
+        {
+          type: 'brand',
+          id: 'new-id2',
+        }
+      ]
+    ).then(response => {
+      assert.propertyVal(response[0], 'id', 'new-id1')
+      assert.propertyVal(response[1], 'id', 'new-id2')
     })
   })
 
