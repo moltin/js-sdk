@@ -38,6 +38,8 @@ import { AccountAuthenticationSettingsEndpoint } from './types/account-authentic
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
 import {PasswordProfileEndpoint} from "./types/password-profile";
+import {UserAuthenticationPasswordProfileEndpoint
+} from "./types/user-authentication-password-profile";
 
 export * from './types/config'
 export * from './types/storage'
@@ -127,6 +129,7 @@ export class Moltin {
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
   PasswordProfile: PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
