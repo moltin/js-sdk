@@ -28,6 +28,7 @@ import VariationsEndpoint from './endpoints/variations'
 import AuthenticationRealmEndpoint from './endpoints/authentication-realm'
 import OidcProfileEndpoint from './endpoints/oidc-profile'
 import PasswordProfileEndpoint from './endpoints/password-profile'
+import UserAuthenticationPasswordProfileEndpoint from './endpoints/user-authentication-password-profile'
 import AuthenticationSettingsEndpoint from './endpoints/authentication-settings'
 import Accounts from './endpoints/accounts'
 import AccountMembersEndpoint from './endpoints/account-members'
@@ -76,6 +77,9 @@ export default class Moltin {
     )
     this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
+    this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
+      config
+    )
   }
 
   // Expose `Cart` class on Moltin class

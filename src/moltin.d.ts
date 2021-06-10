@@ -26,6 +26,7 @@ import * as variations from './types/variations'
 import * as authenticationSettings from './types/authentication-settings'
 import * as oidcProfile from './types/oidc-profile'
 import * as passwordProfile from './types/password-profile'
+import * as userAuthenticationPasswordProfile from './types/user-authentication-password-profile'
 import * as authenticationRealm from './types/authentication-realm'
 import * as paymentGateway from './types/gateway'
 import * as accounts from './types/accounts'
@@ -97,6 +98,7 @@ export class Moltin {
   AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint
   OidcProfile: oidcProfile.OidcProfileEndpoint
   PasswordProfile: passwordProfile.PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: userAuthenticationPasswordProfile.UserAuthenticationPasswordProfileEndpoint;
   AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint
   Accounts: accounts.AccountEndpoint
   AccountMembers: accountMembers.AccountMembersEndpoint
