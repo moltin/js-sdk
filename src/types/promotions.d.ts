@@ -57,6 +57,11 @@ export interface BundleDiscountSchema {
   currencies: CurrencyAmount[]
 }
 
+export interface BundleGiftSchema {
+  requirements: Requirements[]
+  gifts: string[]
+}
+
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#item-fixed-discount
  */
@@ -95,21 +100,23 @@ export interface PromotionBase {
   enabled: boolean
   automatic?: boolean
   promotion_type:
-    | 'fixed_discount'
-    | 'percent_discount'
-    | 'x_for_y'
-    | 'x_for_amount'
-    | 'bundle_fixed_discount'
-    | 'item_fixed_discount'
-    | 'item_percent_discount'
+  | 'fixed_discount'
+  | 'percent_discount'
+  | 'x_for_y'
+  | 'x_for_amount'
+  | 'bundle_fixed_discount'
+  | 'item_fixed_discount'
+  | 'item_percent_discount'
+  | 'bundle_gift'
   schema:
-    | FixedDiscountSchema
-    | PercentDiscountSchema
-    | XforYSchema
-    | XforAmountSchema
-    | BundleDiscountSchema
-    | ItemFixedDiscountSchema
-    | ItemPercentDiscountSchema
+  | FixedDiscountSchema
+  | PercentDiscountSchema
+  | XforYSchema
+  | XforAmountSchema
+  | BundleDiscountSchema
+  | ItemFixedDiscountSchema
+  | ItemPercentDiscountSchema
+  | BundleGiftSchema
   min_cart_value?: CurrencyAmount[]
   max_discount_value?: CurrencyAmount[]
   start: string
@@ -151,13 +158,13 @@ export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
  */
 export interface PromotionsEndpoint
   extends CrudQueryableResource<
-      Promotion,
-      PromotionBase,
-      Identifiable & Partial<PromotionBase>,
-      never,
-      never,
-      never
-    > {
+  Promotion,
+  PromotionBase,
+  Identifiable & Partial<PromotionBase>,
+  never,
+  never,
+  never
+  > {
   endpoint: 'promotions'
 
   Attributes(): Promise<Attributes>
