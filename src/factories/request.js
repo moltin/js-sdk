@@ -130,8 +130,9 @@ class RequestFactory {
         }
 
         fetch(
-          `${config.protocol}://${config.host}/${version ||
-            config.version}/${uri}`,
+          `${config.protocol}://${config.host}/${
+            version || config.version ? `${version || config.version}/` : ''
+          }${uri}`,
           {
             method: method.toUpperCase(),
             headers,
