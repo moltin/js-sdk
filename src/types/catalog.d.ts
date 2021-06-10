@@ -1,13 +1,26 @@
 import {
-  Identifiable,
-  CrudQueryableResource, ResourceList, Resource
+  ResourceList, Resource
 } from './core'
 import { ProductResponse } from './catalogs-products'
-import { Catalog, CatalogBase, CatalogFilter, CatalogInclude, CatalogSort } from './catalogs'
+import { Catalog, CatalogFilter, CatalogInclude, CatalogSort } from './catalogs'
+import { NodeBase } from './nodes'
+import { Hierarchy } from './hierarchies'
+import { Product } from './product'
 
-export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
+interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
-export interface CatalogProductsEndpoint {
+  Filter(filter: Filter): Endpoints
+
+  Limit(value: number): Endpoints
+
+  Offset(value: number): Endpoints
+
+}
+
+export interface CatalogProductsEndpoint
+  extends CatalogQueryableResource<CatalogProductsEndpoint,
+    Catalog,
+    CatalogFilter> {
   endpoint: 'products'
 
   All(options?: {
@@ -31,53 +44,56 @@ export interface CatalogProductsEndpoint {
 
 }
 
-export interface NodesCatalogEndpoint {
+export interface NodesCatalogEndpoint
+  extends CatalogQueryableResource<NodesCatalogEndpoint,
+    Catalog,
+    CatalogFilter> {
   endpoint: 'nodes'
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourceList<NodeBase>>
 
   Get(options: {
     nodeId: string
     token?: string
-  }): Promise<Resource<ProductResponse>>
+  }): Promise<Resource<NodeBase>>
 
   GetNodeChildren(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourceList<NodeBase>>
 }
 
-export interface HierarchiesCatalogEndpoint {
+export interface HierarchiesCatalogEndpoint
+  extends CatalogQueryableResource<HierarchiesCatalogEndpoint,
+    Catalog,
+    CatalogFilter> {
   endpoint: 'products'
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourceList<Hierarchy>>
 
   Get(options: {
     hierarchyId: string
     token?: string
-  }): Promise<Resource<ProductResponse>>
+  }): Promise<Resource<Hierarchy>>
 
   GetHierarchyChildren(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourceList<Hierarchy>>
 
   GetHierarchyNodes(options?: {
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourceList<Hierarchy>>
 }
 
 export interface CatalogEndpoint
-  extends CrudQueryableResource<Catalog,
-    CatalogBase,
-    CatalogUpdateBody,
-    CatalogFilter,
-    CatalogSort,
-    CatalogInclude> {
+  extends CatalogQueryableResource<CatalogEndpoint,
+    Catalog,
+    CatalogFilter> {
   endpoint: 'catalog'
   Nodes: NodesCatalogEndpoint
   Products: CatalogProductsEndpoint
