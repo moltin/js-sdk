@@ -55,26 +55,34 @@ class FlowsEndpoint extends CRUDExtend {
   }
 
   CreateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    let actualBody = body
+    if (Array.isArray(body) === false) {
+      actualBody = {
+        ...body
+      }
+    }
     return this.request.send(
       `${
         this.endpoint
       }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
       'POST',
-      {
-        ...body
-      }
+      actualBody
     )
   }
 
   UpdateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    let actualBody = body
+    if (Array.isArray(body) === false) {
+      actualBody = {
+        ...body
+      }
+    }
     return this.request.send(
       `${
         this.endpoint
       }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
       'PUT',
-      {
-        ...body
-      }
+      actualBody
     )
   }
 
