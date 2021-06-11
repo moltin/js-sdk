@@ -2,10 +2,9 @@ import {
   ResourceList, Resource
 } from './core'
 import { ProductResponse } from './catalogs-products'
-import { Catalog, CatalogFilter, CatalogInclude, CatalogSort } from './catalogs'
-import { NodeBase } from './nodes'
+import { Catalog, CatalogFilter } from './catalogs'
+import { Node } from './nodes'
 import { Hierarchy } from './hierarchies'
-import { Product } from './product'
 
 interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
@@ -52,17 +51,17 @@ export interface NodesCatalogEndpoint
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<NodeBase>>
+  }): Promise<ResourceList<Node>>
 
   Get(options: {
     nodeId: string
     token?: string
-  }): Promise<Resource<NodeBase>>
+  }): Promise<Resource<Node>>
 
   GetNodeChildren(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<NodeBase>>
+  }): Promise<ResourceList<Node>>
 }
 
 export interface HierarchiesCatalogEndpoint
@@ -98,4 +97,8 @@ export interface CatalogEndpoint
   Nodes: NodesCatalogEndpoint
   Products: CatalogProductsEndpoint
   Hierarchies: HierarchiesCatalogEndpoint
+
+  All(options?: {
+    token?: string
+  }): Promise<ResourceList<Catalog>>
 }
