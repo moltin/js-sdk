@@ -119,6 +119,28 @@ describe('Moltin orders', () => {
     })
   })
 
+  it('should return a single order include account and account_member', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+        .get('/orders/order-1?include=account,account_member')
+        .reply(200, orders[0])
+
+    return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then((response:any) => {
+      assert.propertyVal(response, 'id', 'order-1')
+      assert.propertyVal(response, 'status', 'complete')
+      assert.lengthOf(response.included.accounts, 1)
+      assert.lengthOf(response.included.account_members, 1)
+    })
+  })
+
   it('should return a single order using a JWT', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'

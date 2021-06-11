@@ -46,6 +46,8 @@ export interface Order extends Identifiable, OrderBase {
   relationships?: {
     items?: Relationship<'product'>[]
     customer?: Relationship<'customer'>
+    account?: Relationship<'account'>
+    account_member?: Relationship<'account_member'>
   }
 }
 
@@ -187,7 +189,7 @@ export interface ConfirmPaymentResponse {
 }
 
 type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
-type OrderInclude = 'product' | 'customer' | 'items'
+type OrderInclude = 'product' | 'customer' | 'items' | 'account' | 'account_member'
 
 /**
  * Orders Endpoints
