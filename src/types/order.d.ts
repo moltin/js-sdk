@@ -9,7 +9,7 @@ import {
   ResourcePage,
   QueryableResource,
   Resource, RelationshipToMany
-} from './core';
+} from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
 
