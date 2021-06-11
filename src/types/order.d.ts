@@ -8,7 +8,8 @@ import {
   Relationship,
   ResourcePage,
   QueryableResource,
-  Resource, RelationshipToMany
+  Resource,
+  RelationshipToMany
 } from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
