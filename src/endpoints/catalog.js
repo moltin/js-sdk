@@ -32,8 +32,13 @@ class Nodes extends CatalogQuery {
 
   All(options) {
     const { token = null } = options || { token: null }
+    const { limit, offset, filter } = this
     return this.request.send(
-      `catalog/${this.endpoint}`,
+      buildURL(`catalog/${this.endpoint}`, {
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token
@@ -50,8 +55,13 @@ class Nodes extends CatalogQuery {
   }
 
   GetNodeChildren({ nodeId, token = null }) {
+    const { limit, offset, filter } = this
     return this.request.send(
-      `catalog/${this.endpoint}/${nodeId}/relationships/children`,
+      buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/children`, {
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token
