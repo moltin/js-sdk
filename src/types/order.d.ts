@@ -8,7 +8,8 @@ import {
   Relationship,
   ResourcePage,
   QueryableResource,
-  Resource
+  Resource,
+  RelationshipToMany
 } from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
@@ -44,7 +45,7 @@ export interface Order extends Identifiable, OrderBase {
     }
   }
   relationships?: {
-    items?: Relationship<'product'>[]
+    items?: RelationshipToMany<'product'>
     customer?: Relationship<'customer'>
     account?: Relationship<'account'>
     account_member?: Relationship<'account_member'>
@@ -188,7 +189,9 @@ export interface ConfirmPaymentResponse {
   }
 }
 
-type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
+type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
+type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
+type OrderSort = OrderSortAscend | OrderSortDescend
 type OrderInclude = 'product' | 'customer' | 'items' | 'account' | 'account_member'
 
 /**
