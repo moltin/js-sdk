@@ -19,24 +19,34 @@ import { FormattedPrice, Price } from './price'
  * For custom flows, extend this interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/index.html
  */
-export interface OrderBase {
+export interface OrderFoundation {
   type: string
   status: string
   payment: string
   shipping: string
-  customer?: {
-    name: string
-    email: string
-  }
-  contact?: {
-    name: string
-    email: string
-  }
   shipping_address: AddressBase
   billing_address: AddressBase
 }
 
-export interface Order extends Identifiable, OrderBase {
+export interface OrderBaseCustomer extends OrderFoundation {
+  customer: {
+    name: string
+    email: string
+  }
+  contact?: never
+}
+
+export interface OrderBaseContact extends OrderFoundation {
+  contact: {
+    name: string
+    email: string
+  }
+  customer?: never
+}
+
+export type OrderBase = OrderBaseContact | OrderBaseCustomer
+
+export interface OrderData extends Identifiable {
   meta: {
     display_price: {
       with_tax: FormattedPrice
@@ -55,6 +65,8 @@ export interface Order extends Identifiable, OrderBase {
     account_member?: Relationship<'account_member'>
   }
 }
+
+export type Order = OrderBase & OrderData
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/filtering.html
