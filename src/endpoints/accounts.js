@@ -8,7 +8,7 @@ class AccountsEndpoint extends CRUDExtend {
   }
 
   Create(body) {
-    return this.request.send(this.endpoint, 'POST', body.data)
+    return this.request.send(this.endpoint, 'POST', { data: body })
   }
 
   Get({ accountId, token = null }) {
