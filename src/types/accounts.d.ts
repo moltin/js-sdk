@@ -86,7 +86,7 @@ export interface AccountEndpoint
   /**
    * Create an Account
    */
-  Create(body: Partial<AccountBase>): Promise<Resource<Account>>
+  Create(body: AccountBase): Promise<Resource<Account>>
 
  /**
    * Update an Account
