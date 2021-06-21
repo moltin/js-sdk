@@ -17,6 +17,12 @@ export interface UserAuthenticationPasswordProfileBody {
     password : string
 }
 
+export interface UserAuthenticationPasswordProfileUpdateBody {
+    type: string
+    username: string
+    password : string
+}
+
 export interface UserAuthenticationPasswordProfile extends UserAuthenticationPasswordProfileBody, Identifiable {
     meta: {
         timestamps: {
@@ -63,7 +69,7 @@ export interface UserAuthenticationPasswordProfileEndpoint {
      * @param userAuthenticationPasswordProfileId - The ID for the user authentication password profile info.
      * @param body - The User Authentication Password Profile object
      */
-    Update(realmId: string, userAuthenticationInfoId: string,userAuthenticationPasswordProfileId: string, body: { data: UserAuthenticationPasswordProfileBody }, token?: string): Promise<UserAuthenticationPasswordProfileResponse>
+    Update(realmId: string, userAuthenticationInfoId: string,userAuthenticationPasswordProfileId: string, body: { data: UserAuthenticationPasswordProfileUpdateBody }, token?: string): Promise<UserAuthenticationPasswordProfileResponse>
 
     /**
      * Delete an User Authentication Password Profile

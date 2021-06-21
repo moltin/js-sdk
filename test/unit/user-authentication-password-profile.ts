@@ -52,7 +52,6 @@ describe('User Authentication Password Profiles', () => {
         const body = {
             id: userAuthenticationPasswordProfileId,
             type: "user_authentication_password_profile_info",
-            password_profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
             username: "john.doe",
             password : "password.new"
         }
