@@ -34,7 +34,6 @@ import Accounts from './endpoints/accounts'
 import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
-import UserAuthenticationPasswordProfileEndpoint from './endpoints/user-authentication-password-profile'
 
 import { cartIdentifier, tokenInvalid } from './utils/helpers'
 
