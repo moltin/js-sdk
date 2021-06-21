@@ -12,7 +12,7 @@ import {Identifiable, Resource} from './core'
 
 export interface UserAuthenticationPasswordProfileBody {
     type: string
-    profile_id: string
+    password_profile_id: string
     username: string
     password : string
 }
