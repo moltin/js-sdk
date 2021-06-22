@@ -34,7 +34,7 @@ describe('User Authentication Password Profile Info', () => {
 
         const body = {
             type: "user_authentication_password_profile_info",
-            profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
+            password_profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
             username: "john.doe",
             password : "password"
         }
@@ -52,7 +52,6 @@ describe('User Authentication Password Profile Info', () => {
         const body = {
             id: userAuthenticationPasswordProfileId,
             type: "user_authentication_password_profile_info",
-            profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
             username: "john.doe",
             password : "password.new"
         }
