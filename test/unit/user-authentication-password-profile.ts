@@ -4,7 +4,7 @@ import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
-describe('User Authentication Password Profiles', () => {
+describe('User Authentication Password Profile Info', () => {
     const Moltin = MoltinGateway({
         client_id: 'XXX'
     })
@@ -13,7 +13,7 @@ describe('User Authentication Password Profiles', () => {
     const userAuthenticationId = '4da65e78-7f9b-4248-b498-823d43120da9'
     const userAuthenticationPasswordProfileId = '12a64ca9-af12-4355-acce-37fa2ef4728a'
 
-    it('Get a single User Authentication Password Profile', () => {
+    it('Get a single User Authentication Password Profile Info', () => {
         nock(apiUrl, {})
             .get(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info\/(.*)/)
             .reply(200, {})
@@ -27,14 +27,14 @@ describe('User Authentication Password Profiles', () => {
         })
     })
 
-    it('Create a single User Authentication Password Profile', () => {
+    it('Create a single User Authentication Password Profile Info', () => {
         nock(apiUrl, {})
             .post(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info/)
             .reply(201, {})
 
         const body = {
             type: "user_authentication_password_profile_info",
-            profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
+            password_profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
             username: "john.doe",
             password : "password"
         }
@@ -44,7 +44,7 @@ describe('User Authentication Password Profiles', () => {
         })
     })
 
-    it('Update a single User Authentication Password Profile', () => {
+    it('Update a single User Authentication Password Profile Info', () => {
         nock(apiUrl, {})
             .put(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info\/(.*)/)
             .reply(201, {})
@@ -52,7 +52,6 @@ describe('User Authentication Password Profiles', () => {
         const body = {
             id: userAuthenticationPasswordProfileId,
             type: "user_authentication_password_profile_info",
-            profile_id:"e1b5c7fa-f2b6-48d2-b659-3d82f20968a9",
             username: "john.doe",
             password : "password.new"
         }
@@ -64,7 +63,7 @@ describe('User Authentication Password Profiles', () => {
         })
     })
 
-    it('Delete a single User Authentication Password Profile', () => {
+    it('Delete a single User Authentication Password Profile Info', () => {
         nock(apiUrl, {})
             .delete(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info\/(.*)/)
             .reply(204)
