@@ -33,7 +33,6 @@ import * as accounts from './types/accounts'
 import * as accountAuthenticationSettings from './types/account-authentication-settings'
 import * as accountMembers from './types/account-members'
 import * as accountMemberships from './types/account-memberships'
-import * as userAuthenticationPasswordProfile from './types/user-authentication-password-profile'
 
 export * from './types/config'
 export * from './types/storage'
