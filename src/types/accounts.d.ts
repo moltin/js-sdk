@@ -42,11 +42,8 @@ export interface AccountBase {
   type: string
   name: string
   legal_name: string
+  registration_id?: string
   parent_id?: string
-}
-
-export interface AccountCreateBody extends AccountBase {
-  registration_id: string
 }
 
 export interface AccountUpdateBody extends Partial<AccountBase> {}
@@ -58,7 +55,7 @@ export interface AccountEndpoint
   extends Omit<
     CrudQueryableResource<
       Account,
-      AccountCreateBody,
+      AccountBase,
       AccountUpdateBody,
       never,
       never,
