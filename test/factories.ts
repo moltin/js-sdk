@@ -1,5 +1,6 @@
 import {
-  Address,
+  CustomerAddress,
+  AccountAddress,
   Brand,
   BrandBase,
   CustomAuthenticatorResponseBody,
