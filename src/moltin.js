@@ -20,7 +20,8 @@ import FlowsEndpoint from './endpoints/flows'
 import PriceBooksEndpoint from './endpoints/price-books'
 import FieldsEndpoint from './endpoints/fields'
 import FilesEndpoint from './endpoints/files'
-import AddressesEndpoint from './endpoints/addresses'
+import CustomerAddressesEndpoint from './endpoints/customer-addresses'
+import AccountAddressesEndpoint from './endpoints/account-addresses'
 import TransactionsEndpoint from './endpoints/transactions'
 import SettingsEndpoint from './endpoints/settings'
 import LocalStorageFactory from './factories/local-storage'
@@ -72,7 +73,8 @@ export default class Moltin {
     this.Files = new FilesEndpoint(config)
     this.Flows = new FlowsEndpoint(config)
     this.Fields = new FieldsEndpoint(config)
-    this.Addresses = new AddressesEndpoint(config)
+    this.CustomerAddresses = new CustomerAddressesEndpoint(config)
+    this.AccountAddresses = new AccountAddressesEndpoint(config)
     this.Transactions = new TransactionsEndpoint(config)
     this.Settings = new SettingsEndpoint(config)
     this.Promotions = new PromotionsEndpoint(config)

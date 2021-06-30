@@ -2,7 +2,8 @@ require('./unit/config')
 require('./unit/authentication')
 
 // Classes
-require('./unit/addresses')
+require('./unit/customer-addresses')
+require('./unit/account-addresses')
 require('./unit/brands')
 require('./unit/cart')
 require('./unit/categories')

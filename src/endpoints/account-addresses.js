@@ -2,52 +2,52 @@ import { singularize } from 'inflected'
 
 import BaseExtend from '../extends/base'
 
-class AddressesEndpoint extends BaseExtend {
+class AccountAddressesEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
 
-    this.endpoint = 'addresses'
+    this.endpoint = 'account-addresses'
   }
 
-  All({ customer, token = null }) {
+  All({ account, token = null }) {
     return this.request.send(
-      `customers/${customer}/${this.endpoint}`,
+      `accounts/${account}/${this.endpoint}`,
       'GET',
       undefined,
       token
     )
   }
 
-  Get({ customer, address, token = null }) {
+  Get({ account, address, token = null }) {
     return this.request.send(
-      `customers/${customer}/${this.endpoint}/${address}`,
+      `accounts/${account}/${this.endpoint}/${address}`,
       'GET',
       undefined,
       token
     )
   }
 
-  Create({ customer, body, token = null }) {
+  Create({ account, body, token = null }) {
     return this.request.send(
-      `customers/${customer}/${this.endpoint}`,
+      `accounts/${account}/${this.endpoint}`,
       'POST',
       { ...body, type: singularize(this.endpoint) },
       token
     )
   }
 
-  Delete({ customer, address, token = null }) {
+  Delete({ account, address, token = null }) {
     return this.request.send(
-      `customers/${customer}/${this.endpoint}/${address}`,
+      `accounts/${account}/${this.endpoint}/${address}`,
       'DELETE',
       undefined,
       token
     )
   }
 
-  Update({ customer, address, body, token = null }) {
+  Update({ account, address, body, token = null }) {
     return this.request.send(
-      `customers/${customer}/${this.endpoint}/${address}`,
+      `accounts/${account}/${this.endpoint}/${address}`,
       'PUT',
       { ...body, type: singularize(this.endpoint) },
       token
@@ -55,4 +55,4 @@ class AddressesEndpoint extends BaseExtend {
   }
 }
 
-export default AddressesEndpoint
+export default AccountAddressesEndpoint
