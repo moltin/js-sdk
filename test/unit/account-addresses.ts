@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 import {
-  addressesArray as addresses,
+  accountAddressesArray as addresses,
   addressUpdate,
   attributeResponse
 } from '../factories'
