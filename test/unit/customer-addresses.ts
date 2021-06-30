@@ -1,11 +1,7 @@
-import { assert } from 'chai'
+import {assert} from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
-import {
-  addressesArray as addresses,
-  addressUpdate,
-  attributeResponse
-} from '../factories'
+import {gateway as MoltinGateway} from '../../src/moltin'
+import {addressesArray as addresses, addressUpdate, attributeResponse} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -18,30 +14,32 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/customers/customer-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.Addresses.All({ resource: 'customer-1' }).then(response => {
-      assert.lengthOf(response.data, 2)
-    })
+    return Moltin.CustomerAddresses.All({customer: 'customer-1'}).then(
+      response => {
+        assert.lengthOf(response.data, 2)
+      }
+    )
   })
 
   it('should return an array of customer addresses using a JWT', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
       .get('/customers/customer-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.Addresses.All({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.All({
+      customer: 'customer-1',
       token: 'testtoken'
     }).then(response => {
       assert.lengthOf(response.data, 2)
@@ -52,14 +50,14 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/customers/customer-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.Addresses.Get({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Get({
+      customer: 'customer-1',
       address: 'address-1'
     }).then(response => {
       assert.propertyVal(response.data, 'id', 'address-1')
@@ -70,15 +68,15 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
       .get('/customers/customer-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.Addresses.Get({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Get({
+      customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {
@@ -90,14 +88,14 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/customers/customer-1/addresses')
       .reply(201, { data: { ...addresses[0], id: undefined } })
 
-    return Moltin.Addresses.Create({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Create({
+      customer: 'customer-1',
       body: addresses[0]
     }).then(response => {
       assert.equal(response.data.type, addresses[0].type)
@@ -120,15 +118,15 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
       .post('/customers/customer-1/addresses')
       .reply(201, { data: addresses[0] })
 
-    return Moltin.Addresses.Create({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Create({
+      customer: 'customer-1',
       body: addresses[0],
       token: 'testtoken'
     }).then(response => {
@@ -153,14 +151,14 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/customers/customer-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.Addresses.Update({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Update({
+      customer: 'customer-1',
       address: 'address-1',
       body: { ...addresses[0], ...addressUpdate }
     }).then(response => {
@@ -186,15 +184,15 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
       .put('/customers/customer-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.Addresses.Update({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Update({
+      customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken',
       body: { ...addresses[0], ...addressUpdate }
@@ -221,14 +219,14 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/customers/customer-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.Addresses.Delete({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Delete({
+      customer: 'customer-1',
       address: 'address-1'
     }).then(response => {
       assert.equal(response, '{}')
@@ -239,15 +237,15 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
         'X-MOLTIN-CUSTOMER-TOKEN': 'testtoken'
       }
     })
       .delete('/customers/customer-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.Addresses.Delete({
-      resource: 'customer-1',
+    return Moltin.CustomerAddresses.Delete({
+      customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {
@@ -258,13 +256,13 @@ describe('Moltin addresses', () => {
   it('should return an array of attributes', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/addresses/attributes')
       .reply(200, attributeResponse)
 
-    return Moltin.Addresses.Attributes('testtoken').then(response => {
+    return Moltin.CustomerAddresses.Attributes('testtoken').then(response => {
       assert.lengthOf(response.data, 3)
     })
   })

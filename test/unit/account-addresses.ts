@@ -24,9 +24,11 @@ describe('Moltin addresses', () => {
       .get('/accounts/account-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.Addresses.All({ resource: 'account-1' }).then(response => {
-      assert.lengthOf(response.data, 2)
-    })
+    return Moltin.AccountAddresses.All({ account: 'account-1' }).then(
+      response => {
+        assert.lengthOf(response.data, 2)
+      }
+    )
   })
 
   it('should return an array of account addresses using a JWT', () => {
@@ -40,8 +42,8 @@ describe('Moltin addresses', () => {
       .get('/accounts/account-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.Addresses.All({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.All({
+      account: 'account-1',
       token: 'testtoken'
     }).then(response => {
       assert.lengthOf(response.data, 2)
@@ -58,8 +60,8 @@ describe('Moltin addresses', () => {
       .get('/accounts/account-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.Addresses.Get({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Get({
+      account: 'account-1',
       address: 'address-1'
     }).then(response => {
       assert.propertyVal(response.data, 'id', 'address-1')
@@ -77,8 +79,8 @@ describe('Moltin addresses', () => {
       .get('/accounts/account-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.Addresses.Get({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Get({
+      account: 'account-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {
@@ -96,8 +98,8 @@ describe('Moltin addresses', () => {
       .post('/accounts/account-1/addresses')
       .reply(201, { data: { ...addresses[0], id: undefined } })
 
-    return Moltin.Addresses.Create({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Create({
+      account: 'account-1',
       body: addresses[0]
     }).then(response => {
       assert.equal(response.data.type, addresses[0].type)
@@ -127,8 +129,8 @@ describe('Moltin addresses', () => {
       .post('/accounts/account-1/addresses')
       .reply(201, { data: addresses[0] })
 
-    return Moltin.Addresses.Create({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Create({
+      account: 'account-1',
       body: addresses[0],
       token: 'testtoken'
     }).then(response => {
@@ -159,8 +161,8 @@ describe('Moltin addresses', () => {
       .put('/accounts/account-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.Addresses.Update({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Update({
+      account: 'account-1',
       address: 'address-1',
       body: { ...addresses[0], ...addressUpdate }
     }).then(response => {
@@ -193,8 +195,8 @@ describe('Moltin addresses', () => {
       .put('/accounts/account-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.Addresses.Update({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Update({
+      account: 'account-1',
       address: 'address-1',
       token: 'testtoken',
       body: { ...addresses[0], ...addressUpdate }
@@ -227,8 +229,8 @@ describe('Moltin addresses', () => {
       .delete('/accounts/account-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.Addresses.Delete({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Delete({
+      account: 'account-1',
       address: 'address-1'
     }).then(response => {
       assert.equal(response, '{}')
@@ -246,8 +248,8 @@ describe('Moltin addresses', () => {
       .delete('/accounts/account-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.Addresses.Delete({
-      resource: 'account-1',
+    return Moltin.AccountAddresses.Delete({
+      account: 'account-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {
@@ -264,7 +266,7 @@ describe('Moltin addresses', () => {
       .get('/addresses/attributes')
       .reply(200, attributeResponse)
 
-    return Moltin.Addresses.Attributes('testtoken').then(response => {
+    return Moltin.AccountAddresses.Attributes('testtoken').then(response => {
       assert.lengthOf(response.data, 3)
     })
   })
