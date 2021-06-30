@@ -6,7 +6,7 @@ class CustomerAddressesEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
 
-    this.endpoint = 'customer-addresses'
+    this.endpoint = 'addresses'
   }
 
   All({ customer, token = null }) {
