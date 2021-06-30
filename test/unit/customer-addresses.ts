@@ -24,7 +24,7 @@ describe('Moltin addresses', () => {
       .get('/customers/customer-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.Addresses.All({ customer: 'customer-1' }).then(response => {
+    return Moltin.Addresses.All({ resource: 'customer-1' }).then(response => {
       assert.lengthOf(response.data, 2)
     })
   })
@@ -41,7 +41,7 @@ describe('Moltin addresses', () => {
       .reply(200, { data: addresses })
 
     return Moltin.Addresses.All({
-      customer: 'customer-1',
+      resource: 'customer-1',
       token: 'testtoken'
     }).then(response => {
       assert.lengthOf(response.data, 2)
@@ -59,7 +59,7 @@ describe('Moltin addresses', () => {
       .reply(200, { data: addresses[0] })
 
     return Moltin.Addresses.Get({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1'
     }).then(response => {
       assert.propertyVal(response.data, 'id', 'address-1')
@@ -78,7 +78,7 @@ describe('Moltin addresses', () => {
       .reply(200, { data: addresses[0] })
 
     return Moltin.Addresses.Get({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {
@@ -97,7 +97,7 @@ describe('Moltin addresses', () => {
       .reply(201, { data: { ...addresses[0], id: undefined } })
 
     return Moltin.Addresses.Create({
-      customer: 'customer-1',
+      resource: 'customer-1',
       body: addresses[0]
     }).then(response => {
       assert.equal(response.data.type, addresses[0].type)
@@ -128,7 +128,7 @@ describe('Moltin addresses', () => {
       .reply(201, { data: addresses[0] })
 
     return Moltin.Addresses.Create({
-      customer: 'customer-1',
+      resource: 'customer-1',
       body: addresses[0],
       token: 'testtoken'
     }).then(response => {
@@ -160,7 +160,7 @@ describe('Moltin addresses', () => {
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
     return Moltin.Addresses.Update({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1',
       body: { ...addresses[0], ...addressUpdate }
     }).then(response => {
@@ -194,7 +194,7 @@ describe('Moltin addresses', () => {
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
     return Moltin.Addresses.Update({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1',
       token: 'testtoken',
       body: { ...addresses[0], ...addressUpdate }
@@ -228,7 +228,7 @@ describe('Moltin addresses', () => {
       .reply(204)
 
     return Moltin.Addresses.Delete({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1'
     }).then(response => {
       assert.equal(response, '{}')
@@ -247,7 +247,7 @@ describe('Moltin addresses', () => {
       .reply(204)
 
     return Moltin.Addresses.Delete({
-      customer: 'customer-1',
+      resource: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
     }).then(response => {

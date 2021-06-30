@@ -1,7 +1,7 @@
 /**
  * Addresses
- * Description: The Addresses API allows you to organize customer addresses. Addresses are a sub-resource of a Customer.
- * A Customer may have multiple addresses, such as home, work and neighbor. You are able to use a customer with an
+ * Description: The Addresses API allows you to organize customer/account addresses. Addresses are a sub-resource of a Customer/Account.
+ * A Customer/Account may have multiple addresses, such as home, work and neighbor. You are able to use a customer with an
  * implicitBearer token. This is recommend for client-side interactions. Or you can use a client_credentials Bearer
  * token. This is recommended for back end interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
@@ -57,31 +57,31 @@ export interface AddressesEndpoint {
   endpoint: 'addresses'
 
   Get(options: {
-    customer: string
+    resource: string
     address: string
     token?: string
   }): Promise<Resource<Address>>
 
   All(options: {
-    customer: string
+    resource: string
     token?: string
   }): Promise<ResourceList<Address>>
 
   Create(options: {
-    customer: string
+    resource: string
     body: AddressEdit
     token?: string
   }): Promise<Resource<Address>>
 
   Update(options: {
-    customer: string
+    resource: string
     address: string
     body: Identifiable & AddressEdit
     token?: string
   }): Promise<Resource<Address>>
 
   Delete(options: {
-    customer: string
+    resource: string
     address: string
     token?: string
   }): Promise<{}>
