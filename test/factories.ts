@@ -449,7 +449,7 @@ export const flowEntriesArray = [
 
 export const customerAddressesArray: CustomerAddress[] = [
   {
-    type: 'address' as const,
+    type: 'customer-address' as const,
     id: 'address-1',
     first_name: 'Jonathan',
     last_name: 'Steele',
@@ -465,7 +465,7 @@ export const customerAddressesArray: CustomerAddress[] = [
     country: 'GB'
   },
   {
-    type: 'address' as const,
+    type: 'customer-address' as const,
     id: 'address-2',
     first_name: 'Jamie',
     last_name: 'Barton',
@@ -484,7 +484,7 @@ export const customerAddressesArray: CustomerAddress[] = [
 
 export const accountAddressesArray: AccountAddress[] = [
   {
-    type: 'address' as const,
+    type: 'account-address' as const,
     id: 'address-1',
     first_name: 'Jonathan',
     last_name: 'Steele',
@@ -500,7 +500,7 @@ export const accountAddressesArray: AccountAddress[] = [
     country: 'GB'
   },
   {
-    type: 'address' as const,
+    type: 'account-address' as const,
     id: 'address-2',
     first_name: 'Jamie',
     last_name: 'Barton',

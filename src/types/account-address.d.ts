@@ -15,7 +15,7 @@ import { WithRequired } from './util'
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/addresss/index.html
  */
 export interface AccountAddressBase {
-  type: 'address'
+  type: 'account-address'
   first_name: string
   last_name: string
   name: string
