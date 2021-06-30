@@ -54,7 +54,7 @@ interface AccountAddressEdit
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/delete-an-address.html
  */
 export interface AccountAddressesEndpoint {
-  endpoint: 'account-addresses'
+  endpoint: 'addresses'
 
   Get(options: {
     account: string
