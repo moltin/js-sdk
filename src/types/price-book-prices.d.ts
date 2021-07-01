@@ -12,6 +12,20 @@ export interface PriceBookPriceBase {
         amount: number
       }
     }
+    sales?: {
+      [key: string]: {
+        schedule?: {
+          valid_from: string
+          valid_to: string
+        }
+        currencies: {
+          [key: string]: {
+            includes_tax: boolean
+            amount: number
+          }
+        }
+      }
+    }
     sku: string
   }
 }
