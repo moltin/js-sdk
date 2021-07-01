@@ -1,14 +1,17 @@
 /**
  * Products file relationship
  */
-import { Identifiable, ResourceList } from "./core";
+import { Identifiable, ResourceList } from './core'
 
 export interface PcmFileRelationship extends Identifiable {
   meta: {
     created_at: string
+    tags?: string[]
   }
   type: string
 }
+
+export type ProductFileRelationshipResource = string | { id: string; meta: { tags: string[] } }
 
 export interface PcmFileRelationshipEndpoint {
   endpoint: 'relationships/files'
@@ -30,7 +33,7 @@ export interface PcmFileRelationshipEndpoint {
    */
   Create(
     productId: string,
-    resources?: string | string[]
+    resources?: string | ProductFileRelationshipResource[]
   ): Promise<void>
 
   /**
@@ -54,6 +57,6 @@ export interface PcmFileRelationshipEndpoint {
 
   Update(
     productId: string,
-    resources?: string | string[]
+    resources?: string | ProductFileRelationshipResource[]
   ): Promise<void>
 }

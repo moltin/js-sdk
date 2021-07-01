@@ -12,10 +12,18 @@ export function buildRelationshipData(type, ids) {
   }
 
   if (Array.isArray(ids)) {
-    data = ids.map(id => ({
-      type: underscore(type),
-      id
-    }))
+    data = ids.map(item => {
+      if (typeof item === 'object' && item !== null) {
+        return {
+          type: underscore(type),
+          ...item
+        }
+      }
+      return {
+        type: underscore(type),
+        id: item
+      }
+    })
   }
 
   return data
