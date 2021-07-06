@@ -11,15 +11,6 @@ class AccountsEndpoint extends CRUDExtend {
     return this.request.send(this.endpoint, 'POST', body)
   }
 
-  Update(accountId, body, token = null) {
-    return this.request.send(
-      `${this.endpoint}/${accountId}`,
-      'PUT',
-      body.data,
-      token
-    )
-  }
-
   All(token = null, headers = {}) {
     const { limit, offset } = this
 
