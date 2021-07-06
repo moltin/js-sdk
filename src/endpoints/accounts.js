@@ -11,7 +11,6 @@ class AccountsEndpoint extends CRUDExtend {
     return this.request.send(this.endpoint, 'POST', body)
   }
 
-
   All(token = null, headers = {}) {
     const { limit, offset } = this
 
