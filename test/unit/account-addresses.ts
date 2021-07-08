@@ -18,7 +18,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/accounts/account-1/addresses')
@@ -35,8 +35,8 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
-        'X-MOLTIN-ACCOUNT-TOKEN': 'testtoken'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-Account-Management-Authentication-Token': 'testtoken'
       }
     })
       .get('/accounts/account-1/addresses')
@@ -54,7 +54,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/accounts/account-1/addresses/address-1')
@@ -72,8 +72,8 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
-        'X-MOLTIN-ACCOUNT-TOKEN': 'testtoken'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-Account-Management-Authentication-Token': 'testtoken'
       }
     })
       .get('/accounts/account-1/addresses/address-1')
@@ -92,7 +92,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .post('/accounts/account-1/addresses')
@@ -122,8 +122,8 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
-        'X-MOLTIN-ACCOUNT-TOKEN': 'testtoken'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-Account-Management-Authentication-Token': 'testtoken'
       }
     })
       .post('/accounts/account-1/addresses')
@@ -155,7 +155,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .put('/accounts/account-1/addresses/address-1')
@@ -188,8 +188,8 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
-        'X-MOLTIN-ACCOUNT-TOKEN': 'testtoken'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-Account-Management-Authentication-Token': 'testtoken'
       }
     })
       .put('/accounts/account-1/addresses/address-1')
@@ -223,7 +223,7 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .delete('/accounts/account-1/addresses/address-1')
@@ -241,8 +241,8 @@ describe('Moltin addresses', () => {
     // Intercept the API request
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a',
-        'X-MOLTIN-ACCOUNT-TOKEN': 'testtoken'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-Account-Management-Authentication-Token': 'testtoken'
       }
     })
       .delete('/accounts/account-1/addresses/address-1')
@@ -260,7 +260,7 @@ describe('Moltin addresses', () => {
   it('should return an array of attributes', () => {
     nock(apiUrl, {
       reqheaders: {
-        Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
       .get('/addresses/attributes')
