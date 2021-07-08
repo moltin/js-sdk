@@ -22,6 +22,7 @@ class AccountMembershipsEndpoint extends BaseExtend {
       'GET',
       undefined,
       token,
+      undefined,
       this
     )
 

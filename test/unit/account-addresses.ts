@@ -36,7 +36,7 @@ describe('Moltin addresses', () => {
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
-        'EP-Account-Management-Authentication-Token': 'testtoken'
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
       }
     })
       .get('/accounts/account-1/addresses')
@@ -73,7 +73,7 @@ describe('Moltin addresses', () => {
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
-        'EP-Account-Management-Authentication-Token': 'testtoken'
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
       }
     })
       .get('/accounts/account-1/addresses/address-1')
@@ -123,7 +123,7 @@ describe('Moltin addresses', () => {
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
-        'EP-Account-Management-Authentication-Token': 'testtoken'
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
       }
     })
       .post('/accounts/account-1/addresses')
@@ -189,7 +189,7 @@ describe('Moltin addresses', () => {
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
-        'EP-Account-Management-Authentication-Token': 'testtoken'
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
       }
     })
       .put('/accounts/account-1/addresses/address-1')
@@ -242,7 +242,7 @@ describe('Moltin addresses', () => {
     nock(apiUrl, {
       reqheaders: {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
-        'EP-Account-Management-Authentication-Token': 'testtoken'
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
       }
     })
       .delete('/accounts/account-1/addresses/address-1')

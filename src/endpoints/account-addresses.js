@@ -14,6 +14,7 @@ class AccountAddressesEndpoint extends BaseExtend {
       `accounts/${account}/${this.endpoint}`,
       'GET',
       undefined,
+      undefined,
       token
     )
   }
@@ -22,6 +23,7 @@ class AccountAddressesEndpoint extends BaseExtend {
     return this.request.send(
       `accounts/${account}/${this.endpoint}/${address}`,
       'GET',
+      undefined,
       undefined,
       token
     )
@@ -32,6 +34,7 @@ class AccountAddressesEndpoint extends BaseExtend {
       `accounts/${account}/${this.endpoint}`,
       'POST',
       { ...body, type: singularize(this.endpoint) },
+      undefined,
       token
     )
   }
@@ -40,6 +43,7 @@ class AccountAddressesEndpoint extends BaseExtend {
     return this.request.send(
       `accounts/${account}/${this.endpoint}/${address}`,
       'DELETE',
+      undefined,
       undefined,
       token
     )
@@ -50,6 +54,7 @@ class AccountAddressesEndpoint extends BaseExtend {
       `accounts/${account}/${this.endpoint}/${address}`,
       'PUT',
       { ...body, type: singularize(this.endpoint) },
+      undefined,
       token
     )
   }

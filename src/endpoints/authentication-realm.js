@@ -21,6 +21,7 @@ class AuthenticationRealmsEndpoint extends CRUDExtend {
       'GET',
       undefined,
       token,
+      undefined,
       this,
       headers
     )
