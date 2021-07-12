@@ -9,6 +9,24 @@ class FlowsEndpoint extends CRUDExtend {
     this.endpoint = 'flows'
   }
 
+  AllTemplates(template, token = null) {
+    const { includes, sort, limit, offset, filter } = this
+
+    return this.request.send(
+      buildURL(`${this.endpoint}?template=${template}`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token,
+      this
+    )
+  }
+
   GetEntries(slug) {
     const { limit, offset } = this
 

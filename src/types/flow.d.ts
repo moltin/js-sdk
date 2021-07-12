@@ -20,7 +20,11 @@ export interface FlowBase {
 
 export interface Flow extends Identifiable, FlowBase { }
 
-export interface FlowFilter { }
+export interface FlowFilter {
+  eq?: {
+    template?: string
+  }
+ }
 
 /**
  * Flow Endpoints
@@ -29,6 +33,8 @@ export interface FlowEndpoint {
   endpoint: 'flow'
 
   All(token?: string): Promise<ResourcePage<Flow>>
+
+  AllTemplates(template: string, token?: string): Promise<ResourcePage<Flow>>
 
   Get(id: string, token?: string): Promise<Resource<Flow>>
 
