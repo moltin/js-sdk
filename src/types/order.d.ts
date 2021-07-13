@@ -63,6 +63,8 @@ export interface OrderFilter {
     name?: string
     email?: string
     customer_id?: string
+    account_id?: string
+    account_member_id?: string
     shipping_name?: string
     shipping_postcode?: string
     billing_name?: string
