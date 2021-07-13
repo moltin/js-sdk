@@ -32,7 +32,10 @@ class NodeRelationshipsEndpoint {
     return this.request.send(
       `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/parent`,
       'PUT',
-      { ...body, type: singularize(this.endpoint) },
+      {
+        ...body,
+        type: singularize(this.endpoint)
+      },
       token
     )
   }

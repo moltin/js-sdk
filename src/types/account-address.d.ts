@@ -14,8 +14,8 @@ import { WithRequired } from './util'
  * For custom flows, extend this interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/addresss/index.html
  */
-export interface AddressBase {
-  type: 'address'
+export interface AccountAddressBase {
+  type: 'account-address'
   first_name: string
   last_name: string
   name: string
@@ -30,11 +30,11 @@ export interface AddressBase {
   country: string
 }
 
-export interface Address extends Identifiable, AddressBase {}
+export interface AccountAddress extends Identifiable, AccountAddressBase {}
 
-interface AddressEdit
+interface AccountAddressEdit
   extends WithRequired<
-      Address,
+      AccountAddress,
       | 'type'
       | 'first_name'
       | 'last_name'
@@ -53,35 +53,35 @@ interface AddressEdit
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/update-an-address.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/delete-an-address.html
  */
-export interface AddressesEndpoint {
+export interface AccountAddressesEndpoint {
   endpoint: 'addresses'
 
   Get(options: {
-    customer: string
+    account: string
     address: string
     token?: string
-  }): Promise<Resource<Address>>
+  }): Promise<Resource<AccountAddress>>
 
   All(options: {
-    customer: string
+    account: string
     token?: string
-  }): Promise<ResourceList<Address>>
+  }): Promise<ResourceList<AccountAddress>>
 
   Create(options: {
-    customer: string
-    body: AddressEdit
+    account: string
+    body: AccountAddressEdit
     token?: string
-  }): Promise<Resource<Address>>
+  }): Promise<Resource<AccountAddress>>
 
   Update(options: {
-    customer: string
+    account: string
     address: string
-    body: Identifiable & AddressEdit
+    body: Identifiable & AccountAddressEdit
     token?: string
-  }): Promise<Resource<Address>>
+  }): Promise<Resource<AccountAddress>>
 
   Delete(options: {
-    customer: string
+    account: string
     address: string
     token?: string
   }): Promise<{}>

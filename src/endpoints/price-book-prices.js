@@ -20,6 +20,7 @@ class PriceBookPricesEndpoint {
       'GET',
       undefined,
       token,
+      undefined,
       this
     )
   }

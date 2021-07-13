@@ -17,7 +17,7 @@ import { JobEndpoint } from './types/job'
 import { FileEndpoint } from './types/file'
 import { FlowEndpoint } from './types/flow'
 import { FieldsEndpoint } from './types/field'
-import { AddressesEndpoint } from './types/address'
+import { CustomerAddressesEndpoint } from './types/customer-address'
 import { TransactionEndpoint } from './types/transaction'
 import { SettingsEndpoint } from './types/settings'
 import { PromotionsEndpoint } from './types/promotions'
@@ -36,6 +36,7 @@ import { AccountEndpoint } from './types/accounts'
 import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
+import {AccountAddressesEndpoint} from "./types/account-address";
 
 export * from './types/config'
 export * from './types/storage'
@@ -45,7 +46,8 @@ export * from './types/core'
 export * from './types/customer'
 export * from './types/order'
 export * from './types/cart'
-export * from './types/address'
+export * from './types/customer-address'
+export * from './types/account-address'
 export * from './types/inventory'
 export * from './types/field'
 export * from './types/nodes'
@@ -108,7 +110,8 @@ export class Moltin {
   Files: FileEndpoint
   Flows: FlowEndpoint
   Fields: FieldsEndpoint
-  Addresses: AddressesEndpoint
+  CustomerAddresses: CustomerAddressesEndpoint
+  AccountAddresses: AccountAddressesEndpoint
   Transactions: TransactionEndpoint
   Settings: SettingsEndpoint
   Promotions: PromotionsEndpoint
