@@ -205,6 +205,7 @@ class CatalogEndpoint extends CatalogQuery {
       'GET',
       undefined,
       token,
+      undefined,
       this
     )
 

@@ -12,6 +12,7 @@ class CustomersEndpoint extends CRUDExtend {
         'POST',
         tokenRequestBody,
         null,
+        undefined,
         {
           ...headers
         }
