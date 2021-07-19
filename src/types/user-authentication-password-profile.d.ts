@@ -3,7 +3,7 @@
  * Description: A User Authentication Password Profile Info resource represents username and password for user authentication info.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/index.html
  */
-import {Identifiable, Resource} from './core'
+import {Identifiable, Resource, ResourceList} from './core'
 
 /**
  * The User Authentication Password Profile Info object
@@ -30,6 +30,8 @@ export interface UserAuthenticationPasswordProfile extends UserAuthenticationPas
             updated_at: string
         }
     }
+    links: {}
+    relationships: {}
 }
 
 export interface UserAuthenticationPasswordProfileResponse extends Resource<UserAuthenticationPasswordProfile> {
@@ -43,6 +45,16 @@ export interface UserAuthenticationPasswordProfileResponse extends Resource<User
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/index.html
  */
 export interface UserAuthenticationPasswordProfileEndpoint {
+
+    /**
+     * Read All User Authentication Password Info Profile
+     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/get-all-user-authentication-password-profile.html
+     * @param realmId - The ID for the authentication-realm.
+     * @param userAuthenticationInfoId - The ID for the user authentication info.
+     */
+    All(realmId: string, userAuthenticationInfoId: string, token?: string, headers?): Promise<ResourceList<UserAuthenticationPasswordProfile>>
+
+
     /**
      * Get a User Authentication Password Info Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/get-a-user-authentication-password-profile.html

@@ -1,4 +1,5 @@
 import CRUDExtend from '../extends/crud'
+import {buildURL} from "../utils/helpers";
 
 class UserAuthenticationPasswordProfileEndpoint extends CRUDExtend {
     constructor(config) {
@@ -15,6 +16,30 @@ class UserAuthenticationPasswordProfileEndpoint extends CRUDExtend {
             'POST',
             body.data,
             token
+        )
+    }
+
+    All(
+        realmId,
+        userAuthenticationInfoId,
+        token = null, headers = {}
+    ) {
+        const { limit, offset } = this
+        return this.request.send(
+            buildURL(`${this.endpoint
+                .replace('{{realmId}}', realmId)
+                .replace(
+                    '{{userAuthenticationInfoId}}',
+                    userAuthenticationInfoId
+                )}`,{
+                    limit,
+                    offset
+                }),
+            'GET',
+            undefined,
+            token,
+            this,
+            headers
         )
     }
 
