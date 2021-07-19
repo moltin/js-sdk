@@ -31,6 +31,7 @@ describe('Password Profiles', () => {
 
     const body = {
       username_format: 'email',
+      name: 'password profile',
       type: 'password_profile'
     }
 
@@ -47,6 +48,7 @@ describe('Password Profiles', () => {
     const body = {
       username_format: 'any',
       type: 'password_profile',
+      name: 'updated password profile'
     }
 
     const profileId = 'e1b5c7fa-f2b6-48d2-b659-3d82f20968a9'
