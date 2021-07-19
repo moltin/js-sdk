@@ -42,10 +42,21 @@ export interface AccountBase {
   type: string
   name: string
   legal_name: string
+<<<<<<< HEAD
   registration_id?: string
   parent_id?: string
 }
 
+=======
+  company_address?: string
+  parent_id?: string
+}
+
+export interface AccountCreateBody extends AccountBase {
+  registration_id: string
+}
+
+>>>>>>> [MT-6385] added accounts
 export interface AccountUpdateBody extends Partial<AccountBase> {}
 
 /**
@@ -55,7 +66,11 @@ export interface AccountEndpoint
   extends Omit<
     CrudQueryableResource<
       Account,
+<<<<<<< HEAD
       AccountBase,
+=======
+      AccountCreateBody,
+>>>>>>> [MT-6385] added accounts
       AccountUpdateBody,
       never,
       never,
@@ -83,7 +98,11 @@ export interface AccountEndpoint
   /**
    * Create an Account
    */
+<<<<<<< HEAD
   Create(body: AccountBase): Promise<Resource<Account>>
+=======
+  Create(body: Partial<AccountBase>): Promise<Resource<Account>>
+>>>>>>> [MT-6385] added accounts
 
  /**
    * Update an Account

@@ -71,6 +71,7 @@ export * from './types/authentication-settings'
 export * from './types/oidc-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
+
 export * from './types/price-books'
 export * from './types/price-book-prices'
 export * from './types/node-relationships'
@@ -124,6 +125,7 @@ export class Moltin {
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
+
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
