@@ -240,6 +240,11 @@ npm install
 npm start
 ```
 
+To run test
+```
+npm test
+```
+
 You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
 
 ## Terms And Conditions
