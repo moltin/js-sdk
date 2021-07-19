@@ -24,6 +24,8 @@ import { PromotionsEndpoint } from './types/promotions'
 import { VariationsEndpoint } from './types/variations'
 import { AuthenticationSettingsEndpoint } from './types/authentication-settings'
 import { OidcProfileEndpoint } from './types/oidc-profile'
+import { PasswordProfileEndpoint } from './types/password-profile'
+import { UserAuthenticationPasswordProfileEndpoint } from './types/user-authentication-password-profile'
 import { AuthenticationRealmEndpoint } from './types/authentication-realm'
 import { CartEndpoint } from './types/cart'
 import { HierarchiesEndpoint } from './types/hierarchies'
@@ -125,6 +127,8 @@ export class Moltin {
   Variations: VariationsEndpoint
   AuthenticationSettings: AuthenticationSettingsEndpoint
   OidcProfile: OidcProfileEndpoint
+  PasswordProfile: PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
   AuthenticationRealm: AuthenticationRealmEndpoint
   MerchantRealmMappings: MerchantRealmMappingsEndpoint
   Accounts: AccountEndpoint

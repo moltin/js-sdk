@@ -57,8 +57,7 @@ export interface AccountUpdateBody extends Partial<AccountBase> {}
 export interface AccountEndpoint
   extends Omit<
     CrudQueryableResource<
-      Account
-      AccountBase,
+      Account,
       AccountCreateBody,
       AccountUpdateBody,
       never,
@@ -87,7 +86,6 @@ export interface AccountEndpoint
   /**
    * Create an Account
    */
-
   Create(body: Partial<AccountBase>): Promise<Resource<Account>>
 
  /**
