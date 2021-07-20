@@ -11,6 +11,7 @@ import {
 /**
  * The Account object Interface
  */
+
 export interface Account extends AccountBase, Identifiable {
   meta: {
     timestamps: {
@@ -41,11 +42,8 @@ export interface AccountBase {
   type: string
   name: string
   legal_name: string
+  registration_id?: string
   parent_id?: string
-}
-
-export interface AccountCreateBody extends AccountBase {
-  registration_id: string
 }
 
 export interface AccountUpdateBody extends Partial<AccountBase> {}
@@ -54,17 +52,17 @@ export interface AccountUpdateBody extends Partial<AccountBase> {}
  * Accounts Endpoints
  */
 export interface AccountEndpoint
-  extends Omit<
-    CrudQueryableResource<
-      Account,
-      AccountCreateBody,
-      AccountUpdateBody,
-      never,
-      never,
-      never
-    >,
-    'All' | 'Create' | 'Get' | 'Update'
-  > {
+    extends Omit<
+        CrudQueryableResource<
+            Account,
+            AccountBase,
+            AccountUpdateBody,
+            never,
+            never,
+            never
+            >,
+        'All' | 'Create' | 'Get' | 'Update'
+        > {
   endpoint: 'account'
   storage: Storage
 
@@ -85,9 +83,9 @@ export interface AccountEndpoint
   /**
    * Create an Account
    */
-  Create(body: Partial<AccountBase>): Promise<Resource<Account>>
+  Create(body: AccountBase): Promise<Resource<Account>>
 
- /**
+  /**
    * Update an Account
    */
   Update(accountId: string, body: Partial<AccountBase>): Promise<Resource<Account>>

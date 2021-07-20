@@ -24,8 +24,6 @@ import { PromotionsEndpoint } from './types/promotions'
 import { VariationsEndpoint } from './types/variations'
 import { AuthenticationSettingsEndpoint } from './types/authentication-settings'
 import { OidcProfileEndpoint } from './types/oidc-profile'
-import { PasswordProfileEndpoint } from './types/password-profile'
-import { UserAuthenticationPasswordProfileEndpoint } from './types/user-authentication-password-profile'
 import { AuthenticationRealmEndpoint } from './types/authentication-realm'
 import { CartEndpoint } from './types/cart'
 import { HierarchiesEndpoint } from './types/hierarchies'
@@ -39,6 +37,9 @@ import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
+import {PasswordProfileEndpoint} from "./types/password-profile";
+import {UserAuthenticationPasswordProfileEndpoint
+} from "./types/user-authentication-password-profile";
 
 export * from './types/config'
 export * from './types/storage'
@@ -74,12 +75,6 @@ export * from './types/oidc-profile'
 export * from './types/password-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
-export * from './types/accounts'
-export * from './types/account-authentication-settings'
-export * from './types/account-members'
-export * from './types/account-memberships'
-
-
 export * from './types/price-books'
 export * from './types/price-book-prices'
 export * from './types/node-relationships'
@@ -127,14 +122,14 @@ export class Moltin {
   Variations: VariationsEndpoint
   AuthenticationSettings: AuthenticationSettingsEndpoint
   OidcProfile: OidcProfileEndpoint
-  PasswordProfile: PasswordProfileEndpoint
-  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
   AuthenticationRealm: AuthenticationRealmEndpoint
   MerchantRealmMappings: MerchantRealmMappingsEndpoint
   Accounts: AccountEndpoint
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
+  PasswordProfile: PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
