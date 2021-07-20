@@ -51,7 +51,6 @@ export interface AccountMembershipsEndpoint
     > {
   endpoint: 'account-member'
   storage: Storage
-
   /**
    * Get an Account Membership by reference
    * @param accountId - The ID for the requested account,

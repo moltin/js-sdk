@@ -45,7 +45,6 @@ export interface UserAuthenticationPasswordProfileResponse extends Resource<User
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/index.html
  */
 export interface UserAuthenticationPasswordProfileEndpoint {
-
     /**
      * Read All User Authentication Password Info Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/get-all-user-authentication-password-profile.html
@@ -53,8 +52,6 @@ export interface UserAuthenticationPasswordProfileEndpoint {
      * @param userAuthenticationInfoId - The ID for the user authentication info.
      */
     All(realmId: string, userAuthenticationInfoId: string, token?: string, headers?): Promise<ResourceList<UserAuthenticationPasswordProfile>>
-
-
     /**
      * Get a User Authentication Password Info Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-password-profiles/get-a-user-authentication-password-profile.html

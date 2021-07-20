@@ -11,7 +11,6 @@ import {
 /**
  * The Account object Interface
  */
-
 export interface Account extends AccountBase, Identifiable {
   meta: {
     timestamps: {
