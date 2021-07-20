@@ -1,39 +1,44 @@
 // Type definitions for @moltin/js-sdk
 // Project: @moltin/sdk
-
-import * as config from './types/config'
-import * as storage from './types/storage'
-import * as product from './types/product'
-import * as core from './types/core'
-import * as customer from './types/customer'
-import * as order from './types/order'
-import * as cart from './types/cart'
-import * as address from './types/address'
-import * as inventory from './types/inventory'
-import * as field from './types/field'
-import * as collection from './types/collection'
-import * as category from './types/category'
-import * as brand from './types/brand'
-import * as currency from './types/currency'
-import * as integration from './types/integration'
-import * as job from './types/job'
-import * as file from './types/file'
-import * as flow from './types/flow'
-import * as transaction from './types/transaction'
-import * as settings from './types/settings'
-import * as promotions from './types/promotions'
-import * as variations from './types/variations'
-import * as authenticationSettings from './types/authentication-settings'
-import * as oidcProfile from './types/oidc-profile'
-import * as passwordProfile from './types/password-profile'
-import * as userAuthenticationPasswordProfile from './types/user-authentication-password-profile'
-import * as authenticationRealm from './types/authentication-realm'
-import * as paymentGateway from './types/gateway'
-import * as accounts from './types/accounts'
-import * as accountAuthenticationSettings from './types/account-authentication-settings'
-import * as accountMembers from './types/account-members'
-import * as accountMemberships from './types/account-memberships'
-import * as userAuthenticationPasswordProfile from './types/user-authentication-password-profile'
+import { AuthenticateResponseBody, Config, ConfigOptions, RequestFactory } from './types/config'
+import { StorageFactory } from './types/storage'
+import { ProductsEndpoint } from './types/product'
+import { PcmProductsEndpoint } from './types/pcm'
+import { CurrencyEndpoint } from './types/currency'
+import { BrandEndpoint } from './types/brand'
+import { CategoryEndpoint } from './types/category'
+import { CollectionEndpoint } from './types/collection'
+import { IntegrationEndpoint } from './types/integration'
+import { OrdersEndpoint } from './types/order'
+import { GatewaysEndpoint } from './types/gateway'
+import { CustomersEndpoint } from './types/customer'
+import { InventoryEndpoint } from './types/inventory'
+import { JobEndpoint } from './types/job'
+import { FileEndpoint } from './types/file'
+import { FlowEndpoint } from './types/flow'
+import { FieldsEndpoint } from './types/field'
+import { CustomerAddressesEndpoint } from './types/customer-address'
+import { TransactionEndpoint } from './types/transaction'
+import { SettingsEndpoint } from './types/settings'
+import { PromotionsEndpoint } from './types/promotions'
+import { VariationsEndpoint } from './types/variations'
+import { AuthenticationSettingsEndpoint } from './types/authentication-settings'
+import { OidcProfileEndpoint } from './types/oidc-profile'
+import { PasswordProfileEndpoint } from './types/password-profile'
+import { UserAuthenticationPasswordProfileEndpoint } from './types/user-authentication-password-profile'
+import { AuthenticationRealmEndpoint } from './types/authentication-realm'
+import { CartEndpoint } from './types/cart'
+import { HierarchiesEndpoint } from './types/hierarchies'
+import { CatalogsEndpoint } from './types/catalogs'
+import { CatalogsRulesEndpoint } from './types/catalogs-rules'
+import { PriceBooksEndpoint } from './types/price-books'
+import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
+import { CatalogEndpoint } from './types/catalog'
+import { AccountEndpoint } from './types/accounts'
+import { AccountMembersEndpoint } from './types/account-members'
+import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
+import { AccountMembershipsEndpoint } from './types/account-memberships'
+import {AccountAddressesEndpoint} from "./types/account-address";
 
 export * from './types/config'
 export * from './types/storage'
@@ -43,20 +48,26 @@ export * from './types/core'
 export * from './types/customer'
 export * from './types/order'
 export * from './types/cart'
-export * from './types/address'
+export * from './types/customer-address'
+export * from './types/account-address'
 export * from './types/inventory'
 export * from './types/field'
+export * from './types/nodes'
 export * from './types/collection'
 export * from './types/category'
 export * from './types/brand'
 export * from './types/currency'
+export * from './types/pcm'
 export * from './types/integration'
+export * from './types/hierarchies'
 export * from './types/job'
 export * from './types/file'
 export * from './types/flow'
 export * from './types/transaction'
 export * from './types/settings'
 export * from './types/promotions'
+export * from './types/catalogs'
+export * from './types/catalogs-rules'
 export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
@@ -69,50 +80,68 @@ export * from './types/account-members'
 export * from './types/account-memberships'
 
 
+export * from './types/price-books'
+export * from './types/price-book-prices'
+export * from './types/node-relationships'
+export * from './types/merchant-realm-mappings'
+export * from "./types/pcm-file-relationship"
+export * from './types/accounts'
+export * from './types/account-authentication-settings'
+export * from './types/account-members'
+export * from './types/account-memberships'
+
 // UMD
 export as namespace moltin
 
 export class Moltin {
-  config: config.Config
+  config: Config
   cartId?: string
-  request: config.RequestFactory
-  storage: storage.StorageFactory
-  Products: product.ProductsEndpoint
-  Currencies: currency.CurrencyEndpoint
-  Brands: brand.BrandEndpoint
-  Categories: category.CategoryEndpoint
-  Collections: collection.CollectionEndpoint
-  Integrations: integration.IntegrationEndpoint
-  Orders: order.OrdersEndpoint
-  Gateways: paymentGateway.GatewaysEndpoint
-  Customers: customer.CustomersEndpoint
-  Inventories: inventory.InventoryEndpoint
-  Jobs: job.JobEndpoint
-  Files: file.FileEndpoint
-  Flows: flow.FlowEndpoint
-  Fields: field.FieldsEndpoint
-  Addresses: address.AddressesEndpoint
-  Transactions: transaction.TransactionEndpoint
-  Settings: settings.SettingsEndpoint
-  Promotions: promotions.PromotionsEndpoint
-  Variations: variations.VariationsEndpoint
-  AuthenticationSettings: authenticationSettings.AuthenticationSettingsEndpoint
-  OidcProfile: oidcProfile.OidcProfileEndpoint
-  PasswordProfile: passwordProfile.PasswordProfileEndpoint
-  UserAuthenticationPasswordProfile: userAuthenticationPasswordProfile.UserAuthenticationPasswordProfileEndpoint;
-  AuthenticationRealm: authenticationRealm.AuthenticationRealmEndpoint
-  Accounts: accounts.AccountEndpoint
-  AccountMembers: accountMembers.AccountMembersEndpoint
-  AccountAuthenticationSettings: accountAuthenticationSettings.AccountAuthenticationSettingsEndpoint
-  AccountMemberships: accountMemberships.AccountMembershipsEndpoint
+  request: RequestFactory
+  storage: StorageFactory
+  credentials: AuthenticateResponseBody
+  Products: ProductsEndpoint
+  PCM: PcmProductsEndpoint
+  Catalogs: CatalogsEndpoint
+  Catalog: CatalogEndpoint
+  Rules: CatalogsRulesEndpoint
+  PriceBooks: PriceBooksEndpoint
+  Hierarchies: HierarchiesEndpoint
+  Currencies: CurrencyEndpoint
+  Brands: BrandEndpoint
+  Categories: CategoryEndpoint
+  Collections: CollectionEndpoint
+  Integrations: IntegrationEndpoint
+  Orders: OrdersEndpoint
+  Gateways: GatewaysEndpoint
+  Customers: CustomersEndpoint
+  Inventories: InventoryEndpoint
+  Jobs: JobEndpoint
+  Files: FileEndpoint
+  Flows: FlowEndpoint
+  Fields: FieldsEndpoint
+  CustomerAddresses: CustomerAddressesEndpoint
+  AccountAddresses: AccountAddressesEndpoint
+  Transactions: TransactionEndpoint
+  Settings: SettingsEndpoint
+  Promotions: PromotionsEndpoint
+  Variations: VariationsEndpoint
+  AuthenticationSettings: AuthenticationSettingsEndpoint
+  OidcProfile: OidcProfileEndpoint
+  PasswordProfile: PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
+  AuthenticationRealm: AuthenticationRealmEndpoint
+  MerchantRealmMappings: MerchantRealmMappingsEndpoint
+  Accounts: AccountEndpoint
+  AccountMembers: AccountMembersEndpoint
+  AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
+  AccountMemberships: AccountMembershipsEndpoint
+  Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
+  constructor(config: Config)
 
-  Cart(id?: string): cart.CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
-  constructor(config: config.Config)
-
-  Authenticate(): Promise<config.AuthenticateResponseBody>
+  Authenticate(): Promise<AuthenticateResponseBody>
 }
 
-export function gateway(config: config.ConfigOptions): Moltin
+export function gateway(config: ConfigOptions): Moltin
 
 export namespace moltin {
   export interface Settings {

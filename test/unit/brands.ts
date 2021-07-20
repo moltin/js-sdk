@@ -11,7 +11,7 @@ import {
 const apiUrl = 'https://api.moltin.com/v2'
 const authHeaders = {
   reqheaders: {
-    Authorization: 'Bearer: a550d8cbd4a4627013452359ab69694cd446615a'
+    Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
   }
 }
 

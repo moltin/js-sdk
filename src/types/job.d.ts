@@ -27,6 +27,16 @@ export interface Job extends Identifiable, JobBase {
   }
 }
 
+export interface FileHref {
+  href: string
+}
+
+export interface createJob {
+  filter: string
+  job_type: string
+  type?: string
+}
+
 /**
  * Job Endpoints
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/inventory/stock-transactions.html
@@ -41,7 +51,7 @@ export interface JobEndpoint {
    * @param body
    * @constructor
    */
-  Create(body: JobBase): Promise<Resource<JobBase>>
+  Create(body: createJob): Promise<Resource<Job>>
 
   /**
    * Title: Get All
@@ -53,7 +63,7 @@ export interface JobEndpoint {
    * Title: Get
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/jobs/get-a-job.html
    */
-  Get(id: string): Promise<Job>
+  Get(id: string): Promise<Resource<Job>>
 
-  GetFile(id: string): Promise<Job>
+  GetFile(id: string): Promise<FileHref>
 }

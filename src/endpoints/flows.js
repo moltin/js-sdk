@@ -9,6 +9,24 @@ class FlowsEndpoint extends CRUDExtend {
     this.endpoint = 'flows'
   }
 
+  AllTemplates(template, token = null) {
+    const { includes, sort, limit, offset, filter } = this
+
+    return this.request.send(
+      buildURL(`${this.endpoint}?template=${template}`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token,
+      this
+    )
+  }
+
   GetEntries(slug) {
     const { limit, offset } = this
 
@@ -55,26 +73,34 @@ class FlowsEndpoint extends CRUDExtend {
   }
 
   CreateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    let actualBody = body
+    if (Array.isArray(body) === false) {
+      actualBody = {
+        ...body
+      }
+    }
     return this.request.send(
       `${
         this.endpoint
       }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
       'POST',
-      {
-        ...body
-      }
+      actualBody
     )
   }
 
   UpdateEntryRelationship(flowSlug, entryId, fieldSlug, body = {}) {
+    let actualBody = body
+    if (Array.isArray(body) === false) {
+      actualBody = {
+        ...body
+      }
+    }
     return this.request.send(
       `${
         this.endpoint
       }/${flowSlug}/entries/${entryId}/relationships/${fieldSlug}`,
       'PUT',
-      {
-        ...body
-      }
+      actualBody
     )
   }
 

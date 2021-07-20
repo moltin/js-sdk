@@ -11,26 +11,20 @@ import { Identifiable, Resource, ResourcePage, Attributes } from './core';
  * Core Flow Base Interface
  */
 export interface FlowBase {
-  slug:
-    | 'addresses'
-    | 'products'
-    | 'brands'
-    | 'collections'
-    | 'categories'
-    | 'customers'
-    | 'cart_items'
-    | 'orders'
-    | 'order_items'
-    | 'promotions'
+  slug: string
   type: string
   name: string
   description: string
   enabled: boolean
 }
 
-export interface Flow extends Identifiable, FlowBase {}
+export interface Flow extends Identifiable, FlowBase { }
 
-export interface FlowFilter {}
+export interface FlowFilter {
+  eq?: {
+    template?: string
+  }
+ }
 
 /**
  * Flow Endpoints
@@ -39,6 +33,8 @@ export interface FlowEndpoint {
   endpoint: 'flow'
 
   All(token?: string): Promise<ResourcePage<Flow>>
+
+  AllTemplates(template: string, token?: string): Promise<ResourcePage<Flow>>
 
   Get(id: string, token?: string): Promise<Resource<Flow>>
 

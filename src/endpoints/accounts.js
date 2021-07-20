@@ -40,6 +40,7 @@ class AccountsEndpoint extends CRUDExtend {
       'GET',
       undefined,
       token,
+      undefined,
       this,
       headers
     )

@@ -8,7 +8,8 @@ import {
   Relationship,
   ResourcePage,
   QueryableResource,
-  Resource
+  Resource,
+  RelationshipToMany
 } from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
@@ -36,6 +37,7 @@ export interface Order extends Identifiable, OrderBase {
     display_price: {
       with_tax: FormattedPrice
       without_tax: FormattedPrice
+      tax: FormattedPrice
     }
     timestamps: {
       created_at: string
@@ -43,7 +45,7 @@ export interface Order extends Identifiable, OrderBase {
     }
   }
   relationships?: {
-    items?: Relationship<'product'>[]
+    items?: RelationshipToMany<'product'>
     customer?: Relationship<'customer'>
     account?: Relationship<'account'>
     account_member?: Relationship<'account_member'>
@@ -58,11 +60,11 @@ export interface OrderFilter {
     status?: string
     payment?: string
     shipping?: string
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
+    account_id?: string
+    account_member_id?: string
     shipping_name?: string
     shipping_postcode?: string
     billing_name?: string
@@ -70,14 +72,12 @@ export interface OrderFilter {
     currency?: string
     product_id?: string
     product_sku?: string
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   like?: {
-    customer?: {
-      name?: string
-      email?: string
-    }
+    name?: string
+    email?: string
     customer_id?: string
     shipping_name?: string
     shipping_postcode?: string
@@ -87,19 +87,19 @@ export interface OrderFilter {
   ge?: {
     with_tax?: number
     without_tax?: number
-    created_at?: number
+    created_at?: number | string
   }
   lt?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
   le?: {
     with_tax?: number
     without_tax?: number
-    created_at?: Date
-    updated_at?: Date
+    created_at?: number | string
+    updated_at?: number | string
   }
 }
 
@@ -191,7 +191,9 @@ export interface ConfirmPaymentResponse {
   }
 }
 
-type OrderSort = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
+type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
+type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
+type OrderSort = OrderSortAscend | OrderSortDescend
 type OrderInclude = 'product' | 'customer' | 'items' | 'account' | 'account_member'
 
 /**

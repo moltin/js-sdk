@@ -21,6 +21,7 @@ class OidcProfileEndpoint extends CRUDExtend {
       'GET',
       undefined,
       token,
+      undefined,
       this,
       headers
     )
@@ -42,6 +43,7 @@ class OidcProfileEndpoint extends CRUDExtend {
       'GET',
       undefined,
       token,
+      undefined,
       this,
       headers
     )

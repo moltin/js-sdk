@@ -12,6 +12,7 @@ import {Identifiable, Resource} from './core'
 
 export interface PasswordProfileBody {
     username_format: string
+    name: string
     type: string
 }
 

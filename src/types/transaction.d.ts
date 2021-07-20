@@ -59,9 +59,28 @@ export interface TransactionBase {
   gateway: string
   amount: number
   currency: string
+  refunded_amount: number
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
   status: 'complete' | 'failed'
   relationships: any
+  meta: {
+    display_price: {
+      amount: number
+      currency: string
+      formatted: string
+    }
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+    display_refunded_amount?: {
+      total: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+  }
   timestamps: any
 }
 
@@ -92,5 +111,7 @@ export interface TransactionEndpoint {
   Refund(options: {
     order: string
     transaction: string
-  }): Promise<TransactionsResponse>
+  },
+  body?: { amount: number }
+  ): Promise<TransactionsResponse>
 }

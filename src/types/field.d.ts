@@ -27,19 +27,19 @@ export interface FieldBase {
 }
 
 export interface Field extends Identifiable, FieldBase {
-  relationships: Relationship<
-    | 'addresses'
-    | 'products'
-    | 'brands'
-    | 'collections'
-    | 'categories'
-    | 'customers'
-    | 'cart_items'
-    | 'orders'
-    | 'order_items'
-    | 'promotions'
-    | 'flows'
-  >
+  relationships: {
+    addresses?: Relationship<'addresses'>
+    products?: Relationship<'products'>
+    brands?: Relationship<'brands'>
+    collections?: Relationship<'collections'>
+    categories?: Relationship<'categories'>
+    customers?: Relationship<'customers'>
+    cart_items?: Relationship<'cart_items'>
+    orders?: Relationship<'orders'>
+    order_items?: Relationship<'order_items'>
+    promotions?: Relationship<'promotions'>
+    flow?: Relationship<'flow'>
+  }
 }
 
 export interface FieldsEndpoint

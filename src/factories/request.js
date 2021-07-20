@@ -82,7 +82,8 @@ class RequestFactory {
     uri,
     method,
     body = undefined,
-    token = undefined,
+    customerToken = undefined,
+    accountToken = undefined,
     instance,
     wrapBody = true,
     version = null
@@ -102,7 +103,7 @@ class RequestFactory {
         }
 
         if (access_token) {
-          headers.Authorization = `Bearer: ${access_token}`
+          headers.Authorization = `Bearer ${access_token}`
         }
 
         if (config.store_id) {
@@ -121,8 +122,11 @@ class RequestFactory {
           headers['X-MOLTIN-LANGUAGE'] = config.language
         }
 
-        if (token) {
-          headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
+        if (customerToken) {
+          headers['X-MOLTIN-CUSTOMER-TOKEN'] = customerToken
+        }
+        if (accountToken) {
+          headers['EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN'] = accountToken
         }
 
         if (config.headers) {
@@ -130,8 +134,9 @@ class RequestFactory {
         }
 
         fetch(
-          `${config.protocol}://${config.host}/${version ||
-            config.version}/${uri}`,
+          `${config.protocol}://${config.host}/${
+            version || config.version ? `${version || config.version}/` : ''
+          }${uri}`,
           {
             method: method.toUpperCase(),
             headers,
