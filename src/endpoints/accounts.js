@@ -15,16 +15,16 @@ class AccountsEndpoint extends CRUDExtend {
     const { limit, offset } = this
 
     this.call = this.request.send(
-        buildURL(this.endpoint, {
-          limit,
-          offset
-        }),
-        'GET',
-        undefined,
-        token,
-        undefined,
-        this,
-        headers
+      buildURL(this.endpoint, {
+        limit,
+        offset
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      this,
+      headers
     )
 
     return this.call
