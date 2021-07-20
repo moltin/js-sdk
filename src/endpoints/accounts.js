@@ -8,41 +8,23 @@ class AccountsEndpoint extends CRUDExtend {
   }
 
   Create(body) {
-    return this.request.send(this.endpoint, 'POST', body.data)
-  }
-
-  Get({ accountId, token = null }) {
-    return this.request.send(
-      `${this.endpoint}/${accountId}`,
-      'GET',
-      undefined,
-      token
-    )
-  }
-
-  Update(accountId, body, token = null) {
-    return this.request.send(
-      `${this.endpoint}/${accountId}`,
-      'PUT',
-      body.data,
-      token
-    )
+    return this.request.send(this.endpoint, 'POST', body)
   }
 
   All(token = null, headers = {}) {
     const { limit, offset } = this
 
     this.call = this.request.send(
-      buildURL(this.endpoint, {
-        limit,
-        offset
-      }),
-      'GET',
-      undefined,
-      token,
-      undefined,
-      this,
-      headers
+        buildURL(this.endpoint, {
+          limit,
+          offset
+        }),
+        'GET',
+        undefined,
+        token,
+        undefined,
+        this,
+        headers
     )
 
     return this.call
