@@ -1,6 +1,5 @@
 import {
-  CustomerAddress,
-  AccountAddress,
+  Address,
   Brand,
   BrandBase,
   CustomAuthenticatorResponseBody,
@@ -447,9 +446,9 @@ export const flowEntriesArray = [
   }
 ]
 
-export const customerAddressesArray: CustomerAddress[] = [
+export const addressesArray: Address[] = [
   {
-    type: 'customer-address' as const,
+    type: 'address' as const,
     id: 'address-1',
     first_name: 'Jonathan',
     last_name: 'Steele',
@@ -465,42 +464,7 @@ export const customerAddressesArray: CustomerAddress[] = [
     country: 'GB'
   },
   {
-    type: 'customer-address' as const,
-    id: 'address-2',
-    first_name: 'Jamie',
-    last_name: 'Barton',
-    name: 'Office',
-    phone_number: '(555) 555-1234',
-    instructions: 'Instruction 2',
-    company_name: 'Moltin',
-    line_1: 'British India House',
-    line_2: '15 Carliol Square',
-    city: 'Newcastle upon Tyne',
-    county: 'Tyne & Wear',
-    postcode: 'NE1 6UF',
-    country: 'GB'
-  }
-]
-
-export const accountAddressesArray: AccountAddress[] = [
-  {
-    type: 'account-address' as const,
-    id: 'address-1',
-    first_name: 'Jonathan',
-    last_name: 'Steele',
-    name: 'Office',
-    phone_number: '(555) 555-1234',
-    instructions: 'Instruction 1',
-    company_name: 'Moltin',
-    line_1: 'British India House',
-    line_2: '15 Carliol Square',
-    city: 'Newcastle upon Tyne',
-    county: 'Tyne & Wear',
-    postcode: 'NE1 6UF',
-    country: 'GB'
-  },
-  {
-    type: 'account-address' as const,
+    type: 'address' as const,
     id: 'address-2',
     first_name: 'Jamie',
     last_name: 'Barton',

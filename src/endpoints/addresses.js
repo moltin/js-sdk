@@ -2,7 +2,7 @@ import { singularize } from 'inflected'
 
 import BaseExtend from '../extends/base'
 
-class CustomerAddressesEndpoint extends BaseExtend {
+class AddressesEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
 
@@ -55,4 +55,4 @@ class CustomerAddressesEndpoint extends BaseExtend {
   }
 }
 
-export default CustomerAddressesEndpoint
+export default AddressesEndpoint

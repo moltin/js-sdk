@@ -34,18 +34,9 @@ export interface RealmBase {
   name: string
   duplicate_email_policy: string
   redirect_uris: string[]
-  type: 'authentication-realm'
 }
 
 export interface RealmCreateBody extends RealmBase {
-  relationships: {
-    origin: {
-      data: {
-        id: string,
-        type: string
-      }
-    }
-  }
 }
 
 export interface RealmUpdateBody extends Partial<RealmBase> {
@@ -66,7 +57,7 @@ export interface AuthenticationRealmEndpoint
       never,
       never
     >,
-    'All' | 'Create' | 'Update' | 'Get'
+    'All' | 'Create' | 'Get'
   > {
   endpoint: 'authentication-realm'
   storage: Storage
@@ -89,10 +80,5 @@ export interface AuthenticationRealmEndpoint
   /**
    * Create an Authentication Realm
    */
-  Create(body: { data: Partial<RealmCreateBody> }): Promise<Resource<Realm>>
-
-  /**
-   * Update an Authentication Realm
-   */
-  Update(id: string, body: { data: Partial<RealmUpdateBody> }): Promise<Resource<Realm>>
+  Create(body: { data: Partial<RealmBase> }): Promise<Resource<Realm>>
 }

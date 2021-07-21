@@ -14,8 +14,8 @@ import { WithRequired } from './util'
  * For custom flows, extend this interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/addresss/index.html
  */
-export interface AccountAddressBase {
-  type: 'account-address'
+export interface AddressBase {
+  type: 'address'
   first_name: string
   last_name: string
   name: string
@@ -30,11 +30,11 @@ export interface AccountAddressBase {
   country: string
 }
 
-export interface AccountAddress extends Identifiable, AccountAddressBase {}
+export interface Address extends Identifiable, AddressBase {}
 
-interface AccountAddressEdit
+interface AddressEdit
   extends WithRequired<
-      AccountAddress,
+      Address,
       | 'type'
       | 'first_name'
       | 'last_name'
@@ -53,35 +53,35 @@ interface AccountAddressEdit
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/update-an-address.html
  * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/delete-an-address.html
  */
-export interface AccountAddressesEndpoint {
+export interface AddressesEndpoint {
   endpoint: 'addresses'
 
   Get(options: {
-    account: string
+    customer: string
     address: string
     token?: string
-  }): Promise<Resource<AccountAddress>>
+  }): Promise<Resource<Address>>
 
   All(options: {
-    account: string
+    customer: string
     token?: string
-  }): Promise<ResourceList<AccountAddress>>
+  }): Promise<ResourceList<Address>>
 
   Create(options: {
-    account: string
-    body: AccountAddressEdit
+    customer: string
+    body: AddressEdit
     token?: string
-  }): Promise<Resource<AccountAddress>>
+  }): Promise<Resource<Address>>
 
   Update(options: {
-    account: string
+    customer: string
     address: string
-    body: Identifiable & AccountAddressEdit
+    body: Identifiable & AddressEdit
     token?: string
-  }): Promise<Resource<AccountAddress>>
+  }): Promise<Resource<Address>>
 
   Delete(options: {
-    account: string
+    customer: string
     address: string
     token?: string
   }): Promise<{}>

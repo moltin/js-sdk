@@ -82,8 +82,7 @@ class RequestFactory {
     uri,
     method,
     body = undefined,
-    customerToken = undefined,
-    accountToken = undefined,
+    token = undefined,
     instance,
     wrapBody = true,
     version = null
@@ -122,11 +121,8 @@ class RequestFactory {
           headers['X-MOLTIN-LANGUAGE'] = config.language
         }
 
-        if (customerToken) {
-          headers['X-MOLTIN-CUSTOMER-TOKEN'] = customerToken
-        }
-        if (accountToken) {
-          headers['EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN'] = accountToken
+        if (token) {
+          headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
         }
 
         if (config.headers) {

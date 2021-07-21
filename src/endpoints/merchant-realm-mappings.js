@@ -8,14 +8,7 @@ class MerchantRealmMappings {
   }
 
   All(token = null) {
-    this.call = this.request.send(
-      this.endpoint,
-      'GET',
-      undefined,
-      token,
-      undefined,
-      this
-    )
+    this.call = this.request.send(this.endpoint, 'GET', undefined, token, this)
 
     return this.call
   }

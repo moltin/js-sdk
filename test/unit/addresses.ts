@@ -1,7 +1,11 @@
-import {assert} from 'chai'
+import { assert } from 'chai'
 import nock from 'nock'
-import {gateway as MoltinGateway} from '../../src/moltin'
-import {customerAddressesArray as addresses, addressUpdate, attributeResponse} from '../factories'
+import { gateway as MoltinGateway } from '../../src/moltin'
+import {
+  addressesArray as addresses,
+  addressUpdate,
+  attributeResponse
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -20,11 +24,9 @@ describe('Moltin addresses', () => {
       .get('/customers/customer-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.CustomerAddresses.All({customer: 'customer-1'}).then(
-      response => {
-        assert.lengthOf(response.data, 2)
-      }
-    )
+    return Moltin.Addresses.All({ customer: 'customer-1' }).then(response => {
+      assert.lengthOf(response.data, 2)
+    })
   })
 
   it('should return an array of customer addresses using a JWT', () => {
@@ -38,7 +40,7 @@ describe('Moltin addresses', () => {
       .get('/customers/customer-1/addresses')
       .reply(200, { data: addresses })
 
-    return Moltin.CustomerAddresses.All({
+    return Moltin.Addresses.All({
       customer: 'customer-1',
       token: 'testtoken'
     }).then(response => {
@@ -56,7 +58,7 @@ describe('Moltin addresses', () => {
       .get('/customers/customer-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.CustomerAddresses.Get({
+    return Moltin.Addresses.Get({
       customer: 'customer-1',
       address: 'address-1'
     }).then(response => {
@@ -75,7 +77,7 @@ describe('Moltin addresses', () => {
       .get('/customers/customer-1/addresses/address-1')
       .reply(200, { data: addresses[0] })
 
-    return Moltin.CustomerAddresses.Get({
+    return Moltin.Addresses.Get({
       customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
@@ -94,7 +96,7 @@ describe('Moltin addresses', () => {
       .post('/customers/customer-1/addresses')
       .reply(201, { data: { ...addresses[0], id: undefined } })
 
-    return Moltin.CustomerAddresses.Create({
+    return Moltin.Addresses.Create({
       customer: 'customer-1',
       body: addresses[0]
     }).then(response => {
@@ -125,7 +127,7 @@ describe('Moltin addresses', () => {
       .post('/customers/customer-1/addresses')
       .reply(201, { data: addresses[0] })
 
-    return Moltin.CustomerAddresses.Create({
+    return Moltin.Addresses.Create({
       customer: 'customer-1',
       body: addresses[0],
       token: 'testtoken'
@@ -157,7 +159,7 @@ describe('Moltin addresses', () => {
       .put('/customers/customer-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.CustomerAddresses.Update({
+    return Moltin.Addresses.Update({
       customer: 'customer-1',
       address: 'address-1',
       body: { ...addresses[0], ...addressUpdate }
@@ -191,7 +193,7 @@ describe('Moltin addresses', () => {
       .put('/customers/customer-1/addresses/address-1')
       .reply(200, { data: { ...addresses[0], ...addressUpdate } })
 
-    return Moltin.CustomerAddresses.Update({
+    return Moltin.Addresses.Update({
       customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken',
@@ -225,7 +227,7 @@ describe('Moltin addresses', () => {
       .delete('/customers/customer-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.CustomerAddresses.Delete({
+    return Moltin.Addresses.Delete({
       customer: 'customer-1',
       address: 'address-1'
     }).then(response => {
@@ -244,7 +246,7 @@ describe('Moltin addresses', () => {
       .delete('/customers/customer-1/addresses/address-1')
       .reply(204)
 
-    return Moltin.CustomerAddresses.Delete({
+    return Moltin.Addresses.Delete({
       customer: 'customer-1',
       address: 'address-1',
       token: 'testtoken'
@@ -262,7 +264,7 @@ describe('Moltin addresses', () => {
       .get('/addresses/attributes')
       .reply(200, attributeResponse)
 
-    return Moltin.CustomerAddresses.Attributes('testtoken').then(response => {
+    return Moltin.Addresses.Attributes('testtoken').then(response => {
       assert.lengthOf(response.data, 3)
     })
   })
