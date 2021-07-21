@@ -51,17 +51,17 @@ export interface AccountUpdateBody extends Partial<AccountBase> {}
  * Accounts Endpoints
  */
 export interface AccountEndpoint
-    extends Omit<
-        CrudQueryableResource<
-            Account,
-            AccountBase,
-            AccountUpdateBody,
-            never,
-            never,
-            never
-            >,
-        'All' | 'Create' | 'Get' | 'Update'
-        > {
+  extends Omit<
+    CrudQueryableResource<
+      Account,
+      AccountBase,
+      AccountUpdateBody,
+      never,
+      never,
+      never
+    >,
+    'All' | 'Create' | 'Get' | 'Update'
+  > {
   endpoint: 'account'
   storage: Storage
 
@@ -84,7 +84,7 @@ export interface AccountEndpoint
    */
   Create(body: AccountBase): Promise<Resource<Account>>
 
-  /**
+ /**
    * Update an Account
    */
   Update(accountId: string, body: Partial<AccountBase>): Promise<Resource<Account>>
