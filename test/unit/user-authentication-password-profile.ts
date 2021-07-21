@@ -13,6 +13,19 @@ describe('User Authentication Password Profile Info', () => {
     const userAuthenticationId = '4da65e78-7f9b-4248-b498-823d43120da9'
     const userAuthenticationPasswordProfileId = '12a64ca9-af12-4355-acce-37fa2ef4728a'
 
+    it('Read All User Authentication Password Profile Info', () => {
+        nock(apiUrl, {})
+            .get(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info/)
+            .reply(200, {})
+
+        return Moltin.UserAuthenticationPasswordProfile.All(
+            realmId,
+            userAuthenticationId,
+        ).then(res => {
+            assert.isObject(res)
+        })
+    })
+
     it('Get a single User Authentication Password Profile Info', () => {
         nock(apiUrl, {})
             .get(/\/authentication-realms\/(.*)\/user-authentication-info\/(.*)\/user-authentication-password-profile-info\/(.*)/)
