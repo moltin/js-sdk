@@ -23,8 +23,12 @@ export interface OrderBase {
   type: string
   status: string
   payment: string
-  shipping: string
+  shipping?: string
   customer: {
+    name: string
+    email: string
+  }
+  contact?: {
     name: string
     email: string
   }

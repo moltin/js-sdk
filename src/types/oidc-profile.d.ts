@@ -14,14 +14,18 @@ export interface ProfileBase {
   name: string
   discovery_url: string
   client_id: string
-  client_secret: string
+  client_secret: string,
+  type: 'oidc-profile'
 }
 
-export interface ProfileBody extends Partial<ProfileBase> {
-  type: string
+export interface ProfileResponseBody extends Partial<ProfileBase> {
+  id: string
+}
+
+export interface ProfileCreateUpdateBody extends Partial<ProfileBase> {
+
 }
 export interface Profile extends ProfileBase, Identifiable {
-  type: string
   meta: {
     timestamps: {
       created_at: string
@@ -39,7 +43,7 @@ export interface ProfileListItem extends Profile {
   }
 }
 
-export interface ProfileResponse extends Resource<ProfileBase> {
+export interface ProfileResponse extends Resource<ProfileResponseBody> {
   links: {
     'authorization-endpoint': string
     'client-discovery-url': string
@@ -74,7 +78,7 @@ export interface OidcProfileEndpoint {
    * @param realmId - The ID for the authentication-realm containing the OpenID Connect profiles.
    * @param body - The OpenID Connect Profile object
    */
-  Create(realmId: string, body: { data: ProfileBody }): Promise<ProfileResponse>
+  Create(realmId: string, body: { data: ProfileCreateUpdateBody }): Promise<ProfileResponse>
 
   /**
    * Update an OpenID Connect Profile
@@ -86,7 +90,7 @@ export interface OidcProfileEndpoint {
   Update(
     realmId: string,
     profileId: string,
-    body: { data: ProfileBody }
+    body: { data: ProfileCreateUpdateBody }
   ): Promise<ProfileResponse>
 
   /**
