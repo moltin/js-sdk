@@ -15,7 +15,10 @@ class AccountAddressesEndpoint extends BaseExtend {
       'GET',
       undefined,
       undefined,
-      token
+      true,
+      null,
+      null,
+      { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
     )
   }
 
@@ -25,7 +28,10 @@ class AccountAddressesEndpoint extends BaseExtend {
       'GET',
       undefined,
       undefined,
-      token
+      true,
+      null,
+      null,
+      { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
     )
   }
 
@@ -35,7 +41,10 @@ class AccountAddressesEndpoint extends BaseExtend {
       'POST',
       { ...body, type: singularize(this.endpoint) },
       undefined,
-      token
+      true,
+      null,
+      null,
+      { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
     )
   }
 
@@ -45,7 +54,10 @@ class AccountAddressesEndpoint extends BaseExtend {
       'DELETE',
       undefined,
       undefined,
-      token
+      true,
+      null,
+      null,
+      { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
     )
   }
 
@@ -55,7 +67,10 @@ class AccountAddressesEndpoint extends BaseExtend {
       'PUT',
       { ...body, type: singularize(this.endpoint) },
       undefined,
-      token
+      true,
+      null,
+      null,
+      { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
     )
   }
 }

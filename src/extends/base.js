@@ -21,7 +21,6 @@ class BaseExtend {
       'GET',
       undefined,
       token,
-      undefined,
       this
     )
 
@@ -36,7 +35,6 @@ class BaseExtend {
       'GET',
       undefined,
       token,
-      undefined,
       this
     )
 
