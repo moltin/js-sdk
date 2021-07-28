@@ -3,7 +3,7 @@
  * Description: A Password Profile resource represents a specific configuration to have user authentication via username and password.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/index.html
  */
-import {Identifiable, Resource} from './core'
+import {Identifiable, Resource, ResourceList} from './core'
 
 /**
  * The Password Profile object
@@ -36,6 +36,12 @@ export interface PasswordProfileResponse extends Resource<PasswordProfile> {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/index.html
  */
 export interface PasswordProfileEndpoint {
+    /**
+     * Read All Password Profiles
+     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/get-all-password-profiles.html
+     * * @param realmId - The ID for the authentication-realm.
+     */
+    All(realmId: string, token?: string, headers?): Promise<ResourceList<PasswordProfileResponse>>
     /**
      * Get a Password Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/get-a-password-profile.html
