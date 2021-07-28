@@ -146,6 +146,16 @@ export interface OrderItem extends Identifiable, OrderItemBase {
     cart_item: Relationship<'cart_item'>
     taxes: Relationship<'taxes'>[]
   }
+  discounts?: [
+    {
+      amount: {
+        amount: number
+        currency: string
+        includes_tax: string
+      }
+      code: string
+    }
+  ]
 }
 
 export interface ConfirmPaymentBody {
