@@ -11,6 +11,16 @@ describe('Password Profiles', () => {
 
   const realmId = '96764ca9-af12-4355-acce-37fa2ef4728a'
 
+  it('Read All User Authentication Password Profile Info', () => {
+    nock(apiUrl, {})
+      .get(/\/authentication-realms\/(.*)\/password-profiles/)
+      .reply(200, {})
+
+    return Moltin.PasswordProfile.All(realmId).then(res => {
+      assert.isObject(res)
+    })
+  })
+
   it('Get a single Password Profile', () => {
     nock(apiUrl, {})
       .get(/\/authentication-realms\/(.*)\/password-profiles\/(.*)/)
