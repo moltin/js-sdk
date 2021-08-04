@@ -4,8 +4,6 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/user-authentication-info/index.html
  */
 import {CrudQueryableResource, Identifiable, Resource, ResourceList} from './core'
-import {Customer, CustomerBase, CustomerFilter, CustomerInclude} from "./customer";
-import {AccountMembership, AccountMembershipCreateBody} from "./account-memberships";
 
 /**
  * The User Authentication Info object
