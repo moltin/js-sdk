@@ -37,6 +37,7 @@ import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
+import {UserAuthenticationInfoEndpoint} from "./types/user-authentication-info";
 import {PasswordProfileEndpoint} from "./types/password-profile";
 import {UserAuthenticationPasswordProfileEndpoint
 } from "./types/user-authentication-password-profile";
@@ -128,6 +129,7 @@ export class Moltin {
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
+  UserAuthenticationInfo: UserAuthenticationInfoEndpoint;
   PasswordProfile: PasswordProfileEndpoint
   UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
 
