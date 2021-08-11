@@ -5,8 +5,9 @@ import {
   CrudQueryableResource,
   Identifiable,
   Resource,
-  ResourceList
-} from './core'
+  ResourcePage,
+} from "./core";
+import { AccountMemberBase } from "./account-members";
 
 /**
  * The Account Membership object Interface
@@ -34,6 +35,13 @@ export interface AccountMembershipCreateBody {
   account_member_id: string
 }
 
+export interface AccountMembershipsIncluded {
+  account_members: AccountMemberBase[]
+}
+
+type AccountMembershipsInclude = | 'account_members'
+
+type AccountMembershipsResponse = ResourcePage<AccountMembership, AccountMembershipsIncluded>
 /**
  * Account Memberships Endpoints
  */
@@ -45,7 +53,7 @@ export interface AccountMembershipsEndpoint
         never,
         never,
         never,
-        never
+        AccountMembershipsInclude
       >,
       'Get' | 'All' | 'Create' | 'Delete' | 'Update'
     > {
@@ -71,7 +79,7 @@ export interface AccountMembershipsEndpoint
   All(
     accountId: string,
     token?: string
-  ): Promise<ResourceList<AccountMembership>>
+  ): Promise<AccountMembershipsResponse>
 
   /**
    * Create an Account Membership
