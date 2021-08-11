@@ -6,18 +6,20 @@ class AccountMembershipsEndpoint extends BaseExtend {
     return this.request.send(
       `accounts/${accountId}/account-memberships`,
       'POST',
-      body.data,
-      token
+      body,
+      token,
+      this
     )
   }
 
   All(accountId, token = null) {
-    const { limit, offset } = this
+    const { limit, offset, includes } = this
 
     this.call = this.request.send(
       buildURL(`accounts/${accountId}/account-memberships`, {
         limit,
-        offset
+        offset,
+        includes
       }),
       'GET',
       undefined,
