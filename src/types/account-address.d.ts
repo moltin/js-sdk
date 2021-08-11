@@ -6,8 +6,17 @@
  * token. This is recommended for back end interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
  */
-import { Attributes, Identifiable, Resource, ResourceList } from './core'
+import {
+  Attributes,
+  CrudQueryableResource,
+  Identifiable,
+  QueryableResource,
+  Resource,
+  ResourceList,
+  ResourcePage
+} from './core'
 import { WithRequired } from './util'
+import { AccountMembership, AccountMembershipCreateBody, AccountMembershipsInclude } from "./account-memberships";
 
 /**
  * Core Address Base Interface
@@ -65,7 +74,7 @@ export interface AccountAddressesEndpoint {
   All(options: {
     account: string
     token?: string
-  }): Promise<ResourceList<AccountAddress>>
+  }): Promise<ResourcePage<AccountAddress>>
 
   Create(options: {
     account: string
@@ -87,4 +96,8 @@ export interface AccountAddressesEndpoint {
   }): Promise<{}>
 
   Attributes(token?: string): Promise<Attributes>
+
+  Limit(value: number): AccountAddressesEndpoint
+
+  Offset(value: number): AccountAddressesEndpoint
 }
