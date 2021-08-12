@@ -1,5 +1,6 @@
 import CRUDExtend from '../extends/crud'
 import PCMFileRelationshipEndpoint from './pcm-file-relationship'
+import Pcmtemplaterealationshipendpoint from './pcm-template-relationship'
 
 class PCMEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -8,6 +9,7 @@ class PCMEndpoint extends CRUDExtend {
     super(config)
 
     this.FileRelationships = new PCMFileRelationshipEndpoint(config)
+    this.TemplateRelationships = new Pcmtemplaterealationshipendpoint(config)
 
     this.endpoint = 'products'
   }
