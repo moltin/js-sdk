@@ -1,6 +1,7 @@
 import { singularize } from 'inflected'
 
 import BaseExtend from '../extends/base'
+import { buildURL } from '../utils/helpers'
 
 class AccountAddressesEndpoint extends BaseExtend {
   constructor(endpoint) {
@@ -10,8 +11,15 @@ class AccountAddressesEndpoint extends BaseExtend {
   }
 
   All({ account, token = null }) {
+    const { includes, sort, limit, offset, filter } = this
     return this.request.send(
-      `accounts/${account}/${this.endpoint}`,
+      buildURL(`accounts/${account}/${this.endpoint}`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       undefined,

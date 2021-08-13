@@ -1,3 +1,5 @@
+import { AccountMemberBase } from "./account-members";
+
 export interface Identifiable {
   id: string
 }
@@ -38,7 +40,7 @@ export interface Attributes extends ResourceList<Attribute> {
   meta: AttributesMeta
 }
 
-export interface ResourcePage<R> extends ResourceList<R> {
+export interface ResourcePage<R, I = never> extends ResourceList<R> {
   links: { [key: string]: string | null }
   meta: {
     page: {
@@ -51,6 +53,7 @@ export interface ResourcePage<R> extends ResourceList<R> {
       total: number
     }
   }
+  included?: I
 }
 
 export interface Relationship<T> {

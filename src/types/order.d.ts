@@ -87,6 +87,8 @@ export interface OrderFilter {
     shipping_postcode?: string
     billing_name?: string
     billing_postcode?: string
+    account_id?: string
+    account_member_id?: string
   }
   ge?: {
     with_tax?: number
