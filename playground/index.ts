@@ -3,8 +3,8 @@ import * as moltin from '..'
 async function main() {
   const gateway = moltin.gateway({
     host: 'epcc-integration.global.ssl.fastly.net',
-    client_id: 'R7paB5xa2ngzuEM8N6PkTOGpO9jTcAgW1DO2U2KzOl',
-    client_secret: 'lsKTS0hKMzbxpNBAVjX0NoXt8FeALVPcQxh4lgofWD',
+    client_id: 'client_id',
+    client_secret: 'client_secret',
     headers: {
       'EP-Beta-Features': 'account-management,accounts'
     }
