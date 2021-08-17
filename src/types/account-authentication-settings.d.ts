@@ -10,7 +10,6 @@ import { Resource, RelationshipToOne, Identifiable } from './core'
  * The Account Authentication Settings Interface
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/account-authentication-settings/index.html#the-account-authentication-settings-object
  */
-
 export interface AccountAuthenticationSettingsBase {
   type: string
   meta: object

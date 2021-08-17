@@ -240,10 +240,14 @@ npm install
 npm start
 ```
 
+To run test
+```
+npm test
+```
+
 You can learn more about the Rollup API and configuration [here](https://github.com/rollup/rollup/wiki).
 
 ## Terms And Conditions
 
 - Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/moltin/gatsby-demo-store/blob/master/.github/CONTRIBUTING.md).
 - For more information about the license, see [MIT License](https://github.com/moltin/js-sdk/blob/master/LICENSE).
-
