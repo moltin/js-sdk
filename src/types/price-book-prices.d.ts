@@ -10,6 +10,12 @@ export interface PriceBookPriceBase {
       [key: string]: {
         includes_tax: boolean
         amount: number
+        tiers?: {
+          [key: string]: {
+            minimum_quantity: number
+            amount: number
+          }
+        }
       }
     }
     sales?: {
@@ -22,6 +28,12 @@ export interface PriceBookPriceBase {
           [key: string]: {
             includes_tax: boolean
             amount: number
+            tiers?: {
+              [key: string]: {
+                minimum_quantity: number
+                amount: number
+              }
+            }
           }
         }
       }
