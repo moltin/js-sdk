@@ -24,6 +24,7 @@ export interface PcmProductBase {
     commodity_type?: string
     upc_ean?: string | null
     mpn?: string | null
+    extensions?: Object
   }
 }
 
