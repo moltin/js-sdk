@@ -37,6 +37,10 @@ import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
+import {UserAuthenticationInfoEndpoint} from "./types/user-authentication-info";
+import {PasswordProfileEndpoint} from "./types/password-profile";
+import {UserAuthenticationPasswordProfileEndpoint
+} from "./types/user-authentication-password-profile";
 
 export * from './types/config'
 export * from './types/storage'
@@ -69,6 +73,7 @@ export * from './types/catalogs-rules'
 export * from './types/variations'
 export * from './types/authentication-settings'
 export * from './types/oidc-profile'
+export * from './types/password-profile'
 export * from './types/authentication-realm'
 export * from './types/gateway'
 export * from './types/price-books'
@@ -124,6 +129,9 @@ export class Moltin {
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
+  UserAuthenticationInfo: UserAuthenticationInfoEndpoint;
+  PasswordProfile: PasswordProfileEndpoint
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

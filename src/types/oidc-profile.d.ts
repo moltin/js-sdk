@@ -15,7 +15,7 @@ export interface ProfileBase {
   discovery_url: string
   client_id: string
   client_secret: string,
-  type: 'oidc-profile'
+  type: string
 }
 
 export interface ProfileResponseBody extends Partial<ProfileBase> {
