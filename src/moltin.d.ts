@@ -81,6 +81,7 @@ export * from './types/price-book-prices'
 export * from './types/node-relationships'
 export * from './types/merchant-realm-mappings'
 export * from "./types/pcm-file-relationship"
+export * from './types/pcm-template-relationship'
 export * from './types/accounts'
 export * from './types/account-authentication-settings'
 export * from './types/account-members'
