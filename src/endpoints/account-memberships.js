@@ -34,14 +34,17 @@ class AccountMembershipsEndpoint extends BaseExtend {
     const { limit, offset } = this
 
     this.call = this.request.send(
-        buildURL(`accounts/${accountId}/account-memberships/unassigned-account-members`, {
+      buildURL(
+        `accounts/${accountId}/account-memberships/unassigned-account-members`,
+        {
           limit,
           offset
-        }),
-        'GET',
-        undefined,
-        token,
-        this
+        }
+      ),
+      'GET',
+      undefined,
+      token,
+      this
     )
 
     return this.call
