@@ -56,7 +56,7 @@ describe('Moltin Account Memberships', () => {
         .reply(200, {})
     const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
 
-    return Moltin.AccountMemberships.AllUnassignedAccountMembers(accountId).then(res => {
+    return Moltin.AccountMemberships.UnassignedAccountMembers(accountId).then(res => {
       assert.isObject(res)
     })
   })

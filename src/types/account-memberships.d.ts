@@ -81,10 +81,10 @@ export interface AccountMembershipsEndpoint
   ): Promise<AccountMembershipsResponse>
 
   /**
-   * Get all Unassigned Account Members for an account
+   * Get Unassigned Account Members for an account
    * @param accountId - The ID for the account
    */
-  AllUnassignedAccountMembers(
+  UnassignedAccountMembers(
       accountId: string,
       token?: string
   ): Promise<ResourceList<AccountMember>>

@@ -30,7 +30,7 @@ class AccountMembershipsEndpoint extends BaseExtend {
     return this.call
   }
 
-  AllUnassignedAccountMembers(accountId, token = null) {
+  UnassignedAccountMembers(accountId, token = null) {
     const { limit, offset } = this
 
     this.call = this.request.send(
