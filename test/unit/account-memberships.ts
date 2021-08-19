@@ -116,9 +116,7 @@ describe('Moltin Account Memberships', () => {
       })
       .get(/accounts\/.*\/account-memberships/)
       .query({
-        page: {
-          limit: 3
-        }
+        filter: 'eq(account_member_id,00000000-0000-1000-8000-111111111111)'
       })
       .reply(200, { data: accountMembershipsArray })
     const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
