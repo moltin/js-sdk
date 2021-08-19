@@ -42,6 +42,20 @@ export interface AccountMembershipsIncluded {
 type AccountMembershipsInclude = | 'account_members'
 
 type AccountMembershipsResponse = ResourcePage<AccountMembership, AccountMembershipsIncluded>
+
+
+/**
+ * filter for account memberships
+ */
+export interface AccountMembershipsFilter {
+  eq?: {
+    account_member_id?: string
+  }
+  like?: {
+    account_member_id?: string
+  }
+}
+
 /**
  * Account Memberships Endpoints
  */
@@ -51,7 +65,7 @@ export interface AccountMembershipsEndpoint
         AccountMembership,
         AccountMembershipCreateBody,
         never,
-        never,
+        AccountMembershipsFilter,
         never,
         AccountMembershipsInclude
       >,

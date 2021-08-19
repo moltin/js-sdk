@@ -13,12 +13,13 @@ class AccountMembershipsEndpoint extends BaseExtend {
   }
 
   All(accountId, token = null) {
-    const { limit, offset, includes } = this
+    const { limit, offset, filter, includes } = this
 
     this.call = this.request.send(
       buildURL(`accounts/${accountId}/account-memberships`, {
         limit,
         offset,
+        filter,
         includes
       }),
       'GET',
