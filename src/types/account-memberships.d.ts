@@ -69,7 +69,7 @@ export interface AccountMembershipsEndpoint
         never,
         AccountMembershipsInclude
       >,
-      'Get' | 'All' | 'Create' | 'Delete' | 'Update'
+      'Get' | 'All' | 'Create' | 'Delete' | 'Update' | 'Filter'
     > {
   endpoint: 'account-member'
   storage: Storage
@@ -117,4 +117,10 @@ export interface AccountMembershipsEndpoint
     accountMembershipId: string,
     token?: string
   ): Promise<{}>
+
+  /**
+   * Filter Account Memberships for an account
+   * @param filter the filter object
+   */
+  Filter(filter: AccountMembershipsFilter): AccountMembershipsEndpoint
 }
