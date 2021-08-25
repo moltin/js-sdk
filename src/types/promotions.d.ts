@@ -121,6 +121,7 @@ export interface PromotionBase {
   max_discount_value?: CurrencyAmount[]
   start: string
   end: string
+  max_applications_per_cart?: number
 }
 
 export interface PromotionMeta {

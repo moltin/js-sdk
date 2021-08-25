@@ -93,4 +93,24 @@ describe('Moltin Accounts', () => {
       assert.isObject(res)
     })
   })
+
+  it('should filter accounts', () => {
+    nock(apiUrl, {})
+      .post('/oauth/access_token')
+      .reply(200, {
+        access_token: 'a550d8cbd4a4627013452359ab69694cd446615a'
+      })
+      .get(/accounts/)
+      .reply(200, {})
+
+    return Moltin.Accounts.Filter({
+      eq: {
+        name: 'bluefuse'
+      }
+    })
+      .All()
+      .then(res => {
+        assert.isObject(res)
+      })
+  })
 })
