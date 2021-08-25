@@ -42,6 +42,20 @@ export interface AccountMembershipsIncluded {
 type AccountMembershipsInclude = | 'account_members'
 
 type AccountMembershipsResponse = ResourcePage<AccountMembership, AccountMembershipsIncluded>
+
+
+/**
+ * filter for account memberships
+ */
+export interface AccountMembershipsFilter {
+  eq?: {
+    account_member_id?: string
+  }
+  like?: {
+    account_member_id?: string
+  }
+}
+
 /**
  * Account Memberships Endpoints
  */
@@ -51,11 +65,11 @@ export interface AccountMembershipsEndpoint
         AccountMembership,
         AccountMembershipCreateBody,
         never,
-        never,
+        AccountMembershipsFilter,
         never,
         AccountMembershipsInclude
       >,
-      'Get' | 'All' | 'Create' | 'Delete' | 'Update'
+      'Get' | 'All' | 'Create' | 'Delete' | 'Update' | 'Filter'
     > {
   endpoint: 'account-member'
   storage: Storage
@@ -112,4 +126,10 @@ export interface AccountMembershipsEndpoint
     accountMembershipId: string,
     token?: string
   ): Promise<{}>
+
+  /**
+   * Filter Account Memberships for an account
+   * @param filter the filter object
+   */
+  Filter(filter: AccountMembershipsFilter): AccountMembershipsEndpoint
 }
