@@ -45,6 +45,22 @@ export interface AccountBase {
   parent_id?: string
 }
 
+
+/**
+ * filter for accounts
+ */
+export interface AccountFilter {
+  eq?: {
+    name?: string
+    legal_name?: string
+    registration_id?: string
+  }
+  like?: {
+    name?: string
+    legal_name?: string
+    registration_id?: string
+  }
+}
 export interface AccountUpdateBody extends Partial<AccountBase> {}
 
 /**
@@ -56,7 +72,7 @@ export interface AccountEndpoint
       Account,
       AccountBase,
       AccountUpdateBody,
-      never,
+      AccountFilter,
       never,
       never
     >,
