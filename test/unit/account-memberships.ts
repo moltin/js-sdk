@@ -46,6 +46,21 @@ describe('Moltin Account Memberships', () => {
     })
   })
 
+  it('Get all Unassigned Account Members for an account', () => {
+    nock(apiUrl, {})
+        .post('/oauth/access_token')
+        .reply(200, {
+          access_token: 'a550d8cbd4a4627013452359ab69694cd446615a'
+        })
+        .get(/accounts\/.*\/account-memberships\/unassigned-account-members/)
+        .reply(200, {})
+    const accountId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
+
+    return Moltin.AccountMemberships.UnassignedAccountMembers(accountId).then(res => {
+      assert.isObject(res)
+    })
+  })
+
   it('Get all Account Memberships for an account using limit', () => {
     nock(apiUrl, {})
       .post('/oauth/access_token')

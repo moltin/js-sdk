@@ -4,10 +4,10 @@
 import {
   CrudQueryableResource,
   Identifiable,
-  Resource,
+  Resource, ResourceList,
   ResourcePage,
 } from "./core";
-import { AccountMemberBase } from "./account-members";
+import {AccountMember, AccountMemberBase} from "./account-members";
 
 /**
  * The Account Membership object Interface
@@ -79,6 +79,15 @@ export interface AccountMembershipsEndpoint
     accountId: string,
     token?: string
   ): Promise<AccountMembershipsResponse>
+
+  /**
+   * Get Unassigned Account Members for an account
+   * @param accountId - The ID for the account
+   */
+  UnassignedAccountMembers(
+      accountId: string,
+      token?: string
+  ): Promise<ResourceList<AccountMember>>
 
   /**
    * Create an Account Membership
