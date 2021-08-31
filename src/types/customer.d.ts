@@ -37,6 +37,11 @@ export interface CustomerToken {
  */
 export interface CustomerFilter {
   eq?: {
+    name?: string
+    email?: string
+  },
+  like?: {
+    name?: string
     email?: string
   }
 }
