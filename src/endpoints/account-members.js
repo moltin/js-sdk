@@ -17,12 +17,13 @@ class AccountMembersEndpoint extends BaseExtend {
   }
 
   All(token = null, headers = {}) {
-    const { limit, offset } = this
+    const { limit, offset, filter } = this
 
     this.call = this.request.send(
       buildURL(this.endpoint, {
         limit,
-        offset
+        offset,
+        filter
       }),
       'GET',
       undefined,

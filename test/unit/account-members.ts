@@ -33,4 +33,19 @@ describe('Moltin Account Members', () => {
       assert.isObject(res)
     })
   })
+
+  it('Get all Account Members with filter', () => {
+    nock(apiUrl, {})
+      .get(/account-members\/*/)
+      .query({
+        filter: 'eq(name,John)'
+      })
+      .reply(200, {})
+
+    return Moltin.AccountMembers.Filter({ eq: { name: 'John' } })
+      .All()
+      .then(res => {
+        assert.isObject(res)
+      })
+  })
 })
