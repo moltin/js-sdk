@@ -2,7 +2,7 @@
  * Account Members
  */
 import {CrudQueryableResource, Identifiable, Resource, ResourceList} from './core'
-import {FlowFilter} from "./flow";
+import {FlowFilter} from './flow';
 
 /**
  * The Account Member object Interface
