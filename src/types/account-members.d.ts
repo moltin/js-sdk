@@ -1,7 +1,9 @@
 /**
  * Account Members
  */
-import {Identifiable, Resource, ResourceList} from './core'
+import {CrudQueryableResource, Identifiable, Resource, ResourceList} from './core'
+import {FlowFilter} from './flow';
+
 /**
  * The Account Member object Interface
  */
@@ -24,9 +26,34 @@ export interface AccountMember extends AccountMemberBase, Identifiable {
 }
 
 /**
+ * filter for account members
+ */
+export interface AccountMemberFilter {
+    eq?: {
+        name?: string
+        email?: string
+    }
+    like?: {
+        name?: string
+        email?: string
+    }
+}
+
+/**
  * Account Member Endpoints
  */
-export interface AccountMembersEndpoint {
+export interface AccountMembersEndpoint
+    extends Omit<
+        CrudQueryableResource<
+            AccountMember,
+            never,
+            never,
+            AccountMemberFilter,
+            never,
+            never
+            >,
+        'All' |  'Get' | 'Filter'
+        > {
     endpoint: 'account-member'
     storage: Storage
 
@@ -43,4 +70,8 @@ export interface AccountMembersEndpoint {
      * @param token - The Bearer token to grant access to the API.
      */
     Get(accountMemberId: string, token?: string): Promise<Resource<AccountMember>>
+
+
+
+    Filter(filter: AccountMemberFilter): AccountMembersEndpoint
 }
