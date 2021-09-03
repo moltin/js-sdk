@@ -63,12 +63,15 @@ describe('Moltin customers', () => {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .get('/customers?filter=eq(email,jonathan@moltin.com)')
+      .get('/customers?filter=eq(email,jonathan@moltin.com):like(name,jon)')
       .reply(200, { data: customers })
 
     return Moltin.Customers.Filter({
       eq: {
         email: 'jonathan@moltin.com'
+      },
+      like: {
+        name: 'jon'
       }
     })
       .All()
