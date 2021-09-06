@@ -141,6 +141,7 @@ export interface Promotion extends Identifiable, PromotionBase {
 export interface PromotionCode {
   code: string
   uses?: number
+  consume_unit?: 'per_item' | 'per_cart'
   user?: string
 }
 
