@@ -18,7 +18,7 @@ import {
  */
 export interface FixedDiscountSchema {
   currencies: CurrencyAmount[]
-  exclude: {
+  exclude?: {
     targets: string[]
   }
 }
@@ -28,7 +28,7 @@ export interface FixedDiscountSchema {
  */
 export interface PercentDiscountSchema {
   currencies: CurrencyPercentage[]
-  exclude: {
+  exclude?: {
     targets: string[]
   }
 }
