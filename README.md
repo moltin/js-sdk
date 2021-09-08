@@ -1,7 +1,5 @@
 <img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
 
-# Beta
-
 # Elastic Path Commerce Cloud JavaScript SDK
 
 [![npm version](https://img.shields.io/npm/v/@moltin/sdk.svg)](https://www.npmjs.com/package/@moltin/sdk)
@@ -241,6 +239,7 @@ npm start
 ```
 
 To run test
+
 ```
 npm test
 ```
