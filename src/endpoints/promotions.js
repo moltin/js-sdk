@@ -1,4 +1,5 @@
 import CRUDExtend from '../extends/crud'
+import { buildURL } from '../utils/helpers'
 
 class PromotionsEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -12,7 +13,15 @@ class PromotionsEndpoint extends CRUDExtend {
   }
 
   Codes(promotionId) {
-    return this.request.send(`${this.endpoint}/${promotionId}/codes`, 'GET')
+    const { limit, offset } = this
+
+    return this.request.send(
+      buildURL(`${this.endpoint}/${promotionId}/codes`, {
+        limit,
+        offset
+      }),
+      'GET'
+    )
   }
 
   AddCodes(promotionId, codes) {
