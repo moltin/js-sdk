@@ -94,5 +94,5 @@ export interface AuthenticationRealmEndpoint
   /**
    * Update an Authentication Realm
    */
-  Update(id: string, body: { data: Partial<RealmUpdateBody> }): Promise<Resource<Realm>>
+  Update(id: string, body: RealmUpdateBody): Promise<Resource<Realm>>
 }
