@@ -10,7 +10,8 @@ import {
   CrudQueryableResource,
   Identifiable,
   Resource,
-  ResourceList
+  ResourceList,
+  ResourcePage
 } from './core'
 
 /**
@@ -147,7 +148,6 @@ export interface Promotion extends Identifiable, PromotionBase {
 export interface PromotionCode {
   code: string
   uses?: number
-  consume_unit?: 'per_item' | 'per_cart'
   user?: string
 }
 
@@ -180,7 +180,7 @@ export interface PromotionsEndpoint
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#the-promotion-code-object
    */
-  Codes(promotionId: string): Promise<Resource<PromotionCode[]>>
+  Codes(promotionId: string): Promise<ResourcePage<PromotionCode>>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/create-promotion-codes.html
