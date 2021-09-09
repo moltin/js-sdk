@@ -1,5 +1,6 @@
 import CRUDExtend from '../extends/crud'
 import { buildURL } from '../utils/helpers'
+
 class PromotionsEndpoint extends CRUDExtend {
   constructor(endpoint) {
     super(endpoint)
