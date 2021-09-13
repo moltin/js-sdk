@@ -81,7 +81,7 @@ export interface ItemFixedDiscountSchema {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html#item-percent-discount
  */
 export interface ItemPercentDiscountSchema {
-  targets: string[]
+  targets: string[] | 'all'
   percent: number
 }
 
