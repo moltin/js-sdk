@@ -72,6 +72,14 @@ export interface AccountMembersEndpoint
     Get(accountMemberId: string, token?: string): Promise<Resource<AccountMember>>
 
 
+    /**
+     * Get Unassigned Account Members for an account
+     * @param accountId - The ID for the account
+     */
+    UnassignedAccountMembers(
+        accountId: string,
+        token?: string
+    ): Promise<ResourceList<AccountMember>>
 
     Filter(filter: AccountMemberFilter): AccountMembersEndpoint
 }
