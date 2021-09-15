@@ -7,7 +7,7 @@ class AccountMembersEndpoint extends BaseExtend {
     this.endpoint = 'account-members'
   }
 
-  Get({ accountMemberId, token = null }) {
+  Get(accountMemberId, token = null) {
     return this.request.send(
       `${this.endpoint}/${accountMemberId}`,
       'GET',
