@@ -7,6 +7,12 @@ class InventoriesEndpoint extends BaseExtend {
     this.endpoint = 'inventories'
   }
 
+  Create(productId, quantity) {
+    return this.request.send(`${this.endpoint}/${productId}`, 'POST', {
+      quantity
+    })
+  }
+
   IncrementStock(productId, quantity) {
     return this.request.send(
       `${this.endpoint}/${productId}/transactions`,
@@ -42,6 +48,13 @@ class InventoriesEndpoint extends BaseExtend {
   GetTransactions(productId) {
     return this.request.send(
       `${this.endpoint}/${productId}/transactions`,
+      'GET'
+    )
+  }
+
+  GetTransaction(productId, transactionId) {
+    return this.request.send(
+      `${this.endpoint}/${productId}/transactions/${transactionId}`,
       'GET'
     )
   }
