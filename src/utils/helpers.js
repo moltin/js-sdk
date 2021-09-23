@@ -223,25 +223,22 @@ export function getCredentials(storage) {
 export function tokenInvalid({ storage, client_id }) {
   const credentials = getCredentials(storage)
 
-  if (!credentials) {
-    console.error('Token error: credentials do not exist')
+  const handleInvalid = message => {
+    console.info(message)
     return true
   }
 
-  if (!credentials.access_token) {
-    console.error('Token error: credentials missing access_token')
-    return true
-  }
+  if (!credentials)
+    return handleInvalid('Token status: credentials do not exist')
 
-  if (credentials.client_id !== client_id) {
-    console.error('Token error: client_id mismatch')
-    return true
-  }
+  if (!credentials.access_token)
+    return handleInvalid('Token status: credentials missing access_token')
 
-  if (Math.floor(Date.now() / 1000) >= credentials.expires) {
-    console.error('Token error: credentials expired')
-    return true
-  }
+  if (credentials.client_id !== client_id)
+    return handleInvalid('Token status: client_id mismatch')
+
+  if (Math.floor(Date.now() / 1000) >= credentials.expires)
+    return handleInvalid('Token status: credentials expired')
 
   return false
 }
