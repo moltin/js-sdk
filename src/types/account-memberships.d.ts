@@ -56,7 +56,6 @@ export interface AccountMembershipsFilter {
   }
 }
 
-
 /**
  * Account Memberships Endpoints
  */
@@ -95,6 +94,14 @@ export interface AccountMembershipsEndpoint
     token?: string
   ): Promise<AccountMembershipsResponse>
 
+  /**
+   * Get Unassigned Account Members for an account
+   * @param accountId - The ID for the account
+   */
+  UnassignedAccountMembers(
+      accountId: string,
+      token?: string
+  ): Promise<ResourceList<AccountMember>>
 
   /**
    * Create an Account Membership
