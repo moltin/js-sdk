@@ -220,11 +220,13 @@ export function getCredentials(storage) {
   return JSON.parse(storage.get('moltinCredentials'))
 }
 
-export function tokenInvalid({ storage, client_id }) {
+export function tokenInvalid({ storage, client_id, reauth }) {
   const credentials = getCredentials(storage)
 
   const handleInvalid = message => {
-    console.info(message)
+    const logger = reauth ? console.info : console.error
+    logger(message)
+
     return true
   }
 
