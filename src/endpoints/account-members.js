@@ -34,6 +34,27 @@ class AccountMembersEndpoint extends BaseExtend {
 
     return this.call
   }
+
+  UnassignedAccountMembers(accountId, token = null) {
+    const { limit, offset, filter } = this
+
+    this.call = this.request.send(
+      buildURL(
+        `accounts/${accountId}/account-memberships/unassigned-account-members`,
+        {
+          limit,
+          offset,
+          filter
+        }
+      ),
+      'GET',
+      undefined,
+      token,
+      this
+    )
+
+    return this.call
+  }
 }
 
 export default AccountMembersEndpoint
