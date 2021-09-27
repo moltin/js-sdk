@@ -62,6 +62,14 @@ export interface InventoryEndpoint
   ): Promise<Resource<InventoryResponse>>
 
   /**
+   * Delete Inventory
+   * @param productId The ID for the product you’re performing this action on.
+   */
+  Delete(
+    productId: string
+  ): Promise<{}>
+
+  /**
    * Increment Stock
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/inventory/update-inventory.html#post-create-a-stock-transaction-for-a-product
    * @param productId The ID for the product you’re performing this action on.

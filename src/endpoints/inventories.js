@@ -13,6 +13,10 @@ class InventoriesEndpoint extends BaseExtend {
     })
   }
 
+  Delete(productId) {
+    return this.request.send(`${this.endpoint}/${productId}`, 'DELETE')
+  }
+
   IncrementStock(productId, quantity) {
     return this.request.send(
       `${this.endpoint}/${productId}/transactions`,
