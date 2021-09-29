@@ -1,4 +1,5 @@
 import { Identifiable, Resource, ResourceList } from './core'
+import { ProductFilter } from './product'
 
 export interface ProductResponse extends Identifiable {
   type: 'product'
@@ -65,6 +66,8 @@ export interface CatalogsProductsEndpoint {
   Limit(value: number): CatalogsProductsEndpoint
 
   Offset(value: number): CatalogsProductsEndpoint
+
+  Filter(filter: ProductFilter): CatalogsProductsEndpoint
 
   All(options: {
     token?: string

@@ -1,5 +1,6 @@
 import CRUDExtend from '../extends/crud'
 import RequestFactory from '../factories/request'
+import { buildURL } from '../utils/helpers'
 
 class Nodes {
   constructor(endpoint) {
@@ -71,8 +72,10 @@ class Nodes {
   }
 }
 
-class Products {
+class Products extends CRUDExtend {
   constructor(endpoint) {
+    super(endpoint)
+
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'pcm'
@@ -129,8 +132,16 @@ class Products {
   }
 
   GetCatalogProducts({ catalogId, releaseId, token = null }) {
+    const { limit, offset, includes, sort, filter } = this
+
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token
