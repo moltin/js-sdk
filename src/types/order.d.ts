@@ -138,6 +138,10 @@ export interface OrderItem extends Identifiable, OrderItemBase {
         unit: FormattedPrice
         value: FormattedPrice
       }
+      discount?: {
+        unit: FormattedPrice
+        value: FormattedPrice
+      }
     }
     timestamps?: {
       created_at: string
