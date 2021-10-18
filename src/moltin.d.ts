@@ -39,6 +39,8 @@ import { AccountMembershipsEndpoint } from './types/account-memberships'
 import {AccountAddressesEndpoint} from "./types/account-address";
 import {UserAuthenticationInfoEndpoint} from "./types/user-authentication-info";
 import {PasswordProfileEndpoint} from "./types/password-profile";
+import { PCMVariationsEndpoint } from "./types/pcm-variations"
+import { PcmVariationsRelationshipsEndpoint } from "./types/pcm-variations-relationships"
 import {UserAuthenticationPasswordProfileEndpoint
 } from "./types/user-authentication-password-profile";
 
@@ -86,6 +88,9 @@ export * from './types/accounts'
 export * from './types/account-authentication-settings'
 export * from './types/account-members'
 export * from './types/account-memberships'
+export * from './types/pcm-variations'
+export * from './types/pcm-variations-relationships'
+
 
 // UMD
 export as namespace moltin
@@ -133,6 +138,8 @@ export class Moltin {
   UserAuthenticationInfo: UserAuthenticationInfoEndpoint;
   PasswordProfile: PasswordProfileEndpoint
   UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
+  PCMVariations: PCMVariationsEndpoint;
+  PcmVariationsRelationship: PcmVariationsRelationshipsEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

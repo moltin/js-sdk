@@ -6,7 +6,7 @@ export function buildRelationshipData(type, ids) {
   if (ids === null || ids.length === 0) return data
 
   if (typeof ids === 'string') {
-    const obj = { type: underscore(type), id: ids }
+    const obj = { type: type, id: ids }
 
     return [obj]
   }
@@ -15,12 +15,12 @@ export function buildRelationshipData(type, ids) {
     data = ids.map(item => {
       if (typeof item === 'object' && item !== null) {
         return {
-          type: underscore(type),
+          type: type,
           ...item
         }
       }
       return {
-        type: underscore(type),
+        type: type,
         id: item
       }
     })
