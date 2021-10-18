@@ -13,7 +13,7 @@ import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
  * Core PCM Product Base Interface
  * For custom flows, extend this interface
  */
-export interface PcmProductBase {
+export interface PcmProductBase extends PcmProductRelationships {
   type: string
   attributes: {
     name: string
@@ -31,6 +31,14 @@ export interface PcmProductBase {
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
     // TODO
+  }
+}
+
+export interface PcmProductRelationships {
+  relationships?: {
+    base_product?: {
+      // TODO
+    }
   }
 }
 
