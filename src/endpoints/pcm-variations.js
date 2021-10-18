@@ -7,7 +7,7 @@ class PCMVariationsEndpoint extends CRUDExtend {
     super(config)
     this.endpoint = 'variations'
   }
-  
+
   CreateVariation(body) {
     return this.request.send(this.endpoint, 'POST', {
       ...body,
@@ -42,8 +42,10 @@ class PCMVariationsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${variationId}/options`,
       'post',
-     { ...body,
-      type: 'product-variation-option'}
+      {
+        ...body,
+        type: 'product-variation-option'
+      }
     )
   }
 
@@ -51,8 +53,10 @@ class PCMVariationsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${variationId}/options/${optionId}`,
       'PUT',
-      { ...body,
-        type: 'product-variation-option'}
+      {
+        ...body,
+        type: 'product-variation-option'
+      }
     )
   }
 
@@ -83,8 +87,10 @@ class PCMVariationsEndpoint extends CRUDExtend {
     return this.request.send(
       `${this.endpoint}/${variationId}/options/${optionId}/modifiers`,
       'post',
-      { ...body,
-        type: 'product-variation-modifier'}
+      {
+        ...body,
+        type: 'product-variation-modifier'
+      }
     )
   }
 
@@ -94,8 +100,10 @@ class PCMVariationsEndpoint extends CRUDExtend {
         this.endpoint
       }/${variationId}/options/${optionId}/modifiers/${modifierId}`,
       'PUT',
-      { ...body,
-        type: 'product-variation-modifier'}
+      {
+        ...body,
+        type: 'product-variation-modifier'
+      }
     )
   }
 
