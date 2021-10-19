@@ -1,3 +1,4 @@
+import { dasherize } from 'inflected'
 import RequestFactory from '../factories/request'
 import { buildRelationshipData } from '../utils/helpers'
 
@@ -14,7 +15,11 @@ class PCMVariationsRelationshipsEndpoint {
   }
 
   Create(productId, resources) {
-    const body = buildRelationshipData('product-variation', resources)
+    const body = buildRelationshipData(
+      'product-variation',
+      resources,
+      dasherize
+    )
     return this.request.send(
       `products/${productId}/${this.endpoint}`,
       'POST',
@@ -23,7 +28,11 @@ class PCMVariationsRelationshipsEndpoint {
   }
 
   Delete(productId, resources) {
-    const body = buildRelationshipData('product-variation', resources)
+    const body = buildRelationshipData(
+      'product-variation',
+      resources,
+      dasherize
+    )
     return this.request.send(
       `products/${productId}/${this.endpoint}`,
       'DELETE',
@@ -32,7 +41,11 @@ class PCMVariationsRelationshipsEndpoint {
   }
 
   Update(productId, resources) {
-    const body = buildRelationshipData('product-variation', resources)
+    const body = buildRelationshipDatabuildRelationshipData(
+      'product-variation',
+      resources,
+      dasherize
+    )
     return this.request.send(
       `products/${productId}/${this.endpoint}`,
       'PUT',
