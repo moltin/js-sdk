@@ -1,5 +1,5 @@
 /**
- * Products file relationship
+ * Products variation relationship
  */
 import { Identifiable, ResourceList } from './core'
 
@@ -17,7 +17,7 @@ export interface PcmVariationsRelationshipsEndpoint {
   endpoint: 'relationships/variations'
 
   /**
-   * Get all product file relationships
+   * Get all product variation relationships
    * Description:
    * @param productId
    * @constructor
@@ -25,7 +25,7 @@ export interface PcmVariationsRelationshipsEndpoint {
   All(productId: string): Promise<ResourceList<PcmVariationsRelationships>>
 
   /**
-   * Create a product file relationship
+   * Create a product variation relationship
    * Description:
    * @param productId
    * @param resources
@@ -37,7 +37,7 @@ export interface PcmVariationsRelationshipsEndpoint {
   ): Promise<void>
 
   /**
-   * Delete a product file relationship
+   * Delete a product variation relationship
    * Description:
    * @param productId
    * @param resources
@@ -48,7 +48,7 @@ export interface PcmVariationsRelationshipsEndpoint {
     resources?: string | string[]
   ): Promise<void>
   /**
-   * Update a product file relationship
+   * Update a product variation relationship
    * Description:
    * @param productId
    * @param resources

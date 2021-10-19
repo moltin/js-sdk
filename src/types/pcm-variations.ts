@@ -2,7 +2,6 @@
  * Product Variations
  * Description: Variations allow you to create the variations that your products have.
  * Things like size or color are examples of a Variation.
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/index.html#product-variations
  */
 import {
     Identifiable,
@@ -15,7 +14,6 @@ import {
   
   /**
    * Product Variations Base Interface
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/index.html#the-variation-object
    */
   export interface PCMVariationBase {
       attributes: {
@@ -34,7 +32,6 @@ import {
   /**
    * The Product Variation Option object
    * A variation option represents an option for selection for a single product-variation.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/options/index.html
    */
   export interface VariationsOption {
     attributes: {
@@ -59,7 +56,6 @@ import {
   /**
    * Modifiers object
    * Modifiers help augmenting properties of a variation of a product, price, etc., by creating an array of child products or prices.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/index.html
    */
   export interface VariationsModifier {
       attributes: {
@@ -118,7 +114,6 @@ import {
   
   /**
    * Variations Endpoints
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/index.html
    * Get DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/get-a-product-variation.html
    * Get All DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/create-a-product-variation.html
    * Delete DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/delete-a-product-variation.html
@@ -136,7 +131,6 @@ import {
   
     /**
      * Create a product variation
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/create-a-product-variation.html
      * @param body - The variation object.
      * @constructor
      */
@@ -144,7 +138,6 @@ import {
   
     /**
      * Update a product variation
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/update-a-product-variation.html
      * @param id - ID of the variation.
      * @param body - The variation object.
      * @param token - a token to access specific data.
@@ -171,7 +164,6 @@ import {
   
     /**
      * Get all product variation options
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/options/get-all-product-variation-options.html
      * @param variationId - ID of the variation.
      * @constructor
      */
@@ -179,7 +171,6 @@ import {
   
     /**
      * Create a product variation option
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/options/create-product-variation-option.html
      * @param variationId - ID of the variation.
      * @param body - The option object.
      * @constructor
@@ -188,7 +179,6 @@ import {
   
     /**
      * Update product variation option
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/options/update-product-variation-option.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @param body - The option object.
@@ -198,7 +188,6 @@ import {
   
     /**
      * Delete product variation option
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/options/delete-product-variation-option.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @constructor
@@ -207,7 +196,6 @@ import {
   
     /**
      * Get a product modifier
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/get-a-product-modifier.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @param modifierId - ID of the modifier.
@@ -221,7 +209,6 @@ import {
   
     /**
      * Get all product modifiers
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/get-all-product-modifiers.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @constructor
@@ -230,7 +217,6 @@ import {
   
     /**
      * Create a new product modifier
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/create-a-product-modifier.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @param body - The modifier object.
@@ -244,7 +230,6 @@ import {
   
     /**
      * Update a product modifier
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/update-a-product-modifier.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @param modifierId - ID of the modifier.
@@ -260,7 +245,6 @@ import {
   
     /**
      * Delete a product modifier
-     * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/modifiers/delete-a-product-modifier.html
      * @param variationId - ID of the variation.
      * @param optionId - ID of the option.
      * @param modifierId - ID of the modifier.
