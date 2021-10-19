@@ -52,6 +52,12 @@ import {
       }
     }
   }
+
+  export interface UpdateVariation extends PCMVariationBase, Identifiable {}
+
+  export interface UpdateVariationOption extends VariationsOption, Identifiable {}
+
+  export interface UpdateVariationModifier extends VariationsOption, Identifiable {}
   
   /**
    * Modifiers object
@@ -62,7 +68,6 @@ import {
         type: VariationsModifierType
         value: string  | VariationsBuilderModifier
       }
- 
   }
   
   export interface VariationsModifierResponse extends Identifiable {
@@ -145,7 +150,7 @@ import {
      */
     UpdateVariation(
       id: string,
-      body: PCMVariationBase,
+      body: UpdateVariation,
       token?: string
     ): Promise<Resource<PCMVariation>>
   
@@ -167,7 +172,7 @@ import {
      * @param variationId - ID of the variation.
      * @constructor
      */
-    VariationsOptions(variationId): Promise<ResourceList<VariationsOptionResponse>>
+    VariationsOptions(variationId: string): Promise<ResourceList<VariationsOptionResponse>>
   
     /**
      * Create a product variation option
@@ -175,7 +180,7 @@ import {
      * @param body - The option object.
      * @constructor
      */
-    CreateVariationsOption(variationId, body): Promise<Resource<VariationsOptionResponse>>
+    CreateVariationsOption(variationId: string, body: VariationsOption): Promise<Resource<VariationsOptionResponse>>
   
     /**
      * Update product variation option
@@ -184,7 +189,7 @@ import {
      * @param body - The option object.
      * @constructor
      */
-    UpdateVariationsOption(variationId, optionId, body): Promise<Resource<VariationsOptionResponse>>
+    UpdateVariationsOption(variationId: string, optionId: string, body: UpdateVariationOption): Promise<Resource<VariationsOptionResponse>>
   
     /**
      * Delete product variation option
@@ -192,7 +197,7 @@ import {
      * @param optionId - ID of the option.
      * @constructor
      */
-    DeleteVariationsOption(variationId, optionId): Promise<{}>
+    DeleteVariationsOption(variationId: string, optionId: string): Promise<{}>
   
     /**
      * Get a product modifier
@@ -202,9 +207,9 @@ import {
      * @constructor
      */
     VariationsModifier(
-      variationId,
-      optionId,
-      modifierId
+      variationId: string,
+      optionId: string,
+      modifierId: string
     ): Promise<Resource<VariationsModifierResponse>>
   
     /**
@@ -213,7 +218,7 @@ import {
      * @param optionId - ID of the option.
      * @constructor
      */
-    VariationsModifiers(variationId, optionId): Promise<ResourceList<VariationsModifierResponse>>
+    VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifierResponse>>
   
     /**
      * Create a new product modifier
@@ -223,9 +228,9 @@ import {
      * @constructor
      */
     CreateVariationsModifier(
-      variationId,
-      optionId,
-      body
+      variationId: string,
+      optionId: string,
+      body: VariationsModifier
     ): Promise<Resource<VariationsModifierResponse>>
   
     /**
@@ -237,10 +242,10 @@ import {
      * @constructor
      */
     UpdateVariationsModifier(
-      variationId,
-      optionId,
-      modifierId,
-      body
+      variationId: string,
+      optionId: string,
+      modifierId: string,
+      body: UpdateVariationModifier
     ): Promise<Resource<VariationsModifierResponse>>
   
     /**
@@ -250,6 +255,6 @@ import {
      * @param modifierId - ID of the modifier.
      * @constructor
      */
-    DeleteVariationsModifier(variationId, optionId, modifierId): Promise<{}>
+    DeleteVariationsModifier(variationId: string, optionId: string, modifierId: string): Promise<{}>
   }
   
