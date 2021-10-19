@@ -41,7 +41,7 @@ class PCMVariationsRelationshipsEndpoint {
   }
 
   Update(productId, resources) {
-    const body = buildRelationshipDatabuildRelationshipData(
+    const body = buildRelationshipData(
       'product-variation',
       resources,
       dasherize
