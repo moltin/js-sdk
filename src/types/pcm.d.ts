@@ -8,6 +8,7 @@ import {
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
+import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 
 /**
  * Core PCM Product Base Interface
@@ -67,4 +68,5 @@ export interface PcmProductsEndpoint
 
   FileRelationships: PcmFileRelationshipEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
+  VariationsRelationships: PcmVariationsRelationshipsEndpoint
 }
