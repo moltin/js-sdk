@@ -4,14 +4,14 @@
 import { Identifiable, ResourceList } from './core'
 
 export interface PcmFileRelationship extends Identifiable {
-  meta: {
+  meta?: {
     created_at: string
     tags?: string[]
   }
   type: string
 }
 
-export type ProductFileRelationshipResource = string | { id: string; meta: { tags: string[] } }
+export type ProductFileRelationshipResource = string | { id: string; meta?: { tags: string[] } }
 
 export interface PcmFileRelationshipEndpoint {
   endpoint: 'relationships/files'
