@@ -4,12 +4,13 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource
+  CrudQueryableResource, ResourcePage
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
+import { File } from './file'
 
 /**
  * Core PCM Product Base Interface
@@ -39,7 +40,11 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
 export interface PcmProductRelationships {
   relationships?: {
     base_product?: {
-      // TODO
+    }
+    main_image?: {
+      data: {
+        id: string
+      }
     }
   }
 }
@@ -51,8 +56,13 @@ export interface PcmProductFilter {
 type PcmProductSort = // TODO
   | 'name'
 
-type PcmProductInclude = // TODO
-  | 'price'
+export type PcmProductInclude = | 'main_image'
+
+interface PcmProductsIncluded {
+  main_images: File[]
+}
+
+export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
