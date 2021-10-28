@@ -175,7 +175,7 @@ class Releases {
     )
   }
 
-  GetAllHierarchies({ catalogId, releaseId, token = null}) {
+  GetAllHierarchies({ catalogId, releaseId, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`,
       'GET',
