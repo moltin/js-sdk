@@ -134,16 +134,17 @@ class RequestFactory {
           Object.assign(headers, additionalHeaders)
         }
 
-        fetch(
-          `${config.protocol}://${config.host}/${
-            version || config.version ? `${version || config.version}/` : ''
-          }${uri}`,
-          {
-            method: method.toUpperCase(),
-            headers,
-            body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
-          }
-        )
+        config.auth.fetch
+          .bind()(
+            `${config.protocol}://${config.host}/${
+              version || config.version ? `${version || config.version}/` : ''
+            }${uri}`,
+            {
+              method: method.toUpperCase(),
+              headers,
+              body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
+            }
+          )
           .then(parseJSON)
           .then(response => {
             if (response.ok) {
