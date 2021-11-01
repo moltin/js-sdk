@@ -33,7 +33,7 @@ export interface PcmProductBase extends PcmProductRelationships {
 
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
-    // TODO
+    variation_matrix: {[key: string]: string} | {}
   }
 }
 
