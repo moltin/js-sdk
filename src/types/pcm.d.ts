@@ -4,16 +4,19 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource
+  CrudQueryableResource, ResourcePage
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
+import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
+import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
+import { File } from './file'
 
 /**
  * Core PCM Product Base Interface
  * For custom flows, extend this interface
  */
-export interface PcmProductBase {
+export interface PcmProductBase extends PcmProductRelationships {
   type: string
   attributes: {
     name: string
@@ -34,6 +37,18 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
   }
 }
 
+export interface PcmProductRelationships {
+  relationships?: {
+    base_product?: {
+    }
+    main_image?: {
+      data: {
+        id: string
+      }
+    }
+  }
+}
+
 export interface PcmProductFilter {
   // TODO
 }
@@ -41,8 +56,13 @@ export interface PcmProductFilter {
 type PcmProductSort = // TODO
   | 'name'
 
-type PcmProductInclude = // TODO
-  | 'price'
+export type PcmProductInclude = | 'main_image'
+
+interface PcmProductsIncluded {
+  main_images: File[]
+}
+
+export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
@@ -59,4 +79,13 @@ export interface PcmProductsEndpoint
 
   FileRelationships: PcmFileRelationshipEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
+  VariationsRelationships: PcmVariationsRelationshipsEndpoint
+  MainImageRelationships: PcmMainImageRelationshipEndpoint
+
+  /**
+   * Build Child Products
+   * @param productId - The ID of the base product to build the child products for.
+   * @constructor
+   */
+  BuildChildProducts(productId: string): Promise<{}>
 }

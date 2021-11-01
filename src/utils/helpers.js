@@ -1,12 +1,12 @@
 import { pluralize, underscore } from 'inflected'
 
-export function buildRelationshipData(type, ids) {
+export function buildRelationshipData(type, ids, typeModifier = underscore) {
   let data = []
 
   if (ids === null || ids.length === 0) return data
 
   if (typeof ids === 'string') {
-    const obj = { type: underscore(type), id: ids }
+    const obj = { type: typeModifier(type), id: ids }
 
     return [obj]
   }
@@ -15,12 +15,12 @@ export function buildRelationshipData(type, ids) {
     data = ids.map(item => {
       if (typeof item === 'object' && item !== null) {
         return {
-          type: underscore(type),
+          type: typeModifier(type),
           ...item
         }
       }
       return {
-        type: underscore(type),
+        type: typeModifier(type),
         id: item
       }
     })
