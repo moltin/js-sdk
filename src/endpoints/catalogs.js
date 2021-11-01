@@ -113,7 +113,7 @@ class Products extends CRUDExtend {
 
   GetCatalogNodeProducts({ catalogId, releaseId, nodeId, token = null }) {
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/${
+      `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${
         this.endpoint
       }`,
       'GET',
@@ -168,7 +168,16 @@ class Releases {
 
   Get({ catalogId, releaseId, token = null }) {
     return this.request.send(
-      `catalogs/${this.endpoint}/${catalogId}/${releaseId}`,
+      `catalogs/${catalogId}/${this.endpoint}/${releaseId}`,
+      'GET',
+      undefined,
+      token
+    )
+  }
+
+  GetAllHierarchies({ catalogId, releaseId, token = null }) {
+    return this.request.send(
+      `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`,
       'GET',
       undefined,
       token
