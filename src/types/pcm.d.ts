@@ -81,4 +81,11 @@ export interface PcmProductsEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
   VariationsRelationships: PcmVariationsRelationshipsEndpoint
   MainImageRelationships: PcmMainImageRelationshipEndpoint
+
+  /**
+   * Build Child Products
+   * @param productId - The ID of the base product to build the child products for.
+   * @constructor
+   */
+  BuildChildProducts(productId: string): Promise<{}>
 }
