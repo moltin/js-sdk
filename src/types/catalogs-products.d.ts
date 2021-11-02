@@ -27,34 +27,41 @@ export interface ProductResponse extends Identifiable {
     store_id: string
     translations: string[]
     updated_at: string
-    weight:string
+    weight: string
   }
   relationships: {
-    categories:
-      {
-        id: string
-        node_type: string
-      }[]
-    brands:
-      {
-        id: string
-        node_type: string
-      }[]
-    collections:
-      {
-        id: string
-        node_type: string
-      }[]
-    children:
-      {
+    categories: {
+      id: string
+      node_type: string
+    }[]
+    brands: {
+      id: string
+      node_type: string
+    }[]
+    collections: {
+      id: string
+      node_type: string
+    }[]
+    children: {
+      id: string
+      type: string
+    }[]
+    'custom-modifiers': string[]
+    files: {
+      data: {
+        created_at: string
         id: string
         type: string
       }[]
-    "custom-modifiers": string[]
-    files: string[]
-    "main-image": string
+    }
+    main_image: {
+      data: {
+        id: string
+        type: string
+      } | null
+    }
     modifiers: string[]
-    "product-spec": string[]
+    'product-spec': string[]
     variationOpts: string[]
     variations: string[]
   }
@@ -69,9 +76,7 @@ export interface CatalogsProductsEndpoint {
 
   Filter(filter: ProductFilter): CatalogsProductsEndpoint
 
-  All(options: {
-    token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  All(options: { token?: string }): Promise<ResourceList<ProductResponse>>
 
   Get(options: {
     productId: string
