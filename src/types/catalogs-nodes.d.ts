@@ -13,21 +13,23 @@ export interface NodeBaseResponse extends Identifiable {
     updated_at: string
   }
   relationships: {
-    children:
-      {
-        id: string
-        label: string
-        name: string
-      }[]
-    products:
-      {
-        id: string
-        type: string
-      }[]
-    parent: {
+    children: {
       id: string
       label: string
       name: string
+    }[]
+    products: {
+      id: string
+      type: string
+    }[]
+    parent: {
+      data: {
+        id: string
+        type: 'node'
+      }
+      links: {
+        related: string
+      }
     }
   }
 }
@@ -45,9 +47,7 @@ export interface CatalogsNodesEndpoint {
 
   Offset(value: number): CatalogsNodesEndpoint
 
-  All(options: {
-    token?: string
-  }): Promise<ResourceList<NodesResponse>>
+  All(options: { token?: string }): Promise<ResourceList<NodesResponse>>
 
   Get(options: {
     nodeId: string
