@@ -21,6 +21,10 @@ class PCMEndpoint extends CRUDExtend {
   BuildChildProducts(productId) {
     return this.request.send(`${this.endpoint}/${productId}/build`, 'POST')
   }
+
+  GetChildProducts(productId) {
+    return this.request.send(`${this.endpoint}/${productId}/children`, 'GET')
+  }
 }
 
 export default PCMEndpoint

@@ -4,7 +4,7 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage
+  CrudQueryableResource, ResourcePage, ResourceList
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
@@ -40,6 +40,10 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
 export interface PcmProductRelationships {
   relationships?: {
     base_product?: {
+      data: {
+        id: string,
+        type: string
+      }
     }
     main_image?: {
       data: {
@@ -88,4 +92,14 @@ export interface PcmProductsEndpoint
    * @constructor
    */
   BuildChildProducts(productId: string): Promise<{}>
+
+  /**
+   * Get Child Products
+   * @param productId - The ID of the base product to get the child products for.
+   * @constructor
+   */
+
+  GetChildProducts(
+    productId: string,
+  ): Promise<ResourceList<PcmProduct>>
 }
