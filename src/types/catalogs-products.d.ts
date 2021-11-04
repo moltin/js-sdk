@@ -11,6 +11,7 @@ export interface ProductResponse extends Identifiable {
     components: string[]
     created_at: string
     description: string
+    extensions: Object
     dimensions: string
     manage_stock: boolean
     name: string

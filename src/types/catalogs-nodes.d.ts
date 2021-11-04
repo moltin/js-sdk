@@ -14,14 +14,24 @@ export interface NodeBaseResponse extends Identifiable {
   }
   relationships: {
     children: {
-      id: string
-      label: string
-      name: string
-    }[]
+      links: {
+        related: string
+      }
+    }
+    hierarchy: {
+      data: {
+        id: string
+        type: 'hierarchy'
+      }
+      links: {
+        related: string
+      }
+    }
     products: {
-      id: string
-      type: string
-    }[]
+      links: {
+        related: string
+      }
+    }
     parent: {
       data: {
         id: string
