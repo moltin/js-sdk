@@ -4,13 +4,16 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage, ResourceList
+  CrudQueryableResource,
+  ResourcePage,
+  ResourceList
 } from './core'
-import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
+import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
 import { File } from './file'
+import { NodeBaseResponse } from './catalogs-nodes'
 
 /**
  * Core PCM Product Base Interface
@@ -33,7 +36,7 @@ export interface PcmProductBase extends PcmProductRelationships {
 
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
-    variation_matrix: {[key: string]: string} | {}
+    variation_matrix: { [key: string]: string } | {}
   }
 }
 
@@ -41,7 +44,7 @@ export interface PcmProductRelationships {
   relationships?: {
     base_product?: {
       data: {
-        id: string,
+        id: string
         type: string
       }
     }
@@ -57,10 +60,9 @@ export interface PcmProductFilter {
   // TODO
 }
 
-type PcmProductSort = // TODO
-  | 'name'
+type PcmProductSort = 'name' // TODO
 
-export type PcmProductInclude = | 'main_image'
+export type PcmProductInclude = 'main_image'
 
 interface PcmProductsIncluded {
   main_images: File[]
@@ -73,18 +75,27 @@ export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
-  extends CrudQueryableResource<PcmProduct,
-    PcmProductBase,
-    PcmProductUpdateBody,
-    PcmProductFilter,
-    PcmProductSort,
-    PcmProductInclude> {
+  extends CrudQueryableResource<
+      PcmProduct,
+      PcmProductBase,
+      PcmProductUpdateBody,
+      PcmProductFilter,
+      PcmProductSort,
+      PcmProductInclude
+    > {
   endpoint: 'products'
 
   FileRelationships: PcmFileRelationshipEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
   VariationsRelationships: PcmVariationsRelationshipsEndpoint
   MainImageRelationships: PcmMainImageRelationshipEndpoint
+
+  /**
+   * Get Nodes By Product
+   * @param productId - The ID of the base product to get the nodes for.
+   * @constructor
+   */
+  GetNodesByProduct(productId: string): Promise<ResourceList<NodeBaseResponse>>
 
   /**
    * Build Child Products
@@ -99,7 +110,5 @@ export interface PcmProductsEndpoint
    * @constructor
    */
 
-  GetChildProducts(
-    productId: string,
-  ): Promise<ResourceList<PcmProduct>>
+  GetChildProducts(productId: string): Promise<ResourceList<PcmProduct>>
 }

@@ -18,6 +18,10 @@ class PCMEndpoint extends CRUDExtend {
     this.endpoint = 'products'
   }
 
+  GetNodesByProduct(productId) {
+    return this.request.send(`${this.endpoint}/${productId}/nodes`, 'GET')
+  }
+
   BuildChildProducts(productId) {
     return this.request.send(`${this.endpoint}/${productId}/build`, 'POST')
   }
