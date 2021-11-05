@@ -11,7 +11,7 @@ import { Identifiable, CrudQueryableResource } from './core'
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
  */
 export interface FileBase {
-  file_name?: string
+  file_name: string
   file?: string
   public?: boolean
   file_location?: string
