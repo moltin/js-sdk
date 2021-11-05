@@ -20,7 +20,6 @@ export interface FileBase {
 export interface File extends Identifiable, FileBase {
   type: string
   mime_type: string
-  file_name: string
   file_size: number
   public: boolean
   link: {
