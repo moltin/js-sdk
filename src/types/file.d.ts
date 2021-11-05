@@ -4,7 +4,6 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
  */
 import { Identifiable, CrudQueryableResource } from './core'
-import { FieldBase } from './field'
 
 /**
  * Core File Base Interface
@@ -12,7 +11,10 @@ import { FieldBase } from './field'
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/index.html
  */
 export interface FileBase {
-  file_name: string
+  file_name?: string
+  file?: string
+  public?: boolean
+  file_location?: string
 }
 
 export interface File extends Identifiable, FileBase {

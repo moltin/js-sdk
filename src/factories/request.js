@@ -1,3 +1,4 @@
+import FormData from 'form-data'
 import {
   buildRequestBody,
   parseJSON,
@@ -95,11 +96,16 @@ class RequestFactory {
 
       const req = cred => {
         const access_token = cred ? cred.access_token : null
+        const isFormData = body instanceof FormData
 
         const headers = {
-          'Content-Type': 'application/json',
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
           'X-MOLTIN-SDK-VERSION': config.sdk.version
+        }
+
+        if (!isFormData) {
+          // For form-data requests, don't provide a content-type header. The browser will generate one for you
+          headers['Content-Type'] = 'application/json'
         }
 
         if (access_token) {
@@ -134,6 +140,13 @@ class RequestFactory {
           Object.assign(headers, additionalHeaders)
         }
 
+        const requestBody = () => {
+          // form-data body should be sent raw
+          if (isFormData) return body
+
+          return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
+        }
+
         config.auth.fetch
           .bind()(
             `${config.protocol}://${config.host}/${
@@ -142,7 +155,7 @@ class RequestFactory {
             {
               method: method.toUpperCase(),
               headers,
-              body: wrapBody ? buildRequestBody(body) : JSON.stringify(body)
+              body: requestBody()
             }
           )
           .then(parseJSON)
