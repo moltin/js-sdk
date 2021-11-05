@@ -8,7 +8,14 @@ class Files extends BaseExtend {
   }
 
   Create(body) {
-    return this.request.send(`${this.endpoint}`, 'POST', body)
+    return this.request.send(
+      `${this.endpoint}`,
+      'POST',
+      body,
+      undefined,
+      undefined,
+      false
+    )
   }
 
   Delete(id) {
