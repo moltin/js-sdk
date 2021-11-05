@@ -1,3 +1,4 @@
+import FormData from 'form-data'
 import {
   buildRequestBody,
   parseJSON,
