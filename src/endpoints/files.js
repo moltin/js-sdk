@@ -1,3 +1,4 @@
+import { FormData } from 'formdata-node'
 import BaseExtend from '../extends/base'
 
 class Files extends BaseExtend {
@@ -8,10 +9,19 @@ class Files extends BaseExtend {
   }
 
   Create(body) {
+    let requestBody = body
+
+    if (!(body instanceof FormData) && body.file_location) {
+      const formData = new FormData()
+      formData.append('file_location', body.file_location)
+
+      requestBody = formData
+    }
+
     return this.request.send(
       `${this.endpoint}`,
       'POST',
-      body,
+      requestBody,
       undefined,
       undefined,
       false
