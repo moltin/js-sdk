@@ -72,10 +72,8 @@ import {
       }
   }
 
-  export interface VariationsModifierResponse extends Identifiable {
-    type: 'modifier'
-    modifier_type: VariationsModifierType
-    value: string | VariationsBuilderModifier
+  export interface VariationsModifierResponse extends Identifiable, VariationsModifier {
+    type: 'product-variation-modifier'
   }
 
   export type VariationsModifierTypeObj =
@@ -220,7 +218,7 @@ import {
      * @param optionId - ID of the option.
      * @constructor
      */
-    VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifier>>
+    VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifierResponse>>
 
     /**
      * Create a new product modifier
