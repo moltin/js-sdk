@@ -66,7 +66,7 @@ import {
   export interface VariationsModifier {
       attributes: {
         type: VariationsModifierType
-        value?: string | VariationsBuilderModifier
+        value?: string
         seek?: string
         set?: string
       }
@@ -220,7 +220,7 @@ import {
      * @param optionId - ID of the option.
      * @constructor
      */
-    VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifierResponse>>
+    VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifier>>
 
     /**
      * Create a new product modifier
