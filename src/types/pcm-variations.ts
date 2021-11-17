@@ -245,7 +245,7 @@ import {
       variationId: string,
       optionId: string,
       modifierId: string,
-      body: UpdateVariationModifier
+      body: VariationsModifier
     ): Promise<Resource<VariationsModifierResponse>>
 
     /**

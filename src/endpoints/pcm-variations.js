@@ -102,7 +102,8 @@ class PCMVariationsEndpoint extends CRUDExtend {
       'PUT',
       {
         ...body,
-        type: 'product-variation-modifier'
+        type: 'product-variation-modifier',
+        id: modifierId
       }
     )
   }
