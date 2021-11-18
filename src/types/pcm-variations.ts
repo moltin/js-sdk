@@ -57,8 +57,6 @@ import {
 
   export interface UpdateVariationOption extends VariationsOption, Identifiable {}
 
-  export interface UpdateVariationModifier extends VariationsOption, Identifiable {}
-
   /**
    * Modifiers object
    * Modifiers help augmenting properties of a variation of a product, price, etc., by creating an array of child products or prices.
