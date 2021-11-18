@@ -11,7 +11,7 @@ import {
     ResourceList,
   } from './core'
 
-  
+
   /**
    * Product Variations Base Interface
    */
@@ -20,7 +20,7 @@ import {
         name: string
       }
   }
-  
+
   export interface PCMVariation extends Identifiable, PCMVariationBase {
     type: 'product-variation'
     options: VariationsOption[]
@@ -28,7 +28,7 @@ import {
       options: RelationshipToMany<'option'>
     }
   }
-  
+
   /**
    * The Product Variation Option object
    * A variation option represents an option for selection for a single product-variation.
@@ -39,7 +39,7 @@ import {
         description: string
     }
   }
-  
+
   export interface VariationsOptionResponse extends Identifiable {
     type: 'product-variation-option'
     attributes : {
@@ -57,8 +57,6 @@ import {
 
   export interface UpdateVariationOption extends VariationsOption, Identifiable {}
 
-  export interface UpdateVariationModifier extends VariationsOption, Identifiable {}
-  
   /**
    * Modifiers object
    * Modifiers help augmenting properties of a variation of a product, price, etc., by creating an array of child products or prices.
@@ -66,16 +64,16 @@ import {
   export interface VariationsModifier {
       attributes: {
         type: VariationsModifierType
-        value: string  | VariationsBuilderModifier
+        value?: string
+        seek?: string
+        set?: string
       }
   }
-  
-  export interface VariationsModifierResponse extends Identifiable {
-    type: 'modifier'
-    modifier_type: VariationsModifierType
-    value: string | VariationsBuilderModifier
+
+  export interface VariationsModifierResponse extends Identifiable, VariationsModifier {
+    type: 'product-variation-modifier'
   }
-  
+
   export type VariationsModifierTypeObj =
     | { name_equals: string }
     | { name_append: string }
@@ -93,7 +91,7 @@ import {
     | { sku_prepend: string }
     | { sku_builder: VariationsBuilderModifier }
     | { status: string }
-  
+
   export type VariationsModifierType =
     | 'name_equals'
     | 'name_append'
@@ -101,7 +99,7 @@ import {
     | 'description_equals'
     | 'description_append'
     | 'description_prepend'
-    | 'commoditytype'
+    | 'commodity_type'
     | 'slug_equals'
     | 'slug_append'
     | 'slug_prepend'
@@ -111,12 +109,12 @@ import {
     | 'sku_prepend'
     | 'sku_builder'
     | 'status'
-  
+
   export interface VariationsBuilderModifier {
     seek: string
     set: string
   }
-  
+
   /**
    * Variations Endpoints
    * Get DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/get-a-product-variation.html
@@ -133,14 +131,14 @@ import {
         never
       > {
     endpoint: 'pcm/variations'
-  
+
     /**
      * Create a product variation
      * @param body - The variation object.
      * @constructor
      */
     CreateVariation(body: PCMVariationBase): Promise<Resource<PCMVariation>>
-  
+
     /**
      * Update a product variation
      * @param id - ID of the variation.
@@ -153,7 +151,7 @@ import {
       body: UpdateVariation,
       token?: string
     ): Promise<Resource<PCMVariation>>
-  
+
     /**
      * Get a product variation option
      * Description: Use this endpoint to retrieve a single variation option.
@@ -166,14 +164,14 @@ import {
       variationId: string,
       optionId: string
     ): Promise<Resource<VariationsOptionResponse>>
-  
+
     /**
      * Get all product variation options
      * @param variationId - ID of the variation.
      * @constructor
      */
     VariationsOptions(variationId: string): Promise<ResourceList<VariationsOptionResponse>>
-  
+
     /**
      * Create a product variation option
      * @param variationId - ID of the variation.
@@ -181,7 +179,7 @@ import {
      * @constructor
      */
     CreateVariationsOption(variationId: string, body: VariationsOption): Promise<Resource<VariationsOptionResponse>>
-  
+
     /**
      * Update product variation option
      * @param variationId - ID of the variation.
@@ -190,7 +188,7 @@ import {
      * @constructor
      */
     UpdateVariationsOption(variationId: string, optionId: string, body: UpdateVariationOption): Promise<Resource<VariationsOptionResponse>>
-  
+
     /**
      * Delete product variation option
      * @param variationId - ID of the variation.
@@ -198,7 +196,7 @@ import {
      * @constructor
      */
     DeleteVariationsOption(variationId: string, optionId: string): Promise<{}>
-  
+
     /**
      * Get a product modifier
      * @param variationId - ID of the variation.
@@ -211,7 +209,7 @@ import {
       optionId: string,
       modifierId: string
     ): Promise<Resource<VariationsModifierResponse>>
-  
+
     /**
      * Get all product modifiers
      * @param variationId - ID of the variation.
@@ -219,7 +217,7 @@ import {
      * @constructor
      */
     VariationsModifiers(variationId: string, optionId: string): Promise<ResourceList<VariationsModifierResponse>>
-  
+
     /**
      * Create a new product modifier
      * @param variationId - ID of the variation.
@@ -232,7 +230,7 @@ import {
       optionId: string,
       body: VariationsModifier
     ): Promise<Resource<VariationsModifierResponse>>
-  
+
     /**
      * Update a product modifier
      * @param variationId - ID of the variation.
@@ -245,9 +243,9 @@ import {
       variationId: string,
       optionId: string,
       modifierId: string,
-      body: UpdateVariationModifier
+      body: VariationsModifier
     ): Promise<Resource<VariationsModifierResponse>>
-  
+
     /**
      * Delete a product modifier
      * @param variationId - ID of the variation.
@@ -257,4 +255,3 @@ import {
      */
     DeleteVariationsModifier(variationId: string, optionId: string, modifierId: string): Promise<{}>
   }
-  
