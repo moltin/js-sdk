@@ -37,6 +37,10 @@ class OrdersEndpoint extends BaseExtend {
       type: 'order'
     })
   }
+
+  anonymize(ids) {
+    return this.request.send(`${this.endpoint}/anonymize`, 'POST', ids)
+  }
 }
 
 export default OrdersEndpoint
