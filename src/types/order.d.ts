@@ -271,8 +271,8 @@ export interface OrdersEndpoint
   
 /**
    * anonymize an Order
-   * Description: You can only update custom data, shipping and shipping_address on orders. Everything else inside the order object is immutable.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
+   * Description: Anonymize order with the list of the ids.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api
    * @param id
    * @param body
    * @constructor
