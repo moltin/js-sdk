@@ -211,6 +211,9 @@ export interface ConfirmPaymentResponse {
   }
 }
 
+export interface AnonymizeOrder {
+  order_ids: string[]
+}
 type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
 type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
 type OrderSort = OrderSortAscend | OrderSortDescend
@@ -265,4 +268,15 @@ export interface OrdersEndpoint
    * @constructor
    */
   Update(id: string, body: Partial<OrderBase>): Promise<Resource<Order>>
+  
+/**
+   * anonymize an Order
+   * Description: You can only update custom data, shipping and shipping_address on orders. Everything else inside the order object is immutable.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
+   * @param id
+   * @param body
+   * @constructor
+   */
+  anonymize(ids: AnonymizeOrder): Promise<Resource<Order>>
+
 }
