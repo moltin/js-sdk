@@ -214,6 +214,21 @@ export interface ConfirmPaymentResponse {
 export interface AnonymizeOrder {
   order_ids: string[]
 }
+
+export interface AnonymizeOrderResponse {
+  data
+  errors: [
+    {
+      detail: string
+      status: number
+      title: string
+      meta: {
+        order_id: string
+      }
+    }
+  ]
+}
+
 type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
 type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
 type OrderSort = OrderSortAscend | OrderSortDescend
@@ -277,6 +292,7 @@ export interface OrdersEndpoint
    * @param body
    * @constructor
    */
-  anonymize(ids: AnonymizeOrder): Promise<Resource<Order>>
+
+  anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
 
 }
