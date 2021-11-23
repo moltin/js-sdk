@@ -228,6 +228,7 @@ export interface AnonymizeOrderresponse {
     }
   ]
 }
+
 type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
 type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
 type OrderSort = OrderSortAscend | OrderSortDescend
@@ -291,6 +292,7 @@ export interface OrdersEndpoint
    * @param body
    * @constructor
    */
+
   anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderresponse>
 
 }
