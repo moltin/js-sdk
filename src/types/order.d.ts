@@ -215,7 +215,7 @@ export interface AnonymizeOrder {
   order_ids: string[]
 }
 
-export interface AnonymizeOrderresponse {
+export interface AnonymizeOrderResponse {
   data
   errors: [
     {
@@ -293,6 +293,6 @@ export interface OrdersEndpoint
    * @constructor
    */
 
-  anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderresponse>
+  anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
 
 }
