@@ -1,5 +1,6 @@
 import { Identifiable, Resource, ResourceList } from './core'
 import { ProductFilter } from './product'
+import { ProductComponents } from './pcm'
 
 export interface ProductResponse extends Identifiable {
   type: 'product'
@@ -8,7 +9,7 @@ export interface ProductResponse extends Identifiable {
     base_product: boolean
     base_product_id: string
     commodity_type: string
-    components: string[]
+    components: string[] | ProductComponents
     created_at: string
     description: string
     dimensions: string
