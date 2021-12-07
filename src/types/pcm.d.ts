@@ -36,11 +36,18 @@ export interface PcmProductBase extends PcmProductRelationships {
 export interface ProductComponents {
   [key: string]: {
     name: string
-    options: {
-      id: string
-      quantity: number
-      type: string
-    }[]
+    options: ProductComponentOption[]
+  }
+}
+
+export interface ProductComponentOption {
+  id: string
+  quantity: number
+  type: string
+  meta: {
+    name: string
+    sku: string
+    status: string
   }
 }
 
