@@ -193,8 +193,9 @@ class Releases {
   }
 }
 
-class Rules {
+class Rules extends CRUDExtend {
   constructor(endpoint) {
+    super(endpoint)
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'pcm'
@@ -202,8 +203,16 @@ class Rules {
   }
 
   All(token = null) {
+    const { includes, sort, limit, offset, filter } = this
+
     return this.request.send(
-      `catalogs/${this.endpoint}`,
+      buildURL(`catalogs/${this.endpoint}`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token
