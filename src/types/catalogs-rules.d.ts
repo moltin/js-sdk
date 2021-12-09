@@ -3,10 +3,10 @@
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
 import {
-    Identifiable,
-    CrudQueryableResource
-  } from './core'
-  
+  Identifiable,
+  CrudQueryableResource
+} from './core'
+
   /**
    * Core PCM Product Base Interface
    * For custom flows, extend this interface
@@ -23,8 +23,7 @@ export interface RuleBase {
   }
 }
 
-export interface Rule extends Identifiable,RuleBase  {
-  id: string
+export interface Rule extends Identifiable, RuleBase  {
   links: {
     self: string
   }
