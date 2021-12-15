@@ -202,4 +202,7 @@ export interface PromotionsEndpoint
     promotionId: string,
     codes: DeletePromotionCodesBodyItem[]
   ): Promise<{}>
+
+  History(promotionId:string): Promise<ResourcePage<Promotion>>
 }
+

@@ -48,6 +48,18 @@ class PromotionsEndpoint extends CRUDExtend {
       }
     )
   }
+
+  History(promotionId) {
+    const { limit, offset } = this
+
+    return this.request.send(
+      buildURL(`${this.endpoint}/${promotionId}/history`, {
+        limit,
+        offset
+      }),
+      'GET'
+    )
+  }
 }
 
 export default PromotionsEndpoint
