@@ -4,12 +4,12 @@
  * Things like size or color are examples of a Variation.
  */
 import {
-    Identifiable,
-    CrudQueryableResource,
-    RelationshipToMany,
-    Resource,
-    ResourceList,
-  } from './core'
+  Identifiable,
+  CrudQueryableResource,
+  RelationshipToMany,
+  Resource,
+  ResourceList, ResourcePage,
+} from './core'
 
 
   /**
@@ -125,7 +125,7 @@ import {
     extends CrudQueryableResource<
         PCMVariation,
         PCMVariationBase,
-        never,
+        VariationsOptionResponse,
         never,
         never,
         never
@@ -170,7 +170,7 @@ import {
      * @param variationId - ID of the variation.
      * @constructor
      */
-    VariationsOptions(variationId: string): Promise<ResourceList<VariationsOptionResponse>>
+    VariationsOptions(variationId: string): Promise<ResourcePage<never>>
 
     /**
      * Create a product variation option

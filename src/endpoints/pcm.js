@@ -3,6 +3,7 @@ import PCMFileRelationshipEndpoint from './pcm-file-relationship'
 import PCMVariationsRelationshipEndpoint from './pcm-variations-relationships'
 import PCMTemplateRelationshipEndpoint from './pcm-template-relationship'
 import PCMMainImageRelationshipEndpoint from './pcm-main-image-relationship'
+import { buildURL } from '../utils/helpers'
 
 class PCMEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -23,7 +24,17 @@ class PCMEndpoint extends CRUDExtend {
   }
 
   GetChildProducts(productId) {
-    return this.request.send(`${this.endpoint}/${productId}/children`, 'GET')
+    const { includes, sort, limit, offset, filter } = this
+    return this.request.send(
+      buildURL(`${this.endpoint}/${productId}/children`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET'
+    )
   }
 }
 
