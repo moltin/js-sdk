@@ -1,4 +1,5 @@
 import CRUDExtend from '../extends/crud'
+import { buildURL } from '../utils/helpers'
 
 class PCMVariationsEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -35,7 +36,17 @@ class PCMVariationsEndpoint extends CRUDExtend {
   }
 
   VariationsOptions(variationId) {
-    return this.request.send(`${this.endpoint}/${variationId}/options`, 'GET')
+    const { includes, sort, limit, offset, filter } = this
+    return this.request.send(
+      buildURL(`${this.endpoint}/${variationId}/options`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET'
+    )
   }
 
   CreateVariationsOption(variationId, body) {
