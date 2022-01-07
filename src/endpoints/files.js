@@ -1,4 +1,4 @@
-import { FormData } from 'formdata-node'
+import FormData from 'form-data'
 import BaseExtend from '../extends/base'
 
 class Files extends BaseExtend {

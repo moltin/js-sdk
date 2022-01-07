@@ -1,10 +1,12 @@
-import { FormData } from 'formdata-node'
+import FormData from 'form-data'
+
 import {
   buildRequestBody,
   parseJSON,
   resetProps,
   tokenInvalid,
-  getCredentials
+  getCredentials,
+  isNode
 } from '../utils/helpers'
 
 const createAuthRequest = config => {
@@ -106,6 +108,11 @@ class RequestFactory {
         if (!isFormData) {
           // For form-data requests, don't provide a content-type header. The browser will generate one for you
           headers['Content-Type'] = 'application/json'
+        }
+
+        if (isFormData && isNode()) {
+          // construct proper headers for FormData requests in Node.js. assumes a FormData object built with form-data lib
+          headers['Content-Type'] = body.getHeaders()['Content-Type']
         }
 
         if (access_token) {
