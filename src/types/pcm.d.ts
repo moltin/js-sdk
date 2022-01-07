@@ -86,7 +86,7 @@ interface PcmProductsIncluded {
   main_images: File[]
 }
 
-export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
+export type PcmProductResponse = ResourcePage<PcmProduct & PcmProductsIncluded>
 
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
@@ -121,5 +121,5 @@ export interface PcmProductsEndpoint
 
   GetChildProducts(
     productId: string,
-  ): Promise<ResourceList<PcmProduct>>
+  ): Promise<ResourcePage<PcmProduct>>
 }
