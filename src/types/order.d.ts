@@ -11,7 +11,7 @@ import {
   Resource,
   RelationshipToMany
 } from './core'
-import { AddressBase } from './address'
+import { CustomerAddressBase } from './customer-address'
 import { FormattedPrice, Price } from './price'
 
 /**
@@ -32,8 +32,8 @@ export interface OrderBase {
     name: string
     email: string
   }
-  shipping_address: AddressBase
-  billing_address: AddressBase
+  shipping_address: CustomerAddressBase
+  billing_address: CustomerAddressBase
 }
 
 export interface Order extends Identifiable, OrderBase {

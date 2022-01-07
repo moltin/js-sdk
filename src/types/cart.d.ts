@@ -5,7 +5,7 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
  */
 import { Resource, QueryableResource } from './core'
-import { Address } from './address'
+import { CustomerAddress } from './customer-address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
 
@@ -411,8 +411,8 @@ export interface CartEndpoint
    */
   Checkout(
     customer: string | CheckoutCustomer | CheckoutCustomerObject,
-    billingAddress: Partial<Address>,
-    shippingAddress?: Partial<Address>
+    billingAddress: Partial<CustomerAddress>,
+    shippingAddress?: Partial<CustomerAddress>
   ): Promise<Resource<Order>>
 
   /**

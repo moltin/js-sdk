@@ -25,7 +25,7 @@ describe('Moltin Authentication Realms', () => {
       .reply(200, {})
     const realmId = '64f35045-2a76-4bcf-b6ba-02bb12090d38'
 
-    return Moltin.AuthenticationRealm.Get(realmId).then(res => {
+    return Moltin.AuthenticationRealm.Get({ realmId }).then(res => {
       assert.isObject(res)
     })
   })
@@ -35,12 +35,12 @@ describe('Moltin Authentication Realms', () => {
       .post(/authentication-realms\/*/)
       .reply(201, {})
 
-    const body = {
-      type: 'authentication-realm',
+    const data = {
+      type: 'authentication-realm' as const,
       name: 'Boo Authentication Realm'
     }
 
-    return Moltin.AuthenticationRealm.Create(body).then(res => {
+    return Moltin.AuthenticationRealm.Create({ data }).then(res => {
       assert.isObject(res)
     })
   })
@@ -51,7 +51,7 @@ describe('Moltin Authentication Realms', () => {
       .reply(201, {})
 
     const body = {
-      type: 'authentication-realm',
+      type: 'authentication-realm' as const,
       name: 'Boo Authentication Realm'
     }
 
