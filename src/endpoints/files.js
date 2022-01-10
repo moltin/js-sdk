@@ -14,7 +14,10 @@ class Files extends BaseExtend {
 
     // Allows users to specify content type, useful if using Node and an
     // implementation of FormData
-    if (contentType) {
+    if (isNode()) {
+      if (contentType === null)
+        throw new Error('You must provide a content type header')
+
       additionalHeaders['Content-Type'] = contentType
     }
 
@@ -30,9 +33,9 @@ class Files extends BaseExtend {
     )
   }
 
-  Link(href) {
+  Link(url) {
     const form = new FormData()
-    form.append('file_location', href)
+    form.append('file_location', url)
 
     // Headers only need to be explicitly passed in a node environment.
     // Browsers will handle FormData headers natively
