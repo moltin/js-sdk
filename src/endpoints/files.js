@@ -1,5 +1,6 @@
 import FormData from 'form-data'
 import BaseExtend from '../extends/base'
+import { isNode } from '../utils/helpers'
 
 class Files extends BaseExtend {
   constructor(endpoint) {
@@ -8,12 +9,12 @@ class Files extends BaseExtend {
     this.endpoint = 'files'
   }
 
-  Create(body, contentType = '') {
+  Create(body, contentType = null) {
     const additionalHeaders = {}
 
     // Allows users to specify content type, useful if using Node and an
     // implementation of FormData
-    if (contentType !== '') {
+    if (contentType) {
       additionalHeaders['Content-Type'] = contentType
     }
 
@@ -25,7 +26,7 @@ class Files extends BaseExtend {
       undefined,
       false,
       undefined,
-      additionalHeaders,
+      additionalHeaders
     )
   }
 
@@ -33,19 +34,11 @@ class Files extends BaseExtend {
     const form = new FormData()
     form.append('file_location', href)
 
-    return this.request.send(
-      `${this.endpoint}`,
-      'POST',
-      form,
-      undefined,
-      undefined,
-      false,
-      undefined,
-      {
-        // TODO: Replace when we go back to using formdata-node
-        'Content-Type': form.getHeaders()['content-type'],
-      },
-    )
+    // Headers only need to be explicitly passed in a node environment.
+    // Browsers will handle FormData headers natively
+    const contentType = isNode() ? form.getHeaders()['content-type'] : null
+
+    return this.Create(form, contentType)
   }
 
   Delete(id) {

@@ -1,4 +1,3 @@
-import { FormData } from 'formdata-node'
 import {
   buildRequestBody,
   parseJSON,
@@ -96,12 +95,20 @@ class RequestFactory {
 
       const req = cred => {
         const access_token = cred ? cred.access_token : null
-        const isFormData = additionalHeaders['Content-Type'] && additionalHeaders['Content-Type'].includes('multipart')
+
+        const isFormData =
+          (additionalHeaders &&
+            additionalHeaders['Content-Type'] &&
+            additionalHeaders['Content-Type'].includes('multipart')) ||
+          (FormData && body instanceof FormData)
 
         const headers = {
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-          'X-MOLTIN-SDK-VERSION': config.sdk.version,
-          'Content-Type': 'application/json',
+          'X-MOLTIN-SDK-VERSION': config.sdk.version
+        }
+
+        if (!isFormData) {
+          headers['Content-Type'] = 'application/json'
         }
 
         if (access_token) {
