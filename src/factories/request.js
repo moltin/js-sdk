@@ -96,16 +96,12 @@ class RequestFactory {
 
       const req = cred => {
         const access_token = cred ? cred.access_token : null
-        const isFormData = body instanceof FormData
+        const isFormData = additionalHeaders['Content-Type'] && additionalHeaders['Content-Type'].includes('multipart')
 
         const headers = {
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-          'X-MOLTIN-SDK-VERSION': config.sdk.version
-        }
-
-        if (!isFormData) {
-          // For form-data requests, don't provide a content-type header. The browser will generate one for you
-          headers['Content-Type'] = 'application/json'
+          'X-MOLTIN-SDK-VERSION': config.sdk.version,
+          'Content-Type': 'application/json',
         }
 
         if (access_token) {
