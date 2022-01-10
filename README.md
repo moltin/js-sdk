@@ -126,6 +126,32 @@ const Moltin = MoltinGateway({
 })
 ```
 
+### Handling File Upload
+
+Files can be uploaded to the EPCC file service with the `Moltin.Files.Create` method. You should pass a `FormData` object as described in the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html#post-create-a-file 'documentation').
+
+In a Node.js environment, where you may be using an alternative `FormData` implementation, you can include a second parameter to represent the `Content-Type` header for the request. This must be `multipart/form-data` and must include a `boundary`. For example, using the `form-data` [package](https://www.npmjs.com/package/form-data 'package'):
+
+```
+const FormData = require('form-data')
+const formData = new FormData()
+formData.append('file', buffer)
+
+const contentType = formData.getHeaders()['content-type']
+
+Moltin.Files.Create(formData, contentType)
+```
+
+#### Referencing a file stored elsewhere
+
+If you want to create a file by simply [referencing](https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html#post-create-a-file 'referencing') a file stored elsewhere, you can use this helper method:
+
+```
+Moltin.Files.Link('https://cdn.external-host.com/files/filename.png')
+```
+
+Just pass the URL to the `Link` method and creation will be handled for you.
+
 ### TypeScript Support
 
 The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript.

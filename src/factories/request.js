@@ -1,10 +1,10 @@
-import { FormData } from 'formdata-node'
 import {
   buildRequestBody,
   parseJSON,
   resetProps,
   tokenInvalid,
-  getCredentials
+  getCredentials,
+  isNode
 } from '../utils/helpers'
 
 const createAuthRequest = config => {
@@ -96,7 +96,12 @@ class RequestFactory {
 
       const req = cred => {
         const access_token = cred ? cred.access_token : null
-        const isFormData = body instanceof FormData
+
+        const isFormData =
+          (additionalHeaders &&
+            additionalHeaders['Content-Type'] &&
+            additionalHeaders['Content-Type'].includes('multipart')) ||
+          (!isNode() && body instanceof FormData)
 
         const headers = {
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
@@ -104,7 +109,6 @@ class RequestFactory {
         }
 
         if (!isFormData) {
-          // For form-data requests, don't provide a content-type header. The browser will generate one for you
           headers['Content-Type'] = 'application/json'
         }
 
