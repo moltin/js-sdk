@@ -320,8 +320,10 @@ describe('Moltin files', () => {
       .post('/files')
       .reply(201, { data: { ...newFile, id: 'file-5' } })
 
-    return Moltin.Files.Create(newFile).then(response => {
-      assert.equal(response.data.id, 'file-5')
-    })
+    return Moltin.Files.Create(newFile, 'multipart/form-data').then(
+      response => {
+        assert.equal(response.data.id, 'file-5')
+      }
+    )
   })
 })

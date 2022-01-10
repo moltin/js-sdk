@@ -1,4 +1,4 @@
-import { AccountMemberBase } from "./account-members";
+import { AccountMemberBase } from './account-members'
 
 export interface Identifiable {
   id: string
@@ -26,8 +26,8 @@ export interface Attribute {
 }
 
 export interface Validation {
-  type: string,
-  to?: string,
+  type: string
+  to?: string
   options?: any
 }
 
@@ -72,9 +72,9 @@ export interface RelationshipToMany<T> {
 
 export interface RelationshipToOne<T> {
   data: {
-    id: string;
-    type: T;
-  };
+    id: string
+    type: T
+  }
 }
 
 export interface QueryableResource<R, F, S, I> {
@@ -101,7 +101,7 @@ export interface QueryableResource<R, F, S, I> {
 
 export interface CrudQueryableResource<R, C, U, F, S, I>
   extends QueryableResource<R, F, S, I> {
-  Create(body: C): Promise<Resource<R>>
+  Create(body: C, contentType?: string): Promise<Resource<R>>
 
   Delete(id: string): Promise<{}>
 
