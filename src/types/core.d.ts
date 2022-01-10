@@ -106,4 +106,6 @@ export interface CrudQueryableResource<R, C, U, F, S, I>
   Delete(id: string): Promise<{}>
 
   Update(id: string, body: U, token?: string): Promise<Resource<R>>
+
+  Link(url: string): Promise<Resource<R>>
 }
