@@ -3,7 +3,8 @@ import {
   parseJSON,
   resetProps,
   tokenInvalid,
-  getCredentials
+  getCredentials,
+  isNode
 } from '../utils/helpers'
 
 const createAuthRequest = config => {
@@ -100,7 +101,7 @@ class RequestFactory {
           (additionalHeaders &&
             additionalHeaders['Content-Type'] &&
             additionalHeaders['Content-Type'].includes('multipart')) ||
-          (FormData && body instanceof FormData)
+          (!isNode() && body instanceof FormData)
 
         const headers = {
           'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
