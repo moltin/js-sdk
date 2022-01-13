@@ -13,6 +13,7 @@ import {
 } from './core'
 import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
+import { ProductComponents } from './pcm'
 
 /**
  * Core Object Base Interface
@@ -161,7 +162,8 @@ export interface OrderItem extends Identifiable, OrderItemBase {
       }
       code: string
     }
-  ]
+  ],
+  components?: ProductComponents
 }
 
 export interface ConfirmPaymentBody {
@@ -283,7 +285,7 @@ export interface OrdersEndpoint
    * @constructor
    */
   Update(id: string, body: Partial<OrderBase>): Promise<Resource<Order>>
-  
+
 /**
    * anonymize an Order
    * Description: Anonymize order with the list of the ids.
