@@ -163,7 +163,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
       code: string
     }
   ],
-  components: ProductComponents
+  components?: ProductComponents
 }
 
 export interface ConfirmPaymentBody {
