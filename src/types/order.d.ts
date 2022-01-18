@@ -25,6 +25,7 @@ export interface OrderBase {
   status: string
   payment: string
   shipping?: string
+  anonymized: boolean
   customer: {
     name: string
     email: string
