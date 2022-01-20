@@ -46,7 +46,7 @@ export interface ProductComponentOption {
   type: string
   meta: {
     name: string
-    sku?: string
+    sku: string
     status: string
   }
 }
