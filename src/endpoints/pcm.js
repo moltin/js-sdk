@@ -36,6 +36,10 @@ class PCMEndpoint extends CRUDExtend {
       'GET'
     )
   }
+
+  ImportProducts(file) {
+    return this.request.send(`${this.endpoint}/import`, 'POST', file)
+  }
 }
 
 export default PCMEndpoint
