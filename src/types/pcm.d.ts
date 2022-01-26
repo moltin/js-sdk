@@ -122,4 +122,11 @@ export interface PcmProductsEndpoint
   GetChildProducts(
     productId: string,
   ): Promise<ResourceList<PcmProduct>>
+
+  /**
+   * Import Products
+   * @param file - The file you want to upload. The file type is `.csv`.
+   * @constructor
+   */
+  ImportProducts(file: FormData): Promise<{}>
 }
