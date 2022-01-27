@@ -10,6 +10,7 @@ import {
   Resource,
   ResourceList, ResourcePage,
 } from './core'
+import {PcmProduct} from "./pcm";
 
 
   /**
@@ -131,6 +132,10 @@ import {
         never
       > {
     endpoint: 'pcm/variations'
+
+    Limit(value: number): PCMVariationsEndpoint
+
+    Offset(value: number): PCMVariationsEndpoint
 
     /**
      * Create a product variation
@@ -254,4 +259,14 @@ import {
      * @constructor
      */
     DeleteVariationsModifier(variationId: string, optionId: string, modifierId: string): Promise<{}>
+
+    /**
+     * Get Variation Options
+     * @param variationId - The ID of the variation to get the options.
+     * @constructor
+     */
+    VariationsOptions(
+        variationId: string,
+    ): Promise<ResourcePage<PcmProduct>>
+
   }
