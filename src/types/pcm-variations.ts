@@ -175,7 +175,7 @@ import {PcmProduct} from "./pcm";
      * @param variationId - ID of the variation.
      * @constructor
      */
-    VariationsOptions(variationId: string): Promise<ResourcePage<never>>
+    VariationsOptions(variationId: string): Promise<ResourcePage<VariationsOptionResponse>>
 
     /**
      * Create a product variation option
@@ -259,14 +259,4 @@ import {PcmProduct} from "./pcm";
      * @constructor
      */
     DeleteVariationsModifier(variationId: string, optionId: string, modifierId: string): Promise<{}>
-
-    /**
-     * Get Variation Options
-     * @param variationId - The ID of the variation to get the options.
-     * @constructor
-     */
-    VariationsOptions(
-        variationId: string,
-    ): Promise<ResourcePage<PcmProduct>>
-
   }
