@@ -1,6 +1,6 @@
-import {Identifiable, Resource, ResourceList, ResourcePage} from './core'
+import { Identifiable, Resource, ResourceList, ResourcePage } from './core'
 import { ProductFilter } from './product'
-import {PcmProduct, ProductComponents} from './pcm'
+import { PcmProduct, ProductComponents } from './pcm'
 
 export interface ProductResponse extends Identifiable {
   type: 'product'
