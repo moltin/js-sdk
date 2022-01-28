@@ -65,14 +65,15 @@ class RequestFactory {
 
     promise
       .then(({ access_token, refresh_token, expires }) => {
-        const credentials = {
-          client_id: config.client_id,
-          access_token,
-          expires,
-          ...(refresh_token && { refresh_token })
+        if (access_token || refresh_token) {
+          const credentials = {
+            client_id: config.client_id,
+            access_token,
+            expires,
+            ...(refresh_token && { refresh_token })
+          }
+          storage.set('moltinCredentials', JSON.stringify(credentials))
         }
-
-        storage.set('moltinCredentials', JSON.stringify(credentials))
       })
       .catch(() => {})
 
