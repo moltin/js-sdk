@@ -10,6 +10,7 @@ import {
   Resource,
   ResourceList, ResourcePage,
 } from './core'
+import {PcmProduct} from "./pcm";
 
 
   /**
@@ -132,6 +133,10 @@ import {
       > {
     endpoint: 'pcm/variations'
 
+    Limit(value: number): PCMVariationsEndpoint
+
+    Offset(value: number): PCMVariationsEndpoint
+
     /**
      * Create a product variation
      * @param body - The variation object.
@@ -170,7 +175,7 @@ import {
      * @param variationId - ID of the variation.
      * @constructor
      */
-    VariationsOptions(variationId: string): Promise<ResourcePage<never>>
+    VariationsOptions(variationId: string): Promise<ResourcePage<VariationsOptionResponse>>
 
     /**
      * Create a product variation option

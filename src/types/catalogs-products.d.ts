@@ -1,6 +1,6 @@
-import { Identifiable, Resource, ResourceList } from './core'
+import { Identifiable, Resource, ResourceList, ResourcePage } from './core'
 import { ProductFilter } from './product'
-import { ProductComponents } from './pcm'
+import { PcmProduct, ProductComponents } from './pcm'
 
 export interface ProductResponse extends Identifiable {
   type: 'product'
@@ -107,5 +107,5 @@ export interface CatalogsProductsEndpoint {
     catalogId: string
     releaseId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<ResourcePage<PcmProduct>>
 }
