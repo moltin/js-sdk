@@ -93,10 +93,6 @@ export interface QueryableResource<R, F, S, I> {
   With(includes: I | I[]): QueryableResource<R, F, S, I>
 
   Attributes(token?: string): Promise<Attributes>
-
-  GetChildProducts(id: string): Promise<ResourcePage<R>>
-
-  VariationsOptions(id: string): Promise<ResourcePage<S>>
 }
 
 export interface CrudQueryableResource<R, C, U, F, S, I>

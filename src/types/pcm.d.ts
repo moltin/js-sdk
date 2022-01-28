@@ -106,6 +106,10 @@ export interface PcmProductsEndpoint
   VariationsRelationships: PcmVariationsRelationshipsEndpoint
   MainImageRelationships: PcmMainImageRelationshipEndpoint
 
+  Limit(value: number): PcmProductsEndpoint
+
+  Offset(value: number): PcmProductsEndpoint
+
   /**
    * Build Child Products
    * @param productId - The ID of the base product to build the child products for.
@@ -118,10 +122,9 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to get the child products for.
    * @constructor
    */
-
   GetChildProducts(
     productId: string,
-  ): Promise<ResourceList<PcmProduct>>
+  ): Promise<ResourcePage<PcmProduct>>
 
   /**
    * Import Products
