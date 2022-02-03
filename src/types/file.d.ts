@@ -82,7 +82,7 @@ export interface FileFilter {
 export interface FileEndpoint
   extends CrudQueryableResource<
       File,
-      FileBase,
+      FormData,
       never,
       FileFilter,
       never,
