@@ -307,10 +307,8 @@ describe('Moltin files', () => {
   })
 
   it('should create a new file', () => {
-    const newFile = {
-      type: 'file',
-      file_name: 'File 5'
-    }
+    const newFile = new FormData()
+    newFile.append('file', 'some/file/path')
 
     nock(apiUrl, {
       reqheaders: {
