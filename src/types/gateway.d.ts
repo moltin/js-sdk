@@ -27,6 +27,8 @@ export  interface  GatewayBase {
   merchant_account?:string
   partner?:string
   stripe_account?: string
+  client_id?: string
+  payer_id?: string
 }
 
 export  interface  Gateway extends GatewayBase {}
