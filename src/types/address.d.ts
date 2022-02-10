@@ -1,4 +1,3 @@
-
 import { AccountAddress, AccountAddressBase } from './account-address';
 import { CustomerAddress, CustomerAddressBase } from './customer-address';
 
