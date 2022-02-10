@@ -17,6 +17,13 @@ class Settings {
       ...body
     })
   }
+
+  UpdateCart(body) {
+    return this.request.send(`${this.endpoint}/cart`, 'PUT', {
+      type: 'settings',
+      ...body
+    })
+  }
 }
 
 export default Settings

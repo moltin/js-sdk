@@ -33,6 +33,11 @@ interface Settings {
   calculation_method: string
 }
 
+interface CartSettings {
+  type: 'settings'
+  cart_expiry_days: string
+}
+
 /**
  * Settings Endpoints
  */
@@ -55,4 +60,13 @@ export interface SettingsEndpoint {
    * @param body the settings object
    */
   Update(body: Partial<Settings>): Promise<Resource<Settings>>
+
+  /**
+   * Update Cart Settings
+   * Description: You can use the Cart Settings endpoint to update your cart settings.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/cart-settings.html#put-cart-settings
+   * @param body.type - The type is settings.
+   * @param body.cart_expiry_days - The number of days in which the cart will expire.
+   */
+  UpdateCart(body: CartSettings): Promise<Resource<CartSettings>>
 }
