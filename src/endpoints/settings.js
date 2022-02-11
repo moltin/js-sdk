@@ -18,6 +18,10 @@ class Settings {
     })
   }
 
+  Cart() {
+    return this.request.send(`${this.endpoint}/cart`, 'GET')
+  }
+
   UpdateCart(body) {
     return this.request.send(`${this.endpoint}/cart`, 'PUT', {
       type: 'settings',
