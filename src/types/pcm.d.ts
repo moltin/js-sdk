@@ -4,7 +4,7 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage
+  CrudQueryableResource, ResourcePage, ResourceList
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
@@ -80,31 +80,25 @@ export interface PcmProductFilter {
 type PcmProductSort = // TODO
   | 'name'
 
-export type PcmProductInclude = | 'main_image' | 'component_products'
+export type PcmProductInclude = | 'main_image'
 
 interface PcmProductsIncluded {
   main_images: File[]
-  component_products: PcmProduct[]
 }
 
-export interface PcmProductResponse {
-    data: PcmProduct,
-    included: PcmProductsIncluded
-}
-
-export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
+export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
-  extends Omit<CrudQueryableResource<PcmProduct,
+  extends CrudQueryableResource<PcmProduct,
     PcmProductBase,
     PcmProductUpdateBody,
     PcmProductFilter,
     PcmProductSort,
-    PcmProductInclude>, 'Get' | 'Limit' | 'Offset' | 'With'> {
+    PcmProductInclude> {
   endpoint: 'products'
 
   FileRelationships: PcmFileRelationshipEndpoint
@@ -115,10 +109,6 @@ export interface PcmProductsEndpoint
   Limit(value: number): PcmProductsEndpoint
 
   Offset(value: number): PcmProductsEndpoint
-
-  With(included: string): PcmProductsEndpoint
-
-  Get(id: string): PcmProductResponse
 
   /**
    * Build Child Products
@@ -132,6 +122,7 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to get the child products for.
    * @constructor
    */
+
   GetChildProducts(
     productId: string,
   ): Promise<ResourcePage<PcmProduct>>
@@ -143,3 +134,4 @@ export interface PcmProductsEndpoint
    */
   ImportProducts(file: FormData): Promise<{}>
 }
+
