@@ -122,6 +122,7 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to get the child products for.
    * @constructor
    */
+
   GetChildProducts(
     productId: string,
   ): Promise<ResourcePage<PcmProduct>>
@@ -133,3 +134,4 @@ export interface PcmProductsEndpoint
    */
   ImportProducts(file: FormData): Promise<{}>
 }
+
