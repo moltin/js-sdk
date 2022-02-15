@@ -62,17 +62,13 @@ const fetchRetry = (
   const maxAttempts = 4
   const baseDelay = 1000
   return new Promise((resolve, reject) => {
+    const ver = version || config.version || ''
     config.auth.fetch
-      .bind()(
-        `${config.protocol}://${config.host}/${
-          version || config.version ? `${version || config.version}/` : ''
-        }${uri}`,
-        {
-          method: method.toUpperCase(),
-          headers,
-          body: requestBody()
-        }
-      )
+      .bind()(`${config.protocol}://${config.host}/${ver}${uri}`, {
+        method: method.toUpperCase(),
+        headers,
+        body: requestBody()
+      })
       .then(parseJSON)
       .then(response => {
         if (response.ok) {
