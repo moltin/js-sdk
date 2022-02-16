@@ -1,6 +1,7 @@
 import {
   ResourcePage,
-  Resource, Identifiable
+  Resource,
+  Identifiable
 } from "./core";
 import { PcmProduct } from "./pcm";
 
