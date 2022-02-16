@@ -64,7 +64,7 @@ const fetchRetry = (
   return new Promise((resolve, reject) => {
     const ver = version || config.version || ''
     config.auth.fetch
-      .bind()(`${config.protocol}://${config.host}/${ver}${uri}`, {
+      .bind()(`${config.protocol}://${config.host}/${ver}/${uri}`, {
         method: method.toUpperCase(),
         headers,
         body: requestBody()
