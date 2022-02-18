@@ -71,10 +71,12 @@ const fetchRetry = (
       })
       .then(parseJSON)
       .then(response => {
+        console.log(`Attempt: ${attempt} | ${response.status}`)
         if (response.ok) {
           resolve(response.json)
         }
         if (attempt !== maxAttempts && response.status === 429) {
+          console.log(response.status)
           setTimeout(
             () =>
               fetchRetry(
@@ -91,7 +93,10 @@ const fetchRetry = (
         }
         reject(response.json)
       })
-      .catch(error => reject(error))
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
   })
 }
 
