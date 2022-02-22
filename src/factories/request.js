@@ -50,6 +50,56 @@ const createAuthRequest = config => {
   })
 }
 
+const fetchRetry = (
+  config,
+  uri,
+  method,
+  version,
+  headers,
+  requestBody,
+  attempt = 1
+) => {
+  const maxAttempts = 4
+  const baseDelay = 1000
+  return new Promise((resolve, reject) => {
+    const ver = version || config.version || ''
+    config.auth.fetch
+      .bind()(`${config.protocol}://${config.host}/${ver}/${uri}`, {
+        method: method.toUpperCase(),
+        headers,
+        body: requestBody()
+      })
+      .then(parseJSON)
+      .then(response => {
+        console.log(`Attempt: ${attempt} | ${response.status}`)
+        if (response.ok) {
+          resolve(response.json)
+        }
+        if (attempt !== maxAttempts && response.status === 429) {
+          console.log(response.status)
+          setTimeout(
+            () =>
+              fetchRetry(
+                config,
+                uri,
+                method,
+                version,
+                headers,
+                requestBody,
+                attempt + 1
+              ),
+            attempt * baseDelay
+          )
+        }
+        reject(response.json)
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+  })
+}
+
 class RequestFactory {
   constructor(config) {
     this.config = config
@@ -152,23 +202,11 @@ class RequestFactory {
           return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
         }
 
-        config.auth.fetch
-          .bind()(
-            `${config.protocol}://${config.host}/${
-              version || config.version ? `${version || config.version}/` : ''
-            }${uri}`,
-            {
-              method: method.toUpperCase(),
-              headers,
-              body: requestBody()
-            }
-          )
-          .then(parseJSON)
-          .then(response => {
-            if (response.ok) {
-              resolve(response.json)
-            }
-            reject(response.json)
+        console.log(444444444444)
+
+        fetchRetry(config, uri, method, version, headers, requestBody)
+          .then(result => {
+            resolve(result)
           })
           .catch(error => reject(error))
       }
