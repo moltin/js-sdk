@@ -80,25 +80,30 @@ export interface PcmProductFilter {
 type PcmProductSort = // TODO
   | 'name'
 
-export type PcmProductInclude = | 'main_image'
+export type PcmProductInclude = | 'main_image' | 'component_products'
 
 interface PcmProductsIncluded {
   main_images: File[]
+  component_products: PcmProduct[]
 }
 
-export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
+export interface PcmProductResponse {
+  data: PcmProduct,
+  included: PcmProductsIncluded
+}
 
+export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
-  extends CrudQueryableResource<PcmProduct,
+    extends Omit<CrudQueryableResource<PcmProduct,
     PcmProductBase,
     PcmProductUpdateBody,
     PcmProductFilter,
     PcmProductSort,
-    PcmProductInclude> {
+    PcmProductInclude>, 'Get' | 'Limit' | 'Offset' | 'With'> {
   endpoint: 'products'
 
   FileRelationships: PcmFileRelationshipEndpoint
@@ -109,6 +114,10 @@ export interface PcmProductsEndpoint
   Limit(value: number): PcmProductsEndpoint
 
   Offset(value: number): PcmProductsEndpoint
+
+  With(included: string): PcmProductsEndpoint
+
+  Get(id: string): PcmProductResponse
 
   /**
    * Build Child Products
