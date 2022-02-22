@@ -71,14 +71,10 @@ const fetchRetry = (
       })
       .then(parseJSON)
       .then(response => {
-        console.log(`Attempt: ${attempt} | ${response.status}`)
         if (response.ok) {
-          console.log(response.status)
-          console.log('resolving')
           resolve(response.json)
         }
         if (attempt !== maxAttempts && response.status === 429) {
-          console.log(response.status)
           setTimeout(
             () =>
               fetchRetry(
@@ -90,24 +86,15 @@ const fetchRetry = (
                 requestBody,
                 attempt + 1
               )
-                .then(result => {
-                  console.log('resolved_inner')
-                  resolve(result)
-                })
-                .catch(error => {
-                  console.log('reject_inner')
-                  reject(error)
-                }),
+                .then(result => resolve(result))
+                .catch(error => reject(error)),
             attempt * baseDelay
           )
         } else {
           reject(response.json)
         }
       })
-      .catch(error => {
-        console.error(error)
-        reject(error)
-      })
+      .catch(error => reject(error))
   })
 }
 
@@ -214,14 +201,8 @@ class RequestFactory {
         }
 
         fetchRetry(config, uri, method, version, headers, requestBody)
-          .then(result => {
-            console.log('resolved')
-            resolve(result)
-          })
-          .catch(error => {
-            console.log('reject')
-            reject(error)
-          })
+          .then(result => resolve(result))
+          .catch(error => reject(error))
       }
 
       if (tokenInvalid(config) && config.reauth && !config.store_id) {
