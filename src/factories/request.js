@@ -60,7 +60,6 @@ const fetchRetry = (
   attempt = 1
 ) => {
   const maxAttempts = 4
-  const baseDelay = 1000
   return new Promise((resolve, reject) => {
     const ver = version || config.version || ''
     config.auth.fetch
@@ -88,7 +87,7 @@ const fetchRetry = (
               )
                 .then(result => resolve(result))
                 .catch(error => reject(error)),
-            attempt * baseDelay
+            attempt * config.baseDelay
           )
         } else {
           reject(response.json)
