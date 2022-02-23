@@ -1,13 +1,18 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { notFoundError, rateLimitError } from '../factories'
+import {
+  notFoundError,
+  rateLimitError,
+  productsArray as products
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin error handling', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    retryDelay: 10 // Reduce retryDelay for retries during testing
   })
 
   it('should handle a 429 correctly', () => {
@@ -18,6 +23,7 @@ describe('Moltin error handling', () => {
       }
     })
       .get('/products')
+      .times(4)
       .reply(429, rateLimitError)
 
     return Moltin.Products.All().catch(error => {
@@ -45,6 +51,22 @@ describe('Moltin error handling', () => {
           }
         ]
       })
+    })
+  })
+
+  it('should handle retry then success correctly', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get('/products')
+      .reply(429, rateLimitError)
+      .get('/products')
+      .reply(200, { data: products })
+    return Moltin.Products.All().then(response => {
+      assert.lengthOf(response.data, 4)
     })
   })
 })

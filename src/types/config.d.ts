@@ -32,7 +32,8 @@ export interface ConfigOptions {
   storage?: StorageFactory
   headers?: { [key: string]: string }
   disableCart?: Boolean
-  reauth?: Boolean
+  reauth?: Boolean,
+  retryDelay?: number
 }
 
 export interface Config {
@@ -56,6 +57,7 @@ export interface Config {
     language: 'JS'
   }
   storage?: StorageFactory
+  retryDelay: number
 
   constructor(options: ConfigOptions): void
 }
