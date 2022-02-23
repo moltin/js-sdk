@@ -87,7 +87,7 @@ const fetchRetry = (
               )
                 .then(result => resolve(result))
                 .catch(error => reject(error)),
-            attempt * config.baseDelay
+            attempt * config.retryDelay
           )
         } else {
           reject(response.json)

@@ -18,7 +18,7 @@ class Config {
       reauth,
       protocol,
       store_id,
-      baseDelay
+      retryDelay
     } = options
 
     this.application = application
@@ -44,7 +44,7 @@ class Config {
     this.headers = headers || {}
     this.disableCart = disableCart || false
     this.reauth = reauth || true
-    this.baseDelay = baseDelay || 1000
+    this.retryDelay = retryDelay || 1000
   }
 }
 

@@ -33,7 +33,7 @@ export interface ConfigOptions {
   headers?: { [key: string]: string }
   disableCart?: Boolean
   reauth?: Boolean,
-  baseDelay?: number
+  retryDelay?: number
 }
 
 export interface Config {
@@ -57,7 +57,7 @@ export interface Config {
     language: 'JS'
   }
   storage?: StorageFactory
-  baseDelay: number
+  retryDelay: number
 
   constructor(options: ConfigOptions): void
 }
