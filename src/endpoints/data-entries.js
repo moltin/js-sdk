@@ -2,11 +2,6 @@ import { buildURL } from '../utils/helpers'
 import BaseExtend from '../extends/base'
 
 class DataEntriesEndpoint extends BaseExtend {
-  constructor(endpoint) {
-    super(endpoint)
-    this.endpoint = 'related-data-entries'
-  }
-
   RelatedDataEntries(token = null) {
     const { limit, offset, filter } = this
 
