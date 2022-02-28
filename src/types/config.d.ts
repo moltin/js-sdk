@@ -34,7 +34,6 @@ export interface ConfigOptions {
   disableCart?: Boolean
   reauth?: Boolean,
   retryDelay?: number
-  retryJitter?: number
 }
 
 export interface Config {
@@ -58,8 +57,7 @@ export interface Config {
     language: 'JS'
   }
   storage?: StorageFactory
-  retryDelay?: number
-  retryJitter?: number
+  retryDelay: number
 
   constructor(options: ConfigOptions): void
 }
