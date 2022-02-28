@@ -18,7 +18,7 @@ describe('Moltin Personal Data', () => {
       })
       .reply(200, {})
 
-    return Moltin.PersonalData.Filter({
+    return Moltin.DataEntries.Filter({
       eq: {
         resource_id: '64f35045-2a76-4bcf-b6ba-02bb12090d38',
         resource_type: 'account'

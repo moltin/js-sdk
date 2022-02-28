@@ -35,7 +35,7 @@ export interface RelatedDataEntriesFilter {
 /**
  * Personal Data Endpoint
  */
-export interface PersonalDataEndpoint
+export interface DataEntriesEndpoint
     extends Omit<
         CrudQueryableResource<
             DataEntry,
@@ -56,5 +56,5 @@ export interface PersonalDataEndpoint
       token?: string
   ): Promise<ResourceList<DataEntry>>
 
-  Filter(filter: RelatedDataEntriesFilter): PersonalDataEndpoint
+  Filter(filter: RelatedDataEntriesFilter): DataEntriesEndpoint
 }

@@ -1,7 +1,7 @@
 import { buildURL } from '../utils/helpers'
 import BaseExtend from '../extends/base'
 
-class PersonalDataEndpoint extends BaseExtend {
+class DataEntriesEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
     this.endpoint = 'related-data-entries'
@@ -26,4 +26,4 @@ class PersonalDataEndpoint extends BaseExtend {
   }
 }
 
-export default PersonalDataEndpoint
+export default DataEntriesEndpoint

@@ -41,7 +41,7 @@ import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 import PCMVariationsEndpoint from './endpoints/pcm-variations'
-import PersonalDataEndpoint from './endpoints/personal-data'
+import DataEntriesEndpoint from './endpoints/data-entries'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -100,7 +100,7 @@ export default class Moltin {
     this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
       config
     )
-    this.PersonalDataEndpoint = new PersonalDataEndpoint(config)
+    this.DataEntriesEndpoint = new DataEntriesEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
