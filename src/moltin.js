@@ -100,7 +100,7 @@ export default class Moltin {
     this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
       config
     )
-    this.DataEntriesEndpoint = new DataEntriesEndpoint(config)
+    this.DataEntries = new DataEntriesEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class

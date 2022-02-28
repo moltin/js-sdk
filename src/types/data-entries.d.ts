@@ -33,7 +33,7 @@ export interface RelatedDataEntriesFilter {
 }
 
 /**
- * Personal Data Endpoint
+ * Data Entries Endpoint
  */
 export interface DataEntriesEndpoint
     extends Omit<
