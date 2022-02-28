@@ -43,6 +43,7 @@ import { PCMVariationsEndpoint } from "./types/pcm-variations"
 import { PcmVariationsRelationshipsEndpoint } from "./types/pcm-variations-relationships"
 import {UserAuthenticationPasswordProfileEndpoint
 } from "./types/user-authentication-password-profile";
+import {PersonalDataEndpoint} from "./types/personal-data";
 
 export * from './types/config'
 export * from './types/storage'
@@ -144,6 +145,7 @@ export class Moltin {
   UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
   PCMVariations: PCMVariationsEndpoint;
   PcmVariationsRelationship: PcmVariationsRelationshipsEndpoint
+  PersonalData: PersonalDataEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
