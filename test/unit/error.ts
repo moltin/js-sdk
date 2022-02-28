@@ -12,7 +12,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 describe('Moltin error handling', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX',
-    retryDelay: 10 // Reduce retryDelay for retries during testing
+    retryDelay: 10, // Reduce retryDelay/retryJitter for retries during testing
+    retryJitter: 1
   })
 
   it('should handle a 429 correctly', () => {
