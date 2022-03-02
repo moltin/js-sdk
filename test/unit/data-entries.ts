@@ -8,7 +8,7 @@ describe('Moltin Personal Data', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX'
   })
-
+  //
   it('Get all Related Data Entries', () => {
     nock(apiUrl, {})
       .get(
