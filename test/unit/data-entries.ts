@@ -11,11 +11,9 @@ describe('Moltin Personal Data', () => {
 
   it('Get all Related Data Entries', () => {
     nock(apiUrl, {})
-      .get('/personal-data/related-data-entries')
-      .query({
-        filter:
-          'eq(resource_id,64f35045-2a76-4bcf-b6ba-02bb12090d38):eq(resource_type,account)'
-      })
+      .get(
+        '/personal-data/related-data-entries?filter=eq(resource_id,64f35045-2a76-4bcf-b6ba-02bb12090d38):eq(resource_type,account)'
+      )
       .reply(200, {})
 
     return Moltin.DataEntries.Filter({
