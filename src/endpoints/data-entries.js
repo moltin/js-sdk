@@ -2,6 +2,7 @@ import { buildURL } from '../utils/helpers'
 import BaseExtend from '../extends/base'
 
 class DataEntriesEndpoint extends BaseExtend {
+
   RelatedDataEntries(token = null) {
     const { limit, offset, filter } = this
 
