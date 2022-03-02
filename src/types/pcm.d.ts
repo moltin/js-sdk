@@ -22,7 +22,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     name: string
     description?: string | null
     slug?: string | null
-    sku?: string
+    sku?: string | null
     status?: string
     commodity_type?: string
     upc_ean?: string | null
