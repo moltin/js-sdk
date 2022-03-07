@@ -151,8 +151,11 @@ class Products extends CatalogProductsQuery {
   }
 
   Get({ productId, token = null }) {
+    const { includes } = this
     return this.request.send(
-      `catalog/${this.endpoint}/${productId}`,
+      buildURL(`catalog/${this.endpoint}/${productId}`, {
+        includes
+      }),
       'GET',
       undefined,
       token
