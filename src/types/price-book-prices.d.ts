@@ -20,6 +20,7 @@ export interface PriceBookPriceBase {
     }
     sales?: {
       [key: string]: {
+        bundle_ids?: string[]
         schedule?: {
           valid_from: string
           valid_to: string

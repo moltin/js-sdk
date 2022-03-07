@@ -68,6 +68,15 @@ class NodeRelationshipsEndpoint {
     )
   }
 
+  CreateChildrenSortOrder({ hierarchyId, nodeId, body, token = null }) {
+    return this.request.send(
+      `hierarchies/${hierarchyId}/nodes/${nodeId}/relationships/children`,
+      'POST',
+      body,
+      token
+    )
+  }
+
   Limit(value) {
     this.limit = value
     return this

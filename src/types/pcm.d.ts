@@ -4,7 +4,7 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage
+  CrudQueryableResource, ResourcePage, ResourceList
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
@@ -22,7 +22,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     name: string
     description?: string | null
     slug?: string | null
-    sku?: string
+    sku?: string | null
     status?: string
     commodity_type?: string
     upc_ean?: string | null
@@ -88,18 +88,17 @@ interface PcmProductsIncluded {
 }
 
 export interface PcmProductResponse {
-    data: PcmProduct,
-    included: PcmProductsIncluded
+  data: PcmProduct,
+  included: PcmProductsIncluded
 }
 
 export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
-
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
-  extends Omit<CrudQueryableResource<PcmProduct,
+    extends Omit<CrudQueryableResource<PcmProduct,
     PcmProductBase,
     PcmProductUpdateBody,
     PcmProductFilter,
@@ -132,6 +131,7 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to get the child products for.
    * @constructor
    */
+
   GetChildProducts(
     productId: string,
   ): Promise<ResourcePage<PcmProduct>>
@@ -143,3 +143,4 @@ export interface PcmProductsEndpoint
    */
   ImportProducts(file: FormData): Promise<{}>
 }
+
