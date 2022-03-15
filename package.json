@@ -72,6 +72,7 @@
     "fetch-everywhere": "^1.0.5",
     "form-data": "^4.0.0",
     "inflected": "^2.0.1",
+    "js-cookie": "^3.0.1",
     "node-localstorage": "^2.1.6"
   },
   "config": {
