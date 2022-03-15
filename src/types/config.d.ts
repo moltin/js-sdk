@@ -30,6 +30,7 @@ export interface ConfigOptions {
   custom_fetch?: Function
   custom_authenticator?: () => Promise<CustomAuthenticatorResponseBody>
   storage?: StorageFactory
+  storage_type?: 'cookies' | 'localStorage'
   headers?: { [key: string]: string }
   disableCart?: Boolean
   reauth?: Boolean,
@@ -58,6 +59,7 @@ export interface Config {
     language: 'JS'
   }
   storage?: StorageFactory
+  storage_type?: 'cookies' | 'localStorage'
   retryDelay?: number
   retryJitter?: number
 
