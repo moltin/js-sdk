@@ -1,9 +1,9 @@
 {
-  "name": "@moltin/sdk",
+  "name": "@long-wan-ep/sdk-test",
   "description": "SDK for the Moltin eCommerce API",
   "version": "0.0.0-semantic-release",
-  "homepage": "https://github.com/moltin/js-sdk",
-  "author": "Moltin (https://moltin.com/)",
+  "homepage": "https://github.com/long-wan-ep/js-sdk",
+  "author": "Long Wan",
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
@@ -22,7 +22,10 @@
   "types": "src/moltin.d.ts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/moltin/js-sdk.git"
+    "url": "git://github.com/long-wan-ep/js-sdk.git"
+  },
+  "release": {
+    "branches": ["main"]
   },
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"

@@ -1,27 +1,108 @@
-name: CI
+name: Lint, build, test, and release the js-sdk
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
+  push:
   pull_request:
-    types: [opened,reopened]
+    branches:
+      - 'main'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  # This job uses skip-duplicate-actions to skip one of the duplicate workflow runs when you push to a branch with an open PR.
+  check_duplicate_workflow:
+    needs: []
+    runs-on: ubuntu-20.04
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
-    - name: Trigger CircleCI
-      env:
-        CIRCLE_BRANCH: ${{ github.head_ref }}
-      run: |
-        curl -X POST \
-        -H 'Circle-Token: ${CIRCLE_TOKEN}' \
-        -H 'Content-Type: application/json' \
-        -H 'Accept: application/json' \
-        -d "{\"branch\":\"${CIRCLE_BRANCH}\"}" \
-        https://circleci.com/api/v2/project/gh/moltin/js-sdk/pipeline
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: 'same_content_newer'
+
+  lint:
+    needs: [check_duplicate_workflow]
+    runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
+      - name: Run lint
+        run: |
+          yarn install
+          yarn run lint
+  
+  build:
+    needs: [lint]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
+      - name: Build bundles
+        run: |
+          yarn install
+          yarn run rollup
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
+          path: dist
+          retention-days: 3
+
+  test:
+    needs: [build]
+    runs-on: ubuntu-20.04
+    env:
+      MOCHA_FILE: test-results/mocha/test-results.xml
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          cache: 'yarn'
+      - name: Run tests
+        run: |
+          yarn install
+          yarn run test-output
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.job }}-results
+          path: test-results
+          retention-days: 3
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v1.27
+        with:
+          files: test-results/**/*.xml
+  
+  release:
+    needs: [test]
+    runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.10.0'
+          cache: 'yarn'
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
+      - name: Release, publish package
+        run: |
+          yarn install
+          npx semantic-release
