@@ -44,7 +44,7 @@ export function createCartIdentifier() {
 export function cartIdentifier(storage) {
   const cartId = createCartIdentifier()
 
-  if (storage.get('mcart') !== null) {
+  if (storage.get('mcart') !== null && storage.get('mcart') !== undefined) {
     return storage.get('mcart')
   }
 

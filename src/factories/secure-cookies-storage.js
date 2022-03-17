@@ -6,7 +6,7 @@ class SecureCookiesStorageFactory {
   }
 
   set(key, value) {
-    this.cookies.set(key, value, { secure: true, sameSite: 'strict' })
+    return this.cookies.set(key, value, { secure: true, sameSite: 'strict' })
   }
 
   get(key) {
@@ -14,7 +14,7 @@ class SecureCookiesStorageFactory {
   }
 
   delete(key) {
-    this.cookies.remove(key)
+    return this.cookies.remove(key)
   }
 }
 
