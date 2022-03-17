@@ -1,5 +1,6 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
+import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
 
 class Config {
   constructor(options) {
@@ -11,6 +12,7 @@ class Config {
       language,
       host,
       storage,
+      storage_type,
       custom_fetch,
       custom_authenticator,
       headers,
@@ -40,7 +42,11 @@ class Config {
       version,
       language: 'JS'
     }
-    this.storage = storage || new LocalStorageFactory()
+    const defaultStorage =
+      storage_type === 'cookies'
+        ? new SecureCookiesStorageFactory()
+        : new LocalStorageFactory()
+    this.storage = storage || defaultStorage
     this.custom_authenticator = custom_authenticator
     this.headers = headers || {}
     this.disableCart = disableCart || false
