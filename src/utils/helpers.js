@@ -125,6 +125,13 @@ function buildQueryParams({ includes, sort, limit, offset, filter }) {
     .join('&')
 }
 
+export function formatQueryParams(query) {
+  console.log(query, 'query')
+  return Object.keys(query)
+    .map(k => formatQueryString(k, query[k]))
+    .join('&')
+}
+
 export function buildURL(endpoint, params) {
   if (
     params.includes ||
