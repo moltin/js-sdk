@@ -126,7 +126,6 @@ function buildQueryParams({ includes, sort, limit, offset, filter }) {
 }
 
 export function formatQueryParams(query) {
-  console.log(query, 'query')
   return Object.keys(query)
     .map(k => formatQueryString(k, query[k]))
     .join('&')
