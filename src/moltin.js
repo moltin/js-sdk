@@ -46,6 +46,7 @@ import MetricsEndpoint from './endpoints/metrics'
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
 import CatalogEndpoint from './endpoints/catalog'
+import AuthEndpoint from './endpoints/auth'
 
 export default class Moltin {
   constructor(config) {
@@ -101,6 +102,7 @@ export default class Moltin {
       config
     )
     this.Metrics = new MetricsEndpoint(config)
+    this.Auth = new AuthEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
