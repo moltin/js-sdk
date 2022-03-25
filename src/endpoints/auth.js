@@ -1,12 +1,13 @@
 import BaseExtend from '../extends/base'
+import RequestFactory from '../factories/request'
 
 class AuthEndpoint extends BaseExtend {
   constructor(endpoint) {
-    super()
+    super(endpoint)
     this.config = { ...endpoint }
     this.request = new RequestFactory(this.config)
     this.config.version = ''
-    this.endpoint = 'oauth/token'
+    this.endpoint = 'oauth/access_token'
   }
 
   AuthWithPassword(username, password) {
@@ -24,7 +25,7 @@ class AuthEndpoint extends BaseExtend {
       undefined,
       undefined,
       undefined,
-      undefined,
+      '',
       {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
