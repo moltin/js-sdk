@@ -44,7 +44,7 @@ export function createCartIdentifier() {
 export function cartIdentifier(storage) {
   const cartId = createCartIdentifier()
 
-  if (storage.get('mcart') !== null) {
+  if (storage.get('mcart') !== null && storage.get('mcart') !== undefined) {
     return storage.get('mcart')
   }
 
@@ -120,6 +120,12 @@ function buildQueryParams({ includes, sort, limit, offset, filter }) {
     query.filter = filter
   }
 
+  return Object.keys(query)
+    .map(k => formatQueryString(k, query[k]))
+    .join('&')
+}
+
+export function formatQueryParams(query) {
   return Object.keys(query)
     .map(k => formatQueryString(k, query[k]))
     .join('&')
