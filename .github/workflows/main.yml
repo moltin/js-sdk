@@ -1,4 +1,4 @@
-name: Lint, build, test, and release the js-sdk
+name: CI/CD for the js-sdk
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
       - name: Run lint
         run: |
           yarn install
-          yarn run lint
+          yarn lint
   
   build:
     needs: [lint]
@@ -50,7 +50,7 @@ jobs:
       - name: Build bundles
         run: |
           yarn install
-          yarn run rollup
+          yarn rollup
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -59,7 +59,7 @@ jobs:
           retention-days: 3
 
   test:
-    needs: [build]
+    needs: [lint]
     runs-on: ubuntu-20.04
     env:
       MOCHA_FILE: test-results/mocha/test-results.xml
@@ -73,7 +73,7 @@ jobs:
       - name: Run tests
         run: |
           yarn install
-          yarn run test-output
+          yarn test-output
       - name: Upload test results
         uses: actions/upload-artifact@v2
         with:
@@ -86,7 +86,7 @@ jobs:
           files: test-results/**/*.xml
   
   release:
-    needs: [test]
+    needs: [build, test]
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta') }}
     env:
