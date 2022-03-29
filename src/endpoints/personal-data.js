@@ -16,17 +16,17 @@ class PersonalDataEndpoint extends BaseExtend {
       filter
     })
 
-    return this.request.send(
-      url,
-      'GET',
-      undefined,
-      token,
-      this
-    )
+    return this.request.send(url, 'GET', undefined, token, this)
   }
 
   Filter(resourceType, resourceId) {
-    this.filter = { eq: { resource_type: resourceType, resource_id: resourceId } }
+    this.filter = {
+      eq: {
+        resource_type: resourceType,
+        resource_id: resourceId
+      }
+    }
+
     return this
   }
 }
