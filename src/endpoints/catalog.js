@@ -76,7 +76,7 @@ class Nodes extends CatalogQuery {
     )
   }
 
-    GetNodeProducts({ nodeId, token = null }) {
+  GetNodeProducts({ nodeId, token = null }) {
     const { limit, offset, filter } = this
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
@@ -211,11 +211,11 @@ class CatalogEndpoint extends CatalogQuery {
   constructor(endpoint) {
     super()
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'catalog'
+    config.version = 'pcm'
     this.Nodes = new Nodes(endpoint)
     this.Hierarchies = new Hierarchies(endpoint)
     this.Products = new Products(endpoint)
-    this.endpoint = ''
+    this.endpoint = 'catalogs'
     this.request = new RequestFactory(config)
   }
 
