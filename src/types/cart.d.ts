@@ -259,7 +259,7 @@ export interface CartEndpoint
    * @param token a customer token to access specific customer orders.
    * @param data a cart data.
    */
-  CreateCart(data: CreateCartObject, token?: string): Promise<CartItemsResponse>
+  CreateCart(data: CreateCartObject, token?: string): Promise<Resource<Cart>>
 
   /**
    * Update Cart
