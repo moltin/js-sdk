@@ -103,7 +103,7 @@ export interface HierarchiesCatalogEndpoint
   GetHierarchyChildren(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+  }): Promise<ResourceList<Node>>
 
   GetHierarchyNodes(options?: {
     token?: string
