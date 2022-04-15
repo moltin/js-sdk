@@ -10,7 +10,6 @@ import {
   Resource,
   ResourceList, ResourcePage,
 } from './core'
-import {PcmProduct} from "./pcm";
 
 
   /**
