@@ -28,7 +28,6 @@ export interface PcmProductBase extends PcmProductRelationships {
     upc_ean?: string | null
     mpn?: string | null
     extensions?: Object
-    locales?: Object
     components?: ProductComponents
   }
 }
