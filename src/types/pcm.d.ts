@@ -4,7 +4,8 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage, ResourceList
+  CrudQueryableResource,
+  ResourcePage,
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
@@ -29,7 +30,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     upc_ean?: string | null
     mpn?: string | null
     extensions?: Object
-    locales?: {[key in Locales]: {name?: string, description?: string} | undefined}
+    locales?:{[key in Locales]?: {name?: string, description?: string}}
     components?: ProductComponents
   }
 }
