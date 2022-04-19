@@ -16,10 +16,26 @@ interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
 }
 
+type CatalogProductsInclude = 'main_image' | 'files'
+
+interface CatalogProductsQueryableResource<
+  Endpoints,
+  DataType,
+  Filter,
+  Include
+> extends CatalogQueryableResource<Endpoints, DataType, Filter> {
+
+  With(includes: Include | Include[]): Endpoints
+
+}
+
 export interface CatalogProductsEndpoint
-  extends CatalogQueryableResource<CatalogProductsEndpoint,
-    Catalog,
-    CatalogFilter> {
+  extends CatalogProductsQueryableResource<
+      CatalogProductsEndpoint,
+      Catalog,
+      CatalogFilter,
+      CatalogProductsInclude
+    > {
   endpoint: 'products'
 
   All(options?: {
@@ -38,6 +54,11 @@ export interface CatalogProductsEndpoint
 
   GetProductsByHierarchy(options: {
     hierarchyId: string
+    token?: string
+  }): Promise<ResourceList<ProductResponse>>
+
+  GetNodeProducts(options: {
+    nodeId: string
     token?: string
   }): Promise<ResourceList<ProductResponse>>
 
