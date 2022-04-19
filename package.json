@@ -38,7 +38,7 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "chai": "4.3.0",
     "commitizen": "2.10.1",
-    "cross-fetch": "3.0.2",
+    "cross-fetch": "3.1.5",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.2.0",
