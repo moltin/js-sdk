@@ -75,6 +75,20 @@ class Nodes extends CatalogQuery {
       token
     )
   }
+
+  GetNodeProducts({ nodeId, token = null }) {
+    const { limit, offset, filter } = this
+    return this.request.send(
+      buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 class Hierarchies extends CatalogQuery {
