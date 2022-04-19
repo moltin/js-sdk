@@ -57,6 +57,11 @@ export interface CatalogProductsEndpoint
     token?: string
   }): Promise<ResourceList<ProductResponse>>
 
+  GetNodeProducts(options: {
+    nodeId: string
+    token?: string
+  }): Promise<ResourceList<ProductResponse>>
+
 }
 
 export interface NodesCatalogEndpoint
