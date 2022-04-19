@@ -1,6 +1,7 @@
 import {
+  CrudQueryableResource,
   Identifiable,
-  Resource, ResourceList
+  Resource, ResourcePage
 } from './core'
 
 export interface PriceBookPriceBase {
@@ -43,13 +44,38 @@ export interface PriceBookPriceBase {
   }
 }
 
+export interface PriceBookPricesCreateBody {
+  options: {
+    pricebookId: string
+    body: PriceBookPriceBase
+    token?: string
+  }
+}
+
+export interface PriceBookPricesUpdateBody {
+  options: {
+    pricebookId: string
+    priceId: string
+    body: Identifiable & PriceBookPrice
+    token?: string
+  }
+}
+
 export interface PriceBookPrice extends Identifiable, PriceBookPriceBase {
   relationships: {}
 }
 
 export interface PricesFilter {}
 
-export interface PriceBookPricesEndpoint {
+export interface PriceBookPricesEndpoint
+    extends Omit<CrudQueryableResource<
+        PriceBookPrice,
+        PriceBookPricesCreateBody,
+        PriceBookPricesUpdateBody,
+        PricesFilter,
+        never,
+        never
+        >, 'Get' | 'All' | 'Filter' | 'Create' | 'Update' | 'Delete'> {
   endpoint: 'prices'
 
   Get(options: {
@@ -62,22 +88,13 @@ export interface PriceBookPricesEndpoint {
   All(options: {
     pricebookId: string
     token?: string
-  }): Promise<ResourceList<PriceBookPrice>>
+  }): Promise<ResourcePage<PriceBookPrice>>
 
   Filter(filter: PricesFilter): PriceBookPricesEndpoint
 
-  Create(options: {
-    pricebookId: string
-    body: PriceBookPriceBase
-    token?: string
-  }): Promise<Resource<PriceBookPrice>>
+  Create(PriceBookPricesCreateBody): Promise<Resource<PriceBookPrice>>
 
-  Update(options: {
-    pricebookId: string
-    priceId: string
-    body: Identifiable & PriceBookPrice
-    token?: string
-  }): Promise<Resource<PriceBookPrice>>
+  Update(PriceBookPricesUpdateBody): Promise<Resource<PriceBookPrice>>
 
   Delete(options: {
     pricebookId: string

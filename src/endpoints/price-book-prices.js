@@ -11,10 +11,12 @@ class PriceBookPricesEndpoint {
 
   // TODO: API - currently not working! (can get from pricebook relationships)
   All({ pricebookId, token = null }) {
-    const { filter } = this
+    const { limit, offset, filter } = this
 
     return this.request.send(
       buildURL(`pricebooks/${pricebookId}/${this.endpoint}`, {
+        limit,
+        offset,
         filter
       }),
       'GET',
@@ -26,6 +28,16 @@ class PriceBookPricesEndpoint {
 
   Filter(filter) {
     this.filter = filter
+    return this
+  }
+
+  Limit(value) {
+    this.limit = value
+    return this
+  }
+
+  Offset(value) {
+    this.offset = value
     return this
   }
 
