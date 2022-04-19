@@ -1,4 +1,4 @@
-import 'fetch-everywhere'
+import './utils/fetch-polyfill'
 import 'es6-promise'
 
 import Config from './config'
