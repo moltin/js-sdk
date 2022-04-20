@@ -83,6 +83,11 @@ export interface NodesCatalogEndpoint
     nodeId: string
     token?: string
   }): Promise<ResourceList<Node>>
+
+  GetNodeProducts(options: {
+    nodeId: string
+    token?: string
+  }): Promise<ResourceList<ProductResponse>>
 }
 
 export interface HierarchiesCatalogEndpoint
@@ -103,7 +108,7 @@ export interface HierarchiesCatalogEndpoint
   GetHierarchyChildren(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+  }): Promise<ResourceList<Node>>
 
   GetHierarchyNodes(options?: {
     token?: string
