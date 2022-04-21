@@ -38,7 +38,7 @@ jobs:
           yarn lint
   
   build:
-    needs: [lint]
+    needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
     steps:
       - name: Check out repository code
@@ -59,7 +59,7 @@ jobs:
           retention-days: 3
 
   test:
-    needs: [lint]
+    needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
     env:
       MOCHA_FILE: test-results/mocha/test-results.xml
@@ -86,7 +86,7 @@ jobs:
           files: test-results/**/*.xml
   
   release:
-    needs: [build, test]
+    needs: [lint, build, test]
     runs-on: ubuntu-20.04
     if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/beta') }}
     env:
