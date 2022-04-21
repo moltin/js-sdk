@@ -4,13 +4,15 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource, ResourcePage, ResourceList
+  CrudQueryableResource,
+  ResourcePage,
 } from './core'
 import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
 import { File } from './file'
+import Locales from "./locales";
 
 /**
  * Core PCM Product Base Interface
@@ -28,7 +30,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     upc_ean?: string | null
     mpn?: string | null
     extensions?: Object
-    locales?: Object
+    locales?:{[key in Locales]?: {name?: string, description?: string}}
     components?: ProductComponents
   }
 }

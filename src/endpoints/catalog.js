@@ -21,6 +21,14 @@ class CatalogQuery {
   }
 }
 
+class CatalogProductsQuery extends CatalogQuery {
+  With(includes) {
+    if (includes) this.includes = includes.toString().toLowerCase()
+
+    return this
+  }
+}
+
 class Nodes extends CatalogQuery {
   constructor(endpoint) {
     super()
@@ -58,6 +66,20 @@ class Nodes extends CatalogQuery {
     const { limit, offset, filter } = this
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/children`, {
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token
+    )
+  }
+
+  GetNodeProducts({ nodeId, token = null }) {
+    const { limit, offset, filter } = this
+    return this.request.send(
+      buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
         limit,
         offset,
         filter
@@ -117,7 +139,7 @@ class Hierarchies extends CatalogQuery {
   }
 }
 
-class Products extends CatalogQuery {
+class Products extends CatalogProductsQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -127,13 +149,14 @@ class Products extends CatalogQuery {
   }
 
   All(options) {
-    const { limit, offset, filter } = this
+    const { limit, offset, filter, includes } = this
     const { token = null } = options || { token: null }
     return this.request.send(
       buildURL(`catalog/${this.endpoint}`, {
         limit,
         offset,
-        filter
+        filter,
+        includes
       }),
       'GET',
       undefined,
@@ -142,8 +165,11 @@ class Products extends CatalogQuery {
   }
 
   Get({ productId, token = null }) {
+    const { includes } = this
     return this.request.send(
-      `catalog/${this.endpoint}/${productId}`,
+      buildURL(`catalog/${this.endpoint}/${productId}`, {
+        includes
+      }),
       'GET',
       undefined,
       token
@@ -151,12 +177,13 @@ class Products extends CatalogQuery {
   }
 
   GetProductsByNode({ nodeId, token = null }) {
-    const { limit, offset, filter } = this
+    const { limit, offset, filter, includes } = this
     return this.request.send(
       buildURL(`catalog/nodes/${nodeId}/relationships/${this.endpoint}`, {
         limit,
         offset,
-        filter
+        filter,
+        includes
       }),
       'GET',
       undefined,
@@ -165,12 +192,13 @@ class Products extends CatalogQuery {
   }
 
   GetProductsByHierarchy({ hierarchyId, token = null }) {
-    const { limit, offset, filter } = this
+    const { limit, offset, filter, includes } = this
     return this.request.send(
       buildURL(`catalog/hierarchies/${hierarchyId}/${this.endpoint}`, {
         limit,
         offset,
-        filter
+        filter,
+        includes
       }),
       'GET',
       undefined,
