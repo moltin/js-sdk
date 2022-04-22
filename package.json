@@ -1,9 +1,9 @@
 {
-  "name": "@moltin/sdk",
-  "description": "SDK for the Moltin eCommerce API",
+  "name": "@elasticpath/epcc-js-sdk",
+  "description": "SDK for the Elastic Path Commerce Cloud API",
   "version": "0.0.0-semantic-release",
-  "homepage": "https://github.com/moltin/js-sdk",
-  "author": "Moltin (https://moltin.com/)",
+  "homepage": "https://github.com/elasticpath/epcc-js-sdk",
+  "author": "Elasticpath (https://elasticpath.com/)",
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
@@ -22,13 +22,13 @@
   "types": "src/moltin.d.ts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/moltin/js-sdk.git"
+    "url": "git://github.com/elasticpath/epcc-js-sdk.git"
   },
   "release": {
     "branches": ["main", "beta"]
   },
   "bugs": {
-    "url": "https://github.com/moltin/js-sdk/issues"
+    "url": "https://github.com/elasticpath/epcc-js-sdk/issues"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.54",

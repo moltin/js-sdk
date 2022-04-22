@@ -2,9 +2,9 @@
 
 # Elastic Path Commerce Cloud JavaScript SDK
 
-[![npm version](https://img.shields.io/npm/v/@moltin/sdk.svg)](https://www.npmjs.com/package/@moltin/sdk)
+[![npm version](https://img.shields.io/npm/v/@elasticpath/epcc-js-sdk.svg)](https://www.npmjs.com/package/@elasticpath/epcc-js-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/moltin/js-sdk/issues)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elasticpath/epcc-js-sdk/issues)
 [![follow on Twitter](https://img.shields.io/twitter/follow/elasticpath?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=elasticpath)
 
 > A simple to use API interface to help get you off the ground quickly and efficiently with your Elastic Path Commerce Cloud JavaScript apps.
@@ -13,10 +13,10 @@
 
 ## 🛠 Installation
 
-Install the package from [npm](https://www.npmjs.com/package/@moltin/sdk) and import in your project.
+Install the package from [npm](https://www.npmjs.com/package/@elasticpath/epcc-js-sdk) and import in your project.
 
 ```bash
-npm install --save @moltin/sdk
+npm install --save @elasticpath/epcc-js-sdk
 ```
 
 ## ⛽️ Usage
@@ -27,14 +27,14 @@ To get started, instantiate a new Moltin client with your store credentials.
 
 ```js
 // JavaScript
-import { gateway as MoltinGateway } from '@moltin/sdk'
+import { gateway as MoltinGateway } from '@elasticpath/epcc-js-sdk'
 
 const Moltin = MoltinGateway({
   client_id: 'XXX'
 })
 
 // Node.js
-const MoltinGateway = require('@moltin/sdk').gateway
+const MoltinGateway = require('@elasticpath/epcc-js-sdk').gateway
 
 const Moltin = MoltinGateway({
   client_id: 'XXX',
@@ -45,7 +45,7 @@ const Moltin = MoltinGateway({
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
 
 ```js
-<script src="https://unpkg.com/@moltin/sdk"></script>
+<script src="https://unpkg.com/@elasticpath/epcc-js-sdk"></script>
 
 <script>
   const Moltin = moltin.gateway({
@@ -88,7 +88,7 @@ const Moltin = MoltinGateway({
 By default the Elastic Path Commerce Cloud SDK persists data to `window.localStorage` in the browser and `node-localstorage` in Node. If this doesn't suit your needs you can override the default storage with a `MemoryStorageFactory` which will persist data for the life cycle of the JavaScript VM:
 
 ```js
-import { gateway as MoltinGateway, MemoryStorageFactory } from '@moltin/sdk'
+import { gateway as MoltinGateway, MemoryStorageFactory } from '@elasticpath/epcc-js-sdk'
 
 const Moltin = MoltinGateway({
   client_id: 'XXX',
@@ -114,8 +114,8 @@ You can pass them into the config used by the gateway like this:
 
 ```
 // JavaScript
-import { gateway as MoltinGateway } from '@moltin/sdk'
-// const MoltinGateway = require('@moltin/sdk').gateway -> for Node
+import { gateway as MoltinGateway } from '@elasticpath/epcc-js-sdk'
+// const MoltinGateway = require('@elasticpath/epcc-js-sdk').gateway -> for Node
 
 const Moltin = MoltinGateway({
     client_id: 'XXX',
@@ -159,7 +159,7 @@ The Elastic Path Commerce Cloud JavaScript SDK is fully supported in Typescript.
 Imported module will contain all interfaces needed to consume backend services. i.e:
 
 ```TypeScript
-import * as moltin from '@moltin/sdk';
+import * as moltin from '@elasticpath/epcc-js-sdk';
 
 const product: moltin.ProductBase = {...}
 ```
@@ -177,7 +177,7 @@ const product: Product = {...}
 Here is an example of a simple product creation:
 
 ```TypeScript
-import { Moltin, gateway, ProductBase, Resource } from '@moltin/sdk';
+import { Moltin, gateway, ProductBase, Resource } from '@elasticpath/epcc-js-sdk';
 
 async function main() {
   const g: Moltin = gateway({client_id, client_secret});
@@ -205,14 +205,14 @@ async function main() {
 }
 ```
 
-You can also extend any base interface compatible with flows to create any custom interfaces that you might be using by re-declaring `@moltin/sdk` module. Following example adds several properties to `ProductsBase` interface that correspond to flows added to the backend.
+You can also extend any base interface compatible with flows to create any custom interfaces that you might be using by re-declaring `@elasticpath/epcc-js-sdk` module. Following example adds several properties to `ProductsBase` interface that correspond to flows added to the backend.
 
 In your project add a definition file (with a `.d.ts` extension) with a following code:
 
 ```TypeScript
-import * as moltin from '@moltin/sdk';
+import * as moltin from '@elasticpath/epcc-js-sdk';
 
-declare module '@moltin/sdk' {
+declare module '@elasticpath/epcc-js-sdk' {
 
   interface Weight {
     g: number;
@@ -274,5 +274,5 @@ You can learn more about the Rollup API and configuration [here](https://github.
 
 ## Terms And Conditions
 
-- Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/moltin/gatsby-demo-store/blob/master/.github/CONTRIBUTING.md).
-- For more information about the license, see [MIT License](https://github.com/moltin/js-sdk/blob/main/LICENSE).
+- Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/elasticpath/epcc-js-sdk/blob/main/.github/CONTRIBUTING.md).
+- For more information about the license, see [MIT License](https://github.com/elasticpath/epcc-js-sdk/blob/main/LICENSE).
