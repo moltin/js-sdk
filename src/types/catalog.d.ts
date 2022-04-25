@@ -16,7 +16,7 @@ interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
 }
 
-type CatalogProductsInclude = 'main_image' | 'files'
+type CatalogProductsInclude = 'main_image' | 'files' | 'component_products'
 
 interface CatalogProductsQueryableResource<
   Endpoints,
