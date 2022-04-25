@@ -20,6 +20,7 @@ jobs:
         with:
           skip_after_successful_duplicate: 'true'
           concurrent_skipping: 'same_content_newer'
+          do_not_skip: '["push"]'
 
   lint:
     needs: [check_duplicate_workflow]
@@ -40,6 +41,7 @@ jobs:
   build:
     needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -61,6 +63,7 @@ jobs:
   test:
     needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
+    if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
     env:
       MOCHA_FILE: test-results/mocha/test-results.xml
     steps:
