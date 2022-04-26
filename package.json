@@ -24,6 +24,9 @@
     "type": "git",
     "url": "git://github.com/moltin/js-sdk.git"
   },
+  "release": {
+    "branches": ["main", "beta"]
+  },
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"
   },
