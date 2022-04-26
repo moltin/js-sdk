@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
-          path: dist
+          path: ./**/dist/
           retention-days: 3
 
   test:
