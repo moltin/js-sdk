@@ -124,7 +124,5 @@ export interface CatalogEndpoint
   Products: CatalogProductsEndpoint
   Hierarchies: HierarchiesCatalogEndpoint
 
-  All(options?: {
-    token?: string
-  }): Promise<ResourceList<Catalog>>
+  All(token?: string): Promise<ResourceList<Catalog>>
 }
