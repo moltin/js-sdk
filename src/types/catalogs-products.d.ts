@@ -1,6 +1,11 @@
-import { Identifiable, Resource, ResourceList, ResourcePage } from './core'
-import { ProductFilter } from './product'
-import { PcmProduct, ProductComponents } from './pcm'
+import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
+import type { ProductFilter } from './product'
+import type { PcmProduct, ProductComponents } from './pcm'
+import type { MatrixObject, Option, Variation } from './variations'
+
+export interface CatalogsProductVariation extends Omit<Variation, 'relationships' | 'options'> {
+  options: Omit<Option, 'modifiers'>[]
+}
 
 export interface ProductResponse extends Identifiable {
   type: 'product'
@@ -29,7 +34,21 @@ export interface ProductResponse extends Identifiable {
     translations: string[]
     updated_at: string
     weight: string
-  }
+  };
+  meta: {
+    catalog_id?: string
+    catalog_source?: 'pcm'
+    pricebook_id?: string
+    display_price?: {
+      without_tax: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+    variation_matrix?: MatrixObject
+    variations?: CatalogsProductVariation[]
+  };
   relationships: {
     categories: {
       id: string
@@ -43,6 +62,12 @@ export interface ProductResponse extends Identifiable {
       id: string
       node_type: string
     }[]
+    parent: {
+      data: {
+        id: string
+        type: 'product'
+      }
+    }
     children: {
       id: string
       type: string

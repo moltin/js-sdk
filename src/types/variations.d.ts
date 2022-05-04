@@ -4,14 +4,20 @@
  * Things like size or color are examples of a Variation.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/product-variations/index.html#product-variations
  */
-import {
+import type {
   Identifiable,
   CrudQueryableResource,
   RelationshipToMany,
   Resource,
   ResourceList
 } from './core'
-import { Price } from './price'
+import type { Price } from './price'
+
+type MatrixValue = string;
+
+export interface MatrixObject {
+  [key: string]: MatrixObject | MatrixValue
+}
 
 /**
  * Product Variations Base Interface
