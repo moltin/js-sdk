@@ -35,10 +35,10 @@ export interface ProductResponse extends Identifiable {
     updated_at: string
     weight: string
   };
-  meta?: {
-    catalog_id: string
-    catalog_source: 'pcm'
-    pricebook_id: string
+  meta: {
+    catalog_id?: string
+    catalog_source?: 'pcm'
+    pricebook_id?: string
     display_price?: {
       without_tax: {
         amount: number
