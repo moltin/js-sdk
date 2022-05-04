@@ -36,18 +36,18 @@ export interface ProductResponse extends Identifiable {
     weight: string
   };
   meta?: {
-    catalog_id: string;
-    catalog_source: 'pcm';
-    pricebook_id: string;
+    catalog_id: string
+    catalog_source: 'pcm'
+    pricebook_id: string
     display_price?: {
       without_tax: {
-        amount: number;
-        currency: string;
-        formatted: string;
-      };
-    };
-    variation_matrix?: MatrixObject;
-    variations?: CatalogsProductVariation[];
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+    variation_matrix?: MatrixObject
+    variations?: CatalogsProductVariation[]
   };
   relationships: {
     categories: {
