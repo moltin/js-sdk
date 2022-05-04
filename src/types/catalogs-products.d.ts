@@ -62,6 +62,12 @@ export interface ProductResponse extends Identifiable {
       id: string
       node_type: string
     }[]
+    parent: {
+      data: {
+        id: string
+        type: 'product'
+      }
+    }
     children: {
       id: string
       type: string
