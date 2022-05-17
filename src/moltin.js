@@ -43,6 +43,7 @@ import AccountMembershipsEndpoint from './endpoints/account-memberships'
 import PCMVariationsEndpoint from './endpoints/pcm-variations'
 import MetricsEndpoint from './endpoints/metrics'
 import PersonalDataEndpoint from './endpoints/personal-data'
+import DataEntriesEndpoint from './endpoints/data-entry'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -87,6 +88,7 @@ export default class Moltin {
     this.Variations = new VariationsEndpoint(config)
     this.PCMVariations = new PCMVariationsEndpoint(config)
     this.PersonalData = new PersonalDataEndpoint(config)
+    this.DataEntries = new DataEntriesEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.UserAuthenticationInfo = new UserAuthenticationInfoEndpoint(config)
