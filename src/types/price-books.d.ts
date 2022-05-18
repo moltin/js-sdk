@@ -53,5 +53,5 @@ export interface PriceBooksEndpoint
     > {
   endpoint: 'pricebooks'
   Prices: PriceBookPricesEndpoint
-  PricesModifiers: PriceBookPriceModifierEndpoint
+  PriceModifiers: PriceBookPriceModifierEndpoint
 }

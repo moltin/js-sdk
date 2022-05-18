@@ -8,7 +8,7 @@ class PriceBooksEndpoint extends CRUDExtend {
     config.version = 'pcm'
     super(config)
     this.Prices = new PriceBookPricesEndpoint(config)
-    this.PriceMidifiers = new PriceBookPriceModifiersEndpoint(config)
+    this.PriceModifiers = new PriceBookPriceModifiersEndpoint(config)
 
     this.endpoint = 'pricebooks'
   }
