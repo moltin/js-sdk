@@ -3,14 +3,14 @@ import { Identifiable, Resource, ResourceList } from './core'
 export interface PriceBookPriceModifierBase {
   type: 'product-price'
   attributes: {
+    modifier_type: 'price_increment'
+    name: 'large_supplement'
     currencies: {
       [key: string]: {
         includes_tax: boolean
         amount: number
       }
     }
-    modifier_type: 'price_increment'
-    name: 'large_supplement'
   }
 }
 
