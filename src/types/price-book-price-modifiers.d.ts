@@ -1,4 +1,4 @@
-import { Identifiable, Resource, ResourceList } from './core'
+import {Identifiable, Resource, ResourceList, ResourcePage} from './core'
 
 export interface PriceBookPriceModifierBase {
   type: 'product-price'
@@ -26,7 +26,7 @@ export interface PriceBookPriceModifierEndpoint {
   All(options: {
     pricebookId: string
     token?: string
-  }): Promise<ResourceList<PriceBookPriceModifier>>
+  }): Promise<ResourcePage<PriceBookPriceModifier>>
 
   Get(options: {
     pricebookId: string
@@ -52,4 +52,8 @@ export interface PriceBookPriceModifierEndpoint {
     priceModifierId: string
     token?: string
   }): Promise<{}>
+
+  Limit(value: number): PriceBookPriceModifierEndpoint
+
+  Offset(value: number): PriceBookPriceModifierEndpoint
 }

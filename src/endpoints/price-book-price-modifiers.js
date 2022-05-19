@@ -10,10 +10,12 @@ class PriceBookPriceModifiersEndpoint {
   }
 
   All({ pricebookId, token = null }) {
-    const { filter } = this
+    const { limit, offset, filter } = this
 
     return this.request.send(
       buildURL(`pricebooks/${pricebookId}/${this.endpoint}`, {
+        limit,
+        offset,
         filter
       }),
       'GET',
@@ -21,6 +23,16 @@ class PriceBookPriceModifiersEndpoint {
       token,
       this
     )
+  }
+
+  Limit(value) {
+    this.limit = value
+    return this
+  }
+
+  Offset(value) {
+    this.offset = value
+    return this
   }
 
   Get({ pricebookId, priceModifierId, token = null }) {
