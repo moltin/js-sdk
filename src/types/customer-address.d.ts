@@ -25,8 +25,7 @@ export interface CustomerAddressBase {
   line_1: string
   line_2: string
   city: string
-  county?: string
-  region?: string
+  county: string
   postcode: string
   country: string
 }
@@ -42,7 +41,6 @@ interface CustomerAddressEdit
       | 'line_1'
       | 'postcode'
       | 'county'
-      | 'region'
       | 'country'
     > {}
 
