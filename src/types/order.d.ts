@@ -165,6 +165,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
     }
   ],
   components?: ProductComponents
+  catalog_source?: 'pim'
 }
 
 export interface ConfirmPaymentBody {
