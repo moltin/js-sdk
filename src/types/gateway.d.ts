@@ -8,41 +8,43 @@ import { Attributes, QueryableResource, Resource } from './core'
 
 /**
  * Core Gateway Base Interface
-* DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/gateways/index.html#the-gateways-object
-*/
-export  interface  GatewayBase {
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/gateways/index.html#the-gateways-object
+ */
+export interface GatewayBase {
   name: string
   slug: string
   type: string
   enabled: boolean
   login?: string
-  merchant_id?:string
-  password?:string
-  test?:boolean
-  username?:string
-  signature?:string
-  environment?:string
-  private_key?:string
-  public_key?:string
-  merchant_account?:string
-  partner?:string
+  merchant_id?: string
+  password?: string
+  test?: boolean
+  username?: string
+  signature?: string
+  environment?: string
+  private_key?: string
+  public_key?: string
+  merchant_account?: string
+  partner?: string
   stripe_account?: string
   client_id?: string
   payer_id?: string
 }
 
-export  interface  Gateway extends GatewayBase {}
+export interface Gateway extends GatewayBase {}
+
+export interface OnboardingLinkResponse {
+  onboarding_link: string
+}
 
 /**
  * Gateway Endpoints
  */
-export interface GatewaysEndpoint extends QueryableResource<Gateway, never, never, never> {
-  endpoint:'gateways'
+export interface GatewaysEndpoint
+  extends QueryableResource<Gateway, never, never, never> {
+  endpoint: 'gateways'
 
-  Update<R = any, T = Resource<Gateway>>(
-    slug: string,
-    body: R
-  ): Promise<T>
+  Update<R = any, T = Resource<Gateway>>(slug: string, body: R): Promise<T>
 
   /**
    * Enabled
@@ -55,4 +57,16 @@ export interface GatewaysEndpoint extends QueryableResource<Gateway, never, neve
 
   GetSlugAttributes(flowType: string, token?: string): Promise<Attributes>
 
+  /**
+   * OnboardingLinks
+   * Description: This endpoint allows you to request a onboarding link for supported payment gateway slugs.
+   * @param slug [string] The slug of supported gateway (currently only paypal_express_checkout).
+   * @param returnUrl [string] The url you want the onboarding flow to redirect to inside your app
+   * @param test [boolean] true or false depending on if it's in test mode.
+   */
+  OnboardingLinks<T = Resource<OnboardingLinkResponse>>(
+    slug: 'paypal_express_checkout',
+    returnUrl: string,
+    test?: boolean
+  ): Promise<T>
 }
