@@ -3,8 +3,8 @@ import {Identifiable, Resource, ResourceList, ResourcePage} from './core'
 export interface PriceBookPriceModifierBase {
   type: 'product-price'
   attributes: {
-    modifier_type: 'price_increment'
-    name: 'large_supplement'
+    modifier_type: string
+    name: string
     currencies: {
       [key: string]: {
         includes_tax: boolean
