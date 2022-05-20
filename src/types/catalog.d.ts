@@ -1,10 +1,25 @@
-import {
+import type {
   ResourceList, Resource
 } from './core'
-import { ProductResponse } from './catalogs-products'
-import { Catalog, CatalogFilter } from './catalogs'
-import { Node } from './nodes'
-import { Hierarchy } from './hierarchies'
+import type { ProductResponse } from './catalogs-products'
+import type { Catalog, CatalogFilter } from './catalogs'
+import type { Node } from './nodes'
+import type { Hierarchy } from './hierarchies'
+import type { File } from './file'
+
+export interface CatalogResource<T> extends Resource<T> {
+  included?: {
+    main_images?: File[];
+    files?: File[];
+  };
+}
+
+export interface CatalogResourceList<T> extends ResourceList<T> {
+  included?: {
+    main_images?: File[];
+    files?: File[];
+  };
+}
 
 interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
@@ -40,27 +55,27 @@ export interface CatalogProductsEndpoint
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<CatalogResourceList<ProductResponse>>
 
   Get(options: {
     productId: string
     token?: string
-  }): Promise<Resource<ProductResponse>>
+  }): Promise<CatalogResource<ProductResponse>>
 
   GetProductsByNode(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<CatalogResourceList<ProductResponse>>
 
   GetProductsByHierarchy(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<CatalogResourceList<ProductResponse>>
 
   GetNodeProducts(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<CatalogResourceList<ProductResponse>>
 
 }
 
@@ -72,22 +87,22 @@ export interface NodesCatalogEndpoint
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<Node>>
+  }): Promise<CatalogResourceList<Node>>
 
   Get(options: {
     nodeId: string
     token?: string
-  }): Promise<Resource<Node>>
+  }): Promise<CatalogResource<Node>>
 
   GetNodeChildren(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<Node>>
+  }): Promise<CatalogResourceList<Node>>
 
   GetNodeProducts(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+  }): Promise<CatalogResourceList<ProductResponse>>
 }
 
 export interface HierarchiesCatalogEndpoint
@@ -98,21 +113,21 @@ export interface HierarchiesCatalogEndpoint
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+  }): Promise<CatalogResourceList<Hierarchy>>
 
   Get(options: {
     hierarchyId: string
     token?: string
-  }): Promise<Resource<Hierarchy>>
+  }): Promise<CatalogResource<Hierarchy>>
 
   GetHierarchyChildren(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<Node>>
+  }): Promise<CatalogResourceList<Node>>
 
   GetHierarchyNodes(options?: {
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+  }): Promise<CatalogResourceList<Hierarchy>>
 }
 
 export interface CatalogEndpoint
@@ -126,5 +141,5 @@ export interface CatalogEndpoint
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<Catalog>>
+  }): Promise<CatalogResourceList<Catalog>>
 }

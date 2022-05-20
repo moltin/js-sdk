@@ -26,6 +26,17 @@ class GatewaysEndpoint extends BaseExtend {
       token
     )
   }
+
+  OnboardingLinks(slug, returnUrl, test = false) {
+    return this.request.send(
+      `${this.endpoint}/${slug}/onboarding-links`,
+      'POST',
+      {
+        test,
+        return_url: returnUrl
+      }
+    )
+  }
 }
 
 export default GatewaysEndpoint

@@ -54,7 +54,7 @@ jobs:
           yarn install
           yarn rollup
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
           path: dist
@@ -103,9 +103,10 @@ jobs:
           node-version: '16.10.0'
           cache: 'yarn'
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-bundles
+          path: dist
       - name: Release, publish package
         run: |
           yarn install
