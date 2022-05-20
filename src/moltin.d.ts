@@ -1,6 +1,11 @@
 // Type definitions for @moltin/js-sdk
 // Project: @moltin/sdk
-import { AuthenticateResponseBody, Config, ConfigOptions, RequestFactory } from './types/config'
+import {
+  AuthenticateResponseBody,
+  Config,
+  ConfigOptions,
+  RequestFactory
+} from './types/config'
 import { StorageFactory } from './types/storage'
 import { ProductsEndpoint } from './types/product'
 import { PcmProductsEndpoint } from './types/pcm'
@@ -36,16 +41,16 @@ import { AccountEndpoint } from './types/accounts'
 import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
 import { AccountMembershipsEndpoint } from './types/account-memberships'
-import {AccountAddressesEndpoint} from "./types/account-address";
-import {UserAuthenticationInfoEndpoint} from "./types/user-authentication-info";
-import {PasswordProfileEndpoint} from "./types/password-profile";
-import { PCMVariationsEndpoint } from "./types/pcm-variations"
-import { PcmVariationsRelationshipsEndpoint } from "./types/pcm-variations-relationships"
-import {UserAuthenticationPasswordProfileEndpoint
-} from "./types/user-authentication-password-profile";
+import { AccountAddressesEndpoint } from './types/account-address'
+import { UserAuthenticationInfoEndpoint } from './types/user-authentication-info'
+import { PasswordProfileEndpoint } from './types/password-profile'
+import { PCMVariationsEndpoint } from './types/pcm-variations'
+import { PcmVariationsRelationshipsEndpoint } from './types/pcm-variations-relationships'
+import { UserAuthenticationPasswordProfileEndpoint } from './types/user-authentication-password-profile'
 import { MetricsEndpoint } from './types/metrics'
 import { PersonalDataEndpoint } from './types/personal-data'
 import { DataEntriesEndpoint } from './types/data-entries'
+import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
 
 export * from './types/config'
 export * from './types/storage'
@@ -89,8 +94,8 @@ export * from './types/price-books'
 export * from './types/price-book-prices'
 export * from './types/node-relationships'
 export * from './types/merchant-realm-mappings'
-export * from "./types/pcm-file-relationship"
-export * from "./types/pcm-main-image-relationship"
+export * from './types/pcm-file-relationship'
+export * from './types/pcm-main-image-relationship'
 export * from './types/pcm-template-relationship'
 export * from './types/accounts'
 export * from './types/account-authentication-settings'
@@ -101,7 +106,7 @@ export * from './types/pcm-variations-relationships'
 export * from './types/metrics'
 export * from './types/personal-data'
 export * from './types/data-entries'
-
+export * from './types/price-book-price-modifiers'
 
 // UMD
 export as namespace moltin
@@ -146,14 +151,15 @@ export class Moltin {
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
-  UserAuthenticationInfo: UserAuthenticationInfoEndpoint;
+  UserAuthenticationInfo: UserAuthenticationInfoEndpoint
   PasswordProfile: PasswordProfileEndpoint
-  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint;
-  PCMVariations: PCMVariationsEndpoint;
-  PcmVariationsRelationship: PcmVariationsRelationshipsEndpoint;
+  UserAuthenticationPasswordProfile: UserAuthenticationPasswordProfileEndpoint
+  PCMVariations: PCMVariationsEndpoint
+  PcmVariationsRelationship: PcmVariationsRelationshipsEndpoint
   Metrics: MetricsEndpoint
-  PersonalData: PersonalDataEndpoint;
-  DataEntries: DataEntriesEndpoint;
+  PersonalData: PersonalDataEndpoint
+  DataEntries: DataEntriesEndpoint
+  PriceBookPriceModifier: PriceBookPriceModifierEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
