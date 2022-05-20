@@ -31,7 +31,7 @@ interface CatalogQueryableResource<Endpoints, DataType, Filter> {
 
 }
 
-type CatalogProductsInclude = 'main_image' | 'files'
+type CatalogProductsInclude = 'main_image' | 'files' | 'component_products'
 
 interface CatalogProductsQueryableResource<
   Endpoints,
@@ -139,7 +139,5 @@ export interface CatalogEndpoint
   Products: CatalogProductsEndpoint
   Hierarchies: HierarchiesCatalogEndpoint
 
-  All(options?: {
-    token?: string
-  }): Promise<CatalogResourceList<Catalog>>
+  All(token?: string): Promise<CatalogResourceList<Catalog>>
 }
