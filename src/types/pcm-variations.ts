@@ -67,6 +67,7 @@ import {
         value?: string
         seek?: string
         set?: string
+        reference_name?: string
       }
   }
 
@@ -109,6 +110,7 @@ import {
     | 'sku_prepend'
     | 'sku_builder'
     | 'status'
+    | 'price'
 
   export interface VariationsBuilderModifier {
     seek: string
