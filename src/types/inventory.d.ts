@@ -124,4 +124,11 @@ export interface InventoryEndpoint
    * @param transactionId The ID for the transaction created on the product.
    */
   GetTransaction(productId: string, transactionId: string): Promise<Resource<InventoryResponse>>
+
+  /**
+   * Get Stocks for Multiple Products
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/inventory/get-multiple-stocks.html#post-get-stocks-for-multiple-products
+   * @param productIds The array of unique identifier of the products.
+   */
+  GetMultipleStock(productIds: string[]): Promise<ResourceList<Inventory>>
 }

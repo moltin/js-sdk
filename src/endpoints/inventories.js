@@ -62,6 +62,11 @@ class InventoriesEndpoint extends BaseExtend {
       'GET'
     )
   }
+
+  GetMultipleStock(productIds) {
+    const body = productIds.map(id => ({ id }))
+    return this.request.send(`${this.endpoint}/multiple`, 'POST', body)
+  }
 }
 
 export default InventoriesEndpoint
