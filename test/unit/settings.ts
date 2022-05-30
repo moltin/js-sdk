@@ -23,7 +23,17 @@ describe('Moltin settings', () => {
           page_length: 70,
           list_child_products: false,
           additional_languages: ['es', 'fr', 'de'],
-          calculation_method: 'simple'
+          calculation_method: 'simple',
+          address_mandatory_fields: [
+            'first_name',
+            'last_name',
+            'line_1',
+            'city',
+            'region',
+            'postcode',
+            'country',
+            'instructions'
+          ]
         }
       })
 
@@ -34,7 +44,17 @@ describe('Moltin settings', () => {
           page_length: 70,
           list_child_products: false,
           additional_languages: ['es', 'fr', 'de'],
-          calculation_method: 'simple'
+          calculation_method: 'simple',
+          address_mandatory_fields: [
+            'first_name',
+            'last_name',
+            'line_1',
+            'city',
+            'region',
+            'postcode',
+            'country',
+            'instructions'
+          ]
         }
       })
     })
@@ -59,7 +79,17 @@ describe('Moltin settings', () => {
           page_length: 50,
           list_child_products: false,
           additional_languages: ['es', 'fr', 'de'],
-          calculation_method: 'simple'
+          calculation_method: 'simple',
+          address_mandatory_fields: [
+            'first_name',
+            'last_name',
+            'line_1',
+            'city',
+            'region',
+            'postcode',
+            'country',
+            'instructions'
+          ]
         }
       })
 
@@ -70,7 +100,17 @@ describe('Moltin settings', () => {
           page_length: 50,
           list_child_products: false,
           additional_languages: ['es', 'fr', 'de'],
-          calculation_method: 'simple'
+          calculation_method: 'simple',
+          address_mandatory_fields: [
+            'first_name',
+            'last_name',
+            'line_1',
+            'city',
+            'region',
+            'postcode',
+            'country',
+            'instructions'
+          ]
         }
       })
     })
