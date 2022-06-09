@@ -33,6 +33,14 @@ export interface Hierarchy extends Identifiable, HierarchyBase {
   }
 }
 
+export interface DuplicateHierarchyBody {
+  type: 'hierarchy'
+  attributes: {
+    name?: string
+    description?: string
+  }
+}
+
 export interface HierarchyFilter {
   // TODO
 }
@@ -57,6 +65,7 @@ export interface HierarchiesEndpoint
   Nodes: NodesEndpoint
   Relationships: NodeRelationshipsEndpoint
   Children(id: string, token?: string): Promise<ResourcePage<Node>>
+  Duplicate(hierarchyId: string, body: DuplicateHierarchyBody, token?: string): Promise<Hierarchy>
   Limit(value: number): HierarchiesEndpoint
   Offset(value: number): HierarchiesEndpoint
 }

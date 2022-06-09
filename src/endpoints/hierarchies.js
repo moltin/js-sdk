@@ -28,6 +28,15 @@ class HierarchiesEndpoint extends CRUDExtend {
 
     return this.call
   }
+
+  Duplicate(hierarchyId, body, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${hierarchyId}/duplicate`,
+      'POST',
+      body,
+      token
+    )
+  }
 }
 
 export default HierarchiesEndpoint
