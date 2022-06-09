@@ -31,6 +31,12 @@ interface Settings {
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/index.html#calculation-method
    */
   calculation_method: string
+  /**
+   * Address Mandatory Fields
+   * Description: 
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/index.html#address-mandatory-fields
+   */
+  address_mandatory_fields: string[]
 }
 
 interface CartSettings {
