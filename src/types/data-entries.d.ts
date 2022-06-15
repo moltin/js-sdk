@@ -2,7 +2,7 @@
 import { Identifiable, ResourcePage } from './core'
 
 export interface DataEntryRecord extends Identifiable {
-  type: 'related-data-entry';
+  type: 'related_data_entry';
   resource_id: string;
   resource_type: string;
 }
