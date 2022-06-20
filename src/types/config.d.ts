@@ -68,7 +68,7 @@ export interface Config {
 
 export type HttpVerbs = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
-export enum GrantType {
+export const enum GrantType {
   ClientCredentials = 'client_credentials',
   Implicit = 'implicit'
 }
