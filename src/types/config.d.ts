@@ -14,7 +14,8 @@ export interface RequestFactory {
     token?: string,
     instance?: Moltin,
     wrapBody?: Boolean,
-    version?: 'v1' | 'v2' | 'v3'
+    version?: 'v1' | 'v2' | 'v3' | 'pcm',
+    additionalHeaders?: { [key: string]: string }
   ): Promise<T>
 
   constructor(config: Config): void
