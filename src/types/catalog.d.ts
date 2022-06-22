@@ -6,6 +6,7 @@ import type { Catalog, CatalogFilter } from './catalogs'
 import type { Node } from './nodes'
 import type { Hierarchy } from './hierarchies'
 import type { File } from './file'
+import { Identifiable } from './core';
 
 export interface CatalogResource<T> extends Resource<T> {
   included?: {
@@ -19,6 +20,36 @@ export interface CatalogResourceList<T> extends ResourceList<T> {
     main_images?: File[];
     files?: File[];
   };
+}
+
+export interface CatalogReleaseBase extends Identifiable {
+  type: 'catalog-release'
+  attributes: {
+    published_at: string
+    hierarchies: {
+      id: string
+      label?: string
+      name?: string
+    }[]
+    description?: string,
+    name?: string,
+    catalog_id?: string,
+  }
+  relationships: {
+    hierarchies: {
+      links: {
+        related: string
+      }
+    },
+    products: {
+      links: {
+        related: string
+      }
+    }
+  }
+  links: {
+    self: string
+  }
 }
 
 interface CatalogQueryableResource<Endpoints, DataType, Filter> {
@@ -105,6 +136,10 @@ export interface NodesCatalogEndpoint
   }): Promise<CatalogResourceList<ProductResponse>>
 }
 
+export interface PublishedCatalogEndpoint {
+  Get(token?: string): Promise<Resource<CatalogReleaseBase>>
+}
+
 export interface HierarchiesCatalogEndpoint
   extends CatalogQueryableResource<HierarchiesCatalogEndpoint,
     Catalog,
@@ -138,6 +173,7 @@ export interface CatalogEndpoint
   Nodes: NodesCatalogEndpoint
   Products: CatalogProductsEndpoint
   Hierarchies: HierarchiesCatalogEndpoint
+  Catalog: PublishedCatalogEndpoint
 
   All(token?: string): Promise<CatalogResourceList<Catalog>>
 }

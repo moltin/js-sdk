@@ -207,6 +207,21 @@ class Products extends CatalogProductsQuery {
   }
 }
 
+class Catalog {
+  constructor(endpoint) {
+    this.config = { ...endpoint }
+    this.request = new RequestFactory(this.config)
+    this.config.version = ''
+    this.endpoint = 'catalog'
+  }
+
+  Get(token = null) {
+    this.call = this.request.send(`${this.endpoint}`, 'GET', undefined, token)
+
+    return this.call
+  }
+}
+
 class CatalogEndpoint extends CatalogQuery {
   constructor(endpoint) {
     super()
@@ -215,6 +230,7 @@ class CatalogEndpoint extends CatalogQuery {
     this.Nodes = new Nodes(endpoint)
     this.Hierarchies = new Hierarchies(endpoint)
     this.Products = new Products(endpoint)
+    this.Catalog = new Catalog(endpoint)
     this.endpoint = 'catalogs'
     this.request = new RequestFactory(config)
   }
