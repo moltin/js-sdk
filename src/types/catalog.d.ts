@@ -137,7 +137,7 @@ export interface NodesCatalogEndpoint
 }
 
 export interface PublishedCatalogEndpoint {
-  GetCatalog(token?: string): Promise<Resource<CatalogReleaseBase>>
+  Get(token?: string): Promise<Resource<CatalogReleaseBase>>
 }
 
 export interface HierarchiesCatalogEndpoint

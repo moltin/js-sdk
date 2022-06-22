@@ -215,7 +215,7 @@ class Catalog {
     this.endpoint = 'catalog'
   }
 
-  GetCatalog(token = null) {
+  Get(token = null) {
     this.call = this.request.send(`${this.endpoint}`, 'GET', undefined, token)
 
     return this.call
