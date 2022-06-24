@@ -72,7 +72,7 @@ const fetchRetry = (
         if (response.ok) {
           resolve(response.json)
         }
-        if (attempt !== config.retryMaxAttempts && response.status === 429) {
+        if (attempt < config.fetchMaxAttempts && response.status === 429) {
           setTimeout(
             () =>
               fetchRetry(
