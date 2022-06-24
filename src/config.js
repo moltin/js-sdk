@@ -21,7 +21,8 @@ class Config {
       protocol,
       store_id,
       retryDelay,
-      retryJitter
+      retryJitter,
+      fetchMaxAttempts
     } = options
 
     this.application = application
@@ -53,6 +54,10 @@ class Config {
     this.reauth = reauth || true
     this.retryDelay = retryDelay || 1000
     this.retryJitter = retryJitter || 500
+    this.fetchMaxAttempts =
+      fetchMaxAttempts !== undefined && fetchMaxAttempts !== null
+        ? fetchMaxAttempts
+        : 4
   }
 }
 
