@@ -12,8 +12,9 @@ const apiUrl = 'https://api.moltin.com/v2'
 describe('Moltin error handling', () => {
   const Moltin = MoltinGateway({
     client_id: 'XXX',
-    retryDelay: 10, // Reduce retryDelay/retryJitter for retries during testing
-    retryJitter: 1
+    retryDelay: 10, // Reduce retryDelay/retryJitter/fetchMaxAttempts for retries during testing
+    retryJitter: 1,
+    fetchMaxAttempts: 2 // Minimum amount of fetch attempts we need for these tests.
   })
 
   it('should handle a 429 correctly', () => {
@@ -24,7 +25,7 @@ describe('Moltin error handling', () => {
       }
     })
       .get('/products')
-      .times(4)
+      .times(2)
       .reply(429, rateLimitError)
 
     return Moltin.Products.All().catch(error => {

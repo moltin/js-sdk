@@ -37,6 +37,7 @@ export interface ConfigOptions {
   reauth?: Boolean,
   retryDelay?: number
   retryJitter?: number
+  fetchMaxAttempts?: number
 }
 
 export interface Config {
@@ -63,6 +64,7 @@ export interface Config {
   storage_type?: 'cookies' | 'localStorage'
   retryDelay?: number
   retryJitter?: number
+  fetchMaxAttempts? number
 
   constructor(options: ConfigOptions): void
 }
