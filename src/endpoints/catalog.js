@@ -1,7 +1,7 @@
 import { buildURL } from '../utils/helpers'
 import RequestFactory from '../factories/request'
 
-class CatalogQuery {
+class ShopperCatalogQuery {
   Filter(filter) {
     this.filter = filter
 
@@ -21,7 +21,7 @@ class CatalogQuery {
   }
 }
 
-class CatalogProductsQuery extends CatalogQuery {
+class ShopperCatalogProductsQuery extends ShopperCatalogQuery {
   With(includes) {
     if (includes) this.includes = includes.toString().toLowerCase()
 
@@ -29,7 +29,7 @@ class CatalogProductsQuery extends CatalogQuery {
   }
 }
 
-class Nodes extends CatalogQuery {
+class Nodes extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -109,7 +109,7 @@ class Nodes extends CatalogQuery {
   }
 }
 
-class Hierarchies extends CatalogQuery {
+class Hierarchies extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -174,7 +174,7 @@ class Hierarchies extends CatalogQuery {
   }
 }
 
-class Products extends CatalogProductsQuery {
+class Products extends ShopperCatalogProductsQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -265,12 +265,15 @@ class Products extends CatalogProductsQuery {
   }
 }
 
-class Catalog {
+class ShopperCatalogEndpoint extends ShopperCatalogQuery {
   constructor(endpoint) {
-    this.config = { ...endpoint }
-    this.request = new RequestFactory(this.config)
-    this.config.version = ''
+    super()
+    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    this.Nodes = new Nodes(endpoint)
+    this.Hierarchies = new Hierarchies(endpoint)
+    this.Products = new Products(endpoint)
     this.endpoint = 'catalog'
+    this.request = new RequestFactory(config)
   }
 
   Get({ token = null, additionalHeaders = null }) {
@@ -289,38 +292,4 @@ class Catalog {
   }
 }
 
-class CatalogEndpoint extends CatalogQuery {
-  constructor(endpoint) {
-    super()
-    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'pcm'
-    this.Nodes = new Nodes(endpoint)
-    this.Hierarchies = new Hierarchies(endpoint)
-    this.Products = new Products(endpoint)
-    this.Catalog = new Catalog(endpoint)
-    this.endpoint = 'catalogs'
-    this.request = new RequestFactory(config)
-  }
-
-  All(token = null) {
-    const { includes, sort, limit, offset, filter } = this
-
-    this.call = this.request.send(
-      buildURL(this.endpoint, {
-        includes,
-        sort,
-        limit,
-        offset,
-        filter
-      }),
-      'GET',
-      undefined,
-      token,
-      this
-    )
-
-    return this.call
-  }
-}
-
-export default CatalogEndpoint
+export default ShopperCatalogEndpoint
