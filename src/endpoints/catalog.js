@@ -19,14 +19,6 @@ class CatalogQuery {
 
     return this
   }
-
-  RetrieveCatalogContextHeader(catalogContext) {
-    return catalogContext
-      ? {
-          'EP-Context-Tag': catalogContext
-        }
-      : undefined
-  }
 }
 
 class CatalogProductsQuery extends CatalogQuery {
@@ -46,10 +38,8 @@ class Nodes extends CatalogQuery {
     this.endpoint = 'nodes'
   }
 
-  All(options, catalogContext = undefined) {
-    const { token = null } = options || { token: null }
+  All({ token = null, additionalHeaders = null }) {
     const { limit, offset, filter } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}`, {
@@ -67,9 +57,7 @@ class Nodes extends CatalogQuery {
     )
   }
 
-  Get({ nodeId, token = null }, catalogContext = undefined) {
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  Get({ nodeId, token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}/${nodeId}`,
       'GET',
@@ -82,9 +70,8 @@ class Nodes extends CatalogQuery {
     )
   }
 
-  GetNodeChildren({ nodeId, token = null }, catalogContext = undefined) {
+  GetNodeChildren({ nodeId, token = null, additionalHeaders = null }) {
     const { limit, offset, filter } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/children`, {
@@ -102,9 +89,8 @@ class Nodes extends CatalogQuery {
     )
   }
 
-  GetNodeProducts({ nodeId, token = null }, catalogContext = undefined) {
+  GetNodeProducts({ nodeId, token = null, additionalHeaders = null }) {
     const { limit, offset, filter } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
@@ -132,10 +118,7 @@ class Hierarchies extends CatalogQuery {
     this.endpoint = 'hierarchies'
   }
 
-  All(options, catalogContext = undefined) {
-    const { token = null } = options || { token: null }
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  All({ token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}`,
       'GET',
@@ -148,9 +131,7 @@ class Hierarchies extends CatalogQuery {
     )
   }
 
-  Get({ hierarchyId, token = null }, catalogContext = undefined) {
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  Get({ hierarchyId, token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}`,
       'GET',
@@ -162,12 +143,11 @@ class Hierarchies extends CatalogQuery {
     )
   }
 
-  GetHierarchyChildren(
-    { hierarchyId, token = null },
-    catalogContext = undefined
-  ) {
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  GetHierarchyChildren({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  }) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}/children`,
       'GET',
@@ -180,10 +160,7 @@ class Hierarchies extends CatalogQuery {
     )
   }
 
-  GetHierarchyNodes(catalogContext = undefined) {
-    const { token = null } = options || { token: null }
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  GetHierarchyNodes({ token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}/latest/nodes`,
       'GET',
@@ -206,10 +183,8 @@ class Products extends CatalogProductsQuery {
     this.endpoint = 'products'
   }
 
-  All(options, catalogContext = undefined) {
+  All({ token = null, additionalHeaders = null }) {
     const { limit, offset, filter, includes } = this
-    const { token = null } = options || { token: null }
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}`, {
@@ -228,9 +203,8 @@ class Products extends CatalogProductsQuery {
     )
   }
 
-  Get({ productId, token = null }, catalogContext = undefined) {
+  Get({ productId, token = null, additionalHeaders = null }) {
     const { includes } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${productId}`, {
@@ -246,9 +220,8 @@ class Products extends CatalogProductsQuery {
     )
   }
 
-  GetProductsByNode({ nodeId, token = null }, catalogContext = undefined) {
+  GetProductsByNode({ nodeId, token = null, additionalHeaders = null }) {
     const { limit, offset, filter, includes } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/nodes/${nodeId}/relationships/${this.endpoint}`, {
@@ -267,12 +240,12 @@ class Products extends CatalogProductsQuery {
     )
   }
 
-  GetProductsByHierarchy(
-    { hierarchyId, token = null },
-    catalogContext = undefined
-  ) {
+  GetProductsByHierarchy({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  }) {
     const { limit, offset, filter, includes } = this
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
 
     return this.request.send(
       buildURL(`catalog/hierarchies/${hierarchyId}/${this.endpoint}`, {
@@ -300,9 +273,7 @@ class Catalog {
     this.endpoint = 'catalog'
   }
 
-  Get(token = null, catalogContext = undefined) {
-    const additionalHeaders = this.RetrieveCatalogContextHeader(catalogContext)
-
+  Get({ token = null, additionalHeaders = null }) {
     this.call = this.request.send(
       `${this.endpoint}`,
       'GET',
