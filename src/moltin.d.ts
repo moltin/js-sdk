@@ -36,7 +36,7 @@ import { CatalogsEndpoint } from './types/catalogs'
 import { CatalogsRulesEndpoint } from './types/catalogs-rules'
 import { PriceBooksEndpoint } from './types/price-books'
 import { MerchantRealmMappingsEndpoint } from './types/merchant-realm-mappings'
-import { CatalogEndpoint } from './types/catalog'
+import { ShopperCatalogEndpoint } from './types/catalog'
 import { AccountEndpoint } from './types/accounts'
 import { AccountMembersEndpoint } from './types/account-members'
 import { AccountAuthenticationSettingsEndpoint } from './types/account-authentication-settings'
@@ -120,7 +120,7 @@ export class Moltin {
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
-  Catalog: CatalogEndpoint
+  ShopperCatalog: ShopperCatalogEndpoint
   Rules: CatalogsRulesEndpoint
   PriceBooks: PriceBooksEndpoint
   Hierarchies: HierarchiesEndpoint

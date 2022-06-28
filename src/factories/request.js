@@ -58,9 +58,8 @@ const fetchRetry = (
   headers,
   requestBody,
   attempt = 1
-) => {
-  const maxAttempts = 4
-  return new Promise((resolve, reject) => {
+) =>
+  new Promise((resolve, reject) => {
     const ver = version || config.version || ''
     config.auth.fetch
       .bind()(`${config.protocol}://${config.host}/${ver}/${uri}`, {
@@ -73,7 +72,7 @@ const fetchRetry = (
         if (response.ok) {
           resolve(response.json)
         }
-        if (attempt !== maxAttempts && response.status === 429) {
+        if (attempt < config.fetchMaxAttempts && response.status === 429) {
           setTimeout(
             () =>
               fetchRetry(
@@ -96,7 +95,6 @@ const fetchRetry = (
       })
       .catch(error => reject(error))
   })
-}
 
 class RequestFactory {
   constructor(config) {
