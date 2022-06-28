@@ -261,6 +261,26 @@ class CatalogsEndpoint extends CRUDExtend {
     this.Rules = new Rules(endpoint)
     this.endpoint = 'catalogs'
   }
+
+  All(token = null) {
+    const { includes, sort, limit, offset, filter } = this
+
+    this.call = this.request.send(
+      buildURL(this.endpoint, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token,
+      this
+    )
+
+    return this.call
+  }
 }
 
 export default CatalogsEndpoint

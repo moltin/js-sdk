@@ -2,10 +2,7 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
-import {
-  Identifiable,
-  CrudQueryableResource
-} from './core'
+import { Identifiable, CrudQueryableResource } from './core'
 import { CatalogsNodesEndpoint } from './catalogs-nodes'
 import { CatalogsProductsEndpoint } from './catalogs-products'
 import { CatalogsReleasesEndpoint } from './catalogs-releases'
@@ -42,11 +39,9 @@ export interface CatalogFilter {
   // TODO
 }
 
-type CatalogSort = // TODO
-  | ''
+type CatalogSort = '' // TODO
 
-type CatalogInclude = // TODO
-  | ''
+type CatalogInclude = '' // TODO
 
 /**
  * PCM Product Endpoints
@@ -55,12 +50,14 @@ type CatalogInclude = // TODO
 export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
 
 export interface CatalogsEndpoint
-  extends CrudQueryableResource<Catalog,
-    CatalogBase,
-    CatalogUpdateBody,
-    CatalogFilter,
-    CatalogSort,
-    CatalogInclude> {
+  extends CrudQueryableResource<
+      Catalog,
+      CatalogBase,
+      CatalogUpdateBody,
+      CatalogFilter,
+      CatalogSort,
+      CatalogInclude
+    > {
   endpoint: 'catalogs'
   Nodes: CatalogsNodesEndpoint
   Products: CatalogsProductsEndpoint

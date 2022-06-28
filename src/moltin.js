@@ -47,7 +47,7 @@ import DataEntriesEndpoint from './endpoints/data-entry'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
-import CatalogEndpoint from './endpoints/catalog'
+import ShopperCatalogEndpoint from './endpoints/catalog'
 
 export default class Moltin {
   constructor(config) {
@@ -64,7 +64,7 @@ export default class Moltin {
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
     this.Catalogs = new CatalogsEndpoint(config)
-    this.Catalog = new CatalogEndpoint(config)
+    this.ShopperCatalog = new ShopperCatalogEndpoint(config)
     this.Currencies = new CurrenciesEndpoint(config)
     this.Brands = new BrandsEndpoint(config)
     this.PriceBooks = new PriceBooksEndpoint(config)
