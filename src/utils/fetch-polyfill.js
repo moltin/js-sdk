@@ -1,4 +1,4 @@
-import fetch, { Headers, Request, Response } from 'node-fetch'
+import fetch, { Headers, Request, Response } from 'cross-fetch'
 
 if (!globalThis.fetch) {
   globalThis.fetch = fetch
