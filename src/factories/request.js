@@ -60,13 +60,16 @@ const fetchRetry = (
   attempt = 1
 ) =>
   new Promise((resolve, reject) => {
-    const ver = version || config.version || ''
+    const ver = version || config.version
     config.auth.fetch
-      .bind()(`${config.protocol}://${config.host}/${ver}/${uri}`, {
-        method: method.toUpperCase(),
-        headers,
-        body: requestBody()
-      })
+      .bind()(
+        `${config.protocol}://${config.host}${ver ? `/${ver}` : ''}/${uri}`,
+        {
+          method: method.toUpperCase(),
+          headers,
+          body: requestBody()
+        }
+      )
       .then(parseJSON)
       .then(response => {
         if (response.ok) {

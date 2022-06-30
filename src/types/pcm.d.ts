@@ -11,6 +11,7 @@ import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
+import { PcmJobsEndpoint } from './pcm-jobs';
 import { File } from './file'
 import Locales from "./locales";
 
@@ -112,6 +113,7 @@ export interface PcmProductsEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
   VariationsRelationships: PcmVariationsRelationshipsEndpoint
   MainImageRelationships: PcmMainImageRelationshipEndpoint
+  Jobs: PcmJobsEndpoint
 
   Limit(value: number): PcmProductsEndpoint
 
