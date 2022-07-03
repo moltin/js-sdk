@@ -4,6 +4,7 @@ import PCMVariationsRelationshipEndpoint from './pcm-variations-relationships'
 import PCMTemplateRelationshipEndpoint from './pcm-template-relationship'
 import PCMMainImageRelationshipEndpoint from './pcm-main-image-relationship'
 import { buildURL } from '../utils/helpers'
+import PCMJobs from './pcm-jobs'
 
 class PCMEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -15,6 +16,7 @@ class PCMEndpoint extends CRUDExtend {
     this.VariationsRelationships = new PCMVariationsRelationshipEndpoint(config)
     this.TemplateRelationships = new PCMTemplateRelationshipEndpoint(config)
     this.MainImageRelationships = new PCMMainImageRelationshipEndpoint(config)
+    this.Jobs = new PCMJobs(config)
 
     this.endpoint = 'products'
   }
