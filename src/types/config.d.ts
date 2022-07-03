@@ -64,7 +64,7 @@ export interface Config {
   storage_type?: 'cookies' | 'localStorage'
   retryDelay?: number
   retryJitter?: number
-  fetchMaxAttempts? number
+  fetchMaxAttempts?: number
 
   constructor(options: ConfigOptions): void
 }
