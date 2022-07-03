@@ -56,13 +56,13 @@ export function cartIdentifier(storage) {
 export function parseJSON(response) {
   return new Promise(resolve => {
     response.text().then(body => {
-      let bodyJson;
-      let status;
+      let bodyJson
+      let status
       try {
-        bodyJson = JSON.parse(body);
+        bodyJson = JSON.parse(body)
         status = response.status
       } catch (err) {
-        bodyJson = '{}';
+        bodyJson = '{}'
         status = 429
       }
       resolve({
