@@ -57,16 +57,15 @@ export function parseJSON(response) {
   return new Promise(resolve => {
     response.text().then(body => {
       let bodyJson
-      let status
+      let { status } = response
       try {
         bodyJson = JSON.parse(body)
-        status = response.status
       } catch (err) {
         bodyJson = '{}'
         status = 429
       }
       resolve({
-        status: status,
+        status,
         ok: response.ok,
         json: bodyJson
       })
