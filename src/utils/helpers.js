@@ -53,13 +53,21 @@ export function cartIdentifier(storage) {
   return cartId
 }
 
+export function tryParseJSON(body, fallback) {
+  try {
+    return JSON.parse(body)
+  } catch (err) {
+    return fallback
+  }
+}
+
 export function parseJSON(response) {
   return new Promise(resolve => {
     response.text().then(body => {
       resolve({
         status: response.status,
         ok: response.ok,
-        json: body !== '' ? JSON.parse(body) : '{}'
+        json: tryParseJSON(body, '{}')
       })
     })
   })
@@ -230,6 +238,7 @@ export function tokenInvalid({ storage, client_id, reauth }) {
   const credentials = getCredentials(storage)
 
   const handleInvalid = message => {
+    /* eslint-disable no-console */
     const logger = reauth ? console.info : console.error
     logger(message)
 
