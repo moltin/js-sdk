@@ -9,7 +9,8 @@ class AccountMembershipSettingsEndpoint {
   Get() {
     return this.request.send(`${this.endpoint}`, 'GET', undefined)
   }
-  Update({body}) {
+
+  Update(body) {
     return this.request.send(`${this.endpoint}`, 'PUT', body)
   }
 }
