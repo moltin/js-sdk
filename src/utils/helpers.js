@@ -62,7 +62,6 @@ export function parseJSON(response) {
         bodyJson = JSON.parse(body)
       } catch (err) {
         bodyJson = '{}'
-        status = 429
       }
       resolve({
         status,
