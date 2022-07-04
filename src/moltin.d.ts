@@ -51,6 +51,7 @@ import { MetricsEndpoint } from './types/metrics'
 import { PersonalDataEndpoint } from './types/personal-data'
 import { DataEntriesEndpoint } from './types/data-entries'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
+import {AccountMembershipSettingsEndpoint} from "./types/account-membership-settings";
 
 export * from './types/config'
 export * from './types/storage'
@@ -150,6 +151,7 @@ export class Moltin {
   Accounts: AccountEndpoint
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
+  AccountMembershipSettings: AccountMembershipSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
   UserAuthenticationInfo: UserAuthenticationInfoEndpoint
   PasswordProfile: PasswordProfileEndpoint
