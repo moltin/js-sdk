@@ -11,6 +11,7 @@ export interface CatalogResource<T> extends Resource<T> {
   included?: {
     main_images?: File[];
     files?: File[];
+    component_products?: ProductResponse[]
   };
 }
 
