@@ -7,11 +7,12 @@ import type { Node } from './nodes'
 import type { Hierarchy } from './hierarchies'
 import type { File } from './file'
 import { Identifiable } from './core';
-  
+
 export interface ShopperCatalogResource<T> extends Resource<T> {
   included?: {
     main_images?: File[]
     files?: File[]
+    component_products?: ProductResponse[]
   }
 }
 
