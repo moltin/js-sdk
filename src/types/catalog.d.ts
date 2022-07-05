@@ -170,6 +170,7 @@ export interface HierarchiesShopperCatalogEndpoint
   }): Promise<ShopperCatalogResourceList<Node>>
 
   GetHierarchyNodes(options?: {
+    hierarchyId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
   }): Promise<ShopperCatalogResourceList<Hierarchy>>
