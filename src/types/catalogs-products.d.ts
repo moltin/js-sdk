@@ -2,6 +2,7 @@ import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
 import type { ProductFilter } from './product'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
+import { FormattedPrice } from './price'
 
 export interface CatalogsProductVariation extends Omit<Variation, 'relationships' | 'options'> {
   options: Omit<Option, 'modifiers'>[]
@@ -14,7 +15,7 @@ export interface ProductResponse extends Identifiable {
     base_product: boolean
     base_product_id: string
     commodity_type: string
-    components: string[] | ProductComponents
+    components: ProductComponents
     created_at: string
     description: string
     dimensions: string
@@ -48,6 +49,27 @@ export interface ProductResponse extends Identifiable {
     }
     variation_matrix?: MatrixObject
     variations?: CatalogsProductVariation[]
+    bundle_configuration?: {
+      selected_options: {
+        [key: string]: {
+          [key: string]: number
+        }
+      }
+    },
+    component_products: {
+      [key: string]: {
+        display_price: {
+          without_tax: FormattedPrice
+        },
+        price: {
+          [key: string]: {
+            includes_tax: boolean
+            amount: number
+          }
+        },
+        pricebook_id: string
+      }
+    }
   };
   relationships: {
     categories: {
