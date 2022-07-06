@@ -160,7 +160,11 @@ class Hierarchies extends ShopperCatalogQuery {
     )
   }
 
-  GetHierarchyNodes({ hierarchyId, token = null, additionalHeaders = null } = {}) {
+  GetHierarchyNodes({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  } = {}) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}/nodes`,
       'GET',
