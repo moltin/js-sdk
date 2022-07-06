@@ -38,7 +38,7 @@ class Nodes extends ShopperCatalogQuery {
     this.endpoint = 'nodes'
   }
 
-  All({ token = null, additionalHeaders = null }) {
+  All({ token = null, additionalHeaders = null } = {}) {
     const { limit, offset, filter } = this
 
     return this.request.send(
@@ -118,7 +118,7 @@ class Hierarchies extends ShopperCatalogQuery {
     this.endpoint = 'hierarchies'
   }
 
-  All({ token = null, additionalHeaders = null }) {
+  All({ token = null, additionalHeaders = null } = {}) {
     return this.request.send(
       `catalog/${this.endpoint}`,
       'GET',
@@ -160,7 +160,11 @@ class Hierarchies extends ShopperCatalogQuery {
     )
   }
 
-  GetHierarchyNodes({ hierarchyId, token = null, additionalHeaders = null }) {
+  GetHierarchyNodes({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  } = {}) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}/nodes`,
       'GET',
@@ -183,7 +187,7 @@ class Products extends ShopperCatalogProductsQuery {
     this.endpoint = 'products'
   }
 
-  All({ token = null, additionalHeaders = null }) {
+  All({ token = null, additionalHeaders = null } = {}) {
     const { limit, offset, filter, includes } = this
 
     return this.request.send(
