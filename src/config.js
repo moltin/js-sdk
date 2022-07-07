@@ -43,11 +43,12 @@ class Config {
       version,
       language: 'JS'
     }
-    const defaultStorage =
-      storage_type === 'cookies'
+
+    this.storage =
+      storage ||
+      (storage_type === 'cookies'
         ? new SecureCookiesStorageFactory()
-        : new LocalStorageFactory()
-    this.storage = storage || defaultStorage
+        : new LocalStorageFactory())
     this.custom_authenticator = custom_authenticator
     this.headers = headers || {}
     this.disableCart = disableCart || false
