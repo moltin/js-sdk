@@ -41,7 +41,9 @@ export interface OrderBase {
 export interface Order extends Identifiable, OrderBase {
   meta: {
     display_price: {
+      authorized: FormattedPrice
       balance_owing: FormattedPrice
+      paid: FormattedPrice
       with_tax: FormattedPrice
       without_tax: FormattedPrice
       tax: FormattedPrice
