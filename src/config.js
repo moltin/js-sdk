@@ -45,9 +45,10 @@ class Config {
     }
 
     this.storage =
-      storage || storage_type === 'cookies'
+      storage ||
+      (storage_type === 'cookies'
         ? new SecureCookiesStorageFactory()
-        : new LocalStorageFactory()
+        : new LocalStorageFactory())
     this.custom_authenticator = custom_authenticator
     this.headers = headers || {}
     this.disableCart = disableCart || false
