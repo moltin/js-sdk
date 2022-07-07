@@ -56,7 +56,7 @@ export interface ProductResponse extends Identifiable {
         }
       }
     },
-    component_products: {
+    component_products?: {
       [key: string]: {
         display_price: {
           without_tax: FormattedPrice
