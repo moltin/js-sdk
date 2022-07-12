@@ -1,12 +1,9 @@
 {
-  "presets": [
-    "@babel/preset-stage-3",
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": "entry"
-      }
-    ]
-  ],
-  "plugins": ["transform-class-properties"]
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-import-meta",
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    "@babel/plugin-proposal-json-strings"
+  ]
+
 }

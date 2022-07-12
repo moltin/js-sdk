@@ -175,9 +175,9 @@ export function buildRequestBody(body) {
 
 export function buildCartItemData(
   id,
+  flows,
   quantity = null,
   type = 'cart_item',
-  flows,
   isSku = false
 ) {
   const payload = {

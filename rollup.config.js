@@ -1,8 +1,8 @@
-import babel from 'rollup-plugin-babel'
+import babel from '@rollup/plugin-babel'
 import { uglify } from 'rollup-plugin-uglify'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import json from 'rollup-plugin-json'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
@@ -23,9 +23,11 @@ const baseConfig = {
     json(),
     babel({
       exclude: ['package.json', '**/node_modules/**'],
-      presets: [
-        ['@babel/preset-env', { modules: false }],
-        '@babel/preset-stage-3'
+      plugins: [
+        '@babel/plugin-syntax-dynamic-import',
+        '@babel/plugin-syntax-import-meta',
+        ['@babel/plugin-proposal-class-properties', { loose: false }],
+        '@babel/plugin-proposal-json-strings'
       ]
     }),
     filesize()
