@@ -273,6 +273,7 @@ class ShopperCatalogEndpoint extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
     const config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    config.version = ''
     this.Nodes = new Nodes(endpoint)
     this.Hierarchies = new Hierarchies(endpoint)
     this.Products = new Products(endpoint)
