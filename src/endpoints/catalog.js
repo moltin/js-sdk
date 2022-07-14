@@ -281,7 +281,7 @@ class ShopperCatalogEndpoint extends ShopperCatalogQuery {
     this.request = new RequestFactory(config)
   }
 
-  Get({ token = null, additionalHeaders = null }) {
+  Get({ token = null, additionalHeaders = null } = {}) {
     this.call = this.request.send(
       `${this.endpoint}`,
       'GET',
