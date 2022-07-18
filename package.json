@@ -25,7 +25,10 @@
     "url": "git://github.com/moltin/js-sdk.git"
   },
   "release": {
-    "branches": ["main", "beta"]
+    "branches": [
+      "main",
+      "beta"
+    ]
   },
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"
@@ -41,7 +44,6 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "chai": "4.3.0",
     "commitizen": "^4.2.4",
-    "cross-fetch": "^3.1.5",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "5",
     "eslint-config-airbnb-base": "13.2.0",
@@ -53,6 +55,7 @@
     "mocha": "^9.2.2",
     "mocha-junit-reporter": "1.18.0",
     "nock": "13.0.3",
+    "nodemon": "^2.0.18",
     "prettier": "1.14.2",
     "rewire": "5.0.0",
     "rimraf": "2.6.2",
@@ -71,6 +74,7 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
+    "cross-fetch": "^3.1.5",
     "es6-promise": "^4.0.5",
     "form-data": "^4.0.0",
     "inflected": "^2.0.1",

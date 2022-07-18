@@ -5,7 +5,7 @@
 
 import {
   Identifiable,
-  Resource, ResourceList
+  Resource, ResourceList, ResourcePage
 } from './core'
 
 /**
@@ -103,5 +103,9 @@ export interface NodesEndpoint {
     hierarchyId: string
     nodeId: string
     token?: string
-  }): Promise<ResourceList<Node>>
+  }): Promise<ResourcePage<Node>>
+
+  Limit(value: number): NodesEndpoint
+
+  Offset(value: number): NodesEndpoint
 }

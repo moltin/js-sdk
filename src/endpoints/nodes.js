@@ -1,5 +1,6 @@
 import { singularize } from 'inflected'
 import RequestFactory from '../factories/request'
+import { buildURL } from '../utils/helpers'
 
 class NodesEndpoint {
   constructor(endpoint) {
@@ -56,12 +57,29 @@ class NodesEndpoint {
   }
 
   GetNodeChildren({ hierarchyId, nodeId, token = null }) {
+    const { limit, offset } = this
     return this.request.send(
-      `hierarchies/${hierarchyId}/${this.endpoint}/${nodeId}/children`,
+      buildURL(
+        `hierarchies/${hierarchyId}/${this.endpoint}/${nodeId}/children`,
+        {
+          limit,
+          offset
+        }
+      ),
       'GET',
       undefined,
       token
     )
+  }
+
+  Limit(value) {
+    this.limit = value
+    return this
+  }
+
+  Offset(value) {
+    this.offset = value
+    return this
   }
 }
 
