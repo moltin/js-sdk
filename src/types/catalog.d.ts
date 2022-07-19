@@ -14,6 +14,14 @@ export interface ShopperCatalogResource<T> extends Resource<T> {
   }
 }
 
+/** @deprecated Use ShopperCatalogResourcePage instead. Will be removed on next major release. */
+export interface ShopperCatalogResourceList<T> extends ResourceList<T> {
+  included?: {
+    main_images?: File[]
+    files?: File[]
+  }
+}
+
 export interface ShopperCatalogReleaseBase extends Identifiable {
   type: 'catalog-release'
   attributes: {
@@ -41,14 +49,6 @@ export interface ShopperCatalogReleaseBase extends Identifiable {
   }
   links: {
     self: string
-  }
-}
-
-/** @deprecated Use ShopperCatalogResourcePage instead. Will be removed on next major release. */
-export interface ShopperCatalogResourceList<T> extends ResourceList<T> {
-  included?: {
-    main_images?: File[]
-    files?: File[]
   }
 }
 
