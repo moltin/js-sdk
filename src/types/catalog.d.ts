@@ -1,4 +1,4 @@
-import type { Resource, ResourcePage } from './core'
+import type { ResourceList, Resource, ResourcePage } from './core'
 import type { ProductResponse } from './catalogs-products'
 import type { Catalog, CatalogFilter } from './catalogs'
 import type { Node } from './nodes'
@@ -44,6 +44,14 @@ export interface ShopperCatalogReleaseBase extends Identifiable {
   }
 }
 
+/** @deprecated Use ShopperCatalogResourcePage instead. Will be removed on next major release. */
+export interface ShopperCatalogResourceList<T> extends ResourceList<T> {
+  included?: {
+    main_images?: File[]
+    files?: File[]
+  }
+}
+
 interface ShopperCatalogQueryableResource<Endpoints, DataType, Filter> {
   Filter(filter: Filter): Endpoints
 
@@ -77,7 +85,7 @@ interface ShopperCatalogResourcePageIncluded {
   component_products?: ProductResponse[]
 }
 
-type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
+export type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
 
 export interface ShopperCatalogProductsEndpoint
   extends ShopperCatalogProductsQueryableResource<
