@@ -1,5 +1,5 @@
 import type {
-  ResourceList, Resource
+  ResourceList, Resource, ResourcePage
 } from './core'
 import type { ProductResponse } from './catalogs-products'
 import type { Catalog, CatalogFilter } from './catalogs'
@@ -80,6 +80,14 @@ interface ShopperCatalogProductsQueryableResource<
   With(includes: Include | Include[]): Endpoints
 }
 
+interface ShopperCatalogResourcePageIncluded {
+  main_images?: File[]
+  files?: File[]
+  component_products?: ProductResponse[]
+}
+
+export type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
+
 export interface ShopperCatalogProductsEndpoint
   extends ShopperCatalogProductsQueryableResource<
       ShopperCatalogProductsEndpoint,
@@ -92,7 +100,7 @@ export interface ShopperCatalogProductsEndpoint
   All(options?: {
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<ProductResponse>>
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
   Get(options: {
     productId: string
