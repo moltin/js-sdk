@@ -77,7 +77,7 @@ interface ShopperCatalogResourcePageIncluded {
   component_products?: ProductResponse[]
 }
 
-export type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
+type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
 
 export interface ShopperCatalogProductsEndpoint
   extends ShopperCatalogProductsQueryableResource<
