@@ -1,6 +1,4 @@
-import type {
-  ResourceList, Resource
-} from './core'
+import type { ResourceList, Resource, ResourcePage } from './core'
 import type { ProductResponse } from './catalogs-products'
 import type { Catalog, CatalogFilter } from './catalogs'
 import type { Node } from './nodes'
@@ -16,6 +14,7 @@ export interface ShopperCatalogResource<T> extends Resource<T> {
   }
 }
 
+/** @deprecated Use ShopperCatalogResourcePage instead. Will be removed on next major release. */
 export interface ShopperCatalogResourceList<T> extends ResourceList<T> {
   included?: {
     main_images?: File[]
@@ -80,6 +79,14 @@ interface ShopperCatalogProductsQueryableResource<
   With(includes: Include | Include[]): Endpoints
 }
 
+interface ShopperCatalogResourcePageIncluded {
+  main_images?: File[]
+  files?: File[]
+  component_products?: ProductResponse[]
+}
+
+export type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
+
 export interface ShopperCatalogProductsEndpoint
   extends ShopperCatalogProductsQueryableResource<
       ShopperCatalogProductsEndpoint,
@@ -92,7 +99,7 @@ export interface ShopperCatalogProductsEndpoint
   All(options?: {
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<ProductResponse>>
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
   Get(options: {
     productId: string
@@ -104,13 +111,13 @@ export interface ShopperCatalogProductsEndpoint
     nodeId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<ProductResponse>>
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
   GetProductsByHierarchy(options: {
     hierarchyId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<ProductResponse>>
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 }
 
 export interface NodesShopperCatalogEndpoint
@@ -124,7 +131,7 @@ export interface NodesShopperCatalogEndpoint
   All(options?: {
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<Node>>
+  }): Promise<ShopperCatalogResourcePage<Node>>
 
   Get(options: {
     nodeId: string
@@ -136,13 +143,13 @@ export interface NodesShopperCatalogEndpoint
     nodeId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<Node>>
+  }): Promise<ShopperCatalogResourcePage<Node>>
 
   GetNodeProducts(options: {
     nodeId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<ProductResponse>>
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 }
 
 export interface HierarchiesShopperCatalogEndpoint
@@ -156,7 +163,7 @@ export interface HierarchiesShopperCatalogEndpoint
   All(options?: {
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<Hierarchy>>
+  }): Promise<ShopperCatalogResourcePage<Hierarchy>>
 
   Get(options: {
     hierarchyId: string
@@ -168,13 +175,13 @@ export interface HierarchiesShopperCatalogEndpoint
     hierarchyId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<Node>>
+  }): Promise<ShopperCatalogResourcePage<Node>>
 
   GetHierarchyNodes(options?: {
     hierarchyId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourceList<Hierarchy>>
+  }): Promise<ShopperCatalogResourcePage<Hierarchy>>
 }
 
 export interface ShopperCatalogEndpoint
