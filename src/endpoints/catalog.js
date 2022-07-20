@@ -272,8 +272,7 @@ class Products extends ShopperCatalogProductsQuery {
 class ShopperCatalogEndpoint extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
-    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = ''
+    const config = { ...endpoint, version: undefined } // Need to clone config so it is only updated in PCM
     this.Nodes = new Nodes(endpoint)
     this.Hierarchies = new Hierarchies(endpoint)
     this.Products = new Products(endpoint)
