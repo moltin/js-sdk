@@ -272,7 +272,7 @@ class Products extends ShopperCatalogProductsQuery {
 class ShopperCatalogEndpoint extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
-    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
+    const config = { ...endpoint, version: undefined } // Need to clone config so it is only updated in PCM
     this.Nodes = new Nodes(endpoint)
     this.Hierarchies = new Hierarchies(endpoint)
     this.Products = new Products(endpoint)
@@ -280,7 +280,7 @@ class ShopperCatalogEndpoint extends ShopperCatalogQuery {
     this.request = new RequestFactory(config)
   }
 
-  Get({ token = null, additionalHeaders = null }) {
+  Get({ token = null, additionalHeaders = null } = {}) {
     this.call = this.request.send(
       `${this.endpoint}`,
       'GET',
