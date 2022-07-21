@@ -29,14 +29,9 @@ export interface IntegrationFilter {}
  */
 export interface LogIntegration
   extends Identifiable,
-    Omit<
+    Pick<
       Integration,
-      | 'name'
-      | 'description'
-      | 'enabled'
-      | 'observes'
-      | 'integration_type'
-      | 'configuration'
+      'type'
     > {}
 
 export interface IntegrationLogMeta {
