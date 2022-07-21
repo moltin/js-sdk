@@ -173,10 +173,13 @@ export function buildRequestBody(body) {
   return parsedBody
 }
 
+/**
+ * TODO Parameters should be reordered in the next major release
+ */
 export function buildCartItemData(
   id,
-  quantity = null,
-  type = 'cart_item',
+  quantity = null, // eslint-disable-line default-param-last
+  type = 'cart_item', // eslint-disable-line default-param-last
   flows,
   isSku = false
 ) {
