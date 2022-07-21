@@ -22,6 +22,7 @@ const baseConfig = {
   plugins: [
     json(),
     babel({
+      babelHelpers: 'bundled',
       exclude: ['package.json', '**/node_modules/**'],
       plugins: [
         '@babel/plugin-syntax-dynamic-import',

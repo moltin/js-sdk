@@ -96,14 +96,12 @@ export default class Moltin {
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
     this.MerchantRealmMappings = new MerchantRealmMappingsEndpoint(config)
     this.Accounts = new Accounts(config)
-    this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
-      config
-    )
+    this.AccountAuthenticationSettings =
+      new AccountAuthenticationSettingsEndpoint(config)
     this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
-    this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
-      config
-    )
+    this.UserAuthenticationPasswordProfile =
+      new UserAuthenticationPasswordProfileEndpoint(config)
     this.Metrics = new MetricsEndpoint(config)
   }
 
