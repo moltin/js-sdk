@@ -141,82 +141,75 @@ class RequestFactory {
   ) {
     const { config, storage } = this
 
-    const promise = new Promise((resolve, reject) => {
-      const credentials = getCredentials(storage)
+    const credentials = getCredentials(storage)
 
-      const req = cred => {
-        const access_token = cred ? cred.access_token : null
+    const req = cred => {
+      const access_token = cred ? cred.access_token : null
 
-        const isFormData =
-          (additionalHeaders &&
-            additionalHeaders['Content-Type'] &&
-            additionalHeaders['Content-Type'].includes('multipart')) ||
-          (!isNode() && body instanceof FormData)
+      const isFormData =
+        (additionalHeaders &&
+          additionalHeaders['Content-Type'] &&
+          additionalHeaders['Content-Type'].includes('multipart')) ||
+        (!isNode() && body instanceof FormData)
 
-        const headers = {
-          'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
-          'X-MOLTIN-SDK-VERSION': config.sdk.version
-        }
-
-        if (!isFormData) {
-          headers['Content-Type'] = 'application/json'
-        }
-
-        if (access_token) {
-          headers.Authorization = `Bearer ${access_token}`
-        }
-
-        if (config.store_id) {
-          headers['X-MOLTIN-AUTH-STORE'] = config.store_id
-        }
-
-        headers['X-MOLTIN-APPLICATION'] = config.application
-          ? config.application
-          : 'epcc sdk'
-
-        if (config.currency) {
-          headers['X-MOLTIN-CURRENCY'] = config.currency
-        }
-
-        if (config.language) {
-          headers['X-MOLTIN-LANGUAGE'] = config.language
-        }
-
-        if (token) {
-          headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
-        }
-
-        if (config.headers) {
-          Object.assign(headers, config.headers)
-        }
-
-        if (additionalHeaders) {
-          Object.assign(headers, additionalHeaders)
-        }
-
-        const requestBody = () => {
-          // form-data body should be sent raw
-          if (isFormData) return body
-
-          return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
-        }
-
-        fetchRetry(config, uri, method, version, headers, requestBody)
-          .then(result => resolve(result))
-          .catch(error => reject(error))
+      const headers = {
+        'X-MOLTIN-SDK-LANGUAGE': config.sdk.language,
+        'X-MOLTIN-SDK-VERSION': config.sdk.version
       }
 
-      if (tokenInvalid(config) && config.reauth && !config.store_id) {
-        return this.authenticate()
-          .then(() => req(getCredentials(storage)))
-          .catch(error => reject(error))
+      if (!isFormData) {
+        headers['Content-Type'] = 'application/json'
       }
-      return req(credentials)
-    })
+
+      if (access_token) {
+        headers.Authorization = `Bearer ${access_token}`
+      }
+
+      if (config.store_id) {
+        headers['X-MOLTIN-AUTH-STORE'] = config.store_id
+      }
+
+      headers['X-MOLTIN-APPLICATION'] = config.application
+        ? config.application
+        : 'epcc sdk'
+
+      if (config.currency) {
+        headers['X-MOLTIN-CURRENCY'] = config.currency
+      }
+
+      if (config.language) {
+        headers['X-MOLTIN-LANGUAGE'] = config.language
+      }
+
+      if (token) {
+        headers['X-MOLTIN-CUSTOMER-TOKEN'] = token
+      }
+
+      if (config.headers) {
+        Object.assign(headers, config.headers)
+      }
+
+      if (additionalHeaders) {
+        Object.assign(headers, additionalHeaders)
+      }
+
+      const requestBody = () => {
+        // form-data body should be sent raw
+        if (isFormData) return body
+
+        return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
+      }
+
+      return fetchRetry(config, uri, method, version, headers, requestBody)
+    }
+
+    if (tokenInvalid(config) && config.reauth && !config.store_id) {
+      return this.authenticate().then(() => req(getCredentials(storage)))
+    }
 
     if (instance) resetProps(instance)
 
-    return promise
+    return req(credentials)
   }
 }
 
