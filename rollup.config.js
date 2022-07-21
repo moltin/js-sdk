@@ -1,4 +1,4 @@
-import babel from '@rollup/plugin-babel'
+import { babel } from '@rollup/plugin-babel'
 import { uglify } from 'rollup-plugin-uglify'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
@@ -19,21 +19,13 @@ const baseConfig = {
     include: 'src/**'
   },
   external: ['es6-promise', 'fetch-everywhere'],
-  plugins: [
-    json(),
-    babel({
-      babelHelpers: 'bundled',
-      exclude: ['package.json', '**/node_modules/**'],
-      plugins: [
-        '@babel/plugin-syntax-dynamic-import',
-        '@babel/plugin-syntax-import-meta',
-        ['@babel/plugin-proposal-class-properties', { loose: false }],
-        '@babel/plugin-proposal-json-strings'
-      ]
-    }),
-    filesize()
-  ]
+  plugins: [json(), filesize()]
 }
+
+const babelRollupPlugin = babel({
+  babelHelpers: 'bundled',
+  exclude: ['package.json', '**/node_modules/**']
+})
 
 export default [
   {
@@ -48,6 +40,11 @@ export default [
       ...baseConfig.plugins,
       resolve({ browser: true }),
       commonjs(),
+      /*
+        babel plugin should be placed after commonjs
+       https://github.com/rollup/plugins/tree/master/packages/babel#using-with-rollupplugin-commonjs
+      */
+      babelRollupPlugin,
       isProd &&
         uglify({
           compress: {
@@ -60,6 +57,7 @@ export default [
   },
   {
     ...baseConfig,
+    plugins: [...baseConfig.plugins, babelRollupPlugin],
     output: {
       file: pkg['cjs:main'],
       format: 'cjs',
@@ -69,6 +67,7 @@ export default [
   },
   {
     ...baseConfig,
+    plugins: [...baseConfig.plugins, babelRollupPlugin],
     output: {
       file: pkg.module,
       format: 'es'
