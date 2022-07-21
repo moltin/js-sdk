@@ -24,7 +24,7 @@ const baseConfig = {
 
 const babelRollupPlugin = babel({
   babelHelpers: 'bundled',
-  exclude: ['package.json', '**/node_modules/**']
+  exclude: ['package.json', 'node_modules/**']
 })
 
 export default [
