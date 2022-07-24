@@ -4,6 +4,9 @@
   "version": "0.0.0-semantic-release",
   "homepage": "https://github.com/moltin/js-sdk",
   "author": "Moltin (https://moltin.com/)",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "commit": "git-cz",
     "rollup": "rollup -c",
@@ -14,9 +17,6 @@
     "playground": "ts-node playground/index.ts",
     "lint": "eslint src"
   },
-  "files": [
-    "dist/**"
-  ],
   "main": "dist/moltin.cjs.js",
   "module": "dist/moltin.esm.js",
   "jsnext:main": "dist/moltin.esm.js",
@@ -35,7 +35,7 @@
   },
   "bugs": {
     "url": "https://github.com/moltin/js-sdk/issues"
-  },``
+  },
   "devDependencies": {
     "@babel/core": "7.18.6",
     "@babel/eslint-parser": "7.18.2",
