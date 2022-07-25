@@ -127,4 +127,19 @@ export interface CustomersEndpoint
     type: string,
     resources: string | string[]
   ): Promise<T>
+
+  /**
+   * Delete Relationship
+   * Description: Remove a relationship between a Customer and one or more custom resources
+   * DOCS: Same as Create Relationships
+   * @param id customerId
+   * @param type resource types
+   * @param resources [] Array of resource ids to remove
+   * @constructor
+   */
+  DeleteRelationships<T = any>(
+    id: string,
+    type: string,
+    resources: string | string[]
+  ): Promise<T>
 }

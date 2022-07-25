@@ -56,5 +56,14 @@ class CustomersEndpoint extends CRUDExtend {
       body
     )
   }
+
+  DeleteRelationships(id, type) {
+    const parsedType = formatUrlResource(type)
+
+    return this.request.send(
+      `${this.endpoint}/${id}/relationships/${parsedType}`,
+      'DELETE',
+    )
+  }
 }
 export default CustomersEndpoint
