@@ -62,7 +62,18 @@ class CustomersEndpoint extends CRUDExtend {
 
     return this.request.send(
       `${this.endpoint}/${id}/relationships/${parsedType}`,
-      'DELETE',
+      'DELETE'
+    )
+  }
+
+  UpdateRelationships(id, type, resources = null) {
+    const body = buildRelationshipData(type, resources)
+    const parsedType = formatUrlResource(type)
+
+    return this.request.send(
+      `${this.endpoint}/${id}/relationships/${parsedType}`,
+      'PUT',
+      body
     )
   }
 }

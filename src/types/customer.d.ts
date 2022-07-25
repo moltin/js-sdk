@@ -134,12 +134,25 @@ export interface CustomersEndpoint
    * DOCS: Same as Create Relationships
    * @param id customerId
    * @param type resource types
-   * @param resources [] Array of resource ids to remove
    * @constructor
    */
   DeleteRelationships<T = any>(
     id: string,
     type: string,
-    resources: string | string[]
+  ): Promise<T>
+
+  /**
+   * Update Relationship
+   * Description: Replace the relationships between a Customer and a Resource. Unlike a POST to this endpoint, a PUT overrides any existing relationships.
+   * DOCS: Same as Create Relationships
+   * @param id Id
+   * @param type resource types
+   * @param resources [] Array of resource ids to update
+   * @constructor
+   */
+  UpdateRelationships<T = any>(
+    id: string,
+    type: string,
+    resources?: string | string[]
   ): Promise<T>
 }
