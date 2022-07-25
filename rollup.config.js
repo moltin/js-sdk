@@ -6,7 +6,7 @@ import json from '@rollup/plugin-json'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
-import copy from 'rollup-plugin-copy'
+import dts from 'rollup-plugin-dts'
 
 import pkg from './package.json'
 
@@ -68,17 +68,16 @@ export default [
   },
   {
     ...baseConfig,
-    plugins: [
-      ...baseConfig.plugins,
-      babelRollupPlugin,
-      copy({
-        targets: [{ src: 'src/moltin.d.ts', dest: 'dist' }]
-      })
-    ],
+    plugins: [...baseConfig.plugins, babelRollupPlugin],
     output: {
       file: pkg.module,
       format: 'es'
     },
     external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
+  },
+  {
+    input: 'src/moltin.d.ts',
+    output: [{ file: 'dist/moltin.d.ts', format: 'es' }],
+    plugins: [dts()]
   }
 ]
