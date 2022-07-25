@@ -65,13 +65,13 @@ type CustomerInclude =
  */
 export interface CustomersEndpoint
   extends CrudQueryableResource<
-      Customer,
-      CustomerBase,
-      Partial<CustomerBase>,
-      CustomerFilter,
-      never,
-      CustomerInclude
-    > {
+    Customer,
+    CustomerBase,
+    Partial<CustomerBase>,
+    CustomerFilter,
+    never,
+    CustomerInclude
+  > {
   endpoint: 'customers'
 
   /**
@@ -83,7 +83,7 @@ export interface CustomersEndpoint
    * @param password [string] password for customer
    * @deprecated
    */
-  Token(email: string, password: string): Promise<Resource<CustomerToken>>;
+  Token(email: string, password: string): Promise<Resource<CustomerToken>>
 
   /**
    * Customer Tokens
@@ -94,7 +94,11 @@ export interface CustomersEndpoint
    * @param password [string] password for customer
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenViaPassword(email: string, password: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaPassword(
+    email: string,
+    password: string,
+    headers?: object
+  ): Promise<Resource<CustomerToken>>
 
   /**
    * Customer Tokens
@@ -107,4 +111,20 @@ export interface CustomersEndpoint
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
   TokenViaOIDC(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
+
+    /**
+   * Create Relationships
+   * Description: Create a customer relationship to one or more custom resources.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/custom-data/entry-relationships/create-an-entry-relationship.html
+   * customer DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/customers-and-accounts/customers/index.html
+   * @param id customerId
+   * @param type resource types
+   * @param resources [] Array of resource ids to add
+   * @constructor
+   */
+  CreateRelationships<T = any>(
+    id: string,
+    type: string,
+    resources: string | string[]
+  ): Promise<T>
 }

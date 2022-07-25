@@ -1,4 +1,5 @@
 import CRUDExtend from '../extends/crud'
+import { buildRelationshipData, formatUrlResource } from '../utils/helpers'
 
 class CustomersEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -43,6 +44,17 @@ class CustomersEndpoint extends CRUDExtend {
 
   Token(email, password) {
     return this.TokenViaPassword(email, password)
+  }
+
+  CreateRelationships(id, type, resources) {
+    const body = buildRelationshipData(type, resources)
+    const parsedType = formatUrlResource(type)
+
+    return this.request.send(
+      `${this.endpoint}/${id}/relationships/${parsedType}`,
+      'POST',
+      body
+    )
   }
 }
 export default CustomersEndpoint
