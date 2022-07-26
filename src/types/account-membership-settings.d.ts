@@ -5,7 +5,7 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/account-membership-settings/index.html
  */
 import { Resource, RelationshipToOne, Identifiable } from './core'
-import {AccountAddress, AccountAddressEdit} from "./account-address";
+import { AccountAddress, AccountAddressEdit } from './account-address';
 import {CartItem, CartItemsResponse, CreateCartObject} from "./cart";
 import {FormattedPrice} from "./price";
 import {Account, AccountBase} from "./accounts";
