@@ -108,6 +108,8 @@ export * from './types/metrics'
 export * from './types/personal-data'
 export * from './types/data-entries'
 export * from './types/price-book-price-modifiers'
+export * from './types/user-authentication-info'
+export * from './types/user-authentication-password-profile'
 
 // UMD
 export as namespace moltin
