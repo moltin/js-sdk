@@ -39,6 +39,8 @@ export interface PcmProductBase extends PcmProductRelationships {
 export interface ProductComponents {
   [key: string]: {
     name: string
+    min?: number
+    max?: number
     options: ProductComponentOption[]
   }
 }
