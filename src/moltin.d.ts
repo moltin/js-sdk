@@ -110,6 +110,7 @@ export * from './types/data-entries'
 export * from './types/price-book-price-modifiers'
 export * from './types/user-authentication-info'
 export * from './types/user-authentication-password-profile'
+export * from './types/locales'
 
 // UMD
 export as namespace moltin
