@@ -68,64 +68,6 @@ export const integrationsArray = [
   }
 ]
 
-export const integrationJobsArray = [
-  {
-    id: 'integration-job-1',
-    type: 'integration-job' as const
-  },
-  {
-    id: 'integration-job-2',
-    type: 'integration-job' as const
-  },
-  {
-    id: 'integration-job-3',
-    type: 'integration-job' as const
-  }
-]
-
-export const integrationLogsResponse = {
-  data: [
-    {
-      id: 'integration-log-1',
-      type: 'integration-log',
-      succeeded: true,
-      attempt: 1,
-      processing_time: 1.4414,
-      body: 'Not found',
-      status_code: 200,
-      error_detail: '',
-      relationships: {
-        integration: {
-          data: {
-            type: 'integration',
-            id: '123'
-          }
-        },
-        job: {
-          data: {
-            type: 'integration-job',
-            id: 'integration-job-1'
-          }
-        }
-      },
-      meta: {
-        timestamps: {
-          created_at: '2022-07-11T13:12:12.223Z'
-        }
-      }
-    }
-  ],
-  meta: {
-    limit: 10,
-    offset: 0,
-    current: 1,
-    total: 1
-  },
-  results: {
-    total: 1
-  }
-}
-
 export const productsArray = [
   {
     id: 'product-1',
@@ -338,17 +280,15 @@ export const ordersArray = [
         }
       }
     },
-    included: {
-      accounts: [
-        {
+    included:{
+      accounts: [{
           type: 'account',
           id: '1c45e4ec-26e0-4043-86e4-c15b9cf985a1',
           legal_name: 'my legal name',
-          name: 'my name'
+          name: 'my name',
         }
       ],
-      account_members: [
-        {
+      account_members: [{
           type: 'account_member',
           id: '7c45e4ec-26e0-4043-86e4-c15b9cf985a1',
           email: 'test@ep.com',
@@ -971,7 +911,7 @@ export const accountMembershipsArray = [
       }
     },
     relationships: {
-      account_member: {
+      'account_member': {
         data: {
           id: '69a1c07b-b9b8-4a9f-b91c-d613bb260fc3',
           type: 'account_member'
@@ -989,7 +929,7 @@ export const accountMembershipsArray = [
       }
     },
     relationships: {
-      account_member: {
+      'account_member': {
         data: {
           id: 'ff061d14-c8f4-4c56-b6f7-9f3582fb29b2',
           type: 'account_member'
@@ -1007,7 +947,7 @@ export const accountMembershipsArray = [
       }
     },
     relationships: {
-      account_member: {
+      'account_member': {
         data: {
           id: '3221552e-73ae-4ce3-b8a2-db3d8e033e9e',
           type: 'account_member'
