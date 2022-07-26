@@ -1,4 +1,4 @@
-type Locales =
+export type Locales =
   | 'ab'
   | 'af'
   | 'sq'
@@ -48,5 +48,3 @@ type Locales =
   | 'sv'
   | 'uk'
   | 'cy'
-
-export default Locales
