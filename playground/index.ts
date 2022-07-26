@@ -1,3 +1,4 @@
+
 import * as moltin from './../';
 
 async function main() {
