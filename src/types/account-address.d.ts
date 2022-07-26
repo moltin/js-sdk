@@ -16,7 +16,10 @@ import {
   ResourcePage
 } from './core'
 import { WithRequired } from './util'
-import { AccountMembership, AccountMembershipCreateBody, AccountMembershipsInclude } from "./account-memberships";
+import {
+  AccountMembership,
+  AccountMembershipCreateBody
+} from './account-memberships'
 
 /**
  * Core Address Base Interface
@@ -44,16 +47,16 @@ export interface AccountAddress extends Identifiable, AccountAddressBase {}
 
 interface AccountAddressEdit
   extends WithRequired<
-      AccountAddress,
-      | 'type'
-      | 'first_name'
-      | 'last_name'
-      | 'line_1'
-      | 'postcode'
-      | 'county'
-      | 'region'
-      | 'country'
-    > {}
+    AccountAddress,
+    | 'type'
+    | 'first_name'
+    | 'last_name'
+    | 'line_1'
+    | 'postcode'
+    | 'county'
+    | 'region'
+    | 'country'
+  > {}
 
 /**
  * Address Endpoints
