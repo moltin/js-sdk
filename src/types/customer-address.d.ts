@@ -33,18 +33,18 @@ export interface CustomerAddressBase {
 
 export interface CustomerAddress extends Identifiable, CustomerAddressBase {}
 
-interface CustomerAddressEdit
+export interface CustomerAddressEdit
   extends WithRequired<
-      CustomerAddress,
-      | 'type'
-      | 'first_name'
-      | 'last_name'
-      | 'line_1'
-      | 'postcode'
-      | 'county'
-      | 'region'
-      | 'country'
-    > {}
+    CustomerAddress,
+    | 'type'
+    | 'first_name'
+    | 'last_name'
+    | 'line_1'
+    | 'postcode'
+    | 'county'
+    | 'region'
+    | 'country'
+  > {}
 
 /**
  * Address Endpoints

@@ -1,7 +1,11 @@
 import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
-import { integrationsArray as integrations } from '../factories'
+import {
+  integrationJobsArray,
+  integrationLogsResponse,
+  integrationsArray as integrations
+} from '../factories'
 
 const apiUrl = 'https://api.moltin.com/v2'
 
@@ -111,6 +115,44 @@ describe('Moltin integrations', () => {
 
     return Moltin.Integrations.GetLogs('123').then(response => {
       assert.lengthOf(response.data, 3)
+    })
+  })
+
+  it('should return the jobs of an integration', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get(`/integrations/123/jobs`)
+      .reply(200, { data: integrationJobsArray })
+
+    return Moltin.Integrations.GetJobs('123').then(response => {
+      assert.lengthOf(response.data, 3)
+    })
+  })
+
+  it('should return all the logs for an integration job', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+      .get(`/integrations/123/jobs/integration-job-1/logs`)
+      .reply(200, integrationLogsResponse)
+
+    return Moltin.Integrations.GetAllLogsForJob(
+      '123',
+      'integration-job-1'
+    ).then(response => {
+      assert.lengthOf(response.data, 1)
+      assert.propertyVal(
+        response.data[0]!,
+        'id',
+        integrationLogsResponse.data[0].id
+      )
     })
   })
 })
