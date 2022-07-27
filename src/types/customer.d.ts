@@ -39,14 +39,14 @@ export interface CustomerFilter {
   eq?: {
     name?: string
     email?: string
-  },
+  }
   like?: {
     name?: string
     email?: string
   }
 }
 
-type CustomerInclude =
+export type CustomerInclude =
   | 'main_images'
   | 'files'
   | 'brands'

@@ -3,7 +3,7 @@
  */
 import { Resource } from './core'
 
-interface MerchantRealmMappings {
+export interface MerchantRealmMappings {
   type: 'merchant-realm-mappings'
   id: string
   realm_id: string
@@ -25,5 +25,9 @@ export interface MerchantRealmMappingsEndpoint {
   /**
    * Update Merchant Realm Mappings
    */
-  Update(id: string, body: Partial<MerchantRealmMappings>, token?: string): Promise<Resource<MerchantRealmMappings>>
+  Update(
+    id: string,
+    body: Partial<MerchantRealmMappings>,
+    token?: string
+  ): Promise<Resource<MerchantRealmMappings>>
 }
