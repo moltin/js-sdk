@@ -110,7 +110,12 @@ export interface CustomersEndpoint
    * @param codeVerifier [string] an optional codeVerifier if oidc is being used
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenViaOIDC(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaOIDC(
+    code: string,
+    redirectUri: string,
+    codeVerifier: string,
+    headers?: object
+  ): Promise<Resource<CustomerToken>>
 }
 
 

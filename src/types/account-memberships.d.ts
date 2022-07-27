@@ -4,10 +4,10 @@
 import {
   CrudQueryableResource,
   Identifiable,
-  Resource, ResourceList,
-  ResourcePage,
-} from "./core";
-import {AccountMember, AccountMemberBase} from "./account-members";
+  Resource,
+  ResourcePage
+} from './core'
+import { AccountMemberBase } from './account-members'
 
 /**
  * The Account Membership object Interface
@@ -21,7 +21,7 @@ export interface AccountMembership extends Identifiable {
     }
   }
   relationships: {
-    'account_member': {
+    account_member: {
       data: {
         id: string
         type: string
@@ -39,10 +39,12 @@ export interface AccountMembershipsIncluded {
   account_members: AccountMemberBase[]
 }
 
-type AccountMembershipsInclude = | 'account_members'
+export type AccountMembershipsInclude = 'account_members'
 
-type AccountMembershipsResponse = ResourcePage<AccountMembership, AccountMembershipsIncluded>
-
+export type AccountMembershipsResponse = ResourcePage<
+  AccountMembership,
+  AccountMembershipsIncluded
+>
 
 /**
  * filter for account memberships
@@ -56,22 +58,21 @@ export interface AccountMembershipsFilter {
   }
 }
 
-
 /**
  * Account Memberships Endpoints
  */
 export interface AccountMembershipsEndpoint
   extends Omit<
-      CrudQueryableResource<
-        AccountMembership,
-        AccountMembershipCreateBody,
-        never,
-        AccountMembershipsFilter,
-        never,
-        AccountMembershipsInclude
-      >,
-      'Get' | 'All' | 'Create' | 'Delete' | 'Update' | 'Filter'
-    > {
+    CrudQueryableResource<
+      AccountMembership,
+      AccountMembershipCreateBody,
+      never,
+      AccountMembershipsFilter,
+      never,
+      AccountMembershipsInclude
+    >,
+    'Get' | 'All' | 'Create' | 'Delete' | 'Update' | 'Filter'
+  > {
   endpoint: 'account-member'
   storage: Storage
   /**
@@ -90,11 +91,7 @@ export interface AccountMembershipsEndpoint
    * Get all Account Memberships for an account
    * @param accountId - The ID for the account
    */
-  All(
-    accountId: string,
-    token?: string
-  ): Promise<AccountMembershipsResponse>
-
+  All(accountId: string, token?: string): Promise<AccountMembershipsResponse>
 
   /**
    * Create an Account Membership

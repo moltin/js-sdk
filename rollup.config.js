@@ -6,6 +6,7 @@ import json from '@rollup/plugin-json'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import filesize from 'rollup-plugin-filesize'
+import dts from 'rollup-plugin-dts'
 
 import pkg from './package.json'
 
@@ -73,5 +74,10 @@ export default [
       format: 'es'
     },
     external: [...baseConfig.external, ...Object.keys(pkg.dependencies || {})]
+  },
+  {
+    input: 'src/moltin.d.ts',
+    output: [{ file: 'dist/moltin.d.ts', format: 'es' }],
+    plugins: [dts()]
   }
 ]

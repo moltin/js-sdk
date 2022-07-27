@@ -60,6 +60,7 @@ export * from './types/core'
 export * from './types/customer'
 export * from './types/order'
 export * from './types/cart'
+export * from './types/address'
 export * from './types/customer-address'
 export * from './types/account-address'
 export * from './types/inventory'
@@ -107,6 +108,9 @@ export * from './types/metrics'
 export * from './types/personal-data'
 export * from './types/data-entries'
 export * from './types/price-book-price-modifiers'
+export * from './types/user-authentication-info'
+export * from './types/user-authentication-password-profile'
+export * from './types/locales'
 
 // UMD
 export as namespace moltin
