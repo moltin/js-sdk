@@ -1,6 +1,6 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
+import { gateway, gateway as MoltinGateway } from '../../src/moltin'
 import {
   notFoundError,
   rateLimitError,
@@ -14,7 +14,8 @@ describe('Moltin error handling', () => {
     client_id: 'XXX',
     retryDelay: 10, // Reduce retryDelay/retryJitter/fetchMaxAttempts for retries during testing
     retryJitter: 1,
-    fetchMaxAttempts: 2 // Minimum amount of fetch attempts we need for these tests.
+    fetchMaxAttempts: 2, // Minimum amount of fetch attempts we need for these tests.
+    gatewayId: 'mock'
   })
 
   it('should handle a 429 correctly', () => {

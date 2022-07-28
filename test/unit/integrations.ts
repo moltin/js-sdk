@@ -11,7 +11,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin integrations', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   it('should create a new integration', () => {

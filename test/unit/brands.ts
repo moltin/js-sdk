@@ -17,7 +17,8 @@ const authHeaders = {
 
 describe('Moltin brands', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   it('should return an array of brands', () => {

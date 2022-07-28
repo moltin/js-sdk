@@ -8,7 +8,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 describe('Moltin products', () => {
   it('should return an array of products', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -27,7 +28,8 @@ describe('Moltin products', () => {
 
   it('should return a single product', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -46,7 +48,8 @@ describe('Moltin products', () => {
 
   it('should return a filtered array of products', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -75,7 +78,8 @@ describe('Moltin products', () => {
 
   it('should return a limited number of products', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -101,7 +105,8 @@ describe('Moltin products', () => {
 
   it('should return an array products offset by a value', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -127,7 +132,8 @@ describe('Moltin products', () => {
 
   it('should return all products and include associated brands, categories, collections', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -151,7 +157,8 @@ describe('Moltin products', () => {
 
   it('should return a single product and include associated brands, categories, collections', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -175,7 +182,8 @@ describe('Moltin products', () => {
 
   it('should return all products sorted by name key', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -217,7 +225,8 @@ describe('Moltin products', () => {
     }
 
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -245,7 +254,8 @@ describe('Moltin products', () => {
 
   it('should update a product', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -273,7 +283,8 @@ describe('Moltin products', () => {
 
   it('should delete a product', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -292,7 +303,8 @@ describe('Moltin products', () => {
 
   it('should not persist the includes property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -316,7 +328,8 @@ describe('Moltin products', () => {
 
   it('should not persist the sort property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -340,7 +353,8 @@ describe('Moltin products', () => {
 
   it('should not persist the limit property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -366,7 +380,8 @@ describe('Moltin products', () => {
 
   it('should not persist the offset property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -392,7 +407,8 @@ describe('Moltin products', () => {
 
   it('should not persist the filter property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -420,7 +436,10 @@ describe('Moltin products', () => {
   })
 
   it('should build child products', () => {
-    const Moltin = MoltinGateway({ client_id: 'XXX' })
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+      gatewayId: 'mock'
+    })
 
     // Intercept the API request
     nock(apiUrl, {
@@ -438,7 +457,8 @@ describe('Moltin products', () => {
 
   it('should get products attributes', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request

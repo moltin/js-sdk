@@ -20,7 +20,8 @@ describe('Moltin flows', () => {
     }
 
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -43,7 +44,8 @@ describe('Moltin flows', () => {
 
   it('should update a flow', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -71,7 +73,8 @@ describe('Moltin flows', () => {
 
   it('should get a flow', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -92,7 +95,8 @@ describe('Moltin flows', () => {
 
   it('should delete a flow', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -111,7 +115,8 @@ describe('Moltin flows', () => {
 
   it('should return an array of flows', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -130,7 +135,8 @@ describe('Moltin flows', () => {
 
   it('should return a single flow', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -149,7 +155,8 @@ describe('Moltin flows', () => {
 
   it('should return an array of flows entries', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -168,7 +175,8 @@ describe('Moltin flows', () => {
 
   it('should return fields', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -187,7 +195,8 @@ describe('Moltin flows', () => {
 
   it('should return a limited number of flow entries', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -213,7 +222,8 @@ describe('Moltin flows', () => {
 
   it('should return an array flow entries offset by a value', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -239,7 +249,8 @@ describe('Moltin flows', () => {
 
   it('should create a flow entry', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -266,7 +277,8 @@ describe('Moltin flows', () => {
 
   it('should update an entry', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -294,7 +306,8 @@ describe('Moltin flows', () => {
 
   it('should get an entry', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -315,7 +328,8 @@ describe('Moltin flows', () => {
 
   it('should delete an entry', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -333,7 +347,8 @@ describe('Moltin flows', () => {
   })
   it('should delete flows by id', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -351,7 +366,8 @@ describe('Moltin flows', () => {
 
   it('should create a flow entry relationship', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -382,7 +398,8 @@ describe('Moltin flows', () => {
 
   it('should create one-to-many flow entry relationships', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -394,22 +411,22 @@ describe('Moltin flows', () => {
         data: [
           {
             type: 'brand',
-            id: 'id1',
+            id: 'id1'
           },
           {
             type: 'brand',
-            id: 'id2',
+            id: 'id2'
           }
         ]
       })
       .reply(201, [
         {
           type: 'brand',
-          id: 'id1',
+          id: 'id1'
         },
         {
           type: 'brand',
-          id: 'id2',
+          id: 'id2'
         }
       ])
 
@@ -420,11 +437,11 @@ describe('Moltin flows', () => {
       [
         {
           type: 'brand',
-          id: 'id1',
+          id: 'id1'
         },
         {
           type: 'brand',
-          id: 'id2',
+          id: 'id2'
         }
       ]
     ).then(response => {
@@ -435,7 +452,8 @@ describe('Moltin flows', () => {
 
   it('should update a flow entry relationship', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -466,7 +484,8 @@ describe('Moltin flows', () => {
 
   it('should update one-to-many flow entry relationships', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -478,22 +497,22 @@ describe('Moltin flows', () => {
         data: [
           {
             type: 'brand',
-            id: 'new-id1',
+            id: 'new-id1'
           },
           {
             type: 'brand',
-            id: 'new-id2',
+            id: 'new-id2'
           }
         ]
       })
       .reply(201, [
         {
           type: 'brand',
-          id: 'new-id1',
+          id: 'new-id1'
         },
         {
           type: 'brand',
-          id: 'new-id2',
+          id: 'new-id2'
         }
       ])
 
@@ -504,11 +523,11 @@ describe('Moltin flows', () => {
       [
         {
           type: 'brand',
-          id: 'new-id1',
+          id: 'new-id1'
         },
         {
           type: 'brand',
-          id: 'new-id2',
+          id: 'new-id2'
         }
       ]
     ).then(response => {
@@ -519,7 +538,8 @@ describe('Moltin flows', () => {
 
   it('should update a flow entry relationship', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     // Intercept the API request
     nock(apiUrl, {
@@ -541,7 +561,8 @@ describe('Moltin flows', () => {
 
   it('should return an array of attributes', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     nock(apiUrl, {
       reqheaders: {
@@ -558,7 +579,8 @@ describe('Moltin flows', () => {
 
   it('should return an array of attributes by flow type', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     nock(apiUrl, {
       reqheaders: {

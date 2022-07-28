@@ -121,7 +121,10 @@ class RequestFactory {
             expires,
             ...(refresh_token && { refresh_token })
           }
-          storage.set('moltinCredentials', JSON.stringify(credentials))
+          storage.set(
+            `moltinCredentials-${config.gatewayId}`,
+            JSON.stringify(credentials)
+          )
         }
       })
       .catch(() => {})
@@ -141,7 +144,7 @@ class RequestFactory {
   ) {
     const { config, storage } = this
 
-    const credentials = getCredentials(storage)
+    const credentials = getCredentials(storage,config.gatewayId)
 
     const req = cred => {
       const access_token = cred ? cred.access_token : null
@@ -204,7 +207,7 @@ class RequestFactory {
     }
 
     if (tokenInvalid(config) && config.reauth && !config.store_id) {
-      return this.authenticate().then(() => req(getCredentials(storage)))
+      return this.authenticate().then(() => req(getCredentials(storage,config.gatewayId)))
     }
 
     if (instance) resetProps(instance)

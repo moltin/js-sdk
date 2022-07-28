@@ -11,7 +11,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 describe('Moltin orders', () => {
   it('should return an array of orders', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -31,7 +32,8 @@ describe('Moltin orders', () => {
 
   it('should return an array of orders from a specified customer', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -52,7 +54,8 @@ describe('Moltin orders', () => {
 
   it('should return an array of orders and include associated items', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -76,7 +79,8 @@ describe('Moltin orders', () => {
 
   it('should return an array of orders from a specified customer and include associated items', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -101,7 +105,8 @@ describe('Moltin orders', () => {
 
   it('should return a single order', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -121,7 +126,8 @@ describe('Moltin orders', () => {
 
   it('should return a single order include account and account_member', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -130,20 +136,23 @@ describe('Moltin orders', () => {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-        .get('/orders/order-1?include=account,account_member')
-        .reply(200, orders[0])
+      .get('/orders/order-1?include=account,account_member')
+      .reply(200, orders[0])
 
-    return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then((response:any) => {
-      assert.propertyVal(response, 'id', 'order-1')
-      assert.propertyVal(response, 'status', 'complete')
-      assert.lengthOf(response.included.accounts, 1)
-      assert.lengthOf(response.included.account_members, 1)
-    })
+    return Moltin.Orders.With(['account', 'account_member'])
+      .Get(orders[0].id)
+      .then((response: any) => {
+        assert.propertyVal(response, 'id', 'order-1')
+        assert.propertyVal(response, 'status', 'complete')
+        assert.lengthOf(response.included.accounts, 1)
+        assert.lengthOf(response.included.account_members, 1)
+      })
   })
 
   it('should return a single order using a JWT', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -164,7 +173,8 @@ describe('Moltin orders', () => {
 
   it('should return an array of items from an order', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -184,7 +194,8 @@ describe('Moltin orders', () => {
 
   it('should complete a payment for an order', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -215,7 +226,8 @@ describe('Moltin orders', () => {
 
   it('should confirm a payment for an order', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
     const transactionId = '1'
     // Intercept the API request
@@ -246,7 +258,8 @@ describe('Moltin orders', () => {
 
   it('should update an order', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -274,7 +287,8 @@ describe('Moltin orders', () => {
 
   it('should not persist the includes property after request', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -298,7 +312,8 @@ describe('Moltin orders', () => {
 
   it('should get orders attributes', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request

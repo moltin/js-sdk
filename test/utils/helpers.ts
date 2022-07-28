@@ -339,8 +339,9 @@ describe('Get credentials', () => {
     const storageMock = {
       get: () => '{ "token": "abc123" }'
     }
+    const mockGatewayId = "123456789"
 
-    const res = getCredentials(storageMock)
+    const res = getCredentials(storageMock,mockGatewayId)
 
     expect(res).to.deep.equal({ token: 'abc123' })
   })
@@ -351,7 +352,7 @@ describe('Token invalid', () => {
     const storageMock = {
       get: () => false
     }
-    const config = { client_id: '12345', storage: storageMock }
+    const config = { client_id: '12345', storage: storageMock, gatewayId: '123456789' }
 
     const res = tokenInvalid(config)
 
@@ -362,7 +363,7 @@ describe('Token invalid', () => {
     const storageMock = {
       get: () => JSON.stringify({ token: '12345' })
     }
-    const config = { client_id: '12345', storage: storageMock }
+    const config = { client_id: '12345', storage: storageMock, gatewayId: '123456789'}
 
     const res = tokenInvalid(config)
 
@@ -373,7 +374,7 @@ describe('Token invalid', () => {
     const storageMock = {
       get: () => JSON.stringify({ token: '12345', client_id: '54321' })
     }
-    const config = { client_id: '12345', storage: storageMock }
+    const config = { client_id: '12345', storage: storageMock, gatewayId: '123456789' }
 
     const res = tokenInvalid(config)
 
@@ -389,7 +390,7 @@ describe('Token invalid', () => {
           expires: Math.floor(Date.now() / 1000) - 1000
         })
     }
-    const config = { client_id: '12345', storage: storageMock }
+    const config = { client_id: '12345', storage: storageMock, gatewayId: '123456789'}
 
     const res = tokenInvalid(config)
 
@@ -405,7 +406,7 @@ describe('Token invalid', () => {
           expires: Math.floor(Date.now() / 1000) + 1000
         })
     }
-    const config = { client_id: '12345', storage: storageMock }
+    const config = { client_id: '12345', storage: storageMock, gatewayId: '123456789'}
 
     const res = tokenInvalid(config)
 

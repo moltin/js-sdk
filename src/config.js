@@ -5,6 +5,7 @@ import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
 class Config {
   constructor(options) {
     const {
+      gatewayId,
       application,
       client_id,
       client_secret,
@@ -24,7 +25,8 @@ class Config {
       retryJitter,
       fetchMaxAttempts
     } = options
-
+    
+    this.gatewayId = gatewayId || `${Date.now()}`
     this.application = application
     this.client_id = client_id
     this.client_secret = client_secret

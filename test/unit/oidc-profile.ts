@@ -6,7 +6,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Oidc Profiles', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   const realmId = '96764ca9-af12-4355-acce-37fa2ef4728a'

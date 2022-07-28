@@ -6,8 +6,9 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('User Authentication Password Profile Info', () => {
     const Moltin = MoltinGateway({
-        client_id: 'XXX'
-    })
+        client_id: 'XXX',
+        gatewayId: 'mock'
+      })
 
     const realmId = '96764ca9-af12-4355-acce-37fa2ef4728a'
     const userAuthenticationId = '4da65e78-7f9b-4248-b498-823d43120da9'

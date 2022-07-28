@@ -22,6 +22,7 @@ export interface RequestFactory {
 }
 
 export interface ConfigOptions {
+  gatewayId?: string
   application?: string
   client_id?: string
   client_secret?: string
@@ -41,6 +42,7 @@ export interface ConfigOptions {
 }
 
 export interface Config {
+  gatewayId?: string
   application?: string
   client_id: string
   client_secret?: string

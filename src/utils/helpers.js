@@ -233,12 +233,12 @@ export function resetProps(instance) {
   )
 }
 
-export function getCredentials(storage) {
-  return JSON.parse(storage.get('moltinCredentials'))
+export function getCredentials(storage, gatewayId) {
+  return JSON.parse(storage.get(`moltinCredentials-${gatewayId}`))
 }
 
-export function tokenInvalid({ storage, client_id, reauth }) {
-  const credentials = getCredentials(storage)
+export function tokenInvalid({ storage, client_id, reauth, gatewayId }) {
+  const credentials = getCredentials(storage, gatewayId)
 
   const handleInvalid = message => {
     /* eslint-disable no-console */

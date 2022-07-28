@@ -7,7 +7,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin order transactions', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   it('should return an array of order transactions', () => {

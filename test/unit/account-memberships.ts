@@ -10,7 +10,8 @@ const apiUrl = 'https://api.moltin.com'
 
 describe('Moltin Account Memberships', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   it('Get a single account membership', () => {

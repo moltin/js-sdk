@@ -1,5 +1,6 @@
 import {assert} from 'chai'
 import nock from 'nock'
+import { json } from 'stream/consumers'
 import {gateway as MoltinGateway} from '../../src/moltin'
 import {customerAddressesArray as addresses, addressUpdate, attributeResponse} from '../factories'
 
@@ -7,7 +8,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin addresses', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId:'mock',
   })
 
   it('should return an array of customer addresses', () => {
@@ -22,6 +24,7 @@ describe('Moltin addresses', () => {
 
     return Moltin.CustomerAddresses.All({customer: 'customer-1'}).then(
       response => {
+        console.error(JSON.stringify(response))
         assert.lengthOf(response.data, 2)
       }
     )

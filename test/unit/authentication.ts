@@ -9,7 +9,8 @@ const authExpire = 9999999999
 describe('Moltin authentication', () => {
   it('should return an access token', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -118,7 +119,7 @@ describe('Moltin authentication', () => {
 
     Moltin.Authenticate().then(() => {
       const { storage } = Moltin.request
-      assert.exists(storage.get('moltinCredentials'))
+      assert.exists(storage.get(`moltinCredentials-{}`))
     })
   })
 
@@ -144,7 +145,9 @@ describe('Moltin authentication', () => {
 
     return Moltin.Authenticate().then(() => {
       const { storage } = Moltin.request
-      let credentials = JSON.parse(storage.get('moltinCredentials'))
+      let credentials = JSON.parse(
+        storage.get(`moltinCredentials-${Moltin.config.gatewayId}`)
+      )
       assert.equal(
         credentials.access_token,
         'a550d8cbd4a4627013452359ab69694cd446615b'
@@ -171,7 +174,7 @@ describe('Moltin authentication', () => {
 
       return Moltin.Authenticate().then(() => {
         const { storage: storage2 } = Moltin.request
-        credentials = JSON.parse(storage2.get('moltinCredentials'))
+        credentials = JSON.parse(storage2.get(`moltinCredentials-${Moltin.config.gatewayId}`))
         assert.equal(
           credentials.access_token,
           'a550d8cbd4a4627013452359ab69694cd446615a'

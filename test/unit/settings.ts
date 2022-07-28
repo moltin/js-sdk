@@ -6,7 +6,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin settings', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   it('should return store settings', () => {

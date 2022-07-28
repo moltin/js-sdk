@@ -14,7 +14,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Moltin cart', () => {
   const Moltin = MoltinGateway({
-    client_id: 'XXX'
+    client_id: 'XXX',
+    gatewayId: 'mock'
   })
 
   Moltin.cartId = '3'

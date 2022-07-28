@@ -59,7 +59,7 @@ export default class Moltin {
 
     this.request = new RequestFactory(config)
     this.storage = config.storage
-    this.credentials = () => getCredentials(config.storage)
+    this.credentials = () => getCredentials(config.storage,config.gatewayId)
 
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)

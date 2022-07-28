@@ -11,7 +11,8 @@ const apiUrl = 'https://api.moltin.com/v2'
 describe('Moltin inventories', () => {
   it('should return an array of inventories', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -30,7 +31,8 @@ describe('Moltin inventories', () => {
 
   it('should return a single product inventory', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     // Intercept the API request
@@ -49,7 +51,8 @@ describe('Moltin inventories', () => {
 
   it('should return an array inventory transactions for specific product', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     nock(apiUrl, {
@@ -69,7 +72,8 @@ describe('Moltin inventories', () => {
 
   it('should increment stock', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     nock(apiUrl, {
@@ -103,7 +107,8 @@ describe('Moltin inventories', () => {
 
   it('should decrement stock', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     nock(apiUrl, {
@@ -137,7 +142,8 @@ describe('Moltin inventories', () => {
 
   it('should allocate stock', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     nock(apiUrl, {
@@ -171,7 +177,8 @@ describe('Moltin inventories', () => {
 
   it('should deallocate stock', () => {
     const Moltin = MoltinGateway({
-      client_id: 'XXX'
+      client_id: 'XXX',
+      gatewayId: 'mock'
     })
 
     nock(apiUrl, {
