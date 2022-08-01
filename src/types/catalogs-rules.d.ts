@@ -17,9 +17,11 @@ export interface RuleBase {
     name: string
     description?: string
     catalog_id: string
+    account_ids?: string[]
     customer_ids?: string[]
     channels?: string[]
     tags?: string[]
+    schedules?: {valid_from: string, valid_to: string}[]
   }
 }
 
