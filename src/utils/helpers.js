@@ -233,12 +233,14 @@ export function resetProps(instance) {
   )
 }
 
-export function getCredentials(storage) {
-  return JSON.parse(storage.get('moltinCredentials'))
+export async function getCredentials(storage) {
+  // Resolve as a promise incase it's not an AsyncStorageFactory instance
+  const credentials = await Promise.resolve(storage.get('moltinCredentials'))
+  return JSON.parse(credentials)
 }
 
-export function tokenInvalid({ storage, client_id, reauth }) {
-  const credentials = getCredentials(storage)
+export async function tokenInvalid({ storage, client_id, reauth }) {
+  const credentials = await getCredentials(storage)
 
   const handleInvalid = message => {
     /* eslint-disable no-console */
