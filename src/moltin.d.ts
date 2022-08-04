@@ -50,6 +50,7 @@ import { UserAuthenticationPasswordProfileEndpoint } from './types/user-authenti
 import { MetricsEndpoint } from './types/metrics'
 import { PersonalDataEndpoint } from './types/personal-data'
 import { DataEntriesEndpoint } from './types/data-entries'
+import { ErasureRequestsEndpoint } from './types/erasure-requests'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
 
 export * from './types/config'
@@ -107,6 +108,7 @@ export * from './types/pcm-variations-relationships'
 export * from './types/metrics'
 export * from './types/personal-data'
 export * from './types/data-entries'
+export * from './types/erasure-requests'
 export * from './types/price-book-price-modifiers'
 export * from './types/user-authentication-info'
 export * from './types/user-authentication-password-profile'
@@ -163,6 +165,7 @@ export class Moltin {
   Metrics: MetricsEndpoint
   PersonalData: PersonalDataEndpoint
   DataEntries: DataEntriesEndpoint
+  ErasureRequests: ErasureRequestsEndpoint
   PriceBookPriceModifier: PriceBookPriceModifierEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
