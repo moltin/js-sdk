@@ -52,6 +52,7 @@ import { PersonalDataEndpoint } from './types/personal-data'
 import { DataEntriesEndpoint } from './types/data-entries'
 import { ErasureRequestsEndpoint } from './types/erasure-requests'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
+import { AccountMembershipSettingsEndpoint } from './types/account-membership-settings';
 
 export * from './types/config'
 export * from './types/storage'
@@ -103,6 +104,7 @@ export * from './types/accounts'
 export * from './types/account-authentication-settings'
 export * from './types/account-members'
 export * from './types/account-memberships'
+export * from './types/account-membership-settings'
 export * from './types/pcm-variations'
 export * from './types/pcm-variations-relationships'
 export * from './types/metrics'
@@ -156,6 +158,7 @@ export class Moltin {
   Accounts: AccountEndpoint
   AccountMembers: AccountMembersEndpoint
   AccountAuthenticationSettings: AccountAuthenticationSettingsEndpoint
+  AccountMembershipSettings: AccountMembershipSettingsEndpoint
   AccountMemberships: AccountMembershipsEndpoint
   UserAuthenticationInfo: UserAuthenticationInfoEndpoint
   PasswordProfile: PasswordProfileEndpoint
