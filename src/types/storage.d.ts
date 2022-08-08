@@ -11,6 +11,7 @@ export class MemoryStorageFactory implements StorageFactory {
 }
 
 export class LocalStorageFactory implements StorageFactory {
+  constructor(path?: string)
   set(key: string, value: any): void
   get(key: string): any
   delete(key: string): void
