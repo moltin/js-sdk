@@ -78,7 +78,7 @@ jobs:
           yarn install
           yarn test-output
       - name: Upload test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.job }}-results
           path: test-results
