@@ -2,15 +2,14 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
-import {
-  Identifiable,
-  CrudQueryableResource, ResourcePage, ResourceList
-} from './core'
-import { PcmFileRelationshipEndpoint } from "./pcm-file-relationship";
+import { Identifiable, CrudQueryableResource, ResourcePage } from './core'
+import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
+import { PcmJobsEndpoint } from './pcm-jobs'
 import { File } from './file'
+import { Locales } from './locales'
 
 /**
  * Core PCM Product Base Interface
@@ -22,13 +21,13 @@ export interface PcmProductBase extends PcmProductRelationships {
     name: string
     description?: string | null
     slug?: string | null
-    sku?: string
+    sku?: string | null
     status?: string
     commodity_type?: string
     upc_ean?: string | null
     mpn?: string | null
     extensions?: Object
-    locales?: Object
+    locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
   }
 }
@@ -36,6 +35,8 @@ export interface PcmProductBase extends PcmProductRelationships {
 export interface ProductComponents {
   [key: string]: {
     name: string
+    min?: number
+    max?: number
     options: ProductComponentOption[]
   }
 }
@@ -53,7 +54,7 @@ export interface ProductComponentOption {
 
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
-    variation_matrix: {[key: string]: string} | {}
+    variation_matrix: { [key: string]: string } | {}
   }
 }
 
@@ -61,7 +62,7 @@ export interface PcmProductRelationships {
   relationships?: {
     base_product?: {
       data: {
-        id: string,
+        id: string
         type: string
       }
     }
@@ -78,37 +79,52 @@ export interface PcmProductFilter {
 }
 
 type PcmProductSort = // TODO
-  | 'name'
+  'name'
 
-export type PcmProductInclude = | 'main_image'
+export type PcmProductInclude = 'main_image' | 'component_products'
 
 interface PcmProductsIncluded {
   main_images: File[]
+  component_products: PcmProduct[]
 }
 
-export type PcmProductResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
+export interface PcmProductResponse {
+  data: PcmProduct
+  included: PcmProductsIncluded
+}
 
+export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
 /**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
-  extends CrudQueryableResource<PcmProduct,
-    PcmProductBase,
-    PcmProductUpdateBody,
-    PcmProductFilter,
-    PcmProductSort,
-    PcmProductInclude> {
+  extends Omit<
+    CrudQueryableResource<
+      PcmProduct,
+      PcmProductBase,
+      PcmProductUpdateBody,
+      PcmProductFilter,
+      PcmProductSort,
+      PcmProductInclude
+    >,
+    'Get' | 'Limit' | 'Offset' | 'With'
+  > {
   endpoint: 'products'
 
   FileRelationships: PcmFileRelationshipEndpoint
   TemplateRelationships: PcmTemplateRelationshipEndpoint
   VariationsRelationships: PcmVariationsRelationshipsEndpoint
   MainImageRelationships: PcmMainImageRelationshipEndpoint
+  Jobs: PcmJobsEndpoint
 
   Limit(value: number): PcmProductsEndpoint
 
   Offset(value: number): PcmProductsEndpoint
+
+  With(included: string): PcmProductsEndpoint
+
+  Get(id: string): PcmProductResponse
 
   /**
    * Build Child Products
@@ -123,9 +139,7 @@ export interface PcmProductsEndpoint
    * @constructor
    */
 
-  GetChildProducts(
-    productId: string,
-  ): Promise<ResourcePage<PcmProduct>>
+  GetChildProducts(productId: string): Promise<ResourcePage<PcmProduct>>
 
   /**
    * Import Products
@@ -134,4 +148,3 @@ export interface PcmProductsEndpoint
    */
   ImportProducts(file: FormData): Promise<{}>
 }
-

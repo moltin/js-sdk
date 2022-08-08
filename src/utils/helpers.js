@@ -44,7 +44,7 @@ export function createCartIdentifier() {
 export function cartIdentifier(storage) {
   const cartId = createCartIdentifier()
 
-  if (storage.get('mcart') !== null) {
+  if (storage.get('mcart') !== null && storage.get('mcart') !== undefined) {
     return storage.get('mcart')
   }
 
@@ -53,13 +53,21 @@ export function cartIdentifier(storage) {
   return cartId
 }
 
+export function tryParseJSON(body, fallback) {
+  try {
+    return JSON.parse(body)
+  } catch (err) {
+    return fallback
+  }
+}
+
 export function parseJSON(response) {
   return new Promise(resolve => {
     response.text().then(body => {
       resolve({
         status: response.status,
         ok: response.ok,
-        json: body !== '' ? JSON.parse(body) : '{}'
+        json: tryParseJSON(body, '{}')
       })
     })
   })
@@ -125,6 +133,12 @@ function buildQueryParams({ includes, sort, limit, offset, filter }) {
     .join('&')
 }
 
+export function formatQueryParams(query) {
+  return Object.keys(query)
+    .map(k => formatQueryString(k, query[k]))
+    .join('&')
+}
+
 export function buildURL(endpoint, params) {
   if (
     params.includes ||
@@ -159,10 +173,13 @@ export function buildRequestBody(body) {
   return parsedBody
 }
 
+/**
+ * TODO Parameters should be reordered in the next major release
+ */
 export function buildCartItemData(
   id,
-  quantity = null,
-  type = 'cart_item',
+  quantity = null, // eslint-disable-line default-param-last
+  type = 'cart_item', // eslint-disable-line default-param-last
   flows,
   isSku = false
 ) {
@@ -224,6 +241,7 @@ export function tokenInvalid({ storage, client_id, reauth }) {
   const credentials = getCredentials(storage)
 
   const handleInvalid = message => {
+    /* eslint-disable no-console */
     const logger = reauth ? console.info : console.error
     logger(message)
 

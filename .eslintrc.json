@@ -2,8 +2,8 @@
   "env": {
     "browser": true
   },
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
-  "parser": "babel-eslint",
+  "extends": ["airbnb-base", "prettier"],
+  "parser": "@babel/eslint-parser",
   "rules": {
     "class-methods-use-this": 0,
     "import/no-named-as-default": 0,
@@ -13,6 +13,7 @@
     "no-unused-expressions": 0,
     "no-undef": 0,
     "global-require": 0,
-    "no-bitwise": 0
+    "no-bitwise": 0,
+    "max-classes-per-file": 0
   }
 }

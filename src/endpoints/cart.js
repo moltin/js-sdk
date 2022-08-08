@@ -36,6 +36,10 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
+  /**
+   * TODO Parameters should be reordered in the next major release
+   */
+  // eslint-disable-next-line default-param-last
   AddProduct(productId, quantity = 1, data = {}, isSku) {
     const body = buildCartItemData(productId, quantity, 'cart_item', {}, isSku)
 

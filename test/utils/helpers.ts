@@ -13,7 +13,8 @@ import {
   buildCartCheckoutData,
   resetProps,
   getCredentials,
-  tokenInvalid
+  tokenInvalid,
+  tryParseJSON,
 } from '../../src/utils/helpers'
 
 import LocalStorageFactory from '../../src/factories/local-storage'
@@ -409,5 +410,43 @@ describe('Token invalid', () => {
     const res = tokenInvalid(config)
 
     expect(res).to.equal(true)
+  })
+})
+
+describe('Parsing body JSON', () => {
+  it('should parse empty object', () => {
+    expect(tryParseJSON('{}', 'fallback')).to.deep.equal({})
+  })
+
+  it('should parse non-empty object', () => {
+    expect(tryParseJSON('{ "a": 123, "b": "str" }', 'fallback')).to.deep.equal({ a: 123, b: 'str' })
+  })
+
+  it('should parse complex object', () => {
+    const body = {
+      ok: false,
+      status: 500,
+      errors: [
+        { code: 123, message: 'Server error' },
+        { code: 456, message: 'Another error' },
+      ]
+    }
+
+    expect(tryParseJSON(JSON.stringify(body), 'fallback')).to.deep.equal(body)
+  })
+
+  it('should parse null value', () => {
+    expect(tryParseJSON(null, 'fallback')).to.equal(null)
+  })
+
+  it('should fallback on undefined', () => {
+    expect(tryParseJSON(undefined, 'fallback')).to.equal('fallback')
+  })
+
+  it('should fallback on non-json strings', () => {
+    expect(tryParseJSON('', 'fallback')).to.equal('fallback')
+    expect(tryParseJSON('   ', 'fallback')).to.equal('fallback')
+    expect(tryParseJSON('There was an error', 'fallback')).to.equal('fallback')
+    expect(tryParseJSON('{ "a": 123', 'fallback')).to.equal('fallback')
   })
 })

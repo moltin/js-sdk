@@ -1,104 +1,202 @@
-import {
-  ResourceList, Resource
-} from './core'
-import { ProductResponse } from './catalogs-products'
-import { Catalog, CatalogFilter } from './catalogs'
-import { Node } from './nodes'
-import { Hierarchy } from './hierarchies'
+import type { ResourceList, Resource, ResourcePage } from './core'
+import type { ProductResponse } from './catalogs-products'
+import type { Catalog, CatalogFilter } from './catalogs'
+import type { Node } from './nodes'
+import type { Hierarchy } from './hierarchies'
+import type { File } from './file'
+import { Identifiable } from './core';
 
-interface CatalogQueryableResource<Endpoints, DataType, Filter> {
+export interface ShopperCatalogResource<T> extends Resource<T> {
+  included?: {
+    main_images?: File[]
+    files?: File[]
+    component_products?: ProductResponse[]
+  }
+}
 
+/** @deprecated Use ShopperCatalogResourcePage instead. Will be removed on next major release. */
+export interface ShopperCatalogResourceList<T> extends ResourceList<T> {
+  included?: {
+    main_images?: File[]
+    files?: File[]
+  }
+}
+
+export interface ShopperCatalogReleaseBase extends Identifiable {
+  type: 'catalog-release'
+  attributes: {
+    published_at: string
+    hierarchies: {
+      id: string
+      label?: string
+      name?: string
+    }[]
+    description?: string
+    name?: string
+    catalog_id?: string
+  }
+  relationships: {
+    hierarchies: {
+      links: {
+        related: string
+      }
+    }
+    products: {
+      links: {
+        related: string
+      }
+    }
+  }
+  links: {
+    self: string
+  }
+}
+
+interface ShopperCatalogQueryableResource<Endpoints, DataType, Filter> {
   Filter(filter: Filter): Endpoints
 
   Limit(value: number): Endpoints
 
   Offset(value: number): Endpoints
-
 }
 
-export interface CatalogProductsEndpoint
-  extends CatalogQueryableResource<CatalogProductsEndpoint,
-    Catalog,
-    CatalogFilter> {
+type ShopperCatalogProductsInclude =
+  | 'main_image'
+  | 'files'
+  | 'component_products'
+
+interface ShopperCatalogAdditionalHeaders {
+  'EP-Context-Tag'?: string
+  'EP-Channel'?: string
+}
+
+interface ShopperCatalogProductsQueryableResource<
+  Endpoints,
+  DataType,
+  Filter,
+  Include
+> extends ShopperCatalogQueryableResource<Endpoints, DataType, Filter> {
+  With(includes: Include | Include[]): Endpoints
+}
+
+interface ShopperCatalogResourcePageIncluded {
+  main_images?: File[]
+  files?: File[]
+  component_products?: ProductResponse[]
+}
+
+export type ShopperCatalogResourcePage<T> = ResourcePage<T, ShopperCatalogResourcePageIncluded>
+
+export interface ShopperCatalogProductsEndpoint
+  extends ShopperCatalogProductsQueryableResource<
+      ShopperCatalogProductsEndpoint,
+      Catalog,
+      CatalogFilter,
+      ShopperCatalogProductsInclude
+    > {
   endpoint: 'products'
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
   Get(options: {
     productId: string
     token?: string
-  }): Promise<Resource<ProductResponse>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResource<ProductResponse>>
 
   GetProductsByNode(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
   GetProductsByHierarchy(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<ProductResponse>>
-
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 }
 
-export interface NodesCatalogEndpoint
-  extends CatalogQueryableResource<NodesCatalogEndpoint,
-    Catalog,
-    CatalogFilter> {
+export interface NodesShopperCatalogEndpoint
+  extends ShopperCatalogQueryableResource<
+      NodesShopperCatalogEndpoint,
+      Catalog,
+      CatalogFilter
+    > {
   endpoint: 'nodes'
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<Node>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<Node>>
 
   Get(options: {
     nodeId: string
     token?: string
-  }): Promise<Resource<Node>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResource<Node>>
 
   GetNodeChildren(options: {
     nodeId: string
     token?: string
-  }): Promise<ResourceList<Node>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<Node>>
+
+  GetNodeProducts(options: {
+    nodeId: string
+    token?: string
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 }
 
-export interface HierarchiesCatalogEndpoint
-  extends CatalogQueryableResource<HierarchiesCatalogEndpoint,
-    Catalog,
-    CatalogFilter> {
+export interface HierarchiesShopperCatalogEndpoint
+  extends ShopperCatalogQueryableResource<
+      HierarchiesShopperCatalogEndpoint,
+      Catalog,
+      CatalogFilter
+    > {
   endpoint: 'products'
 
   All(options?: {
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<Hierarchy>>
 
   Get(options: {
     hierarchyId: string
     token?: string
-  }): Promise<Resource<Hierarchy>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResource<Hierarchy>>
 
   GetHierarchyChildren(options: {
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<Node>>
 
   GetHierarchyNodes(options?: {
+    hierarchyId: string
     token?: string
-  }): Promise<ResourceList<Hierarchy>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<Hierarchy>>
 }
 
-export interface CatalogEndpoint
-  extends CatalogQueryableResource<CatalogEndpoint,
-    Catalog,
-    CatalogFilter> {
+export interface ShopperCatalogEndpoint
+  extends ShopperCatalogQueryableResource<
+      ShopperCatalogEndpoint,
+      Catalog,
+      CatalogFilter
+    > {
   endpoint: 'catalog'
-  Nodes: NodesCatalogEndpoint
-  Products: CatalogProductsEndpoint
-  Hierarchies: HierarchiesCatalogEndpoint
+  Nodes: NodesShopperCatalogEndpoint
+  Products: ShopperCatalogProductsEndpoint
+  Hierarchies: HierarchiesShopperCatalogEndpoint
 
-  All(options?: {
+  Get(options?: {
     token?: string
-  }): Promise<ResourceList<Catalog>>
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<Resource<ShopperCatalogReleaseBase>>
 }

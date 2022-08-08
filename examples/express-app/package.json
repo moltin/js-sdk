@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
-    "@moltin/sdk": "../.."
+    "@moltin/sdk": "../..",
+    "express": "^4.16.3"
   }
 }

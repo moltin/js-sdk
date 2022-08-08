@@ -25,24 +25,26 @@ export interface CustomerAddressBase {
   line_1: string
   line_2: string
   city: string
-  county: string
+  county?: string
+  region?: string
   postcode: string
   country: string
 }
 
 export interface CustomerAddress extends Identifiable, CustomerAddressBase {}
 
-interface CustomerAddressEdit
+export interface CustomerAddressEdit
   extends WithRequired<
-      CustomerAddress,
-      | 'type'
-      | 'first_name'
-      | 'last_name'
-      | 'line_1'
-      | 'postcode'
-      | 'county'
-      | 'country'
-    > {}
+    CustomerAddress,
+    | 'type'
+    | 'first_name'
+    | 'last_name'
+    | 'line_1'
+    | 'postcode'
+    | 'county'
+    | 'region'
+    | 'country'
+  > {}
 
 /**
  * Address Endpoints

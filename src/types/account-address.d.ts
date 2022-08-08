@@ -6,17 +6,8 @@
  * token. This is recommended for back end interactions.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/addresses/index.html
  */
-import {
-  Attributes,
-  CrudQueryableResource,
-  Identifiable,
-  QueryableResource,
-  Resource,
-  ResourceList,
-  ResourcePage
-} from './core'
+import { Attributes, Identifiable, Resource, ResourcePage } from './core'
 import { WithRequired } from './util'
-import { AccountMembership, AccountMembershipCreateBody, AccountMembershipsInclude } from "./account-memberships";
 
 /**
  * Core Address Base Interface
@@ -34,24 +25,26 @@ export interface AccountAddressBase {
   line_1: string
   line_2: string
   city: string
-  county: string
+  county?: string
+  region?: string
   postcode: string
   country: string
 }
 
 export interface AccountAddress extends Identifiable, AccountAddressBase {}
 
-interface AccountAddressEdit
+export interface AccountAddressEdit
   extends WithRequired<
-      AccountAddress,
-      | 'type'
-      | 'first_name'
-      | 'last_name'
-      | 'line_1'
-      | 'postcode'
-      | 'county'
-      | 'country'
-    > {}
+    AccountAddress,
+    | 'type'
+    | 'first_name'
+    | 'last_name'
+    | 'line_1'
+    | 'postcode'
+    | 'county'
+    | 'region'
+    | 'country'
+  > {}
 
 /**
  * Address Endpoints

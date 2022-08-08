@@ -1,7 +1,7 @@
 import { buildURL } from '../utils/helpers'
 import RequestFactory from '../factories/request'
 
-class CatalogQuery {
+class ShopperCatalogQuery {
   Filter(filter) {
     this.filter = filter
 
@@ -21,7 +21,15 @@ class CatalogQuery {
   }
 }
 
-class Nodes extends CatalogQuery {
+class ShopperCatalogProductsQuery extends ShopperCatalogQuery {
+  With(includes) {
+    if (includes) this.includes = includes.toString().toLowerCase()
+
+    return this
+  }
+}
+
+class Nodes extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -30,9 +38,9 @@ class Nodes extends CatalogQuery {
     this.endpoint = 'nodes'
   }
 
-  All(options) {
-    const { token = null } = options || { token: null }
+  All({ token = null, additionalHeaders = null } = {}) {
     const { limit, offset, filter } = this
+
     return this.request.send(
       buildURL(`catalog/${this.endpoint}`, {
         limit,
@@ -41,21 +49,30 @@ class Nodes extends CatalogQuery {
       }),
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 
-  Get({ nodeId, token = null }) {
+  Get({ nodeId, token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}/${nodeId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 
-  GetNodeChildren({ nodeId, token = null }) {
+  GetNodeChildren({ nodeId, token = null, additionalHeaders = null }) {
     const { limit, offset, filter } = this
+
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/children`, {
         limit,
@@ -64,12 +81,35 @@ class Nodes extends CatalogQuery {
       }),
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
+
+  GetNodeProducts({ nodeId, token = null, additionalHeaders = null }) {
+    const { limit, offset, filter } = this
+
+    return this.request.send(
+      buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
+        limit,
+        offset,
+        filter
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 }
 
-class Hierarchies extends CatalogQuery {
+class Hierarchies extends ShopperCatalogQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -78,46 +118,67 @@ class Hierarchies extends CatalogQuery {
     this.endpoint = 'hierarchies'
   }
 
-  All(options) {
-    const { token = null } = options || { token: null }
+  All({ token = null, additionalHeaders = null } = {}) {
     return this.request.send(
       `catalog/${this.endpoint}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 
-  Get({ hierarchyId, token = null }) {
+  Get({ hierarchyId, token = null, additionalHeaders = null }) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      additionalHeaders
     )
   }
 
-  GetHierarchyChildren({ hierarchyId, token = null }) {
+  GetHierarchyChildren({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  }) {
     return this.request.send(
       `catalog/${this.endpoint}/${hierarchyId}/children`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 
-  GetHierarchyNodes() {
-    const { token = null } = options || { token: null }
+  GetHierarchyNodes({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  } = {}) {
     return this.request.send(
-      `catalog/${this.endpoint}/latest/nodes`,
+      `catalog/${this.endpoint}/${hierarchyId}/nodes`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
   }
 }
 
-class Products extends CatalogQuery {
+class Products extends ShopperCatalogProductsQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -126,90 +187,113 @@ class Products extends CatalogQuery {
     this.endpoint = 'products'
   }
 
-  All(options) {
-    const { limit, offset, filter } = this
-    const { token = null } = options || { token: null }
+  All({ token = null, additionalHeaders = null } = {}) {
+    const { limit, offset, filter, includes } = this
+
     return this.request.send(
       buildURL(`catalog/${this.endpoint}`, {
         limit,
         offset,
-        filter
-      }),
-      'GET',
-      undefined,
-      token
-    )
-  }
-
-  Get({ productId, token = null }) {
-    return this.request.send(
-      `catalog/${this.endpoint}/${productId}`,
-      'GET',
-      undefined,
-      token
-    )
-  }
-
-  GetProductsByNode({ nodeId, token = null }) {
-    const { limit, offset, filter } = this
-    return this.request.send(
-      buildURL(`catalog/nodes/${nodeId}/relationships/${this.endpoint}`, {
-        limit,
-        offset,
-        filter
-      }),
-      'GET',
-      undefined,
-      token
-    )
-  }
-
-  GetProductsByHierarchy({ hierarchyId, token = null }) {
-    const { limit, offset, filter } = this
-    return this.request.send(
-      buildURL(`catalog/hierarchies/${hierarchyId}/${this.endpoint}`, {
-        limit,
-        offset,
-        filter
-      }),
-      'GET',
-      undefined,
-      token
-    )
-  }
-}
-
-class CatalogEndpoint extends CatalogQuery {
-  constructor(endpoint) {
-    super()
-    const config = { ...endpoint } // Need to clone config so it is only updated in PCM
-    config.version = 'pcm'
-    this.Nodes = new Nodes(endpoint)
-    this.Hierarchies = new Hierarchies(endpoint)
-    this.Products = new Products(endpoint)
-    this.endpoint = 'catalogs'
-    this.request = new RequestFactory(config)
-  }
-
-  All(token = null) {
-    const { includes, sort, limit, offset, filter } = this
-
-    this.call = this.request.send(
-      buildURL(this.endpoint, {
-        includes,
-        sort,
-        limit,
-        offset,
-        filter
+        filter,
+        includes
       }),
       'GET',
       undefined,
       token,
-      this
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
+
+  Get({ productId, token = null, additionalHeaders = null }) {
+    const { includes } = this
+
+    return this.request.send(
+      buildURL(`catalog/${this.endpoint}/${productId}`, {
+        includes
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
+
+  GetProductsByNode({ nodeId, token = null, additionalHeaders = null }) {
+    const { limit, offset, filter, includes } = this
+
+    return this.request.send(
+      buildURL(`catalog/nodes/${nodeId}/relationships/${this.endpoint}`, {
+        limit,
+        offset,
+        filter,
+        includes
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
+
+  GetProductsByHierarchy({
+    hierarchyId,
+    token = null,
+    additionalHeaders = null
+  }) {
+    const { limit, offset, filter, includes } = this
+
+    return this.request.send(
+      buildURL(`catalog/hierarchies/${hierarchyId}/${this.endpoint}`, {
+        limit,
+        offset,
+        filter,
+        includes
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
+}
+
+class ShopperCatalogEndpoint extends ShopperCatalogQuery {
+  constructor(endpoint) {
+    super()
+    const config = { ...endpoint, version: undefined } // Need to clone config so it is only updated in PCM
+    this.Nodes = new Nodes(endpoint)
+    this.Hierarchies = new Hierarchies(endpoint)
+    this.Products = new Products(endpoint)
+    this.endpoint = 'catalog'
+    this.request = new RequestFactory(config)
+  }
+
+  Get({ token = null, additionalHeaders = null } = {}) {
+    this.call = this.request.send(
+      `${this.endpoint}`,
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
     )
 
     return this.call
   }
 }
 
-export default CatalogEndpoint
+export default ShopperCatalogEndpoint

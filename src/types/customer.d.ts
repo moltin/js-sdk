@@ -39,14 +39,14 @@ export interface CustomerFilter {
   eq?: {
     name?: string
     email?: string
-  },
+  }
   like?: {
     name?: string
     email?: string
   }
 }
 
-type CustomerInclude =
+export type CustomerInclude =
   | 'main_images'
   | 'files'
   | 'brands'
@@ -65,13 +65,13 @@ type CustomerInclude =
  */
 export interface CustomersEndpoint
   extends CrudQueryableResource<
-      Customer,
-      CustomerBase,
-      Partial<CustomerBase>,
-      CustomerFilter,
-      never,
-      CustomerInclude
-    > {
+    Customer,
+    CustomerBase,
+    Partial<CustomerBase>,
+    CustomerFilter,
+    never,
+    CustomerInclude
+  > {
   endpoint: 'customers'
 
   /**
@@ -83,7 +83,7 @@ export interface CustomersEndpoint
    * @param password [string] password for customer
    * @deprecated
    */
-  Token(email: string, password: string): Promise<Resource<CustomerToken>>;
+  Token(email: string, password: string): Promise<Resource<CustomerToken>>
 
   /**
    * Customer Tokens
@@ -94,7 +94,11 @@ export interface CustomersEndpoint
    * @param password [string] password for customer
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenViaPassword(email: string, password: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaPassword(
+    email: string,
+    password: string,
+    headers?: object
+  ): Promise<Resource<CustomerToken>>
 
   /**
    * Customer Tokens
@@ -106,5 +110,10 @@ export interface CustomersEndpoint
    * @param codeVerifier [string] an optional codeVerifier if oidc is being used
    * @param headers [object] an optional header parameter if headers would like to be included with the request
    */
-  TokenViaOIDC(code: string, redirectUri: string, codeVerifier: string, headers?: object): Promise<Resource<CustomerToken>>;
+  TokenViaOIDC(
+    code: string,
+    redirectUri: string,
+    codeVerifier: string,
+    headers?: object
+  ): Promise<Resource<CustomerToken>>
 }

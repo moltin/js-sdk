@@ -1,4 +1,4 @@
-import 'fetch-everywhere'
+import './utils/fetch-polyfill'
 import 'es6-promise'
 
 import Config from './config'
@@ -41,10 +41,15 @@ import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
 import PCMVariationsEndpoint from './endpoints/pcm-variations'
+import MetricsEndpoint from './endpoints/metrics'
+import PersonalDataEndpoint from './endpoints/personal-data'
+import DataEntriesEndpoint from './endpoints/data-entry'
+import AccountMembershipSettingsEndpoint from './endpoints/account-membership-settings'
+import ErasureRequestsEndpoint from './endpoints/erasure-requests'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
-import CatalogEndpoint from './endpoints/catalog'
+import ShopperCatalogEndpoint from './endpoints/catalog'
 
 export default class Moltin {
   constructor(config) {
@@ -61,7 +66,7 @@ export default class Moltin {
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
     this.Catalogs = new CatalogsEndpoint(config)
-    this.Catalog = new CatalogEndpoint(config)
+    this.ShopperCatalog = new ShopperCatalogEndpoint(config)
     this.Currencies = new CurrenciesEndpoint(config)
     this.Brands = new BrandsEndpoint(config)
     this.PriceBooks = new PriceBooksEndpoint(config)
@@ -84,6 +89,9 @@ export default class Moltin {
     this.Promotions = new PromotionsEndpoint(config)
     this.Variations = new VariationsEndpoint(config)
     this.PCMVariations = new PCMVariationsEndpoint(config)
+    this.PersonalData = new PersonalDataEndpoint(config)
+    this.DataEntries = new DataEntriesEndpoint(config)
+    this.ErasureRequests = new ErasureRequestsEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.UserAuthenticationInfo = new UserAuthenticationInfoEndpoint(config)
@@ -91,14 +99,17 @@ export default class Moltin {
     this.AuthenticationSettings = new AuthenticationSettingsEndpoint(config)
     this.MerchantRealmMappings = new MerchantRealmMappingsEndpoint(config)
     this.Accounts = new Accounts(config)
-    this.AccountAuthenticationSettings = new AccountAuthenticationSettingsEndpoint(
-      config
-    )
+    this.AccountAuthenticationSettings =
+      new AccountAuthenticationSettingsEndpoint(config)
     this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
+    this.AccountMembershipSettings = new AccountMembershipSettingsEndpoint(
+      config
+    )
     this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
       config
     )
+    this.Metrics = new MetricsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class

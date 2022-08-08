@@ -2,11 +2,9 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
-import {
-  Identifiable,
-  CrudQueryableResource
-} from './core'
+import { Identifiable, CrudQueryableResource } from './core'
 import { PriceBookPricesEndpoint } from './price-book-prices'
+import { PriceBookPriceModifierEndpoint } from './price-book-price-modifiers'
 
 /**
  * Core PCM Product Base Interface
@@ -35,12 +33,9 @@ export interface PriceBookFilter {
   // TODO
 }
 
-type PriceBookSort = // TODO
-  | 'name'
-  | '-name'
+type PriceBookSort = 'name' | '-name' // TODO
 
-type PriceBookInclude = // TODO
-  | 'price'
+type PriceBookInclude = 'price' // TODO
 
 export type PriceBooksUpdateBody = PriceBookBase & Identifiable
 
@@ -48,12 +43,15 @@ export type PriceBooksUpdateBody = PriceBookBase & Identifiable
  * PCM Product Endpoints
  */
 export interface PriceBooksEndpoint
-  extends CrudQueryableResource<PriceBook,
-    PriceBookBase,
-    PriceBooksUpdateBody,
-    PriceBookFilter,
-    PriceBookSort,
-    PriceBookInclude> {
+  extends CrudQueryableResource<
+      PriceBook,
+      PriceBookBase,
+      PriceBooksUpdateBody,
+      PriceBookFilter,
+      PriceBookSort,
+      PriceBookInclude
+    > {
   endpoint: 'pricebooks'
   Prices: PriceBookPricesEndpoint
+  PriceModifiers: PriceBookPriceModifierEndpoint
 }

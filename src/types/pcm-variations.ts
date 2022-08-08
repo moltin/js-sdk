@@ -10,7 +10,6 @@ import {
   Resource,
   ResourceList, ResourcePage,
 } from './core'
-import {PcmProduct} from "./pcm";
 
 
   /**
@@ -68,6 +67,7 @@ import {PcmProduct} from "./pcm";
         value?: string
         seek?: string
         set?: string
+        reference_name?: string
       }
   }
 
@@ -110,6 +110,7 @@ import {PcmProduct} from "./pcm";
     | 'sku_prepend'
     | 'sku_builder'
     | 'status'
+    | 'price'
 
   export interface VariationsBuilderModifier {
     seek: string

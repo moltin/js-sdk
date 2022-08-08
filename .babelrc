@@ -1,12 +1,11 @@
 {
   "presets": [
-    "@babel/preset-stage-3",
     [
       "@babel/preset-env",
       {
+        "corejs": "3.8",
         "useBuiltIns": "entry"
       }
     ]
-  ],
-  "plugins": ["transform-class-properties"]
+  ]
 }

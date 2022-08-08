@@ -41,6 +41,9 @@ export interface OrderBase {
 export interface Order extends Identifiable, OrderBase {
   meta: {
     display_price: {
+      authorized: FormattedPrice
+      balance_owing: FormattedPrice
+      paid: FormattedPrice
       with_tax: FormattedPrice
       without_tax: FormattedPrice
       tax: FormattedPrice
@@ -163,8 +166,9 @@ export interface OrderItem extends Identifiable, OrderItemBase {
       }
       code: string
     }
-  ],
+  ]
   components?: ProductComponents
+  catalog_source?: 'pim'
 }
 
 export interface ConfirmPaymentBody {
@@ -232,11 +236,26 @@ export interface AnonymizeOrderResponse {
   ]
 }
 
-type OrderSortAscend = 'created_at' | 'payment' | 'shipping' | 'status' | 'with_tax'
-type OrderSortDescend = '-created_at' | '-payment' | '-shipping' | '-status' | '-with_tax'
-type OrderSort = OrderSortAscend | OrderSortDescend
+export type OrderSortAscend =
+  | 'created_at'
+  | 'payment'
+  | 'shipping'
+  | 'status'
+  | 'with_tax'
+export type OrderSortDescend =
+  | '-created_at'
+  | '-payment'
+  | '-shipping'
+  | '-status'
+  | '-with_tax'
+export type OrderSort = OrderSortAscend | OrderSortDescend
 
-type OrderInclude = 'product' | 'customer' | 'items' | 'account' | 'account_member'
+export type OrderInclude =
+  | 'product'
+  | 'customer'
+  | 'items'
+  | 'account'
+  | 'account_member'
 
 /**
  * Orders Endpoints
@@ -287,7 +306,7 @@ export interface OrdersEndpoint
    */
   Update(id: string, body: Partial<OrderBase>): Promise<Resource<Order>>
 
-/**
+  /**
    * anonymize an Order
    * Description: Anonymize order with the list of the ids.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api
@@ -297,5 +316,4 @@ export interface OrdersEndpoint
    */
 
   anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
-
 }

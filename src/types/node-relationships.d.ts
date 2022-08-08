@@ -1,6 +1,7 @@
 import {
   ResourcePage,
-  Resource
+  Resource,
+  Identifiable
 } from "./core";
 import { PcmProduct } from "./pcm";
 
@@ -16,6 +17,13 @@ export interface NodeRelationship extends NodeRelationshipBase {
 export interface NodeRelationshipParent {
   type: 'node'
   id: string
+}
+
+export interface CreateChildrenSortOrderBody extends Identifiable {
+      "type": "node",
+      "meta": {
+        "sort_order": number
+      }
 }
 
 export interface NodeRelationshipsEndpoint {
@@ -58,6 +66,13 @@ export interface NodeRelationshipsEndpoint {
   DeleteParent(options: {
     hierarchyId: string
     nodeId: string
+    token?: string
+  }): Promise<void>
+
+  CreateChildrenSortOrder(options: {
+    hierarchyId: string
+    nodeId: string
+    body: CreateChildrenSortOrderBody[]
     token?: string
   }): Promise<void>
 
