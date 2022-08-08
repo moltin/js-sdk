@@ -29,15 +29,15 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Run lint
         run: |
           yarn install
           yarn lint
-  
+
   build:
     needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
@@ -45,9 +45,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Build bundles
         run: |
@@ -69,9 +69,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Run tests
         run: |
@@ -87,7 +87,7 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1.27
         with:
           files: test-results/**/*.xml
-  
+
   release:
     needs: [lint, build, test]
     runs-on: ubuntu-20.04
@@ -98,7 +98,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '16.10.0'
           cache: 'yarn'
