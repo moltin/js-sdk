@@ -9,11 +9,30 @@ import {
   ResourcePage,
   QueryableResource,
   Resource,
-  RelationshipToMany
+  RelationshipToMany,
+  Subset
 } from './core'
-import { AddressBase } from './address'
 import { FormattedPrice, Price } from './price'
 import { ProductComponents } from './pcm'
+
+export interface OrderAddressBase {
+  first_name: string
+  last_name: string
+  company_name: string
+  line_1: string
+  line_2: string
+  city: string
+  postcode: string
+  county: string
+  country: string
+}
+
+export interface OrderShippingAddress extends OrderAddressBase {
+  phone_number: string
+  instructions: string
+}
+
+export interface OrderBillingAddress extends OrderAddressBase {}
 
 /**
  * Core Object Base Interface
@@ -34,8 +53,8 @@ export interface OrderBase {
     name: string
     email: string
   }
-  shipping_address: AddressBase
-  billing_address: AddressBase
+  shipping_address: OrderShippingAddress
+  billing_address: OrderBillingAddress
 }
 
 export interface Order extends Identifiable, OrderBase {
@@ -54,7 +73,7 @@ export interface Order extends Identifiable, OrderBase {
     }
   }
   relationships?: {
-    items?: RelationshipToMany<'product'>
+    items?: RelationshipToMany<'item'>
     customer?: Relationship<'customer'>
     account?: Relationship<'account'>
     account_member?: Relationship<'account_member'>
@@ -304,7 +323,7 @@ export interface OrdersEndpoint
    * @param body
    * @constructor
    */
-  Update(id: string, body: Partial<OrderBase>): Promise<Resource<Order>>
+  Update(id: string, body: Subset<OrderBase>): Promise<Resource<Order>>
 
   /**
    * anonymize an Order
