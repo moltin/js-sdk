@@ -2,7 +2,12 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
-import { Identifiable, CrudQueryableResource, ResourcePage } from './core'
+import {
+  Identifiable,
+  CrudQueryableResource,
+  ResourcePage,
+  ResourceList
+} from './core'
 import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
@@ -140,6 +145,14 @@ export interface PcmProductsEndpoint
    */
 
   GetChildProducts(productId: string): Promise<ResourcePage<PcmProduct>>
+
+  /**
+   * Get Product Nodes
+   * https://documentation.elasticpath.com/commerce-cloud/docs/api/pcm/products/relationships/get-a-products-nodes.html
+   * @param productId - The ID of the product to get the nodes for.
+   * @constructor
+   */
+  GetProductNodes(productId: string): Promise<ResourceList<Node>>
 
   /**
    * Import Products
