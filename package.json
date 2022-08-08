@@ -8,7 +8,7 @@
     "dist/**"
   ],
   "scripts": {
-    "commit": "git-cz",
+    "commit": "cz",
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "mocha --require @babel/register -r ts-node/register test/tests.ts",
@@ -85,7 +85,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   },
   "directories": {
