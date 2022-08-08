@@ -84,7 +84,7 @@ jobs:
           path: test-results
           retention-days: 3
       - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v1.27
+        uses: EnricoMi/publish-unit-test-result-action@v1.40
         with:
           files: test-results/**/*.xml
 
