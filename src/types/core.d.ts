@@ -1,5 +1,3 @@
-import { AccountMemberBase } from './account-members'
-
 export interface Identifiable {
   id: string
 }
