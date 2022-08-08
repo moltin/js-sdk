@@ -33,6 +33,7 @@ require('./unit/variations')
 require('./unit/accounts')
 require('./unit/account-members')
 require('./unit/account-authentication-settings')
+require('./unit/account-membership-settings')
 require('./unit/account-memberships')
 
 // Utilities

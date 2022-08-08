@@ -1,4 +1,5 @@
-import { Identifiable, Resource, ResourceList } from './core'
+import { Identifiable, Resource, ResourceList, ResourcePage } from './core'
+import { Hierarchy } from './hierarchies'
 
 export interface ReleaseBase extends Identifiable {
   name: string
@@ -29,6 +30,12 @@ export interface CatalogsReleasesEndpoint {
     releaseId: string
     token?: string
   }): Promise<Resource<ReleaseResponse>>
+
+  GetAllHierarchies(options: {
+    catalogId: string
+    releaseId: string
+    token?: string
+  }): Promise<ResourcePage<Hierarchy>>
 
   Create(options: {
     catalogId: string
