@@ -96,13 +96,25 @@ const Moltin = MoltinGateway({
 })
 ```
 
-Or alternatively, create your own storage factory by passing in an object which implements the following interface:
+Or alternatively, create your own storage factory by passing in an object which implements the following interfaces:
 
-```js
-interface StorageFactory {
-  set(key: string, value: string): void;
-  get(key: string): string | null;
-  delete(key: string): void;
+```ts
+type StorageFactory = SyncStorageFactory | AyncStorageFactory
+```
+
+```ts
+interface SyncStorageFactory {
+  set(key: string, value: string): void
+  get(key: string): string | null
+  delete(key: string): void
+}
+```
+
+```ts
+interface AyncStorageFactory {
+  set(key: string, value: string): Promise<void>
+  get(key: string): Promise<string | null>
+  delete(key: string): Promise<void>
 }
 ```
 
@@ -276,4 +288,3 @@ You can learn more about the Rollup API and configuration [here](https://github.
 
 - Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/moltin/gatsby-demo-store/blob/master/.github/CONTRIBUTING.md).
 - For more information about the license, see [MIT License](https://github.com/moltin/js-sdk/blob/main/LICENSE).
-

@@ -105,31 +105,26 @@ class RequestFactory {
     this.storage = config.storage
   }
 
-  authenticate() {
+  async authenticate() {
     const { config, storage } = this
 
-    const promise = config.custom_authenticator
-      ? config.custom_authenticator()
-      : createAuthRequest(config)
+    const { access_token, refresh_token, expires } =
+      (await config.custom_authenticator)
+        ? config.custom_authenticator()
+        : createAuthRequest(config)
 
-    promise
-      .then(({ access_token, refresh_token, expires }) => {
-        if (access_token || refresh_token) {
-          const credentials = {
-            client_id: config.client_id,
-            access_token,
-            expires,
-            ...(refresh_token && { refresh_token })
-          }
-          storage.set('moltinCredentials', JSON.stringify(credentials))
-        }
-      })
-      .catch(() => {})
-
-    return promise
+    if (access_token || refresh_token) {
+      const credentials = {
+        client_id: config.client_id,
+        access_token,
+        expires,
+        ...(refresh_token && { refresh_token })
+      }
+      storage.set('moltinCredentials', JSON.stringify(credentials))
+    }
   }
 
-  send(
+  async send(
     uri,
     method,
     body = undefined,
@@ -141,7 +136,7 @@ class RequestFactory {
   ) {
     const { config, storage } = this
 
-    const credentials = getCredentials(storage)
+    const credentials = await getCredentials(storage)
 
     const req = cred => {
       const access_token = cred ? cred.access_token : null
@@ -204,7 +199,9 @@ class RequestFactory {
     }
 
     if (tokenInvalid(config) && config.reauth && !config.store_id) {
-      return this.authenticate().then(() => req(getCredentials(storage)))
+      return this.authenticate()
+        .then(getCredentials(storage))
+        .then(refreshedCredentials => req(refreshedCredentials))
     }
 
     if (instance) resetProps(instance)

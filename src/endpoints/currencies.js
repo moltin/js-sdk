@@ -20,39 +20,20 @@ class CurrenciesEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${id}`, 'PUT', body)
   }
 
-  Set(currency) {
+  async Set(currency) {
     const { config, storage } = this
 
-    storage.set('mcurrency', currency)
+    await storage.set('mcurrency', currency)
+
     config.currency = currency
 
-    const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
-
-      try {
-        resolve(request)
-      } catch (err) {
-        reject(new Error(err))
-      }
-    })
-
-    return promise
+    return storage.get('mcurrency')
   }
 
   Active() {
     const { storage } = this
 
-    const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
-
-      try {
-        resolve(request)
-      } catch (err) {
-        reject(new Error(err))
-      }
-    })
-
-    return promise
+    return storage.get('mcurrency')
   }
 }
 

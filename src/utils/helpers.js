@@ -41,14 +41,16 @@ export function createCartIdentifier() {
   )
 }
 
-export function cartIdentifier(storage) {
-  const cartId = createCartIdentifier()
+export async function cartIdentifier(storage) {
+  const cartIdResp = await storage.get('mcart')
 
-  if (storage.get('mcart') !== null && storage.get('mcart') !== undefined) {
-    return storage.get('mcart')
+  if (cartIdResp !== null && cartIdResp !== undefined) {
+    return cartIdResp
   }
 
-  storage.set('mcart', cartId)
+  const cartId = createCartIdentifier()
+
+  await storage.set('mcart', cartId)
 
   return cartId
 }
