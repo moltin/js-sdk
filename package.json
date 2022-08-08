@@ -56,7 +56,6 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
-    "husky": "0.14.3",
     "lint-staged": "7.3.0",
     "mocha": "10.0.0",
     "mocha-junit-reporter": "1.18.0",
