@@ -24,6 +24,10 @@ class MerchantRealmMappings {
       token
     )
   }
+
+  Get(id) {
+    return this.request.send(`${this.endpoint}/${id}`, 'GET')
+  }
 }
 
 export default MerchantRealmMappings

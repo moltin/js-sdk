@@ -44,6 +44,8 @@ import PCMVariationsEndpoint from './endpoints/pcm-variations'
 import MetricsEndpoint from './endpoints/metrics'
 import PersonalDataEndpoint from './endpoints/personal-data'
 import DataEntriesEndpoint from './endpoints/data-entry'
+import AccountMembershipSettingsEndpoint from './endpoints/account-membership-settings'
+import ErasureRequestsEndpoint from './endpoints/erasure-requests'
 
 import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -89,6 +91,7 @@ export default class Moltin {
     this.PCMVariations = new PCMVariationsEndpoint(config)
     this.PersonalData = new PersonalDataEndpoint(config)
     this.DataEntries = new DataEntriesEndpoint(config)
+    this.ErasureRequests = new ErasureRequestsEndpoint(config)
     this.AuthenticationRealm = new AuthenticationRealmEndpoint(config)
     this.OidcProfile = new OidcProfileEndpoint(config)
     this.UserAuthenticationInfo = new UserAuthenticationInfoEndpoint(config)
@@ -100,8 +103,12 @@ export default class Moltin {
       new AccountAuthenticationSettingsEndpoint(config)
     this.AccountMembers = new AccountMembersEndpoint(config)
     this.AccountMemberships = new AccountMembershipsEndpoint(config)
-    this.UserAuthenticationPasswordProfile =
-      new UserAuthenticationPasswordProfileEndpoint(config)
+    this.AccountMembershipSettings = new AccountMembershipSettingsEndpoint(
+      config
+    )
+    this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
+      config
+    )
     this.Metrics = new MetricsEndpoint(config)
   }
 

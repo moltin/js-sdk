@@ -28,26 +28,26 @@ jobs:
     if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Run lint
         run: |
           yarn install
           yarn lint
-  
+
   build:
     needs: [check_duplicate_workflow]
     runs-on: ubuntu-20.04
     if: ${{ needs.check_duplicate_workflow.outputs.should_skip != 'true' }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Build bundles
         run: |
@@ -68,26 +68,26 @@ jobs:
       MOCHA_FILE: test-results/mocha/test-results.xml
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '12'
+          node-version: '16.10.0'
           cache: 'yarn'
       - name: Run tests
         run: |
           yarn install
           yarn test-output
       - name: Upload test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ github.event.repository.name }}-${{ github.sha }}-${{ github.run_id }}-${{ github.job }}-results
           path: test-results
           retention-days: 3
       - name: Publish test results
-        uses: EnricoMi/publish-unit-test-result-action@v1.27
+        uses: EnricoMi/publish-unit-test-result-action@v1.40
         with:
           files: test-results/**/*.xml
-  
+
   release:
     needs: [lint, build, test]
     runs-on: ubuntu-20.04
@@ -97,8 +97,8 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '16.10.0'
           cache: 'yarn'

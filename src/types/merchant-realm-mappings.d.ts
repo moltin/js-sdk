@@ -30,4 +30,9 @@ export interface MerchantRealmMappingsEndpoint {
     body: Partial<MerchantRealmMappings>,
     token?: string
   ): Promise<Resource<MerchantRealmMappings>>
+
+  /**
+   * Get Merchant Realm Mappings by id
+   */
+  Get(id: string): Promise<Resource<MerchantRealmMappings>>
 }
