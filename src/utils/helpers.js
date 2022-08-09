@@ -237,7 +237,7 @@ export function getCredentials(storage) {
   return JSON.parse(storage.get('moltinCredentials'))
 }
 
-export function tokenInvalid({ storage, client_id, reauth }) {
+export function tokenInvalid({ storage, reauth }) {
   const credentials = getCredentials(storage)
 
   const handleInvalid = message => {
@@ -253,9 +253,6 @@ export function tokenInvalid({ storage, client_id, reauth }) {
 
   if (!credentials.access_token)
     return handleInvalid('Token status: credentials missing access_token')
-
-  if (credentials.client_id !== client_id)
-    return handleInvalid('Token status: client_id mismatch')
 
   if (Math.floor(Date.now() / 1000) >= credentials.expires)
     return handleInvalid('Token status: credentials expired')
