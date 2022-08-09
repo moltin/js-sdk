@@ -124,6 +124,7 @@ class RequestFactory {
         }) => {
           if (access_token || refresh_token) {
             const credentials = {
+              client_id: config.client_id,
               access_token,
               expires,
               expires_in,
