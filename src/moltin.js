@@ -106,9 +106,8 @@ export default class Moltin {
     this.AccountMembershipSettings = new AccountMembershipSettingsEndpoint(
       config
     )
-    this.UserAuthenticationPasswordProfile = new UserAuthenticationPasswordProfileEndpoint(
-      config
-    )
+    this.UserAuthenticationPasswordProfile =
+      new UserAuthenticationPasswordProfileEndpoint(config)
     this.Metrics = new MetricsEndpoint(config)
   }
 
