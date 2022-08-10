@@ -122,38 +122,34 @@ class FlowsEndpoint extends CRUDExtend {
     )
   }
 
-  CreateFlowRelationship(flowSlug, fieldSlug, srcId, targetType, targetId) {
+  CreateFlowRelationship(endpoint, srcId, flowSlug, targetType, targetId) {
     return this.request.send(
-      `v2/flows/${flowSlug}/entries/${srcId}/relationships/${fieldSlug}`,
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
       'POST',
       {
-        type: targetType,
-        id: targetId,
-      },
+          type: targetType,
+          id: targetId
+      }
     )
   }
 
-  // DeleteFlowRelationships(srcType, srcId, targetType) {
-  //   const srcEndpoint = getEndpoint(srcType);
-  //   const parsedType = formatUrlResource(targetType)
+  DeleteFlowRelationship(endpoint, srcId, flowSlug) {
+    return this.request.send(
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
+      'DELETE'
+    )
+  }
 
-  //   return this.request.send(
-  //     `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
-  //     'DELETE'
-  //   )
-  // }
-
-  // UpdateRelationships(srcType, srcId, targetType, resources = null) {
-  //   const srcEndpoint = getEndpoint(srcType);
-  //   const body = buildRelationshipData(targetType, resources)
-  //   const parsedType = formatUrlResource(targetType)
-
-  //   return this.request.send(
-  //     `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
-  //     'PUT',
-  //     body
-  //   )
-  // }
+  UpdateFlowRelationship(endpoint, srcId, flowSlug, targetType, targetId) {
+    return this.request.send(
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
+      'PUT',
+      {
+          type: targetType,
+          id: targetId
+      }
+    )
+  }
 }
 
 export default FlowsEndpoint
