@@ -122,39 +122,38 @@ class FlowsEndpoint extends CRUDExtend {
     )
   }
 
-  CreateFlowRelationship(srcType, srcId, targetType, resources) {
-    const srcEndpoint = getEndpoint(srcType);
-    const body = buildRelationshipData(targetType, resources)
-    const parsedType = formatUrlResource(targetType)
-
+  CreateFlowRelationship(flowSlug, fieldSlug, srcId, targetType, targetId) {
     return this.request.send(
-      `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
+      `v2/flows/${flowSlug}/entries/${srcId}/relationships/${fieldSlug}`,
       'POST',
-      body
+      {
+        type: targetType,
+        id: targetId,
+      },
     )
   }
 
-  DeleteFlowRelationships(srcType, srcId, targetType) {
-    const srcEndpoint = getEndpoint(srcType);
-    const parsedType = formatUrlResource(targetType)
+  // DeleteFlowRelationships(srcType, srcId, targetType) {
+  //   const srcEndpoint = getEndpoint(srcType);
+  //   const parsedType = formatUrlResource(targetType)
 
-    return this.request.send(
-      `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
-      'DELETE'
-    )
-  }
+  //   return this.request.send(
+  //     `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
+  //     'DELETE'
+  //   )
+  // }
 
-  UpdateRelationships(srcType, srcId, targetType, resources = null) {
-    const srcEndpoint = getEndpoint(srcType);
-    const body = buildRelationshipData(targetType, resources)
-    const parsedType = formatUrlResource(targetType)
+  // UpdateRelationships(srcType, srcId, targetType, resources = null) {
+  //   const srcEndpoint = getEndpoint(srcType);
+  //   const body = buildRelationshipData(targetType, resources)
+  //   const parsedType = formatUrlResource(targetType)
 
-    return this.request.send(
-      `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
-      'PUT',
-      body
-    )
-  }
+  //   return this.request.send(
+  //     `${srcEndpoint}/${srcId}/relationships/${parsedType}`,
+  //     'PUT',
+  //     body
+  //   )
+  // }
 }
 
 export default FlowsEndpoint
