@@ -25,10 +25,11 @@ export interface OrderAddressBase {
   postcode: string
   county: string
   country: string
+  phone_number: string
+  region: string
 }
 
 export interface OrderShippingAddress extends OrderAddressBase {
-  phone_number: string
   instructions: string
 }
 

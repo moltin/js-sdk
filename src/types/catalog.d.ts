@@ -47,6 +47,12 @@ export interface ShopperCatalogReleaseBase extends Identifiable {
       }
     }
   }
+  meta: {
+    created_at: string
+    is_full_publish: boolean
+    release_status: string
+    started_at: string
+  }
   links: {
     self: string
   }
