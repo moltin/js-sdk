@@ -1,5 +1,4 @@
-
-import * as moltin from './../';
+import * as moltin from './../'
 
 async function main() {
   const gateway = moltin.gateway({
@@ -7,12 +6,12 @@ async function main() {
     client_id: 'client_id',
     client_secret: 'client_secret',
     headers: {
-      'EP-Beta-Features': 'account-management',
-    },
-  });
+      'EP-Beta-Features': 'account-management'
+    }
+  })
 
   // const accounts = await gateway.Accounts.All();
   // console.log(accounts);
 }
 
-main().catch(console.error);
+main().catch(console.error)

@@ -281,6 +281,24 @@ class CatalogsEndpoint extends CRUDExtend {
 
     return this.call
   }
+
+  GetCatalogReleases(catalogId, token = null) {
+    return this.request.send(
+        `${this.endpoint}/${catalogId}/releases`,
+        'GET',
+        undefined,
+        token,
+    )
+  }
+
+  DeleteCatalogRelease(catalogId, releaseId, token = null) {
+    return this.request.send(
+        `${this.endpoint}/${catalogId}/releases/${releaseId}`,
+        'DELETE',
+        undefined,
+        token
+    )
+  }
 }
 
 export default CatalogsEndpoint

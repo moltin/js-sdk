@@ -1,4 +1,10 @@
-import { AccountMemberBase } from './account-members'
+/**
+ * Supporting nested Partial properties
+ * https://grrr.tech/posts/2021/typescript-partial/
+ */
+export type Subset<K> = {
+  [attr in keyof K]?: K[attr] extends object ? Subset<K[attr]> : K[attr]
+}
 
 export interface Identifiable {
   id: string

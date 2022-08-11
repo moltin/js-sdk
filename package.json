@@ -8,7 +8,7 @@
     "dist/**"
   ],
   "scripts": {
-    "commit": "git-cz",
+    "commit": "cz",
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "mocha --require @babel/register -r ts-node/register test/tests.ts",
@@ -49,7 +49,7 @@
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.0.6",
     "chai": "4.3.0",
-    "commitizen": "^4.2.4",
+    "commitizen": "^4.2.5",
     "core-js": "3",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "~8.20.0",
@@ -85,7 +85,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "cz-conventional-changelog"
     }
   },
   "directories": {
