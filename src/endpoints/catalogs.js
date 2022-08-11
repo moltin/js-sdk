@@ -284,19 +284,10 @@ class CatalogsEndpoint extends CRUDExtend {
 
   GetCatalogReleases(catalogId, token = null) {
     return this.request.send(
-        buildURL(`${this.endpoint}/${catalogId}/releases`),
+        `${this.endpoint}/${catalogId}/releases`,
         'GET',
         undefined,
         token,
-    )
-  }
-
-  GetCatalogRelease(catalogId, releaseId, token = null) {
-    return this.request.send(
-        buildURL(`${this.endpoint}/${catalogId}/releases/${releaseId}`),
-        'GET',
-        undefined,
-        token
     )
   }
 

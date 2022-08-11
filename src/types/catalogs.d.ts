@@ -2,7 +2,7 @@
  * Products
  * Description: Products are the core resource to any Commerce Cloud project. They can be associated by category, collection, brands, and more.
  */
-import { Identifiable, CrudQueryableResource, ResourcePage } from './core'
+import { Identifiable, CrudQueryableResource, ResourceList } from './core'
 import { CatalogsNodesEndpoint } from './catalogs-nodes'
 import { CatalogsProductsEndpoint } from './catalogs-products'
 import { CatalogsReleasesEndpoint } from './catalogs-releases'
@@ -64,6 +64,6 @@ export interface CatalogsEndpoint
   Products: CatalogsProductsEndpoint
   Releases: CatalogsReleasesEndpoint
   Rules: CatalogsRulesEndpoint
-  GetCatalogReleases(catalogId: string, token?: string): Promise<ResourcePage<ShopperCatalogReleaseBase>>
+  GetCatalogReleases(catalogId: string, token?: string): Promise<ResourceList<ShopperCatalogReleaseBase>>
   DeleteCatalogRelease(catalogId: string, releaseId: string, token?: string): Promise<void>
 }
