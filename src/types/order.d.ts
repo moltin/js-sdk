@@ -18,18 +18,19 @@ import { ProductComponents } from './pcm'
 export interface OrderAddressBase {
   first_name: string
   last_name: string
-  company_name: string
+  company_name?: string
   line_1: string
-  line_2: string
-  city: string
+  line_2?: string
+  city?: string
   postcode: string
-  county: string
+  county?: string
   country: string
+  region: string
 }
 
 export interface OrderShippingAddress extends OrderAddressBase {
-  phone_number: string
-  instructions: string
+  phone_number?: string
+  instructions?: string
 }
 
 export interface OrderBillingAddress extends OrderAddressBase {}
