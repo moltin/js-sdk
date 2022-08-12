@@ -1,6 +1,9 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
+import {
+  gateway as MoltinGateway,
+  MemoryStorageFactory
+} from '../../src/moltin'
 import {
   auth,
   promotionsArray as promotions,
@@ -12,7 +15,8 @@ const accessToken = 'testaccesstoken'
 
 describe('Moltin promotions', () => {
   const Moltin = MoltinGateway({
-    custom_authenticator: () => auth(accessToken)
+    custom_authenticator: () => auth(accessToken),
+    storage: new MemoryStorageFactory()
   })
 
   it('should return an array of promotions', () => {

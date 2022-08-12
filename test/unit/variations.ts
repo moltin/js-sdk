@@ -1,6 +1,9 @@
 import { assert } from 'chai'
 import nock from 'nock'
-import { gateway as MoltinGateway } from '../../src/moltin'
+import {
+  gateway as MoltinGateway,
+  MemoryStorageFactory
+} from '../../src/moltin'
 import {
   variationsArray as variations,
   optionsArray as options,
@@ -13,8 +16,11 @@ const accessToken = 'testaccesstoken'
 
 describe('Moltin variations', () => {
   const Moltin = MoltinGateway({
-    custom_authenticator: () => auth(accessToken)
+    custom_authenticator: () => auth(accessToken),
+    storage: new MemoryStorageFactory()
   })
+
+  console.log('expected auth header: ', `Bearer ${accessToken}`)
 
   it('should return an a single variation', () => {
     nock(apiUrl, {

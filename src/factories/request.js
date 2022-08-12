@@ -113,17 +113,29 @@ class RequestFactory {
       : createAuthRequest(config)
 
     promise
-      .then(({ access_token, refresh_token, expires }) => {
-        if (access_token || refresh_token) {
-          const credentials = {
-            client_id: config.client_id,
-            access_token,
-            expires,
-            ...(refresh_token && { refresh_token })
+      .then(
+        ({
+          access_token,
+          refresh_token,
+          expires,
+          expires_in,
+          identifier,
+          token_type
+        }) => {
+          if (access_token || refresh_token) {
+            const credentials = {
+              client_id: config.client_id,
+              access_token,
+              expires,
+              expires_in,
+              identifier,
+              token_type,
+              ...(refresh_token && { refresh_token })
+            }
+            storage.set('moltinCredentials', JSON.stringify(credentials))
           }
-          storage.set('moltinCredentials', JSON.stringify(credentials))
         }
-      })
+      )
       .catch(() => {})
 
     return promise

@@ -52,7 +52,7 @@ import { PersonalDataEndpoint } from './types/personal-data'
 import { DataEntriesEndpoint } from './types/data-entries'
 import { ErasureRequestsEndpoint } from './types/erasure-requests'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
-import { AccountMembershipSettingsEndpoint } from './types/account-membership-settings';
+import { AccountMembershipSettingsEndpoint } from './types/account-membership-settings'
 
 export * from './types/config'
 export * from './types/storage'
@@ -124,7 +124,7 @@ export class Moltin {
   cartId?: string
   request: RequestFactory
   storage: StorageFactory
-  credentials: AuthenticateResponseBody
+  credentials: () => AuthenticateResponseBody | null
   Products: ProductsEndpoint
   PCM: PcmProductsEndpoint
   Catalogs: CatalogsEndpoint
