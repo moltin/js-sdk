@@ -181,7 +181,7 @@ export interface HierarchiesShopperCatalogEndpoint
     hierarchyId: string
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
-  }): Promise<ShopperCatalogResourcePage<Hierarchy>>
+  }): Promise<ShopperCatalogResourcePage<Node>>
 }
 
 export interface ShopperCatalogEndpoint
