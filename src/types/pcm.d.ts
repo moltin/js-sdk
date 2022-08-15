@@ -15,6 +15,7 @@ import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
 import { PcmJobsEndpoint } from './pcm-jobs'
 import { File } from './file'
 import { Locales } from './locales'
+import { Node } from './nodes'
 
 /**
  * Core PCM Product Base Interface
