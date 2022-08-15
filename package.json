@@ -66,7 +66,7 @@
     "rimraf": "2.6.2",
     "rollup": "^2.76.0",
     "rollup-plugin-dts": "^4.2.2",
-    "rollup-plugin-filesize": "9.1.0",
+    "rollup-plugin-filesize": "9.1.2",
     "rollup-plugin-ignore": "1.0.10",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.0",
