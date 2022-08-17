@@ -66,4 +66,5 @@ export interface CatalogsEndpoint
   Rules: CatalogsRulesEndpoint
   GetCatalogReleases(catalogId: string, token?: string): Promise<ResourceList<ShopperCatalogReleaseBase>>
   DeleteCatalogRelease(catalogId: string, releaseId: string, token?: string): Promise<void>
+  DeleteAllCatalogReleases(catalogId: string, token?: string): Promise<void>
 }
