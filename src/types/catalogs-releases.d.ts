@@ -42,4 +42,8 @@ export interface CatalogsReleasesEndpoint {
     catalogId: string
     token?: string
   }): Promise<Resource<ReleaseBase>>
+
+  Limit(value: number): CatalogsReleasesEndpoint
+
+  Offset(value: number): CatalogsReleasesEndpoint
 }
