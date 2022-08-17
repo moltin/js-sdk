@@ -307,7 +307,7 @@ class CatalogsEndpoint extends CRUDExtend {
     )
   }
 
-  DeleteAllCatalogRelease(catalogId, token = null) {
+  DeleteAllCatalogReleases(catalogId, token = null) {
     return this.request.send(
         `${this.endpoint}/${catalogId}/releases`,
         'DELETE',
