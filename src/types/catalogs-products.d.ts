@@ -41,11 +41,10 @@ export interface ProductResponse extends Identifiable {
     catalog_source?: 'pcm'
     pricebook_id?: string
     display_price?: {
-      without_tax: {
-        amount: number
-        currency: string
-        formatted: string
-      }
+      without_tax: FormattedPrice
+    }
+    original_display_price?: {
+      without_tax: FormattedPrice
     }
     variation_matrix?: MatrixObject
     variations?: CatalogsProductVariation[]
