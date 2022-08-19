@@ -61,7 +61,7 @@ export interface TransactionBase {
   currency: string
   refunded_amount: number
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
-  status: 'complete' | 'failed'
+  status: 'complete' | 'failed' | 'pending' | 'cancelled'
   relationships: any
   meta: {
     display_price: {
@@ -92,6 +92,7 @@ export interface Transaction extends Identifiable, TransactionBase {}
  * Get single DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#get-get-single-transaction
  * Capture DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-capture-payment
  * Refund DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-refund-payment
+ * Cancel DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions/cancel-a-pending-transaction.html
  */
 export interface TransactionEndpoint {
   endpoint: 'transaction'
@@ -108,10 +109,21 @@ export interface TransactionEndpoint {
     transaction: string
   }): Promise<TransactionsResponse>
 
-  Refund(options: {
-    order: string
-    transaction: string
-  },
-  body?: { amount: number }
+  Refund(
+    options: {
+      order: string
+      transaction: string
+    },
+    body?: { amount: number }
+  ): Promise<TransactionsResponse>
+
+  Cancel(
+    options: {
+      order: string
+      transaction: string
+    },
+    body?: {
+      reason: 'duplicate' | 'fraudulent' | 'requested_by_customer' | 'abandoned'
+    }
   ): Promise<TransactionsResponse>
 }
