@@ -34,6 +34,14 @@ class TransactionsEndpoint extends BaseExtend {
       body
     )
   }
+
+  Cancel({ order, transaction }, body) {
+    return this.request.send(
+        `orders/${order}/${this.endpoint}/${transaction}/cancel`,
+        'POST',
+        body
+    )
+  }
 }
 
 export default TransactionsEndpoint
