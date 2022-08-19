@@ -61,7 +61,7 @@ export interface TransactionBase {
   currency: string
   refunded_amount: number
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
-  status: 'complete' | 'failed'
+  status: 'complete' | 'failed' | 'pending' | 'cancelled'
   relationships: any
   meta: {
     display_price: {
