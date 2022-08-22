@@ -50,7 +50,7 @@
     "@types/node": "^18.0.6",
     "chai": "4.3.0",
     "commitizen": "^4.2.5",
-    "core-js": "3",
+    "core-js": "3.24.1",
     "cz-conventional-changelog": "2.1.0",
     "eslint": "8.22.0",
     "eslint-config-airbnb-base": "15.0.0",
