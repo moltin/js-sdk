@@ -1,0 +1,1 @@
+export type Extensions = Record<string, Record<string, string | number | boolean>>

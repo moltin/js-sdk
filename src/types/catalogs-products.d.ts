@@ -2,7 +2,9 @@ import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
 import type { ProductFilter } from './product'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
-import { FormattedPrice } from './price'
+import type {Extensions} from "./extensions";
+import type { FormattedPrice } from './price'
+
 
 export interface CatalogsProductVariation extends Omit<Variation, 'relationships' | 'options'> {
   options: Omit<Option, 'modifiers'>[]
@@ -34,7 +36,8 @@ export interface ProductResponse extends Identifiable {
     store_id: string
     translations: string[]
     updated_at: string
-    weight: string
+    weight: string,
+    extensions?: Extensions
   };
   meta: {
     catalog_id?: string
