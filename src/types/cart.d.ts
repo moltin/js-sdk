@@ -133,8 +133,20 @@ export interface CartItemObject {
   code?: string
 }
 
+export type CartInclude =
+    | 'items'
+    | 'tax_items'
+
+interface CartQueryableResource <
+    R,
+    F,
+    S,
+    > extends QueryableResource<Cart, F, S, CartInclude> {
+  With(includes: CartInclude | CartInclude[]): CartEndpoint
+}
+
 export interface CartEndpoint
-  extends QueryableResource<Cart, never, never, never> {
+  extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
   cartId: string
 
