@@ -28,12 +28,15 @@ export interface CreateCartObject {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/index.html
  */
 export interface ItemTaxObject {
-  id: string
   type: 'tax-item'
   name: string
   jurisdiction: string
   code: string
   rate: number
+}
+
+export interface ItemTaxObjectResponse extends ItemTaxObject{
+  id: string
 }
 
 /**
@@ -123,7 +126,7 @@ export interface CartItemsResponse {
     }
   },
   included?: {
-    tax_items?: ItemTaxObject[]
+    tax_items?: ItemTaxObjectResponse[]
   }
 }
 
@@ -401,7 +404,7 @@ export interface CartEndpoint
   AddItemTax(
     itemId: string,
     taxData: ItemTaxObject
-  ): Promise<Resource<ItemTaxObject>>
+  ): Promise<Resource<ItemTaxObjectResponse>>
 
   /**
    * Update a Tax Item
@@ -414,7 +417,7 @@ export interface CartEndpoint
     itemId: string,
     taxItemId: string,
     taxData: ItemTaxObject
-  ): Promise<Resource<ItemTaxObject>>
+  ): Promise<Resource<ItemTaxObjectResponse>>
 
   /**
    * Delete a Tax Item

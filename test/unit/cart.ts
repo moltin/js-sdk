@@ -1007,7 +1007,8 @@ describe('Moltin cart', () => {
       code: 'CALI',
       rate: 0.0775,
       jurisdiction: 'CALIFORNIA',
-      name: 'California Tax'
+      name: 'California Tax',
+      type: 'tax-item'
     }
 
     // Intercept the API request
@@ -1034,7 +1035,8 @@ describe('Moltin cart', () => {
       code: 'CALI',
       rate: 0.0775,
       jurisdiction: 'CALIFORNIA',
-      name: 'California Tax'
+      name: 'California Tax',
+      type: 'tax-item'
     }
 
     // Intercept the API request
