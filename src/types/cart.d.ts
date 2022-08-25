@@ -28,10 +28,15 @@ export interface CreateCartObject {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/index.html
  */
 export interface ItemTaxObject {
+  type: 'tax-item'
   name: string
   jurisdiction: string
   code: string
   rate: number
+}
+
+export interface ItemTaxObjectResponse extends ItemTaxObject{
+  id: string
 }
 
 /**
@@ -119,6 +124,9 @@ export interface CartItemsResponse {
       updated_at: string
       expires_at: string
     }
+  },
+  included?: {
+    tax_items?: ItemTaxObjectResponse[]
   }
 }
 
@@ -145,6 +153,14 @@ interface CartQueryableResource <
   With(includes: CartInclude | CartInclude[]): CartEndpoint
 }
 
+export interface ResourceIncluded<R, I = never> extends Resource<R> {
+  included?: I
+}
+
+export interface CartIncluded {
+  items: CartItem[]
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -154,7 +170,7 @@ export interface CartEndpoint
    * Get a Cart by reference
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/get-a-cart.html
    */
-  Get(): Promise<Resource<Cart>>
+  Get(): Promise<ResourceIncluded<Cart, CartIncluded>>
 
   /**
    * Get Cart Items
@@ -388,7 +404,7 @@ export interface CartEndpoint
   AddItemTax(
     itemId: string,
     taxData: ItemTaxObject
-  ): Promise<Resource<ItemTaxObject>>
+  ): Promise<Resource<ItemTaxObjectResponse>>
 
   /**
    * Update a Tax Item
@@ -401,7 +417,7 @@ export interface CartEndpoint
     itemId: string,
     taxItemId: string,
     taxData: ItemTaxObject
-  ): Promise<Resource<ItemTaxObject>>
+  ): Promise<Resource<ItemTaxObjectResponse>>
 
   /**
    * Delete a Tax Item
