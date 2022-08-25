@@ -16,7 +16,14 @@ class CartEndpoint extends BaseExtend {
   }
 
   Get() {
-    return this.request.send(`${this.endpoint}/${this.cartId}`, 'GET')
+    const { includes } = this
+
+    return this.request.send(
+        buildURL(`${this.endpoint}/${this.cartId}`, {
+          includes,
+        }),
+        'GET'
+    )
   }
 
   Items() {
