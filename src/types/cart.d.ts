@@ -28,6 +28,8 @@ export interface CreateCartObject {
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/index.html
  */
 export interface ItemTaxObject {
+  id: string
+  type: 'tax-item'
   name: string
   jurisdiction: string
   code: string
@@ -119,6 +121,9 @@ export interface CartItemsResponse {
       updated_at: string
       expires_at: string
     }
+  },
+  included?: {
+    tax_items?: ItemTaxObject[]
   }
 }
 
@@ -145,6 +150,14 @@ interface CartQueryableResource <
   With(includes: CartInclude | CartInclude[]): CartEndpoint
 }
 
+export interface ResourceIncluded<R, I = never> extends Resource<R> {
+  included?: I
+}
+
+export interface CartIncluded {
+  items: CartItem[]
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -154,7 +167,7 @@ export interface CartEndpoint
    * Get a Cart by reference
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/get-a-cart.html
    */
-  Get(): Promise<Resource<Cart>>
+  Get(): Promise<ResourceIncluded<Cart, CartIncluded>>
 
   /**
    * Get Cart Items
