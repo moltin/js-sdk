@@ -6,6 +6,7 @@ import {
   getCredentials,
   isNode
 } from '../utils/helpers'
+import {DEFAULT_CREDENTIALS_KEY} from "../endpoints/constants";
 
 const createAuthRequest = config => {
   if (!config.client_id) {
@@ -132,7 +133,7 @@ class RequestFactory {
               token_type,
               ...(refresh_token && { refresh_token })
             }
-            storage.set('moltinCredentials', JSON.stringify(credentials))
+            storage.set(DEFAULT_CREDENTIALS_KEY, JSON.stringify(credentials))
           }
         }
       )

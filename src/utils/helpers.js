@@ -1,4 +1,5 @@
 import { pluralize, underscore } from 'inflected'
+import {DEFAULT_CART_KEY, DEFAULT_CREDENTIALS_KEY} from "../endpoints/constants";
 
 export function buildRelationshipData(type, ids, typeModifier = underscore) {
   let data = []
@@ -44,11 +45,11 @@ export function createCartIdentifier() {
 export function cartIdentifier(storage) {
   const cartId = createCartIdentifier()
 
-  if (storage.get('mcart') !== null && storage.get('mcart') !== undefined) {
-    return storage.get('mcart')
+  if (storage.get(DEFAULT_CART_KEY) !== null && storage.get(DEFAULT_CART_KEY) !== undefined) {
+    return storage.get(DEFAULT_CART_KEY)
   }
 
-  storage.set('mcart', cartId)
+  storage.set(DEFAULT_CART_KEY, cartId)
 
   return cartId
 }
@@ -234,7 +235,7 @@ export function resetProps(instance) {
 }
 
 export function getCredentials(storage) {
-  return JSON.parse(storage.get('moltinCredentials'))
+  return JSON.parse(storage.get(DEFAULT_CREDENTIALS_KEY))
 }
 
 export function tokenInvalid({ storage, client_id, reauth }) {

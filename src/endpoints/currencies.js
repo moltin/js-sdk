@@ -1,4 +1,5 @@
 import BaseExtend from '../extends/base'
+import {DEFAULT_CURRENCY_KEY} from "./constants";
 
 class CurrenciesEndpoint extends BaseExtend {
   constructor(config) {
@@ -23,11 +24,11 @@ class CurrenciesEndpoint extends BaseExtend {
   Set(currency) {
     const { config, storage } = this
 
-    storage.set('mcurrency', currency)
+    storage.set(DEFAULT_CURRENCY_KEY, currency)
     config.currency = currency
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
+      const request = storage.get(DEFAULT_CURRENCY_KEY)
 
       try {
         resolve(request)
@@ -43,7 +44,7 @@ class CurrenciesEndpoint extends BaseExtend {
     const { storage } = this
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
+      const request = storage.get(DEFAULT_CURRENCY_KEY)
 
       try {
         resolve(request)
