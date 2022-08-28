@@ -1,5 +1,5 @@
 import { pluralize, underscore } from 'inflected'
-import {DEFAULT_CART_KEY, DEFAULT_CREDENTIALS_KEY} from "../endpoints/constants";
+import {DEFAULT_CART_KEY, DEFAULT_CREDENTIALS_KEY} from "../constants";
 
 export function buildRelationshipData(type, ids, typeModifier = underscore) {
   let data = []

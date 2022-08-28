@@ -1,5 +1,5 @@
 import BaseExtend from '../extends/base'
-import {DEFAULT_CURRENCY_KEY} from "./constants";
+import {DEFAULT_CURRENCY_KEY} from "../constants";
 
 class CurrenciesEndpoint extends BaseExtend {
   constructor(config) {

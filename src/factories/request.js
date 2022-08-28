@@ -6,7 +6,7 @@ import {
   getCredentials,
   isNode
 } from '../utils/helpers'
-import {DEFAULT_CREDENTIALS_KEY} from "../endpoints/constants";
+import {DEFAULT_CREDENTIALS_KEY} from "../constants";
 
 const createAuthRequest = config => {
   if (!config.client_id) {
