@@ -22,6 +22,7 @@ export interface RequestFactory {
 }
 
 export interface ConfigOptions {
+  name?: string
   application?: string
   client_id?: string
   client_secret?: string
@@ -41,6 +42,7 @@ export interface ConfigOptions {
 }
 
 export interface Config {
+  name?: string
   application?: string
   client_id: string
   client_secret?: string

@@ -4,9 +4,8 @@ import {
   resetProps,
   tokenInvalid,
   getCredentials,
-  isNode
+  isNode, resolveCredentialsStorageKey
 } from '../utils/helpers'
-import {DEFAULT_CREDENTIALS_KEY} from "../constants";
 
 const createAuthRequest = config => {
   if (!config.client_id) {
@@ -133,7 +132,8 @@ class RequestFactory {
               token_type,
               ...(refresh_token && { refresh_token })
             }
-            storage.set(DEFAULT_CREDENTIALS_KEY, JSON.stringify(credentials))
+
+            storage.set(resolveCredentialsStorageKey(config.name), JSON.stringify(credentials))
           }
         }
       )
@@ -154,7 +154,8 @@ class RequestFactory {
   ) {
     const { config, storage } = this
 
-    const credentials = getCredentials(storage)
+    const storageKey = resolveCredentialsStorageKey(config.name);
+    const credentials = getCredentials(storage, storageKey)
 
     const req = cred => {
       const access_token = cred ? cred.access_token : null
@@ -217,7 +218,7 @@ class RequestFactory {
     }
 
     if (tokenInvalid(config) && config.reauth && !config.store_id) {
-      return this.authenticate().then(() => req(getCredentials(storage)))
+      return this.authenticate().then(() => req(getCredentials(storage, storageKey)))
     }
 
     if (instance) resetProps(instance)

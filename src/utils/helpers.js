@@ -1,5 +1,5 @@
 import { pluralize, underscore } from 'inflected'
-import {DEFAULT_CART_KEY, DEFAULT_CREDENTIALS_KEY} from "../constants";
+import {DEFAULT_CART_KEY, DEFAULT_CREDENTIALS_KEY, DEFAULT_CURRENCY_KEY} from "./constants";
 
 export function buildRelationshipData(type, ids, typeModifier = underscore) {
   let data = []
@@ -42,14 +42,25 @@ export function createCartIdentifier() {
   )
 }
 
-export function cartIdentifier(storage) {
-  const cartId = createCartIdentifier()
+export function resolveCurrencyStorageKey(name) {
+  return name ? `${name}_ep_currency` : DEFAULT_CURRENCY_KEY
+}
 
-  if (storage.get(DEFAULT_CART_KEY) !== null && storage.get(DEFAULT_CART_KEY) !== undefined) {
-    return storage.get(DEFAULT_CART_KEY)
+export function resolveCartStorageKey(name) {
+  return name ? `${name}_ep_cart` : DEFAULT_CART_KEY
+}
+
+export function cartIdentifier(storage, name) {
+  const cartId = createCartIdentifier()
+  const cartStorageKey = resolveCartStorageKey(name)
+
+  const cartStorageValue = storage.get(cartStorageKey)
+
+  if (cartStorageValue !== null && cartStorageValue !== undefined) {
+    return storage.get(cartStorageKey)
   }
 
-  storage.set(DEFAULT_CART_KEY, cartId)
+  storage.set(cartStorageKey, cartId)
 
   return cartId
 }
@@ -234,12 +245,16 @@ export function resetProps(instance) {
   )
 }
 
-export function getCredentials(storage) {
-  return JSON.parse(storage.get(DEFAULT_CREDENTIALS_KEY))
+export function getCredentials(storage, storageKey) {
+  return JSON.parse(storage.get(storageKey) ?? null)
 }
 
-export function tokenInvalid({ storage, client_id, reauth }) {
-  const credentials = getCredentials(storage)
+export function resolveCredentialsStorageKey(name) {
+  return name ? `${name}_ep_credentials` : DEFAULT_CREDENTIALS_KEY
+}
+
+export function tokenInvalid({ storage, client_id, reauth, name }) {
+  const credentials = getCredentials(storage, resolveCredentialsStorageKey(name))
 
   const handleInvalid = message => {
     /* eslint-disable no-console */
@@ -271,3 +286,4 @@ export function isNode() {
     process.versions.node != null
   )
 }
+

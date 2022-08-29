@@ -47,7 +47,7 @@ import DataEntriesEndpoint from './endpoints/data-entry'
 import AccountMembershipSettingsEndpoint from './endpoints/account-membership-settings'
 import ErasureRequestsEndpoint from './endpoints/erasure-requests'
 
-import { cartIdentifier, tokenInvalid, getCredentials } from './utils/helpers'
+import {cartIdentifier, tokenInvalid, getCredentials, resolveCredentialsStorageKey} from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
 import ShopperCatalogEndpoint from './endpoints/catalog'
 
@@ -55,13 +55,14 @@ export default class Moltin {
   constructor(config) {
     this.config = config
 
-    if (!config.disableCart) this.cartId = cartIdentifier(config.storage)
+    if (!config.disableCart) this.cartId = cartIdentifier(config.storage, config.name)
 
     this.tokenInvalid = () => tokenInvalid(config)
 
     this.request = new RequestFactory(config)
     this.storage = config.storage
-    this.credentials = () => getCredentials(config.storage)
+
+    this.credentials = () => getCredentials(config.storage, resolveCredentialsStorageKey(config.name))
 
     this.Products = new ProductsEndpoint(config)
     this.PCM = new PCMEndpoint(config)
