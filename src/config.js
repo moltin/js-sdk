@@ -5,6 +5,7 @@ import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
 class Config {
   constructor(options) {
     const {
+      name,
       application,
       client_id,
       client_secret,
@@ -25,6 +26,7 @@ class Config {
       fetchMaxAttempts
     } = options
 
+    this.name = name
     this.application = application
     this.client_id = client_id
     this.client_secret = client_secret

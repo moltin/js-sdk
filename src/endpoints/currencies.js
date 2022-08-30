@@ -1,4 +1,5 @@
 import BaseExtend from '../extends/base'
+import {resolveCurrencyStorageKey} from "../utils/helpers";
 
 class CurrenciesEndpoint extends BaseExtend {
   constructor(config) {
@@ -22,12 +23,12 @@ class CurrenciesEndpoint extends BaseExtend {
 
   Set(currency) {
     const { config, storage } = this
-
-    storage.set('mcurrency', currency)
+    const currencyStorageKey = resolveCurrencyStorageKey(config.name)
+    storage.set(currencyStorageKey, currency)
     config.currency = currency
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
+      const request = storage.get(currencyStorageKey)
 
       try {
         resolve(request)
@@ -40,10 +41,10 @@ class CurrenciesEndpoint extends BaseExtend {
   }
 
   Active() {
-    const { storage } = this
+    const { storage, config } = this
 
     const promise = new Promise((resolve, reject) => {
-      const request = storage.get('mcurrency')
+      const request = storage.get(resolveCurrencyStorageKey(config.name))
 
       try {
         resolve(request)
