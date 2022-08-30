@@ -18,6 +18,14 @@ class Settings {
     })
   }
 
+  GetLogsTtl() {
+    return this.request.send(`${this.endpoint}/logs-ttl`, 'GET')
+  }
+
+  UpdateLogsTtl(days) {
+    return this.request.send(`${this.endpoint}/logs-ttl`, 'PUT', { days, type: 'time_to_live' });
+  }
+
   Cart() {
     return this.request.send(`${this.endpoint}/cart`, 'GET')
   }
