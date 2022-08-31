@@ -39,6 +39,11 @@ export interface Settings {
   address_mandatory_fields: string[]
 }
 
+export interface TtlSettings {
+  type: 'time_to_live'
+  days: number
+}
+
 export interface CartSettings {
   type: 'settings'
   cart_expiry_days: number
@@ -66,6 +71,10 @@ export interface SettingsEndpoint {
    * @param body the settings object
    */
   Update(body: Partial<Settings>): Promise<Resource<Settings>>
+
+  GetLogsTtl(): Promise<Resource<TtlSettings>>
+
+  UpdateLogsTtl(days: number): Promise<Resource<TtlSettings>>
 
   /**
    * Get Cart Settings
