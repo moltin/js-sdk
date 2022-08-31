@@ -106,6 +106,32 @@ interface StorageFactory {
 }
 ```
 
+### Multiple Gateways
+
+Supporting multiple gateways is as simple as giving the gateway a `name` by specifying thing `name` property when initializing the gateway.
+
+This `name` should be unique as if not it will share the same storage keys with the other gateways of the same name.
+
+```js
+import { gateway as EPCCGateway } from "@moltin/sdk"
+
+const gatewayOne = EPCCGateway({
+    name: "my-first-gateway",
+    client_id: 'XXX'
+})
+
+const gatewayTwo = EPCCGateway({
+    name: "my-second-gateway",
+    client_id: 'XXX'
+})
+```
+
+Storage keys used for storage solutions are prefixed with the name provided and end with the relevent feature e.g.
+`my-first-gateway_ep_cart`, `my-first-gateway_ep_credentials` and `my-first-gateway_ep_currency`.
+
+If no name property is provided to the EPCCGateway function the legacy behaviour included all keys remains the same.
+`mcart`, `moltinCredentials` and `mcurrency`
+
 ### Included Headers
 
 There are currently several optional headers you can pass into the configuration, which include `application`, `language` and `currency`.
