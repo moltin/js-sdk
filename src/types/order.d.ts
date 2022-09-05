@@ -14,6 +14,7 @@ import {
 } from './core'
 import { FormattedPrice, Price } from './price'
 import { ProductComponents } from './pcm'
+import { XOR } from './util'
 
 export interface OrderAddressBase {
   first_name: string
@@ -191,14 +192,158 @@ export interface OrderItem extends Identifiable, OrderItemBase {
   catalog_source?: 'pim'
 }
 
+export type PurchasePaymentMethod = 'purchase'
+export type AuthorizePaymentMethod = 'authorize'
+export type CapturePaymentMethod = 'capture'
+export type RefundPaymentMethod = 'refund'
+
+export type PaymentMethod =
+  | PurchasePaymentMethod
+  | AuthorizePaymentMethod
+  | CapturePaymentMethod
+  | RefundPaymentMethod
+
+interface PaymentBase {
+  payment: string
+}
+
+export interface AdyenPayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod | CapturePaymentMethod
+  gateway: 'adyen'
+  options: {
+    shopper_reference: string
+    recurring_processing_model?: string
+  }
+}
+
+export interface AuthorizeNetPayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod | CapturePaymentMethod
+  gateway: 'authorize_net'
+  options: {
+    customer_payment_profile_id: string
+  }
+}
+
+/** Braintree Payment **/
+
+type BraintreePaymentOptions = XOR<
+  { payment_method_nonce: true },
+  { payment_method_token: true }
+> & {
+  custom_fields?: Record<string, string>
+}
+
+export interface BraintreePayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'braintree'
+  options?: BraintreePaymentOptions
+}
+
+export interface CardConnectPayment extends PaymentBase {
+  method:
+    | PurchasePaymentMethod
+    | AuthorizePaymentMethod
+    | CapturePaymentMethod
+    | RefundPaymentMethod
+  gateway: 'card_connect'
+}
+
+export interface CyberSourcePayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'cyber_source'
+  options?: Record<string, string>
+}
+
+export interface PayPalExpressCheckoutPayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'paypal_express_checkout'
+  options?: {
+    description?: string
+    soft_descriptor?: string
+    application_context?: {
+      return_url?: string
+      cancel_url?: string
+      shipping_preference?: string
+      landing_page?: 'LOGIN' | 'BILLING' | 'NO_PREFERENCE'
+      locale?: string
+      brand_name?: string
+    }
+  }
+}
+
+/**
+ * Stripe Payments
+ */
+
+export type StripePaymentOptionBase = {
+  idempotency_key?: string
+  receipt_email?: string
+  customer?: string
+}
+
+export interface StripePaymentBase extends PaymentBase {
+  amount?: number
+  options?: StripePaymentOptionBase
+}
+
+export interface StripePayment extends StripePaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod | CapturePaymentMethod
+  gateway: 'stripe'
+  options?: StripePaymentOptionBase & {
+    destination?: string
+  }
+}
+
+export interface StripeConnectPayment extends StripePaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'stripe_connect'
+}
+
+export interface StripeIntentsPayment extends StripePaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'stripe_payment_intents'
+}
+
+export interface ElasticPathStripePayment extends StripePaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'elastic_path_payments_stripe'
+}
+
+/**
+ * Manual Payments
+ */
+
+export interface ManualPayment extends PaymentBase {
+  method: PurchasePaymentMethod | AuthorizePaymentMethod
+  gateway: 'manual'
+  amount?: number
+  paymentmethod_meta?: {
+    name?: string
+    custom_reference?: string
+  }
+}
+
+export type PaymentRequestBody =
+  | ManualPayment
+  | ElasticPathStripePayment
+  | StripeIntentsPayment
+  | StripeConnectPayment
+  | StripePayment
+  | PayPalExpressCheckoutPayment
+  | CyberSourcePayment
+  | CardConnectPayment
+  | BraintreePayment
+  | AuthorizeNetPayment
+  | AdyenPayment
+
 export interface ConfirmPaymentBody {
   method: string
   gateway: string
   payment: string
   options?: {
-    customer: string
-    idempotency_key: string
-    receipt_email: string
+    customer?: string
+    idempotency_key?: string
+    receipt_email?: string
   }
 }
 
@@ -314,7 +459,7 @@ export interface OrdersEndpoint
    * @param id - The UUID of the order that you want to authorize payment for.
    * @param body - The body of the order
    */
-  Payment(id: string, body: ConfirmPaymentBody): Promise<ConfirmPaymentResponse>
+  Payment(id: string, body: PaymentRequestBody): Promise<ConfirmPaymentResponse>
 
   /**
    * Update an Order
@@ -330,10 +475,6 @@ export interface OrdersEndpoint
    * anonymize an Order
    * Description: Anonymize order with the list of the ids.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api
-   * @param id
-   * @param body
-   * @constructor
    */
-
   anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
 }
