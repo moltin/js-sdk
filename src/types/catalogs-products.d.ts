@@ -157,4 +157,11 @@ export interface CatalogsProductsEndpoint {
     releaseId: string
     token?: string
   }): Promise<ResourcePage<PcmProduct>>
+
+  GetCatalogProductChildren(options: {
+    catalogId: string
+    releaseId: string
+    productId: string
+    token?: string
+  }): Promise<ResourcePage<PcmProduct>>
 }
