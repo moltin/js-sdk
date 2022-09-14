@@ -307,7 +307,8 @@ export interface StripeIntentsPayment extends StripePaymentBase, PaymentBase {
 export interface ElasticPathStripePayment extends StripePaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'elastic_path_payments_stripe'
-  payment_method_types: string[]
+  payment_method_types?: string[]
+  payment?: string
 }
 
 /**
