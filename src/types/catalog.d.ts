@@ -124,6 +124,12 @@ export interface ShopperCatalogProductsEndpoint
     token?: string
     additionalHeaders?: ShopperCatalogAdditionalHeaders
   }): Promise<ShopperCatalogResourcePage<ProductResponse>>
+
+  GetProductChildren(options: {
+    productId: string
+    token?: string
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+  }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 }
 
 export interface NodesShopperCatalogEndpoint
