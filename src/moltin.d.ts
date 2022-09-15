@@ -54,7 +54,7 @@ import { ErasureRequestsEndpoint } from './types/erasure-requests'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
 import { AccountMembershipSettingsEndpoint } from './types/account-membership-settings'
 import { ApplicationKeysEndpoint } from './types/application-keys'
-import {AuditLogsEndpoint} from './types/audit-logs'
+import { AuditLogsEndpoint } from './types/audit-logs'
 
 export * from './types/config'
 export * from './types/storage'
