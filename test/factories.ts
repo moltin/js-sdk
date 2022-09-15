@@ -1016,3 +1016,54 @@ export const accountMembershipsArray = [
     }
   }
 ]
+
+export const applicationKeysArray = [
+  {
+    id: 'a29a3ee0-afcc-400a-a675-9d7471a4a169',
+    name: 'application-key-1',
+    type: 'application_key',
+    client_id: '69e4c1d553f9a52d60579b08527d50ac13cd04bc04',
+    meta: {
+      timestamps: {
+        created_at: '2022-09-13T18:34:04.748025Z',
+        updated_at: '2022-09-13T18:34:04.748025Z'
+      }
+    }
+  },
+  {
+    id: '1be17a02-ffae-4175-a237-8e7ea08a408c',
+    name: 'application-key-2',
+    type: 'application_key',
+    client_id: 'f338175816c2c773217785d22252b02f3902477c17',
+    meta: {
+      timestamps: {
+        created_at: '2022-09-13T18:34:04.748025Z',
+        updated_at: '2022-09-13T18:34:04.748025Z'
+      }
+    }
+  },
+  {
+    id: 'bfb507c9-e750-47a1-89e1-ae6fae819b27',
+    name: 'application-key-3',
+    type: 'application_key',
+    client_id: '574407e5abe019393b9d5c52900e0457690ebb490b',
+    meta: {
+      timestamps: {
+        created_at: '2022-09-13T18:34:04.748025Z',
+        updated_at: '2022-09-13T18:34:04.748025Z'
+      }
+    }
+  },
+  {
+    id: '9f7de086-76bd-4f30-925c-1b298c476274',
+    name: 'application-key-4',
+    type: 'application_key',
+    client_id: '1efa47fed0b4688861ce31e00ba6ebc0a143dcbfe4',
+    meta: {
+      timestamps: {
+        created_at: '2022-09-13T18:34:04.748025Z',
+        updated_at: '2022-09-13T18:34:04.748025Z'
+      }
+    }
+  }
+]

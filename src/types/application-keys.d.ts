@@ -25,5 +25,5 @@ export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
 export interface ApplicationKeysEndpoint {
   All(): Promise<ResourcePage<ApplicationKey>>
   Create(body: ApplicationKeyBase): Promise<ApplicationKeyResponse>
-  Delete(id: string): void
+  Delete(id: string): Promise<{}>
 }
