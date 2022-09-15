@@ -281,12 +281,12 @@ export type StripePaymentOptionBase = {
   customer?: string
 }
 
-export interface StripePaymentBase extends PaymentBase {
+export interface StripePaymentBase {
   amount?: number
   options?: StripePaymentOptionBase
 }
 
-export interface StripePayment extends StripePaymentBase {
+export interface StripePayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod | CapturePaymentMethod
   gateway: 'stripe'
   options?: StripePaymentOptionBase & {
@@ -294,12 +294,12 @@ export interface StripePayment extends StripePaymentBase {
   }
 }
 
-export interface StripeConnectPayment extends StripePaymentBase {
+export interface StripeConnectPayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'stripe_connect'
 }
 
-export interface StripeIntentsPayment extends StripePaymentBase {
+export interface StripeIntentsPayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'stripe_payment_intents'
 }
@@ -307,6 +307,8 @@ export interface StripeIntentsPayment extends StripePaymentBase {
 export interface ElasticPathStripePayment extends StripePaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'elastic_path_payments_stripe'
+  payment_method_types?: string[]
+  payment?: string
 }
 
 /**
