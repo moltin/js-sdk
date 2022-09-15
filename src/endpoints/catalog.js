@@ -267,6 +267,30 @@ class Products extends ShopperCatalogProductsQuery {
       additionalHeaders
     )
   }
+
+  GetProductChildren({
+    productId,
+    token = null,
+    additionalHeaders = null
+  }) {
+    const { limit, offset, filter, includes } = this
+
+    return this.request.send(
+      buildURL(`catalog/${this.endpoint}/${productId}/relationships/children`, {
+        limit,
+        offset,
+        filter,
+        includes
+      }),
+      'GET',
+      undefined,
+      token,
+      undefined,
+      false,
+      undefined,
+      additionalHeaders
+    )
+  }
 }
 
 class ShopperCatalogEndpoint extends ShopperCatalogQuery {
