@@ -1,5 +1,4 @@
-import { CrudQueryableResource } from '../../dist/moltin'
-import { Identifiable, Resource, ResourcePage } from './core'
+import { Identifiable, Resource, ResourcePage, CrudQueryableResource } from './core'
 
 export interface ApplicationKeyBase {
   name: string
