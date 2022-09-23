@@ -1,3 +1,4 @@
+import { CrudQueryableResource } from '../../dist/moltin'
 import { Identifiable, Resource, ResourcePage } from './core'
 
 export interface ApplicationKeyBase {
@@ -22,7 +23,14 @@ export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
   }
 }
 
-export interface ApplicationKeysEndpoint {
+export interface ApplicationKeysEndpoint extends CrudQueryableResource<
+  ApplicationKey,
+  ApplicationKeyBase,
+  Partial<ApplicationKeyBase>,
+  never,
+  never,
+  never
+> {
   All(): Promise<ResourcePage<ApplicationKey>>
   Create(body: ApplicationKeyBase): Promise<ApplicationKeyResponse>
   Delete(id: string): Promise<{}>
