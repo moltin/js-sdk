@@ -1,4 +1,4 @@
-import { Identifiable, Resource, ResourcePage } from './core'
+import { Identifiable, Resource, ResourcePage, CrudQueryableResource } from './core'
 
 export interface ApplicationKeyBase {
   name: string
@@ -22,7 +22,14 @@ export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
   }
 }
 
-export interface ApplicationKeysEndpoint {
+export interface ApplicationKeysEndpoint extends CrudQueryableResource<
+  ApplicationKey,
+  ApplicationKeyBase,
+  Partial<ApplicationKeyBase>,
+  never,
+  never,
+  never
+> {
   All(): Promise<ResourcePage<ApplicationKey>>
   Create(body: ApplicationKeyBase): Promise<ApplicationKeyResponse>
   Delete(id: string): Promise<{}>
