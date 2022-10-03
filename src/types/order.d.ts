@@ -68,6 +68,7 @@ export interface Order extends Identifiable, OrderBase {
       with_tax: FormattedPrice
       without_tax: FormattedPrice
       tax: FormattedPrice
+      discount: FormattedPrice
     }
     timestamps: {
       created_at: string
@@ -168,6 +169,11 @@ export interface OrderItem extends Identifiable, OrderItemBase {
         unit: FormattedPrice
         value: FormattedPrice
       }
+      without_discount?: {
+        unit: FormattedPrice
+        value: FormattedPrice
+      }
+      discounts?: FormattedPrice
     }
     timestamps?: {
       created_at: string
@@ -185,6 +191,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
         currency: string
         includes_tax: string
       }
+      id: string
       code: string
     }
   ]
