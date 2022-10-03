@@ -728,7 +728,8 @@ describe('Moltin cart', () => {
           type: 'promotion_item',
           code: 'testcode'
         }
-      ])
+      ],
+      { add_all_or_nothing: false })
       .then(response => {
         assert.propertyVal(response, 'name', 'Custom Item')
         assert.propertyVal(response, 'quantity', 1)

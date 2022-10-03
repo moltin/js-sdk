@@ -139,6 +139,10 @@ export interface CartItemsResponse {
   }
 }
 
+export interface BulkAddOptions {
+   add_all_or_nothing: boolean 
+}
+
 export interface CartItemObject {
   type: string
   name?: string
@@ -309,9 +313,10 @@ export interface CartEndpoint
    * Bulk Add Items to Cart
    * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
-   * @param data An cart items or custom items
+   * @param data Cart items or custom items
+   * @param options Optional config object for add to cart behaviour 
    */
-  BulkAdd(data: CartItemObject[]): Promise<CartItemsResponse>
+  BulkAdd(data: CartItemObject[], options?: BulkAddOptions): Promise<CartItemsResponse>
 
   /**
    * Get Carts List
