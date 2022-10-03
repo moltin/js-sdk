@@ -110,4 +110,4 @@ jobs:
       - name: Release, publish package
         run: |
           yarn install
-          npx semantic-release --dry-run
+          npx semantic-release
