@@ -139,7 +139,7 @@ export interface CartItemsResponse {
   }
 }
 
-export interface BulkAddOptionsField {
+export interface BulkAddOptions {
    add_all_or_nothing: boolean 
 }
 
@@ -315,7 +315,7 @@ export interface CartEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
    * @param data An cart items or custom items
    */
-  BulkAdd(data: CartItemObject[], options?: BulkAddOptionsField): Promise<CartItemsResponse>
+  BulkAdd(data: CartItemObject[], options?: BulkAddOptions): Promise<CartItemsResponse>
 
   /**
    * Get Carts List
