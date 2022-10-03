@@ -83,7 +83,7 @@ class CartEndpoint extends BaseExtend {
  
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       data: body,
-      options
+      ...(options && { options })
     })
   }
 
