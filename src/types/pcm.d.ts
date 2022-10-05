@@ -32,6 +32,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     commodity_type?: string
     upc_ean?: string | null
     mpn?: string | null
+    external_ref?: string | null
     extensions?: Object
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
