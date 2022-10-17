@@ -52,7 +52,7 @@
     "@rollup/plugin-commonjs": "22.0.2",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "13.3.0",
-    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/exec": "6.0.3",
     "@types/chai": "4.2.15",
     "@types/mocha": "9.1.1",
     "@types/node": "18.0.6",
