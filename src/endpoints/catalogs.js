@@ -163,6 +163,15 @@ class Products extends CRUDExtend {
         token
     )
   }
+
+  GetProductsInCatalogRelease({ catalogId, releaseId, token = null }) {
+    return this.request.send(
+      `catalogs/${catalogId}/releases/${releaseId}/products`,
+      'GET',
+      undefined,
+      token
+    )
+  }
 }
 
 class Releases extends CRUDExtend {
