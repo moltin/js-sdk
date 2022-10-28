@@ -226,16 +226,18 @@ describe('Moltin orders', () => {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/orders/order-2/transactions/1/confirm', {})
+      .post('/orders/order-2/transactions/1/confirm', {
+        data: {}
+      })
       .reply(201, {
         status: 'complete'
       })
 
-    return Moltin.Orders.Confirm(orders[1].id, transactionId, {
-      data: {}
-    }).then(response => {
-      assert.propertyVal(response, 'status', 'complete')
-    })
+    return Moltin.Orders.Confirm(orders[1].id, transactionId, {}).then(
+      response => {
+        assert.propertyVal(response, 'status', 'complete')
+      }
+    )
   })
 
   it('should update an order', () => {

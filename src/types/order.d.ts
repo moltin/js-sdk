@@ -459,7 +459,7 @@ export interface OrdersEndpoint
   Confirm(
     orderId: string,
     transactionId: string,
-    body: { data: {} }
+    body: {}
   ): Promise<ConfirmPaymentResponse>
 
   /**
