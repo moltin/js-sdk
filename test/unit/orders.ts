@@ -226,9 +226,7 @@ describe('Moltin orders', () => {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-      .post('/orders/order-2/transactions/1/confirm', {
-        data: {}
-      })
+      .post('/orders/order-2/transactions/1/confirm', {})
       .reply(201, {
         status: 'complete'
       })
