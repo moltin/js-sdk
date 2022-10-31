@@ -346,9 +346,9 @@ export type PaymentRequestBody =
   | AdyenPayment
 
 export interface ConfirmPaymentBody {
-  method: string
-  gateway: string
-  payment: string
+  method?: string
+  gateway?: string
+  payment?: string
   options?: {
     customer?: string
     idempotency_key?: string
@@ -451,15 +451,15 @@ export interface OrdersEndpoint
 
   /**
    * Confirm payment intent
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/paying-for-an-order/elastic-path-payments-stripe.html#confirmation---post-confirm-the-security-validation-succeeded
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/payments/transactions.html#post-confirm-payment-intent
    * @param orderId - The ID of the order.
    * @param transactionId - The ID of the transaction you want to confirm.
-   * @param body - The empty data object.
+   * @param body - The body of the order.
    */
   Confirm(
     orderId: string,
     transactionId: string,
-    body: {}
+    body: ConfirmPaymentBody
   ): Promise<ConfirmPaymentResponse>
 
   /**
