@@ -130,15 +130,17 @@ describe('Moltin orders', () => {
         Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
       }
     })
-        .get('/orders/order-1?include=account,account_member')
-        .reply(200, orders[0])
+      .get('/orders/order-1?include=account,account_member')
+      .reply(200, orders[0])
 
-    return Moltin.Orders.With(['account', 'account_member']).Get(orders[0].id).then((response:any) => {
-      assert.propertyVal(response, 'id', 'order-1')
-      assert.propertyVal(response, 'status', 'complete')
-      assert.lengthOf(response.included.accounts, 1)
-      assert.lengthOf(response.included.account_members, 1)
-    })
+    return Moltin.Orders.With(['account', 'account_member'])
+      .Get(orders[0].id)
+      .then((response: any) => {
+        assert.propertyVal(response, 'id', 'order-1')
+        assert.propertyVal(response, 'status', 'complete')
+        assert.lengthOf(response.included.accounts, 1)
+        assert.lengthOf(response.included.account_members, 1)
+      })
   })
 
   it('should return a single order using a JWT', () => {
@@ -225,23 +227,17 @@ describe('Moltin orders', () => {
       }
     })
       .post('/orders/order-2/transactions/1/confirm', {
-        data: {
-          gateway: 'purchase',
-          payment: 'test',
-          method: 'payment_intents'
-        }
+        data: {}
       })
       .reply(201, {
         status: 'complete'
       })
 
-    return Moltin.Orders.Confirm(orders[1].id, transactionId, {
-      gateway: 'purchase',
-      payment: 'test',
-      method: 'payment_intents'
-    }).then(response => {
-      assert.propertyVal(response, 'status', 'complete')
-    })
+    return Moltin.Orders.Confirm(orders[1].id, transactionId, {}).then(
+      response => {
+        assert.propertyVal(response, 'status', 'complete')
+      }
+    )
   })
 
   it('should update an order', () => {
