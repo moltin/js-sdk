@@ -46,6 +46,7 @@ export interface TransactionsResponse {
         }
       }
     }
+    next_actions?: string[]
   }
 }
 
