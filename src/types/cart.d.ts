@@ -2,7 +2,7 @@
  * Carts
  * Description: A Cart contains the product and custom cart items that a user may wish to purchase. Once a Cart is ready
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/index.html
  */
 import { Resource, QueryableResource } from './core'
 import { Address } from './address'
@@ -25,7 +25,7 @@ export interface CreateCartObject {
 }
 
 /**
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/index.html
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/index.html
  */
 export interface ItemTaxObject {
   type: 'tax-item'
@@ -41,7 +41,7 @@ export interface ItemTaxObjectResponse extends ItemTaxObject{
 
 /**
  * Core Cart Base Interface
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/index.html
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/index.html
  */
 
 export interface Cart {
@@ -70,7 +70,7 @@ export interface CartItemBase {
 }
 
 /**
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/index.html
+ * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/index.html
  */
 export interface CartItem extends CartItemBase {
   id: string
@@ -181,19 +181,19 @@ export interface CartEndpoint
 
   /**
    * Get a Cart by reference
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/get-a-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/get-a-cart.html
    */
   Get(): Promise<ResourceIncluded<Cart, CartIncluded>>
 
   /**
    * Get Cart Items
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/get-cart-items.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/get-cart-items.html
    */
   Items(): Promise<CartItemsResponse>
 
   /**
    * Add Product to Cart
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-product-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-product-to-cart.html
    * @param productId the ID of the product you want to add to cart.
    * @param quantity the amount of products to add to cart
    * @param data
@@ -208,7 +208,7 @@ export interface CartEndpoint
   /**
    * Add Custom Item to Cart
    * Description: You want to add a custom item to the cart to handle things like shipping, taxes and inventory you don’t manage with Commerce Cloud.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-custom-item-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-custom-item-to-cart.html
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
@@ -216,7 +216,7 @@ export interface CartEndpoint
   /**
    * Add Promotion to Cart
    * Description: You can use the Promotions API to apply discounts to your cart as a special cart item type.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-promotion-to-cart.html
    * @param code the promotion code.
    * @param token a customer token to apply customer specific promotions.
    */
@@ -231,12 +231,12 @@ export interface CartEndpoint
   /**
    * Remove Cart Item
    * Description: You can easily remove items from the Cart. A successful Cart item removal request returns the cart items.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/remove-cart-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/remove-cart-item.html
    * @param itemId the unique identifier for this cart item.
 
    /**
    * Get Cart Items
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/get-cart-items.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/get-cart-items.html
    */
   RemoveItem(itemId: string): Promise<CartItemsResponse>
 
@@ -244,7 +244,7 @@ export interface CartEndpoint
 
   /**
    * Add Product to Cart
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-product-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-product-to-cart.html
    * @param productId the ID of the product you want to add to cart.
    * @param quantity the amount of products to add to cart
    * @param data
@@ -260,7 +260,7 @@ export interface CartEndpoint
   /**
    * Add Custom Item to Cart
    * Description: You want to add a custom item to the cart to handle things like shipping, taxes and inventory you don’t manage with Commerce Cloud.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-custom-item-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-custom-item-to-cart.html
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
@@ -268,7 +268,7 @@ export interface CartEndpoint
   /**
    * Update Cart Item
    * Description: You can easily update a Cart item. A successful update returns the cart items.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/update-cart-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/update-cart-item.html
    * @param itemId the unique identifier for this cart item.
    * @param quantity The amount of products to add to cart.
    * @param customData
@@ -282,7 +282,7 @@ export interface CartEndpoint
   /**
    * Add Promotion to Cart
    * Description: You can use the Promotions API to apply discounts to your cart as a special cart item type.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/add-promotion-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/add-promotion-to-cart.html
    * @param code the promotion code.
    */
   AddPromotion(code: string): Promise<CartItemsResponse>
@@ -290,7 +290,7 @@ export interface CartEndpoint
   /**
    * Bulk Update Items to Cart
    * Description: When you enable the bulk update feature, a shopper can update an array of items to their cart in one action, rather than updating each item one at a time.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-update-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-update-to-cart.html
    * @param items a cart items or custom items
    */
   UpdateItems(items: CartItemBase[]): Promise<CartItemsResponse>
@@ -312,7 +312,7 @@ export interface CartEndpoint
   /**
    * Bulk Add Items to Cart
    * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-add-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-add-to-cart.html
    * @param data Cart items or custom items
    * @param options Optional config object for add to cart behaviour 
    */
@@ -327,7 +327,7 @@ export interface CartEndpoint
   /**
    * Remove Cart Item
    * Description: You can easily remove items from the Cart. A successful Cart item removal request returns the cart items.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/remove-cart-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/remove-cart-item.html
    * @param itemId the unique identifier for this cart item.
 
    */
@@ -338,7 +338,7 @@ export interface CartEndpoint
   /**
    * Update Cart Item
    * Description: You can easily update a Cart item. A successful update returns the cart items.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/update-cart-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/update-cart-item.html
    * @param itemId the unique identifier for this cart item.
    * @param quantity The amount of products to add to cart.
    * @param customData
@@ -352,7 +352,7 @@ export interface CartEndpoint
   /**
    * Bulk Update Items to Cart
    * Description: When you enable the bulk update feature, a shopper can update an array of items to their cart in one action, rather than updating each item one at a time.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/bulk-update-to-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-update-to-cart.html
    * @param items a cart items or custom items
    */
   UpdateItems(items: CartItemBase[]): Promise<CartItemsResponse>
@@ -380,7 +380,7 @@ export interface CartEndpoint
   /**
    * Customer Cart Associations
    * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/customer-cart-associations.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/customer-cart-associations.html
    * @param customerId the id of the customer.
    * @param token a customer token to access specific customer orders.
    */
@@ -392,7 +392,7 @@ export interface CartEndpoint
   /**
    * Customer Cart Associations
    * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/customer-cart-associations.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/customer-cart-associations.html
    * @param customerId the id of the customer.
    * @param token a customer token to access specific customer orders.
    */
@@ -411,7 +411,7 @@ export interface CartEndpoint
 
   /**
    * Create a Tax Item
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/create-a-tax-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/create-a-tax-item.html
    * @param itemId the unique identifier for this cart item.
    * @param taxData the tax item object
    */
@@ -422,7 +422,7 @@ export interface CartEndpoint
 
   /**
    * Update a Tax Item
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/update-a-tax-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/update-a-tax-item.html
    * @param itemId the unique identifier for this cart item.
    * @param taxItemId ID of the tax item to update.
    * @param taxData the tax item object
@@ -435,7 +435,7 @@ export interface CartEndpoint
 
   /**
    * Delete a Tax Item
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/cart-items/tax-items/delete-a-tax-item.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/delete-a-tax-item.html
    * @param itemId the unique identifier for this cart item.
    * @param taxItemId ID of the tax item to update.
    */
@@ -446,7 +446,7 @@ export interface CartEndpoint
    * Description: Once a Cart is ready to checkout, you can easily convert your Cart to an Order.
    * The Cart remains and can be modified and checked out again if required.
    * Once a successful Checkout is completed, the response contains the order.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/checkout.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/checkout.html
    * @param customer the customer ID or Customer object.
    * @param billingAddress billing address
    * @param shippingAddress shipping address, billingAddress is used if shippingAddress not provided
@@ -460,7 +460,7 @@ export interface CartEndpoint
   /**
    * Delete a Cart
    * Description: You can easily remove all items from a cart.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/carts/delete-a-cart.html
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/delete-a-cart.html
    */
   Delete(): Promise<{}>
 }
