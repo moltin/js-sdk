@@ -345,16 +345,11 @@ export type PaymentRequestBody =
   | AuthorizeNetPayment
   | AdyenPayment
 
-export interface ConfirmPaymentBody {
-  method?: string
-  gateway?: string
-  payment?: string
-  options?: {
-    customer?: string
-    idempotency_key?: string
-    receipt_email?: string
-  }
+export interface ConfirmPaymentBodyWithOptions {
+  options: Record<string, any>
 }
+
+export type ConfirmPaymentBody = ConfirmPaymentBodyWithOptions | {}
 
 export interface ConfirmPaymentResponse {
   data: {
