@@ -46,6 +46,7 @@ export interface TransactionsResponse {
         }
       }
     }
+    next_actions?: string[]
   }
 }
 
@@ -83,6 +84,7 @@ export interface TransactionBase {
     }
   }
   timestamps: any
+  next_actions?: string[]
 }
 
 export interface Transaction extends Identifiable, TransactionBase {}

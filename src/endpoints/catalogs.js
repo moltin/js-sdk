@@ -165,8 +165,16 @@ class Products extends CRUDExtend {
   }
 
   GetProductsInCatalogRelease({ catalogId, releaseId, token = null }) {
+    const { limit, offset, includes, sort, filter } = this
+
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/products`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/products`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token

@@ -102,6 +102,14 @@ export interface PcmProductResponse {
 
 export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
+
+/**
+ * PCM Product nodes attachment body
+ */
+export interface PcmProductAttachmentBody {
+  filter: string
+  node_ids: string[]
+}
 /**
  * PCM Product Endpoints
  */
@@ -162,4 +170,18 @@ export interface PcmProductsEndpoint
    * @constructor
    */
   ImportProducts(file: FormData): Promise<{}>
+
+  /**
+   * Attach Nodes
+   * @param body - filter and node id's
+   * @constructor
+   */
+  AttachNodes(body: PcmProductAttachmentBody): Promise<{}>
+
+  /**
+   * Detach Nodes
+   * @param body - filter and node id's
+   * @constructor
+   */
+  DetachNodes(body: PcmProductAttachmentBody): Promise<{}>
 }
