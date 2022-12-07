@@ -322,7 +322,7 @@ export interface ElasticPathStripePayment extends StripePaymentBase {
  * Manual Payments
  */
 
-export interface ManualPayment extends PaymentBase {
+export interface ManualPayment {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'manual'
   amount?: number
