@@ -90,10 +90,13 @@ function formatFilterString(type, filter) {
     const value = filter[key]
     let queryString = `${key},${value}`
 
-    if (typeof value === 'object')
+    if (Array.isArray(value)) {
+      queryString = `${key},${value.join(',')}`
+    } else if (typeof value === 'object') {
       queryString = Object.keys(value).map(
         attr => `${key}.${attr},${value[attr]}`
       )
+    }
 
     return `${type}(${queryString})`
   })
