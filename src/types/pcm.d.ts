@@ -6,13 +6,13 @@ import {
   Identifiable,
   CrudQueryableResource,
   ResourcePage,
-  ResourceList
+  ResourceList, Resource
 } from './core'
 import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
-import { PcmJobsEndpoint } from './pcm-jobs'
+import { PcmJob, PcmJobsEndpoint } from './pcm-jobs'
 import { File } from './file'
 import { Locales } from './locales'
 import { Node } from './nodes'
@@ -184,4 +184,11 @@ export interface PcmProductsEndpoint
    * @constructor
    */
   DetachNodes(body: PcmProductAttachmentBody): Promise<{}>
+
+  /**
+   * Export products
+   * @param filter - products filters
+   * @constructor
+   */
+  ExportProducts(filter?: PcmProductFilter): Promise<Resource<PcmJob>>
 }

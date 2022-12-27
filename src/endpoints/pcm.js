@@ -61,6 +61,15 @@ class PCMEndpoint extends CRUDExtend {
   DetachNodes(body) {
     return this.request.send(`${this.endpoint}/detach_nodes`, 'POST', body)
   }
+
+  ExportProducts(filter) {
+    return this.request.send(
+        buildURL(`${this.endpoint}/export`, {
+          filter
+        }),
+        'POST'
+    )
+  }
 }
 
 export default PCMEndpoint
