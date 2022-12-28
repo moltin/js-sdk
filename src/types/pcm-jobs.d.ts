@@ -17,6 +17,10 @@ export interface PcmJobBase {
 
 export interface PcmJob extends Identifiable, PcmJobBase {
   type: 'pim-job'
+  meta: {
+    file_locations: string[]
+    filter: string
+  }
 }
 
 export interface PcmJobError extends Identifiable {
