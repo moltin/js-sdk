@@ -12,7 +12,7 @@ import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
-import { PcmJob, PcmJobsEndpoint } from './pcm-jobs'
+import { PcmJobBase, PcmJobsEndpoint} from './pcm-jobs'
 import { File } from './file'
 import { Locales } from './locales'
 import { Node } from './nodes'
@@ -36,6 +36,14 @@ export interface PcmProductBase extends PcmProductRelationships {
     extensions?: Object
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
+  }
+}
+
+export interface PcmJob extends Identifiable, PcmJobBase {
+  type: 'pim-job'
+  meta: {
+    file_locations: string[]
+    filter: string
   }
 }
 
