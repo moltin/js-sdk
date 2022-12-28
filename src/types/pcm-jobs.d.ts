@@ -2,6 +2,7 @@
  * PCM Jobs
  */
 import { Identifiable, Resource, ResourceList } from './core'
+import { PcmJob } from './pcm';
 
 /**
  * PCM Job Base Interface
@@ -12,14 +13,6 @@ export interface PcmJobBase {
     status: string
     type: string
     updated_at: string
-  }
-}
-
-export interface PcmJob extends Identifiable, PcmJobBase {
-  type: 'pim-job'
-  meta: {
-    file_locations: string[]
-    filter: string
   }
 }
 
