@@ -23,7 +23,13 @@ class Config {
       store_id,
       retryDelay,
       retryJitter,
-      fetchMaxAttempts
+      fetchMaxAttempts,
+      throttleRequests,
+      throttleLimit,
+      throttleInterval,
+      throttleStrict,
+      httpKeepAlive,
+      httpKeepAliveInterval
     } = options
 
     this.name = name
@@ -61,6 +67,13 @@ class Config {
       fetchMaxAttempts !== undefined && fetchMaxAttempts !== null
         ? fetchMaxAttempts
         : 4
+
+    this.throttleRequests = throttleRequests || false
+    this.throttleLimit = throttleLimit || 6
+    this.throttleInterval = throttleInterval || 250
+    this.throttleStrict = throttleStrict || false
+    this.httpKeepAlive = httpKeepAlive || false
+    this.httpKeepAliveInterval = httpKeepAliveInterval || 10000
   }
 }
 
