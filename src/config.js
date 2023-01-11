@@ -67,13 +67,14 @@ class Config {
       fetchMaxAttempts !== undefined && fetchMaxAttempts !== null
         ? fetchMaxAttempts
         : 4
-
-    this.throttleRequests = throttleRequests || false
-    this.throttleLimit = throttleLimit || 6
-    this.throttleInterval = throttleInterval || 250
-    this.throttleStrict = throttleStrict || false
-    this.httpKeepAlive = httpKeepAlive || false
-    this.httpKeepAliveInterval = httpKeepAliveInterval || 10000
+    this.ThrottleConfig = {
+      throttleRequests: throttleRequests || false,
+      throttleLimit: throttleLimit || 3,
+      throttleInterval: throttleInterval || 125,
+      throttleStrict: throttleStrict || false,
+      httpKeepAlive: httpKeepAlive || false,
+      httpKeepAliveInterval: httpKeepAliveInterval || 10000
+    }
   }
 }
 
