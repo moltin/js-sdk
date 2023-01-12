@@ -10,7 +10,8 @@ export const configure = options => {
 
   throttle = throttledQueue(
     Number(options.throttleLimit) || 3,
-    Number(options.throttleInterval) || 125
+    Number(options.throttleInterval) || 125,
+    options.throttleStrict
   )
 
   httpsAgent = new https.Agent({
