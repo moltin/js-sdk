@@ -4,6 +4,7 @@ import { buildURL } from '../utils/helpers'
 
 class Nodes extends CRUDExtend {
   constructor(endpoint) {
+    super(endpoint)
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'pcm'
