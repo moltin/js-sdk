@@ -30,7 +30,7 @@ class Nodes extends CRUDExtend {
   }
 
   GetNodeChildren({ nodeId, token = null }) {
-    const { limit, offset, includes, sort, filter } = this
+    const { limit, offset, sort } = this
     return this.request.send(
       buildURL(`catalogs/${this.endpoint}/${nodeId}/relationships/children`, {
         sort,
@@ -49,7 +49,7 @@ class Nodes extends CRUDExtend {
     nodeId,
     token = null
   }) {
-    const { limit, offset, includes, sort, filter } = this
+    const { limit, offset, sort } = this
     return this.request.send(
       buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint
         }/${nodeId}/relationships/children`, {
@@ -64,7 +64,7 @@ class Nodes extends CRUDExtend {
   }
 
   GetAllCatalogNodes({ catalogId, releaseId, token = null }) {
-    const { limit, offset, includes, sort, filter } = this
+    const { limit, offset, sort } = this
     return this.request.send(
       buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`, {
         sort,
