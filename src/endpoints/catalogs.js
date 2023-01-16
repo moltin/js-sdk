@@ -33,11 +33,9 @@ class Nodes extends CRUDExtend {
     const { limit, offset, includes, sort, filter } = this
     return this.request.send(
       buildURL(`catalogs/${this.endpoint}/${nodeId}/relationships/children`, {
-        includes,
         sort,
         limit,
-        offset,
-        filter
+        offset
       }),
       'GET',
       undefined,
@@ -55,11 +53,9 @@ class Nodes extends CRUDExtend {
     return this.request.send(
       buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint
         }/${nodeId}/relationships/children`, {
-        includes,
         sort,
         limit,
-        offset,
-        filter
+        offset
       }),
       'GET',
       undefined,
@@ -71,11 +67,9 @@ class Nodes extends CRUDExtend {
     const { limit, offset, includes, sort, filter } = this
     return this.request.send(
       buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`, {
-        includes,
         sort,
         limit,
-        offset,
-        filter
+        offset
       }),
       'GET',
       undefined,
