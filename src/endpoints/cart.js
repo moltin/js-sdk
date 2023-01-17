@@ -19,10 +19,10 @@ class CartEndpoint extends BaseExtend {
     const { includes } = this
 
     return this.request.send(
-        buildURL(`${this.endpoint}/${this.cartId}`, {
-          includes,
-        }),
-        'GET'
+      buildURL(`${this.endpoint}/${this.cartId}`, {
+        includes,
+      }),
+      'GET'
     )
   }
 
@@ -79,10 +79,11 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  BulkAdd(body) {
+  BulkAdd(body, options) {
+ 
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       data: body,
-      options: { add_all_or_nothing: false }
+      ...(options && { options })
     })
   }
 

@@ -68,6 +68,7 @@ export interface Order extends Identifiable, OrderBase {
       with_tax: FormattedPrice
       without_tax: FormattedPrice
       tax: FormattedPrice
+      discount: FormattedPrice
     }
     timestamps: {
       created_at: string
@@ -168,6 +169,11 @@ export interface OrderItem extends Identifiable, OrderItemBase {
         unit: FormattedPrice
         value: FormattedPrice
       }
+      without_discount?: {
+        unit: FormattedPrice
+        value: FormattedPrice
+      }
+      discounts?: FormattedPrice
     }
     timestamps?: {
       created_at: string
@@ -185,6 +191,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
         currency: string
         includes_tax: string
       }
+      id: string
       code: string
     }
   ]
@@ -281,12 +288,12 @@ export type StripePaymentOptionBase = {
   customer?: string
 }
 
-export interface StripePaymentBase extends PaymentBase {
+export interface StripePaymentBase {
   amount?: number
   options?: StripePaymentOptionBase
 }
 
-export interface StripePayment extends StripePaymentBase {
+export interface StripePayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod | CapturePaymentMethod
   gateway: 'stripe'
   options?: StripePaymentOptionBase & {
@@ -294,12 +301,12 @@ export interface StripePayment extends StripePaymentBase {
   }
 }
 
-export interface StripeConnectPayment extends StripePaymentBase {
+export interface StripeConnectPayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'stripe_connect'
 }
 
-export interface StripeIntentsPayment extends StripePaymentBase {
+export interface StripeIntentsPayment extends StripePaymentBase, PaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'stripe_payment_intents'
 }
@@ -307,13 +314,15 @@ export interface StripeIntentsPayment extends StripePaymentBase {
 export interface ElasticPathStripePayment extends StripePaymentBase {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'elastic_path_payments_stripe'
+  payment_method_types?: string[]
+  payment?: string
 }
 
 /**
  * Manual Payments
  */
 
-export interface ManualPayment extends PaymentBase {
+export interface ManualPayment {
   method: PurchasePaymentMethod | AuthorizePaymentMethod
   gateway: 'manual'
   amount?: number
@@ -336,16 +345,11 @@ export type PaymentRequestBody =
   | AuthorizeNetPayment
   | AdyenPayment
 
-export interface ConfirmPaymentBody {
-  method: string
-  gateway: string
-  payment: string
-  options?: {
-    customer?: string
-    idempotency_key?: string
-    receipt_email?: string
-  }
+export interface ConfirmPaymentBodyWithOptions {
+  options: Record<string, any>
 }
+
+export type ConfirmPaymentBody = ConfirmPaymentBodyWithOptions | {}
 
 export interface ConfirmPaymentResponse {
   data: {

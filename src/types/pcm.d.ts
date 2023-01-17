@@ -6,13 +6,13 @@ import {
   Identifiable,
   CrudQueryableResource,
   ResourcePage,
-  ResourceList
+  ResourceList, Resource
 } from './core'
 import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
-import { PcmJobsEndpoint } from './pcm-jobs'
+import { PcmJobBase, PcmJobsEndpoint} from './pcm-jobs'
 import { File } from './file'
 import { Locales } from './locales'
 import { Node } from './nodes'
@@ -32,9 +32,18 @@ export interface PcmProductBase extends PcmProductRelationships {
     commodity_type?: string
     upc_ean?: string | null
     mpn?: string | null
+    external_ref?: string | null
     extensions?: Object
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
+  }
+}
+
+export interface PcmJob extends Identifiable, PcmJobBase {
+  type: 'pim-job'
+  meta: {
+    file_locations: string[]
+    filter: string
   }
 }
 
@@ -101,6 +110,14 @@ export interface PcmProductResponse {
 
 export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
 export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
+
+/**
+ * PCM Product nodes attachment body
+ */
+export interface PcmProductAttachmentBody {
+  filter: string
+  node_ids: string[]
+}
 /**
  * PCM Product Endpoints
  */
@@ -161,4 +178,25 @@ export interface PcmProductsEndpoint
    * @constructor
    */
   ImportProducts(file: FormData): Promise<{}>
+
+  /**
+   * Attach Nodes
+   * @param body - filter and node id's
+   * @constructor
+   */
+  AttachNodes(body: PcmProductAttachmentBody): Promise<{}>
+
+  /**
+   * Detach Nodes
+   * @param body - filter and node id's
+   * @constructor
+   */
+  DetachNodes(body: PcmProductAttachmentBody): Promise<{}>
+
+  /**
+   * Export products
+   * @param filter - products filters
+   * @constructor
+   */
+  ExportProducts(filter?: PcmProductFilter): Promise<Resource<PcmJob>>
 }

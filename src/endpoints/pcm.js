@@ -53,6 +53,23 @@ class PCMEndpoint extends CRUDExtend {
   ImportProducts(file) {
     return this.request.send(`${this.endpoint}/import`, 'POST', file)
   }
+  
+  AttachNodes(body) {
+    return this.request.send(`${this.endpoint}/attach_nodes`, 'POST', body)
+  }
+
+  DetachNodes(body) {
+    return this.request.send(`${this.endpoint}/detach_nodes`, 'POST', body)
+  }
+
+  ExportProducts(filter) {
+    return this.request.send(
+        buildURL(`${this.endpoint}/export`, {
+          filter
+        }),
+        'POST'
+    )
+  }
 }
 
 export default PCMEndpoint

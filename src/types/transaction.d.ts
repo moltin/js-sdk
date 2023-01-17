@@ -46,6 +46,7 @@ export interface TransactionsResponse {
         }
       }
     }
+    next_actions?: string[]
   }
 }
 
@@ -60,6 +61,7 @@ export interface TransactionBase {
   amount: number
   currency: string
   refunded_amount: number
+  refund_mechanism?: 'automatic' | 'manual'
   transaction_type: 'purchase' | 'capture' | 'authorize' | 'refund'
   status: 'complete' | 'failed' | 'pending' | 'cancelled'
   relationships: any
@@ -82,6 +84,7 @@ export interface TransactionBase {
     }
   }
   timestamps: any
+  next_actions?: string[]
 }
 
 export interface Transaction extends Identifiable, TransactionBase {}
