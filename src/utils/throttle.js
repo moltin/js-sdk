@@ -5,24 +5,21 @@ let httpsAgent
 let throttle
 
 export const configure = options => {
+  if (options.throttleRequests) {
+    throttle = throttledQueue(
+      Number(options.throttleLimit) || 3,
+      Number(options.throttleInterval) || 125,
+      options.throttleStrict
+    )
 
-    if(options.throttleRequests){
-
-  throttle = throttledQueue(
-    Number(options.throttleLimit) || 3,
-    Number(options.throttleInterval) || 125,
-    options.throttleStrict
-  )
-
-  httpsAgent = new https.Agent({
-    keepAlive: options.httpKeepAlive,
-    keepAliveMsecs: options.httpKeepAliveInterval || 10000
-  })
-}
+    httpsAgent = new https.Agent({
+      keepAlive: options.httpKeepAlive,
+      keepAliveMsecs: options.httpKeepAliveInterval || 10000
+    })
+  }
 }
 
-const wrapFetch = async(url, options)=> {
-
+const wrapFetch = async (url, options) => {
   const response = await throttle(async () => globalThis.fetch(url, options))
   const responseBody = await response.text()
 
@@ -31,11 +28,11 @@ const wrapFetch = async(url, options)=> {
   return response
 }
 
-const keepAliveFetch = async(url, options) => {
+const keepAliveFetch = async (url, options) => {
   // eslint-disable-next-line no-param-reassign
   options.agent = () => httpsAgent
   return wrapFetch(url, options)
 }
 
-export const throttleFetch = async(url, options) => keepAliveFetch(url, options)
-
+export const throttleFetch = async (url, options) =>
+  keepAliveFetch(url, options)
