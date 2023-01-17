@@ -2,8 +2,9 @@ import CRUDExtend from '../extends/crud'
 import RequestFactory from '../factories/request'
 import { buildURL } from '../utils/helpers'
 
-class Nodes {
+class Nodes extends CRUDExtend {
   constructor(endpoint) {
+    super(endpoint)
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
     this.request = new RequestFactory(this.config)
     this.config.version = 'pcm'
@@ -29,8 +30,13 @@ class Nodes {
   }
 
   GetNodeChildren({ nodeId, token = null }) {
+    const { limit, offset, sort } = this
     return this.request.send(
-      `catalogs/${this.endpoint}/${nodeId}/relationships/children`,
+      buildURL(`catalogs/${this.endpoint}/${nodeId}/relationships/children`, {
+        sort,
+        limit,
+        offset
+      }),
       'GET',
       undefined,
       token
@@ -43,10 +49,14 @@ class Nodes {
     nodeId,
     token = null
   }) {
+    const { limit, offset, sort } = this
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${
-        this.endpoint
-      }/${nodeId}/relationships/children`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint
+        }/${nodeId}/relationships/children`, {
+        sort,
+        limit,
+        offset
+      }),
       'GET',
       undefined,
       token
@@ -54,8 +64,13 @@ class Nodes {
   }
 
   GetAllCatalogNodes({ catalogId, releaseId, token = null }) {
+    const { limit, offset, sort } = this
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`, {
+        sort,
+        limit,
+        offset
+      }),
       'GET',
       undefined,
       token
@@ -112,10 +127,16 @@ class Products extends CRUDExtend {
   }
 
   GetCatalogNodeProducts({ catalogId, releaseId, nodeId, token = null }) {
+    const { limit, offset, includes, sort, filter } = this
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${
-        this.endpoint
-      }`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${this.endpoint
+        }`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
       token
@@ -155,12 +176,12 @@ class Products extends CRUDExtend {
     token = null
   }) {
     return this.request.send(
-        `catalogs/${catalogId}/releases/${releaseId}/${
-            this.endpoint
-        }/${productId}/relationships/children`,
-        'GET',
-        undefined,
-        token
+      `catalogs/${catalogId}/releases/${releaseId}/${
+        this.endpoint
+      }/${productId}/relationships/children`,
+      'GET',
+      undefined,
+      token
     )
   }
 
@@ -213,10 +234,10 @@ class Releases extends CRUDExtend {
     const { limit, offset } = this
 
     return this.request.send(
-        buildURL(
-      `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`, {
-              limit,
-              offset
+      buildURL(
+        `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`, {
+        limit,
+        offset
       }),
       'GET',
       undefined,
@@ -324,28 +345,28 @@ class CatalogsEndpoint extends CRUDExtend {
 
   GetCatalogReleases(catalogId, token = null) {
     return this.request.send(
-        `${this.endpoint}/${catalogId}/releases`,
-        'GET',
-        undefined,
-        token,
+      `${this.endpoint}/${catalogId}/releases`,
+      'GET',
+      undefined,
+      token,
     )
   }
 
   DeleteCatalogRelease(catalogId, releaseId, token = null) {
     return this.request.send(
-        `${this.endpoint}/${catalogId}/releases/${releaseId}`,
-        'DELETE',
-        undefined,
-        token
+      `${this.endpoint}/${catalogId}/releases/${releaseId}`,
+      'DELETE',
+      undefined,
+      token
     )
   }
 
   DeleteAllCatalogReleases(catalogId, token = null) {
     return this.request.send(
-        `${this.endpoint}/${catalogId}/releases`,
-        'DELETE',
-        undefined,
-        token
+      `${this.endpoint}/${catalogId}/releases`,
+      'DELETE',
+      undefined,
+      token
     )
   }
 }
