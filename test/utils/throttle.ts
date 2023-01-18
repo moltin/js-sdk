@@ -26,8 +26,8 @@ describe('Build throttle mechanism', () => {
   })
 
   it('should give correct throttle response', async () => {
-    const res = throttleFetch('api.moltin.com', options)
+    const res = throttleFetch('api.moltin.com', options).then(() => Promise.resolve('Resolved promise response'))
     console.log(res)
-    expect(res).to.deep.equal({})
+    expect(res.text).to.equal('Resolved promise response')
   })
 })
