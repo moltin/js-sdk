@@ -39,7 +39,4 @@ require('./unit/application-keys')
 
 // Utilities
 require('./utils/helpers')
-// require('./utils/throttle')
-
-// Integration
-require('./integration/throttle')
+require('./utils/throttle')

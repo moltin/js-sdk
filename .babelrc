@@ -7,5 +7,6 @@
         "useBuiltIns": "entry"
       }
     ]
-  ]
+  ],
+  "plugins": ["rewire"]
 }
