@@ -197,6 +197,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
   ]
   components?: ProductComponents
   catalog_source?: 'pim'
+  custom_inputs?: { [key: string]: string|number }
 }
 
 export type PurchasePaymentMethod = 'purchase'
