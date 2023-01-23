@@ -45,4 +45,24 @@ describe('Moltin config', () => {
       expect(error).to.be.an.instanceof(TypeError)
     })
   })
+
+  it('should have throttling config options', () => {
+    const Moltin = MoltinGateway({
+      throttleRequests: true,
+      throttleLimit: 3,
+      throttleInterval: 125,
+      throttleStrict: false,
+      httpKeepAlive: true,
+      httpKeepAliveInterval: 10000
+    })
+
+    expect(Moltin.config.throttleConfig?.throttleRequests).to.be.equal(true)
+    expect(Moltin.config.throttleConfig?.throttleLimit).to.be.equal(3)
+    expect(Moltin.config.throttleConfig?.throttleInterval).to.be.equal(125)
+    expect(Moltin.config.throttleConfig?.throttleStrict).to.be.equal(false)
+    expect(Moltin.config.throttleConfig?.httpKeepAlive).to.be.equal(true)
+    expect(Moltin.config.throttleConfig?.httpKeepAliveInterval).to.be.equal(
+      10000
+    )
+  })
 })
