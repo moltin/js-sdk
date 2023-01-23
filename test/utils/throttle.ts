@@ -25,7 +25,7 @@ describe('Build throttle mechanism', () => {
       expect(interval).to.equal(Moltin.config.throttleConfig?.throttleInterval)
     }
     throttleMod.__Rewire__('throttledQueue', throttledQueueMock)
-    configure(Moltin.config,throttleFetch)
+    configure(Moltin.config.throttleConfig)
   })
 
   it('should give correct throttle response', async () => {
@@ -38,7 +38,10 @@ describe('Build throttle mechanism', () => {
     }
     throttleMod.__Rewire__('throttle', throttleMock)
 
-    const res = await throttleFetch(apiUrl + '/test', Moltin.config.throttleConfig)
+    const res = await throttleFetch(
+      apiUrl + '/test',
+      Moltin.config.throttleConfig
+    )
     const body = await res.text()
     expect(body).to.equal('{"data":"Resolved promise response"}')
   })
@@ -46,7 +49,9 @@ describe('Build throttle mechanism', () => {
   it('should have correct config options for http agent', () => {
     const httpAgent = function (keepAlive: boolean, keepAliveMsecs: number) {
       expect(keepAlive).to.equal(Moltin.config.throttleConfig?.httpKeepAlive),
-        expect(keepAliveMsecs).to.equal(Moltin.config.throttleConfig?.httpKeepAliveInterval)
+        expect(keepAliveMsecs).to.equal(
+          Moltin.config.throttleConfig?.httpKeepAliveInterval
+        )
     }
     throttleMod.__Rewire__('httpAgent', httpAgent)
     configure(Moltin.config.throttleConfig)
