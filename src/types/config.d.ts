@@ -35,10 +35,16 @@ export interface ConfigOptions {
   storage_type?: 'cookies' | 'localStorage'
   headers?: { [key: string]: string }
   disableCart?: Boolean
-  reauth?: Boolean,
+  reauth?: Boolean
   retryDelay?: number
   retryJitter?: number
   fetchMaxAttempts?: number
+  throttleRequests?: boolean
+  throttleLimit?: number
+  throttleInterval?: number
+  throttleStrict?: boolean
+  httpKeepAlive?: boolean
+  httpKeepAliveInterval?: number
 }
 
 export interface Config {
@@ -67,7 +73,14 @@ export interface Config {
   retryDelay?: number
   retryJitter?: number
   fetchMaxAttempts?: number
-
+  throttleConfig?: {
+    throttleRequests?: boolean
+    throttleLimit?: number
+    throttleInterval?: number
+    throttleStrict?: boolean
+    httpKeepAlive?: boolean
+    httpKeepAliveInterval?: number
+  }
   constructor(options: ConfigOptions): void
 }
 

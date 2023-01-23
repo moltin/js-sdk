@@ -67,7 +67,7 @@ class Config {
       fetchMaxAttempts !== undefined && fetchMaxAttempts !== null
         ? fetchMaxAttempts
         : 4
-    this.ThrottleConfig = {
+    this.throttleConfig = {
       throttleRequests: throttleRequests || false,
       throttleLimit: throttleLimit || 3,
       throttleInterval: throttleInterval || 125,
