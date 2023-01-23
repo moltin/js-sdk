@@ -14,7 +14,7 @@ import {
   resetProps,
   getCredentials,
   tokenInvalid,
-  tryParseJSON,
+  tryParseJSON
 } from '../../src/utils/helpers'
 
 import LocalStorageFactory from '../../src/factories/local-storage'
@@ -167,6 +167,12 @@ describe('Format filter string', () => {
     const res = formatFilterString('eq', { user: { name: 'Test' } })
 
     expect(res).to.equal('eq(user.name,Test)')
+  })
+
+  it('should return a valid filter string for "in" operator', () => {
+    const res = formatFilterString('in', { sku: ['prod12', 'prod34','prod56'] })
+    
+    expect(res).to.equal('in(sku,prod12,prod34,prod56)')
   })
 })
 
@@ -419,7 +425,10 @@ describe('Parsing body JSON', () => {
   })
 
   it('should parse non-empty object', () => {
-    expect(tryParseJSON('{ "a": 123, "b": "str" }', 'fallback')).to.deep.equal({ a: 123, b: 'str' })
+    expect(tryParseJSON('{ "a": 123, "b": "str" }', 'fallback')).to.deep.equal({
+      a: 123,
+      b: 'str'
+    })
   })
 
   it('should parse complex object', () => {
@@ -428,7 +437,7 @@ describe('Parsing body JSON', () => {
       status: 500,
       errors: [
         { code: 123, message: 'Server error' },
-        { code: 456, message: 'Another error' },
+        { code: 456, message: 'Another error' }
       ]
     }
 
