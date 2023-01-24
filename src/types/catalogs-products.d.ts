@@ -45,9 +45,11 @@ export interface ProductResponse extends Identifiable {
     pricebook_id?: string
     display_price?: {
       without_tax: FormattedPrice
+      with_tax: FormattedPrice
     }
     original_display_price?: {
       without_tax: FormattedPrice
+      with_tax: FormattedPrice
     }
     variation_matrix?: MatrixObject
     variations?: CatalogsProductVariation[]
