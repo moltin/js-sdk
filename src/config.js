@@ -1,6 +1,7 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
 import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
+import { throttleFetch } from './utils/throttle'
 
 class Config {
   constructor(options) {
@@ -45,7 +46,7 @@ class Config {
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: custom_fetch || fetch
+      fetch: custom_fetch || (throttleRequests ? throttleFetch : fetch)
     }
     this.sdk = {
       version,

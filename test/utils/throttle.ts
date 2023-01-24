@@ -20,9 +20,14 @@ describe('Build throttle mechanism', () => {
   })
 
   it('should have correct config options for throttle', () => {
-    const throttledQueueMock = function (limit: number, interval: number) {
+    const throttledQueueMock = function (
+      limit: number,
+      interval: number,
+      strict: boolean
+    ) {
       expect(limit).to.equal(Moltin.config.throttleConfig?.throttleLimit)
       expect(interval).to.equal(Moltin.config.throttleConfig?.throttleInterval)
+      expect(strict).to.equal(Moltin.config.throttleConfig?.throttleStrict)
     }
     throttleMod.__Rewire__('throttledQueue', throttledQueueMock)
     configure(Moltin.config.throttleConfig)
