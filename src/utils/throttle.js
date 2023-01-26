@@ -5,18 +5,16 @@ let httpsAgent
 let throttle
 
 export const configure = options => {
-  if (options.throttleRequests) {
-    throttle = throttledQueue(
-      Number(options.throttleLimit) || 3,
-      Number(options.throttleInterval) || 125,
-      options.throttleStrict
-    )
+  throttle = throttledQueue(
+    Number(options.throttleLimit),
+    Number(options.throttleInterval),
+    options.throttleStrict
+  )
 
-    httpsAgent = new https.Agent({
-      keepAlive: options.httpKeepAlive,
-      keepAliveMsecs: options.httpKeepAliveInterval || 10000
-    })
-  }
+  httpsAgent = new https.Agent({
+    keepAlive: options.httpKeepAlive,
+    keepAliveMsecs: options.httpKeepAliveInterval
+  })
 }
 
 const wrapFetch = async (url, options) => {
