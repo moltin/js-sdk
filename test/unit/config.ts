@@ -56,7 +56,6 @@ describe('Moltin config', () => {
       custom_fetch: testCustomFetch,
       throttleRequests: true
     })
-    console.log('fetch', Moltin.config)
     expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
   })
 
@@ -64,7 +63,6 @@ describe('Moltin config', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX'
     })
-    console.log('fetch', Moltin.config)
     expect(Moltin.config.auth.fetch).to.equal(fetch)
   })
 
