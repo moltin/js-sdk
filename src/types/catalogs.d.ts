@@ -7,11 +7,11 @@ import { CatalogsNodesEndpoint } from './catalogs-nodes'
 import { CatalogsProductsEndpoint } from './catalogs-products'
 import { CatalogsReleasesEndpoint } from './catalogs-releases'
 import { CatalogsRulesEndpoint } from './catalogs-rules'
-import { ShopperCatalogReleaseBase } from "./catalog";
+import { ShopperCatalogReleaseBase } from './catalog'
 
 /**
- * Core PCM Product Base Interface
- * For custom flows, extend this interface
+ * Catalog Base interface
+ *  pricebook_id OR pricebook_ids must be present, but never both or neither
  */
 export interface CatalogBase {
   type: 'catalog'
@@ -19,7 +19,8 @@ export interface CatalogBase {
     name: string
     description?: string
     hierarchy_ids: string[]
-    pricebook_id: string
+    pricebook_id?: string
+    pricebook_ids?: { priority: number; id: string }[]
     created_at?: string
     updated_at?: string
   }
@@ -52,19 +53,26 @@ export type CatalogUpdateBody = Partial<CatalogBase> & Identifiable
 
 export interface CatalogsEndpoint
   extends CrudQueryableResource<
-      Catalog,
-      CatalogBase,
-      CatalogUpdateBody,
-      CatalogFilter,
-      CatalogSort,
-      CatalogInclude
-    > {
+    Catalog,
+    CatalogBase,
+    CatalogUpdateBody,
+    CatalogFilter,
+    CatalogSort,
+    CatalogInclude
+  > {
   endpoint: 'catalogs'
   Nodes: CatalogsNodesEndpoint
   Products: CatalogsProductsEndpoint
   Releases: CatalogsReleasesEndpoint
   Rules: CatalogsRulesEndpoint
-  GetCatalogReleases(catalogId: string, token?: string): Promise<ResourceList<ShopperCatalogReleaseBase>>
-  DeleteCatalogRelease(catalogId: string, releaseId: string, token?: string): Promise<void>
+  GetCatalogReleases(
+    catalogId: string,
+    token?: string
+  ): Promise<ResourceList<ShopperCatalogReleaseBase>>
+  DeleteCatalogRelease(
+    catalogId: string,
+    releaseId: string,
+    token?: string
+  ): Promise<void>
   DeleteAllCatalogReleases(catalogId: string, token?: string): Promise<void>
 }
