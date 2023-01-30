@@ -5,7 +5,7 @@ import {
   MemoryStorageFactory,
   LocalStorageFactory
 } from '../../src/moltin'
-
+import { throttleFetch } from '../../src/utils/throttle'
 describe('Moltin config', () => {
   it('storage defaults to `StorageFactory`', () => {
     const Moltin = MoltinGateway({})
@@ -33,6 +33,7 @@ describe('Moltin config', () => {
     })
 
     expect(Moltin.config.auth.fetch).to.be.an.instanceof(Function)
+    expect(Moltin.config.auth.fetch).to.equal(fetch)
   })
 
   it('custom_fetch will fail must be a Function', () => {
@@ -44,6 +45,27 @@ describe('Moltin config', () => {
     return Moltin.Authenticate().catch(error => {
       expect(error).to.be.an.instanceof(TypeError)
     })
+  })
+
+  it('should use throttleFetch if custom_fetch and throttleRequest value are given', () => {
+    // minimal test function
+    const testCustomFetch = (url: string, options: object) => url
+
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+      custom_fetch: testCustomFetch,
+      throttleRequests: true
+    })
+    console.log('fetch', Moltin.config)
+    expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
+  })
+
+  it('should use fetch if custom_fetch and throttleRequest value are not given', () => {
+    const Moltin = MoltinGateway({
+      client_id: 'XXX'
+    })
+    console.log('fetch', Moltin.config)
+    expect(Moltin.config.auth.fetch).to.equal(fetch)
   })
 
   it('should have throttling config options', () => {

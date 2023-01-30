@@ -3,8 +3,10 @@ import throttledQueue from 'throttled-queue'
 
 let httpsAgent
 let throttle
-
+let customFetch
 export const configure = options => {
+  customFetch = options.custom_fetch
+
   throttle = throttledQueue(
     Number(options.throttleLimit),
     Number(options.throttleInterval),
@@ -18,7 +20,12 @@ export const configure = options => {
 }
 
 const wrapFetch = async (url, options) => {
-  const response = await throttle(async () => globalThis.fetch(url, options))
+  let response
+  if (customFetch) {
+    response = await throttle(async () => customFetch(url, options))
+  } else {
+    response = await throttle(async () => globalThis.fetch(url, options))
+  }
   const responseBody = await response.text()
 
   response.text = () => Promise.resolve(responseBody)

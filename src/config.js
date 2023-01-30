@@ -46,7 +46,11 @@ class Config {
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: custom_fetch || (throttleRequests ? throttleFetch : fetch)
+      // eslint-disable-next-line no-nested-ternary
+      fetch:
+        custom_fetch && throttleRequests
+          ? throttleFetch
+          : custom_fetch || (throttleRequests ? throttleFetch : fetch)
     }
     this.sdk = {
       version,
