@@ -43,14 +43,21 @@ class Config {
     this.version = 'v2'
     this.currency = currency
     this.language = language
+
+    let fetchMethod
+    if (custom_fetch && throttleRequests) {
+      fetchMethod = throttleFetch
+    } else if (custom_fetch) {
+      fetchMethod = custom_fetch
+    } else if (throttleRequests) {
+      fetchMethod = throttleFetch
+    } else {
+      fetchMethod = fetch
+    }
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      // eslint-disable-next-line no-nested-ternary
-      fetch:
-        custom_fetch && throttleRequests
-          ? throttleFetch
-          : custom_fetch || (throttleRequests ? throttleFetch : fetch)
+      fetch: fetchMethod
     }
     this.sdk = {
       version,
