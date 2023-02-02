@@ -34,8 +34,8 @@ export interface ConfigOptions {
   storage?: StorageFactory
   storage_type?: 'cookies' | 'localStorage'
   headers?: { [key: string]: string }
-  disableCart?: Boolean
-  reauth?: Boolean
+  disableCart?: boolean
+  reauth?: boolean
   retryDelay?: number
   retryJitter?: number
   fetchMaxAttempts?: number

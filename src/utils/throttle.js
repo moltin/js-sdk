@@ -8,8 +8,8 @@ export const configure = options => {
   customFetch = options.custom_fetch
 
   throttle = throttledQueue(
-    Number(options.throttleLimit),
-    Number(options.throttleInterval),
+    options.throttleLimit,
+    options.throttleInterval,
     options.throttleStrict
   )
 
