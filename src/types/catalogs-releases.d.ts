@@ -41,6 +41,7 @@ export interface CatalogsReleasesEndpoint {
   Create(options: {
     catalogId: string
     token?: string
+    include_organization_resources?: boolean
   }): Promise<Resource<ReleaseBase>>
 
   Limit(value: number): CatalogsReleasesEndpoint
