@@ -5,7 +5,7 @@ import {
   MemoryStorageFactory,
   LocalStorageFactory
 } from '../../src/moltin'
-import { throttleFetch } from '../../src/utils/throttle'
+import  throttleFetch  from '../../src/utils/throttle'
 describe('Moltin config', () => {
   it('storage defaults to `StorageFactory`', () => {
     const Moltin = MoltinGateway({})
@@ -56,6 +56,7 @@ describe('Moltin config', () => {
       custom_fetch: testCustomFetch,
       throttleRequests: true
     })
+
     expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
   })
 
