@@ -1,7 +1,7 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
 import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
-import { throttleFetch } from './utils/throttle'
+import configureFetch from './utils/configFetch'
 
 class Config {
   constructor(options) {
@@ -44,16 +44,8 @@ class Config {
     this.currency = currency
     this.language = language
 
-    let fetchMethod
-    if (custom_fetch && throttleRequests) {
-      fetchMethod = throttleFetch
-    } else if (custom_fetch) {
-      fetchMethod = custom_fetch
-    } else if (throttleRequests) {
-      fetchMethod = throttleFetch
-    } else {
-      fetchMethod = fetch
-    }
+    const fetchMethod = configureFetch(custom_fetch, throttleRequests, options)
+
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
@@ -91,3 +83,6 @@ class Config {
 }
 
 export default Config
+
+
+
