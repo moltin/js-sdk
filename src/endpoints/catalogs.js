@@ -245,12 +245,13 @@ class Releases extends CRUDExtend {
     )
   }
 
-  Create({ catalogId, token = null, include_organization_resources = false }) {
+  Create({ catalogId, body, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/${this.endpoint}`,
       'POST',
+      body,
       token,
-      include_organization_resources
+      
     )
   }
 }
