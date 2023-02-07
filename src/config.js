@@ -1,7 +1,7 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
 import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
-import configureFetch from './utils/configFetch'
+import resolveFetchMethod from './utils/configFetch'
 
 class Config {
   constructor(options) {
@@ -15,6 +15,7 @@ class Config {
       host,
       storage,
       storage_type,
+      // eslint-disable-next-line no-unused-vars
       custom_fetch,
       custom_authenticator,
       headers,
@@ -28,9 +29,7 @@ class Config {
       throttleRequests,
       throttleLimit,
       throttleInterval,
-      throttleStrict,
-      httpKeepAlive,
-      httpKeepAliveInterval
+      throttleStrict
     } = options
 
     this.name = name
@@ -44,12 +43,10 @@ class Config {
     this.currency = currency
     this.language = language
 
-    const fetchMethod = configureFetch(custom_fetch, throttleRequests, options)
-
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: fetchMethod
+      fetch: resolveFetchMethod(options)
     }
     this.sdk = {
       version,
@@ -75,14 +72,9 @@ class Config {
       throttleRequests: throttleRequests || false,
       throttleLimit: throttleLimit || 3,
       throttleInterval: throttleInterval || 125,
-      throttleStrict: throttleStrict || false,
-      httpKeepAlive: httpKeepAlive || false,
-      httpKeepAliveInterval: httpKeepAliveInterval || 10000
+      throttleStrict: throttleStrict || false
     }
   }
 }
 
 export default Config
-
-
-

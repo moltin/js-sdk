@@ -1,19 +1,7 @@
-import throttleFetch, { createThrottleQueue }  from './throttle'
+import throttleFetch from './throttle'
 
-const configureFetch = (custom_fetch, throttleRequests, options) => {
-    let fetchMethod
-    if (custom_fetch && throttleRequests) {
-      createThrottleQueue(options)
-      fetchMethod = throttleFetch
-    } else if (custom_fetch) {
-      fetchMethod = custom_fetch
-    } else if (throttleRequests) {
-      createThrottleQueue(options)
-      fetchMethod = throttleFetch
-    } else {
-      fetchMethod = fetch
-    }
-    return fetchMethod
-  }
-
-  export default configureFetch
+const resolveFetchMethod = ({ custom_fetch, throttleRequests }) => {
+  const resolvedFetch = custom_fetch ?? fetch
+  return throttleRequests ? throttleFetch(resolvedFetch) : resolvedFetch
+}
+export default resolveFetchMethod

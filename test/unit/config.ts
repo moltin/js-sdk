@@ -5,7 +5,7 @@ import {
   MemoryStorageFactory,
   LocalStorageFactory
 } from '../../src/moltin'
-import  throttleFetch  from '../../src/utils/throttle'
+import throttleFetch from '../../src/utils/throttle'
 describe('Moltin config', () => {
   it('storage defaults to `StorageFactory`', () => {
     const Moltin = MoltinGateway({})
@@ -56,7 +56,6 @@ describe('Moltin config', () => {
       custom_fetch: testCustomFetch,
       throttleRequests: true
     })
-
     expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
   })
 
@@ -72,18 +71,12 @@ describe('Moltin config', () => {
       throttleRequests: true,
       throttleLimit: 3,
       throttleInterval: 125,
-      throttleStrict: false,
-      httpKeepAlive: true,
-      httpKeepAliveInterval: 10000
+      throttleStrict: false
     })
 
     expect(Moltin.config.throttleConfig?.throttleRequests).to.be.equal(true)
     expect(Moltin.config.throttleConfig?.throttleLimit).to.be.equal(3)
     expect(Moltin.config.throttleConfig?.throttleInterval).to.be.equal(125)
     expect(Moltin.config.throttleConfig?.throttleStrict).to.be.equal(false)
-    expect(Moltin.config.throttleConfig?.httpKeepAlive).to.be.equal(true)
-    expect(Moltin.config.throttleConfig?.httpKeepAliveInterval).to.be.equal(
-      10000
-    )
   })
 })

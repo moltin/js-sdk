@@ -43,8 +43,6 @@ export interface ConfigOptions {
   throttleLimit?: number
   throttleInterval?: number
   throttleStrict?: boolean
-  httpKeepAlive?: boolean
-  httpKeepAliveInterval?: number
 }
 
 export interface Config {
@@ -78,8 +76,6 @@ export interface Config {
     throttleLimit?: number
     throttleInterval?: number
     throttleStrict?: boolean
-    httpKeepAlive?: boolean
-    httpKeepAliveInterval?: number
   }
   constructor(options: ConfigOptions): void
 }

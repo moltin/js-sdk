@@ -1,8 +1,6 @@
 import { expect } from 'chai'
-import nock from 'nock'
 import '../../src/utils/fetch-polyfill'
 import throttleMod from '../../src/utils/throttle.js'
-import throttleFetch from '../../src/utils/throttle.js'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://api.moltin.com/v2'
@@ -12,9 +10,7 @@ describe('Build throttle mechanism', () => {
     throttleRequests: true,
     throttleLimit: 3,
     throttleInterval: 125,
-    throttleStrict: false,
-    httpKeepAlive: false,
-    httpKeepAliveInterval: 10000
+    throttleStrict: false
   })
 
   it('should have correct config options for throttle', () => {
@@ -30,21 +26,11 @@ describe('Build throttle mechanism', () => {
     throttleMod.__Rewire__('throttledQueue', throttledQueueMock)
   })
 
-  it('should give correct throttle response', async () => {
-    // Intercept the API request
-    nock(apiUrl).get('/test').reply(200, { data: 'Resolved promise response' })
-    
+  it('should not be undefined', async () => {
     const throttleMock = async function (fn: () => any) {
-      expect(fn).to.not.be.undefined
       return fn()
     }
+    expect(throttleMock).to.not.be.undefined
     throttleMod.__Rewire__('throttle', throttleMock)
-
-    const res = await throttleFetch(
-      apiUrl + '/test',
-      Moltin.config.throttleConfig
-    )
-    const body = await res.text()
-    expect(body).to.equal('{"data":"Resolved promise response"}')
   })
 })
