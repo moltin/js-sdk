@@ -39,7 +39,7 @@ export interface ConfigOptions {
   retryDelay?: number
   retryJitter?: number
   fetchMaxAttempts?: number
-  throttleRequests?: boolean
+  throttleEnabled?: boolean
   throttleLimit?: number
   throttleInterval?: number
   throttleStrict?: boolean
@@ -72,7 +72,7 @@ export interface Config {
   retryJitter?: number
   fetchMaxAttempts?: number
   throttleConfig?: {
-    throttleRequests?: boolean
+    throttleEnabled?: boolean
     throttleLimit?: number
     throttleInterval?: number
     throttleStrict?: boolean

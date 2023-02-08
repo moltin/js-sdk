@@ -1,7 +1,7 @@
 import throttleFetch from './throttle'
 
-const resolveFetchMethod = ({ custom_fetch, throttleRequests }) => {
+const resolveFetchMethod = ({ custom_fetch, throttleEnabled }) => {
   const resolvedFetch = custom_fetch ?? fetch
-  return throttleRequests ? throttleFetch(resolvedFetch) : resolvedFetch
+  return throttleEnabled ? throttleFetch(resolvedFetch) : resolvedFetch
 }
 export default resolveFetchMethod

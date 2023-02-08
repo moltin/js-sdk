@@ -26,7 +26,7 @@ class Config {
       retryDelay,
       retryJitter,
       fetchMaxAttempts,
-      throttleRequests,
+      throttleEnabled,
       throttleLimit,
       throttleInterval,
       throttleStrict
@@ -69,7 +69,7 @@ class Config {
         ? fetchMaxAttempts
         : 4
     this.throttleConfig = {
-      throttleRequests: throttleRequests || false,
+      throttleEnabled: throttleEnabled || false,
       throttleLimit: throttleLimit || 3,
       throttleInterval: throttleInterval || 125,
       throttleStrict: throttleStrict || false
