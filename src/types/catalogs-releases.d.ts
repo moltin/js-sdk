@@ -18,6 +18,10 @@ export interface ReleaseResponse extends Identifiable {
   }
 }
 
+export interface ReleaseBodyBase {
+  include_organization_resources: boolean
+}
+
 export interface CatalogsReleasesEndpoint {
   endpoint: 'releases'
 
@@ -40,6 +44,7 @@ export interface CatalogsReleasesEndpoint {
 
   Create(options: {
     catalogId: string
+    body?: ReleaseBodyBase
     token?: string
   }): Promise<Resource<ReleaseBase>>
 
