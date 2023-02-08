@@ -43,9 +43,6 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
-  /**
-   * TODO Parameters should be reordered in the next major release
-   */
   AddProduct(productId, quantity = 1, data = {}, isSku = false, token = null) {
     const body = buildCartItemData(productId, quantity, 'cart_item', {}, isSku)
 
