@@ -7,7 +7,9 @@ const apiUrl = 'https://api.moltin.com/v2'
 
 describe('Build throttle mechanism', () => {
   const Moltin = MoltinGateway({
-    throttleRequests: true,
+    client_id: 'xxx',
+    client_secret: 'xxx',
+    throttleEnabled: true,
     throttleLimit: 3,
     throttleInterval: 125,
     throttleStrict: false

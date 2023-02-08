@@ -54,7 +54,7 @@ describe('Moltin config', () => {
     const Moltin = MoltinGateway({
       client_id: 'XXX',
       custom_fetch: testCustomFetch,
-      throttleRequests: true
+      throttleEnabled: true
     })
     expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
   })
@@ -68,13 +68,13 @@ describe('Moltin config', () => {
 
   it('should have throttling config options', () => {
     const Moltin = MoltinGateway({
-      throttleRequests: true,
+      throttleEnabled: true,
       throttleLimit: 3,
       throttleInterval: 125,
       throttleStrict: false
     })
 
-    expect(Moltin.config.throttleConfig?.throttleRequests).to.be.equal(true)
+    expect(Moltin.config.throttleConfig?.throttleEnabled).to.be.equal(true)
     expect(Moltin.config.throttleConfig?.throttleLimit).to.be.equal(3)
     expect(Moltin.config.throttleConfig?.throttleInterval).to.be.equal(125)
     expect(Moltin.config.throttleConfig?.throttleStrict).to.be.equal(false)
