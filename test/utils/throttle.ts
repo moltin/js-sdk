@@ -11,19 +11,13 @@ describe('Build throttle mechanism', () => {
     client_secret: 'xxx',
     throttleEnabled: true,
     throttleLimit: 3,
-    throttleInterval: 125,
-    throttleStrict: false
+    throttleInterval: 125
   })
 
   it('should have correct config options for throttle', () => {
-    const throttledQueueMock = function (
-      limit: number,
-      interval: number,
-      strict: boolean
-    ) {
+    const throttledQueueMock = function (limit: number, interval: number) {
       expect(limit).to.equal(Moltin.config.throttleConfig?.throttleLimit)
       expect(interval).to.equal(Moltin.config.throttleConfig?.throttleInterval)
-      expect(strict).to.equal(Moltin.config.throttleConfig?.throttleStrict)
     }
     throttleMod.__Rewire__('throttledQueue', throttledQueueMock)
   })

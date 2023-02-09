@@ -42,7 +42,6 @@ export interface ConfigOptions {
   throttleEnabled?: boolean
   throttleLimit?: number
   throttleInterval?: number
-  throttleStrict?: boolean
 }
 
 export interface Config {
@@ -75,7 +74,6 @@ export interface Config {
     throttleEnabled?: boolean
     throttleLimit?: number
     throttleInterval?: number
-    throttleStrict?: boolean
   }
   constructor(options: ConfigOptions): void
 }

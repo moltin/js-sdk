@@ -80,13 +80,11 @@ describe('Moltin config', () => {
     const Moltin = MoltinGateway({
       throttleEnabled: true,
       throttleLimit: 3,
-      throttleInterval: 125,
-      throttleStrict: false
+      throttleInterval: 125
     })
 
     expect(Moltin.config.throttleConfig?.throttleEnabled).to.be.equal(true)
     expect(Moltin.config.throttleConfig?.throttleLimit).to.be.equal(3)
     expect(Moltin.config.throttleConfig?.throttleInterval).to.be.equal(125)
-    expect(Moltin.config.throttleConfig?.throttleStrict).to.be.equal(false)
   })
 })

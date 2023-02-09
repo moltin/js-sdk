@@ -3,10 +3,9 @@ import throttledQueue from 'throttled-queue'
 let throttledQ
 const createThrottledQueue = ({
   throttleLimit = 3,
-  throttleInterval = 125,
-  throttleStrict = false
+  throttleInterval = 125
 }) => {
-  throttledQ = throttledQueue(throttleLimit, throttleInterval, throttleStrict)
+  throttledQ = throttledQueue(throttleLimit, throttleInterval)
   return throttledQ
 }
 

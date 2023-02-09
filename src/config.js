@@ -28,8 +28,7 @@ class Config {
       fetchMaxAttempts,
       throttleEnabled,
       throttleLimit,
-      throttleInterval,
-      throttleStrict
+      throttleInterval
     } = options
 
     this.name = name
@@ -71,8 +70,7 @@ class Config {
     this.throttleConfig = {
       throttleEnabled: throttleEnabled || false,
       throttleLimit: throttleLimit || 3,
-      throttleInterval: throttleInterval || 125,
-      throttleStrict: throttleStrict || false
+      throttleInterval: throttleInterval || 125
     }
   }
 }
