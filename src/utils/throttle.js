@@ -1,22 +1,18 @@
 import throttledQueue from 'throttled-queue'
 
+let throttledQ
 const createThrottledQueue = ({
   throttleLimit = 3,
   throttleInterval = 125,
   throttleStrict = false
 }) => {
-  _throttledQueue = throttledQueue(
-    throttleLimit,
-    throttleInterval,
-    throttleStrict
-  )
-  return _throttledQueue
+  throttledQ = throttledQueue(throttleLimit, throttleInterval, throttleStrict)
+  return throttledQ
 }
 
-const throttleFetch = fetch => async (url, options) => {
-  const throttle = _throttledQueue ?? createThrottledQueue(options)
-  return throttle(() => fetch(url, options))
-
+const throttleFetch = async (url, options) => {
+  const throttle = throttledQ ?? createThrottledQueue(options)
+  const resolveFetch = options.custom_fetch ?? fetch
+  return throttle(() => resolveFetch(url, options))
 }
 export default throttleFetch
-
