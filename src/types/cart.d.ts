@@ -35,7 +35,7 @@ export interface ItemTaxObject {
   rate: number
 }
 
-export interface ItemTaxObjectResponse extends ItemTaxObject{
+export interface ItemTaxObjectResponse extends ItemTaxObject {
   id: string
 }
 
@@ -133,14 +133,14 @@ export interface CartItemsResponse {
       updated_at: string
       expires_at: string
     }
-  },
+  }
   included?: {
     tax_items?: ItemTaxObjectResponse[]
   }
 }
 
 export interface BulkAddOptions {
-   add_all_or_nothing: boolean 
+  add_all_or_nothing: boolean
 }
 
 export interface CartItemObject {
@@ -154,15 +154,10 @@ export interface CartItemObject {
   code?: string
 }
 
-export type CartInclude =
-    | 'items'
-    | 'tax_items'
+export type CartInclude = 'items' | 'tax_items'
 
-interface CartQueryableResource <
-    R,
-    F,
-    S,
-    > extends QueryableResource<Cart, F, S, CartInclude> {
+interface CartQueryableResource<R, F, S>
+  extends QueryableResource<Cart, F, S, CartInclude> {
   With(includes: CartInclude | CartInclude[]): CartEndpoint
 }
 
@@ -197,12 +192,15 @@ export interface CartEndpoint
    * @param productId the ID of the product you want to add to cart.
    * @param quantity the amount of products to add to cart
    * @param data
+   * @param isSku the default value is `false`, which adds products by product ID. To add products by SKU, set to `true`.
+   * @param token customer token
    */
   AddProduct(
     productId: string,
     quantity?: number,
     data?: any,
-    isSku?: boolean
+    isSku?: boolean,
+    token?: string
   ): Promise<CartItemsResponse>
 
   /**
@@ -314,9 +312,12 @@ export interface CartEndpoint
    * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-add-to-cart.html
    * @param data Cart items or custom items
-   * @param options Optional config object for add to cart behaviour 
+   * @param options Optional config object for add to cart behaviour
    */
-  BulkAdd(data: CartItemObject[], options?: BulkAddOptions): Promise<CartItemsResponse>
+  BulkAdd(
+    data: CartItemObject[],
+    options?: BulkAddOptions
+  ): Promise<CartItemsResponse>
 
   /**
    * Get Carts List
