@@ -66,6 +66,16 @@ describe('Moltin config', () => {
     expect(Moltin.config.auth.fetch).to.equal(fetch)
   })
 
+  it('should use custom_fetch if throttleRequest value is not given', () => {
+    // minimal test function
+    const testCustomFetch = (url: string, options: object) => url
+    const Moltin = MoltinGateway({
+      client_id: 'XXX',
+      custom_fetch: testCustomFetch
+    })
+    expect(Moltin.config.auth.fetch).to.equal(testCustomFetch)
+  })
+
   it('should have throttling config options', () => {
     const Moltin = MoltinGateway({
       throttleEnabled: true,

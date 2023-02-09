@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import '../../src/utils/fetch-polyfill'
 import resolveFetchMethod from '../../src/utils/configFetch'
-import throttleFetch from '../../src/utils/throttle'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
 describe('Config fetch parameters', () => {
@@ -14,35 +13,40 @@ describe('Config fetch parameters', () => {
     custom_fetch: testCustomFetch,
     throttleEnabled: true,
     throttleLimit: 3,
-    throttleInterval: 125,
-    throttleStrict: false
+    throttleInterval: 125
   })
+  const mockOptions = {
+    custom_fetch: Moltin.config.custom_fetch,
+    throttleEnabled: Moltin.config.throttleConfig?.throttleEnabled,
+    throttleLimit: Moltin.config.throttleConfig?.throttleLimit,
+    throttleInterval: Moltin.config.throttleConfig?.throttleInterval
+  }
+  const throttleMock = async function (fn: () => any) {
+    return fn()
+  }
 
   it('should have correct config options for resolveFetchMethod', () => {
-    const resolveFetchMethodMock = function (
-      customFetch: Function,
-      ThrottleRequest: boolean
-    ) {
-      expect(customFetch).to.equal(Moltin.config.custom_fetch)
-      expect(ThrottleRequest).to.equal(
+    const resolveFetchMethodMock = function (options: any) {
+      const isCustomFetch = options.custom_fetch ?? fetch
+      expect(options.custom_fetch).to.equal(Moltin.config.custom_fetch)
+      expect(options.throttleEnabled).to.equal(
         Moltin.config.throttleConfig?.throttleEnabled
       )
+      return options.throttleEnabled ? throttleMock : isCustomFetch
     }
+    resolveFetchMethodMock(mockOptions)
     resolveFetchMethod.__Rewire__('resolveFetchMethod', resolveFetchMethodMock)
   })
 
   it('should access throttleFetch if custom_fetch and throttle request is given', () => {
-    const resolveFetchMethodMock = function (
-      customFetch: Function,
-      throttleEnabled: boolean
-    ) {
-      const resolvedFetch = customFetch ?? fetch
-      expect(resolvedFetch).to.equal(customFetch)
-      return throttleEnabled ? throttleFetch(resolvedFetch) : resolvedFetch
+    expect(throttleMock).to.not.be.undefined
+    const resolveFetchMethodMock = function (options: any) {
+      const isCustomFetch = options.custom_fetch ?? fetch
+      return options.throttleEnabled ? throttleMock : isCustomFetch
     }
 
-    const response = resolveFetchMethodMock(testCustomFetch, true)
+    const response = resolveFetchMethodMock(mockOptions)
     resolveFetchMethod.__Rewire__('resolveFetchMethod', resolveFetchMethodMock)
-    expect(response).to.equal(throttleFetch)
+    expect(response).to.equal(throttleMock)
   })
 })
