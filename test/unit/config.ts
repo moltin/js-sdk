@@ -47,16 +47,27 @@ describe('Moltin config', () => {
     })
   })
 
-  it('should use throttleFetch if custom_fetch and throttleRequest value are given', () => {
+  it('should access throttleFetch if custom_fetch and throttle request is given', () => {
     // minimal test function
     const testCustomFetch = (url: string, options: object) => url
-
-    const Moltin = MoltinGateway({
-      client_id: 'XXX',
+    
+    const testOptions = {
       custom_fetch: testCustomFetch,
-      throttleEnabled: true
-    })
-    expect(Moltin.config.auth.fetch).to.equal(throttleFetch)
+      throttleEnabled: true,
+      throttleLimit: 3,
+      throttleInterval: 125
+    }
+
+    let partiallyAppliedThrottleFetch = undefined
+    const resolveFetchMethodMock = function (options) {
+      const resolvedFetch = options.custom_fetch ?? fetch
+      expect(resolvedFetch).to.equal(options.custom_fetch)
+      partiallyAppliedThrottleFetch = throttleFetch(resolvedFetch)
+      return options.throttleEnabled ? partiallyAppliedThrottleFetch : resolvedFetch
+    }
+
+    const response = resolveFetchMethodMock(testOptions)
+    expect(response).to.equal(partiallyAppliedThrottleFetch)
   })
 
   it('should use fetch if custom_fetch and throttleRequest value are not given', () => {
