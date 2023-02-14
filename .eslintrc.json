@@ -14,6 +14,7 @@
     "no-undef": 0,
     "global-require": 0,
     "no-bitwise": 0,
-    "max-classes-per-file": 0
+    "max-classes-per-file": 0,
+    "import/prefer-default-export": "off"
   }
 }
