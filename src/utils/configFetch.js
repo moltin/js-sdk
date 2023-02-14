@@ -1,11 +1,15 @@
-import throttleFetch, { createThrottledQueue } from './throttle'
+import { throttleFetch } from './throttle'
 
-const resolveFetchMethod = options => {
+export const resolveFetchMethod = options => {
   const { custom_fetch, throttleEnabled } = options
-  if (throttleEnabled) {
-    createThrottledQueue(options)
-  }
-  const isCustomFetch = custom_fetch ?? fetch
-  return throttleEnabled ? throttleFetch(isCustomFetch) : isCustomFetch
+
+  /**
+   * Use custom fetch function if provided
+   */
+  const resolvedFetch = custom_fetch ?? fetch
+
+  /**
+   * Throttle the decided on fetch function if throttleEnabled option is true
+   */
+  return throttleEnabled ? throttleFetch(resolvedFetch) : resolvedFetch
 }
-export default resolveFetchMethod

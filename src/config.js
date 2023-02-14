@@ -1,7 +1,7 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
 import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
-import resolveFetchMethod from './utils/configFetch'
+import { resolveFetchMethod } from './utils/configFetch'
 
 class Config {
   constructor(options) {
@@ -15,8 +15,6 @@ class Config {
       host,
       storage,
       storage_type,
-      // eslint-disable-next-line no-unused-vars
-      custom_fetch,
       custom_authenticator,
       headers,
       disableCart,

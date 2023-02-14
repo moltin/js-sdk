@@ -5,7 +5,7 @@ import {
   MemoryStorageFactory,
   LocalStorageFactory
 } from '../../src/moltin'
-import throttleFetch from '../../src/utils/throttle'
+import { throttleFetch } from '../../src/utils/throttle'
 describe('Moltin config', () => {
   it('storage defaults to `StorageFactory`', () => {
     const Moltin = MoltinGateway({})
@@ -50,7 +50,7 @@ describe('Moltin config', () => {
   it('should access throttleFetch if custom_fetch and throttle request is given', () => {
     // minimal test function
     const testCustomFetch = (url: string, options: object) => url
-    
+
     const testOptions = {
       custom_fetch: testCustomFetch,
       throttleEnabled: true,
@@ -63,7 +63,9 @@ describe('Moltin config', () => {
       const resolvedFetch = options.custom_fetch ?? fetch
       expect(resolvedFetch).to.equal(options.custom_fetch)
       partiallyAppliedThrottleFetch = throttleFetch(resolvedFetch)
-      return options.throttleEnabled ? partiallyAppliedThrottleFetch : resolvedFetch
+      return options.throttleEnabled
+        ? partiallyAppliedThrottleFetch
+        : resolvedFetch
     }
 
     const response = resolveFetchMethodMock(testOptions)
