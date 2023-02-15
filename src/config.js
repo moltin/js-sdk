@@ -1,6 +1,7 @@
 import { version } from '../package.json'
 import LocalStorageFactory from './factories/local-storage'
 import SecureCookiesStorageFactory from './factories/secure-cookies-storage'
+import { resolveFetchMethod } from './utils/configFetch'
 
 class Config {
   constructor(options) {
@@ -14,7 +15,6 @@ class Config {
       host,
       storage,
       storage_type,
-      custom_fetch,
       custom_authenticator,
       headers,
       disableCart,
@@ -23,7 +23,11 @@ class Config {
       store_id,
       retryDelay,
       retryJitter,
-      fetchMaxAttempts
+      fetchMaxAttempts,
+      custom_fetch,
+      throttleEnabled = false,
+      throttleLimit = 3,
+      throttleInterval = 125
     } = options
 
     this.name = name
@@ -36,10 +40,16 @@ class Config {
     this.version = 'v2'
     this.currency = currency
     this.language = language
+
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: custom_fetch || fetch
+      fetch: resolveFetchMethod({
+        custom_fetch,
+        throttleEnabled,
+        throttleLimit,
+        throttleInterval
+      })
     }
     this.sdk = {
       version,
@@ -61,6 +71,11 @@ class Config {
       fetchMaxAttempts !== undefined && fetchMaxAttempts !== null
         ? fetchMaxAttempts
         : 4
+    this.throttleConfig = {
+      throttleEnabled,
+      throttleLimit,
+      throttleInterval
+    }
   }
 }
 

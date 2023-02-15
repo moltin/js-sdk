@@ -11,9 +11,9 @@
     "commit": "cz",
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
-    "test": "mocha --require @babel/register -r ts-node/register test/tests.ts",
-    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'mocha --require @babel/register -r ts-node/register test/tests.ts'",
-    "test-output": "mocha --require @babel/register -r ts-node/register --reporter mocha-junit-reporter test/tests.ts",
+    "test": "NODE_ENV=test mocha --require @babel/register -r ts-node/register test/tests.ts",
+    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'NODE_ENV=test mocha --require @babel/register -r ts-node/register test/tests.ts'",
+    "test-output": "NODE_ENV=test mocha --require @babel/register -r ts-node/register --reporter mocha-junit-reporter test/tests.ts",
     "playground": "ts-node playground/index.ts",
     "lint": "eslint src"
   },
@@ -44,6 +44,7 @@
     "url": "https://github.com/moltin/js-sdk/issues"
   },
   "devDependencies": {
+    "babel-plugin-rewire": "^1.2.0",
     "@babel/core": "7.18.10",
     "@babel/eslint-parser": "7.18.9",
     "@babel/preset-env": "7.18.10",
@@ -89,7 +90,8 @@
     "form-data": "^4.0.0",
     "inflected": "^2.0.1",
     "js-cookie": "^3.0.1",
-    "node-localstorage": "^2.1.6"
+    "node-localstorage": "^2.1.6",
+    "throttled-queue": "^2.1.4"
   },
   "config": {
     "commitizen": {
