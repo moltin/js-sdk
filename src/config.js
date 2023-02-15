@@ -24,9 +24,10 @@ class Config {
       retryDelay,
       retryJitter,
       fetchMaxAttempts,
-      throttleEnabled,
-      throttleLimit,
-      throttleInterval
+      custom_fetch,
+      throttleEnabled = false,
+      throttleLimit = 3,
+      throttleInterval = 125
     } = options
 
     this.name = name
@@ -43,7 +44,12 @@ class Config {
     this.auth = {
       expires: 3600,
       uri: 'oauth/access_token',
-      fetch: resolveFetchMethod(options)
+      fetch: resolveFetchMethod({
+        custom_fetch,
+        throttleEnabled,
+        throttleLimit,
+        throttleInterval
+      })
     }
     this.sdk = {
       version,
@@ -66,9 +72,9 @@ class Config {
         ? fetchMaxAttempts
         : 4
     this.throttleConfig = {
-      throttleEnabled: throttleEnabled || false,
-      throttleLimit: throttleLimit || 3,
-      throttleInterval: throttleInterval || 125
+      throttleEnabled,
+      throttleLimit,
+      throttleInterval
     }
   }
 }
