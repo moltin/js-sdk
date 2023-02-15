@@ -12,8 +12,8 @@
     "rollup": "rollup -c",
     "start": "SERVE=true rollup -c -w",
     "test": "NODE_ENV=test mocha --require @babel/register -r ts-node/register test/tests.ts",
-    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'mocha --require @babel/register -r ts-node/register test/tests.ts'",
-    "test-output": "mocha --require @babel/register -r ts-node/register --reporter mocha-junit-reporter test/tests.ts",
+    "test-watch": "nodemon -w 'src/**' -w 'test/**' -e ts --exec 'NODE_ENV=test mocha --require @babel/register -r ts-node/register test/tests.ts'",
+    "test-output": "NODE_ENV=test mocha --require @babel/register -r ts-node/register --reporter mocha-junit-reporter test/tests.ts",
     "playground": "ts-node playground/index.ts",
     "lint": "eslint src"
   },
