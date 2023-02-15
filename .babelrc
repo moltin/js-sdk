@@ -8,5 +8,9 @@
       }
     ]
   ],
-  "plugins": ["rewire"]
+  "env": {
+    "test": {
+      "plugins": ["rewire"]
+    }
+  }
 }
