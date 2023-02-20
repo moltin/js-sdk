@@ -200,7 +200,8 @@ export interface CartEndpoint
     quantity?: number,
     data?: any,
     isSku?: boolean,
-    token?: string
+    token?: string,
+    additionalHeaders?: any
   ): Promise<CartItemsResponse>
 
   /**

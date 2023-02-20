@@ -43,7 +43,14 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
-  AddProduct(productId, quantity = 1, data = {}, isSku = false, token = null) {
+  AddProduct(
+    productId,
+    quantity = 1,
+    data = {},
+    isSku = false,
+    token = null,
+    additionalHeaders = {}
+  ) {
     const body = buildCartItemData(productId, quantity, 'cart_item', {}, isSku)
 
     return this.request.send(
@@ -53,7 +60,11 @@ class CartEndpoint extends BaseExtend {
         ...body,
         ...data
       },
-      token
+      token,
+      null,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
