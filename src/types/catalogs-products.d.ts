@@ -2,11 +2,11 @@ import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
 import type { ProductFilter } from './product'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
-import type {Extensions} from "./extensions";
+import type { Extensions } from './extensions'
 import type { FormattedPrice } from './price'
 
-
-export interface CatalogsProductVariation extends Omit<Variation, 'relationships' | 'options'> {
+export interface CatalogsProductVariation
+  extends Omit<Variation, 'relationships' | 'options'> {
   options: Omit<Option, 'modifiers'>[]
 }
 
@@ -36,9 +36,9 @@ export interface ProductResponse extends Identifiable {
     store_id: string
     translations: string[]
     updated_at: string
-    weight: string,
+    weight: string
     extensions?: Extensions
-  };
+  }
   meta: {
     catalog_id?: string
     catalog_source?: 'pcm'
@@ -59,22 +59,22 @@ export interface ProductResponse extends Identifiable {
           [key: string]: number
         }
       }
-    },
+    }
     component_products?: {
       [key: string]: {
         display_price: {
           without_tax: FormattedPrice
-        },
+        }
         price: {
           [key: string]: {
             includes_tax: boolean
             amount: number
           }
-        },
+        }
         pricebook_id: string
       }
     }
-  };
+  }
   relationships: {
     categories: {
       id: string
@@ -128,11 +128,15 @@ export interface CatalogsProductsEndpoint {
 
   Filter(filter: ProductFilter): CatalogsProductsEndpoint
 
-  All(options: { token?: string }): Promise<ResourceList<ProductResponse>>
+  All(options: {
+    token?: string
+    additionalHeaders?: any
+  }): Promise<ResourceList<ProductResponse>>
 
   Get(options: {
     productId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<Resource<ProductResponse>>
 
   GetProduct(options: {
@@ -140,6 +144,7 @@ export interface CatalogsProductsEndpoint {
     releaseId: string
     productId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<Resource<ProductResponse>>
 
   GetCatalogNodeProducts(options: {
@@ -152,6 +157,7 @@ export interface CatalogsProductsEndpoint {
   GetProductsByNode(options: {
     nodeId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<ResourceList<ProductResponse>>
 
   GetCatalogProducts(options: {

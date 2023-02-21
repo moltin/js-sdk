@@ -51,12 +51,14 @@ class Nodes extends CRUDExtend {
   }) {
     const { limit, offset, sort } = this
     return this.request.send(
-      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint
-        }/${nodeId}/relationships/children`, {
-        sort,
-        limit,
-        offset
-      }),
+      buildURL(
+        `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${nodeId}/relationships/children`,
+        {
+          sort,
+          limit,
+          offset
+        }
+      ),
       'GET',
       undefined,
       token
@@ -102,41 +104,53 @@ class Products extends CRUDExtend {
       `catalogs/${this.endpoint}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
-  Get({ productId, token = null }) {
+  Get({ productId, token = null, additionalHeaders = {} }) {
     return this.request.send(
       `catalogs/${this.endpoint}/${productId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
   GetProduct({ catalogId, releaseId, productId, token = null }) {
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${
-        this.endpoint
-      }/${productId}`,
+      `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
   GetCatalogNodeProducts({ catalogId, releaseId, nodeId, token = null }) {
     const { limit, offset, includes, sort, filter } = this
     return this.request.send(
-      buildURL(`catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${this.endpoint
-        }`, {
-        includes,
-        sort,
-        limit,
-        offset,
-        filter
-      }),
+      buildURL(
+        `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${this.endpoint}`,
+        {
+          includes,
+          sort,
+          limit,
+          offset,
+          filter
+        }
+      ),
       'GET',
       undefined,
       token
@@ -148,7 +162,11 @@ class Products extends CRUDExtend {
       `catalogs/nodes/${nodeId}/relationships/${this.endpoint}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
@@ -169,16 +187,9 @@ class Products extends CRUDExtend {
     )
   }
 
-  GetCatalogProductChildren({
-    catalogId,
-    releaseId,
-    productId,
-    token = null
-  }) {
+  GetCatalogProductChildren({ catalogId, releaseId, productId, token = null }) {
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${
-        this.endpoint
-      }/${productId}/relationships/children`,
+      `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}/relationships/children`,
       'GET',
       undefined,
       token
@@ -235,10 +246,12 @@ class Releases extends CRUDExtend {
 
     return this.request.send(
       buildURL(
-        `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`, {
-        limit,
-        offset
-      }),
+        `catalogs/${catalogId}/${this.endpoint}/${releaseId}/hierarchies`,
+        {
+          limit,
+          offset
+        }
+      ),
       'GET',
       undefined,
       token
@@ -250,8 +263,7 @@ class Releases extends CRUDExtend {
       `catalogs/${catalogId}/${this.endpoint}`,
       'POST',
       body,
-      token,
-      
+      token
     )
   }
 }
@@ -350,7 +362,7 @@ class CatalogsEndpoint extends CRUDExtend {
       `${this.endpoint}/${catalogId}/releases`,
       'GET',
       undefined,
-      token,
+      token
     )
   }
 

@@ -169,6 +169,10 @@ export interface CartIncluded {
   items: CartItem[]
 }
 
+export interface CartAdditionalHeaders {
+  'X-MOLTIN-CURRENCY'?: string
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -201,7 +205,7 @@ export interface CartEndpoint
     data?: any,
     isSku?: boolean,
     token?: string,
-    additionalHeaders?: any
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   /**
