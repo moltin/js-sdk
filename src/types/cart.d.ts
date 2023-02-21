@@ -169,6 +169,12 @@ export interface CartIncluded {
   items: CartItem[]
 }
 
+export interface CartAdditionalHeaders {
+  'EP-Context-Tag'?: string
+  'EP-Channel'?: string
+  'X-MOLTIN-CURRENCY'?: string
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -200,7 +206,8 @@ export interface CartEndpoint
     quantity?: number,
     data?: any,
     isSku?: boolean,
-    token?: string
+    token?: string,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   /**
@@ -250,7 +257,8 @@ export interface CartEndpoint
   AddProduct(
     productId: string,
     quantity?: number,
-    data?: any
+    data?: any,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   RemoveAllItems(): Promise<CartItemsResponse>
