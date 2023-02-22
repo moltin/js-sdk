@@ -170,6 +170,8 @@ export interface CartIncluded {
 }
 
 export interface CartAdditionalHeaders {
+  'EP-Context-Tag'?: string
+  'EP-Channel'?: string
   'X-MOLTIN-CURRENCY'?: string
 }
 
@@ -255,7 +257,8 @@ export interface CartEndpoint
   AddProduct(
     productId: string,
     quantity?: number,
-    data?: any
+    data?: any,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   RemoveAllItems(): Promise<CartItemsResponse>
