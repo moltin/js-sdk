@@ -185,6 +185,13 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  BulkAddItemTax(body, options) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/taxes`, 'POST', {
+      data: body,
+      ...(options && { options })
+    })
+  }
+
   UpdateItemTax(itemId, taxItemId, taxData) {
     const body = Object.assign(taxData, {
       type: 'tax_item'

@@ -154,6 +154,22 @@ export interface CartItemObject {
   code?: string
 }
 
+export interface CartTaxItemObject {
+  type: string
+  name: string
+  jurisdiction: string
+  code: string
+  rate: number
+  relationships: {
+    item: {
+      data: {
+        type: string
+        id: string
+      }
+    }
+  }
+}
+
 export type CartInclude = 'items' | 'tax_items'
 
 interface CartQueryableResource<R, F, S>
@@ -429,6 +445,17 @@ export interface CartEndpoint
     taxData: ItemTaxObject
   ): Promise<Resource<ItemTaxObjectResponse>>
 
+  /**
+   * Bulk Add Items tax to Cart
+   * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-add-to-cart.html
+   * @param data Cart items or custom items
+   * @param options Optional config object for add to cart behaviour
+   */
+  BulkAddItemTax(
+    data: CartTaxItemObject[],
+    options?: BulkAddOptions
+  ): Promise<CartTaxItemObject[]>
   /**
    * Update a Tax Item
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/update-a-tax-item.html
