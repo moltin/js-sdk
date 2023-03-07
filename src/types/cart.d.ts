@@ -298,7 +298,8 @@ export interface CartEndpoint
   UpdateItem(
     itemId: string,
     quantity: number,
-    customData?: any
+    customData?: any,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   /**

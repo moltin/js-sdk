@@ -141,13 +141,18 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'DELETE')
   }
 
-  UpdateItem(itemId, quantity, data = {}) {
+  UpdateItem(itemId, quantity, data = {}, additionalHeaders = {}) {
     const body = buildCartItemData(itemId, quantity)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
       'PUT',
-      { ...body, ...data }
+      { ...body, ...data },
+      null,
+      null,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
