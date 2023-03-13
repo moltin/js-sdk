@@ -8,6 +8,7 @@ import { Resource, QueryableResource } from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
+import { PcmProductResponse } from './pcm'
 
 export interface CheckoutCustomer {
   id: string
@@ -143,6 +144,9 @@ export interface BulkAddOptions {
   add_all_or_nothing: boolean
 }
 
+export interface MergeCartOptions {
+  add_all_or_nothing: boolean
+}
 export interface CartItemObject {
   type: string
   name?: string
@@ -495,6 +499,21 @@ export interface CartEndpoint
     additionalHeaders?: CartAdditionalHeaders
   ): Promise<Resource<Order>>
 
+  /**
+   * Merge
+   * Description: Allows to merge two carts. Moves the cart items from one cart to another.
+   * If both the cart items are same, the cart items quantity will be increased
+   * DOCS: https://elasticpath.dev/docs/carts/cart-items/merging-carts.html
+   * @param cartId the cart Id of the cart to be merged.
+   * @param token the customer token of the cart to whom it is associated or to be associated with
+   * @param options When true, if an error occurs for any item, no items are added to the cart. When false, valid items are added to the cart and the items with errors are reported in the response. Default is true
+   */
+
+  Merge(
+    cartId: string,
+    token?: string,
+    options?: MergeCartOptions
+  ): Promise<PcmProductResponse[]>
   /**
    * Delete a Cart
    * Description: You can easily remove all items from a cart.
