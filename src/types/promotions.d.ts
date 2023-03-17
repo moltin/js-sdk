@@ -121,7 +121,7 @@ export interface ItemPercentDiscountSchema {
   targets: string[] | 'all'
   percent: number
   target_conditions?: Conditions
-  target_attributes?: PromotionAttribute
+  target_attributes?: PromotionAttribute[]
   exclude?: Exclude
 }
 
