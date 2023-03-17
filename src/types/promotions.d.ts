@@ -16,37 +16,37 @@ import {
 
 //interfaces for target_conditions
 export interface Conditions {
-  or: AndCondition[];
+  or: AndCondition[]
 }
 
 export interface AndCondition {
-  and: TargetCondition[];
+  and: TargetCondition[]
 }
 
 export interface TargetCondition {
-  attribute?: PromotionAttributeValues;
-  node?: { values: Array<string> };
+  attribute?: PromotionAttributeValues
+  node?: { values: Array<string> }
 }
 
 export interface PromotionAttributeValues {
-  template: string;
-  field: string;
-  type: 'string' | 'boolean' | 'integer' | 'float' | 'date';
-  values: Array<string | boolean | number>;
+  template: string
+  field: string
+  type: 'string' | 'boolean' | 'integer' | 'float' | 'date'
+  values: Array<string | boolean | number>
 }
 
 export interface Exclude {
-  targets?: string[];
-  nodes?: string[];
-  attributes?: PromotionAttribute[];
-  conditions?: Conditions;
+  targets?: string[]
+  nodes?: string[]
+  attributes?: PromotionAttribute[]
+  conditions?: Conditions
 }
 
 export interface PromotionAttribute {
-  template: string;
-  field: string;
-  type: 'string' | 'boolean' | 'integer' | 'float' | 'date';
-  value: string | boolean | number;
+  template: string
+  field: string
+  type: 'string' | 'boolean' | 'integer' | 'float' | 'date'
+  value: string | boolean | number
 }
 
 /**
@@ -121,6 +121,7 @@ export interface ItemPercentDiscountSchema {
   targets: string[] | 'all'
   percent: number
   target_conditions?: Conditions
+  target_attributes?: PromotionAttribute[]
   exclude?: Exclude
 }
 
@@ -242,6 +243,5 @@ export interface PromotionsEndpoint
     codes: DeletePromotionCodesBodyItem[]
   ): Promise<{}>
 
-  History(promotionId:string): Promise<ResourcePage<Promotion>>
+  History(promotionId: string): Promise<ResourcePage<Promotion>>
 }
-
