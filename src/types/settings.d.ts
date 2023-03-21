@@ -72,6 +72,8 @@ export interface SettingsEndpoint {
    */
   Update(body: Partial<Settings>): Promise<Resource<Settings>>
 
+  Delete(): Promise<{}>
+
   GetLogsTtl(): Promise<Resource<TtlSettings>>
 
   UpdateLogsTtl(days: number): Promise<Resource<TtlSettings>>
