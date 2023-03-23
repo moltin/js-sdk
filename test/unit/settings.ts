@@ -126,8 +126,7 @@ describe('Moltin settings', () => {
         .reply(204, {})
 
     return Moltin.Settings.Delete().then(response => {
-      assert.deepEqual(response, '{}')
+      assert.deepEqual(response, {})
     })
-
   })
 })
