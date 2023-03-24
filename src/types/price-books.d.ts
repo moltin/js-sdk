@@ -25,6 +25,7 @@ export interface PriceBookBase {
 
 export interface PriceBook extends Identifiable, PriceBookBase {
   meta?: {
+    owner?: 'organization' | 'store'
     // TODO
   }
 }

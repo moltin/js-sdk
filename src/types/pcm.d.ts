@@ -70,6 +70,7 @@ export interface ProductComponentOption {
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
     variation_matrix: { [key: string]: string } | {}
+    owner?: 'organization' | 'store'
   }
 }
 

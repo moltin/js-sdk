@@ -23,6 +23,7 @@ export interface CatalogBase {
     pricebook_ids?: { priority: number; id: string }[]
     created_at?: string
     updated_at?: string
+    owner?: 'organization' | 'store'
   }
 }
 

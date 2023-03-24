@@ -20,6 +20,9 @@ export interface HierarchyBase {
     updated_at?: string
     published_at?: string
   }
+  meta?: {
+    owner?: 'organization' | 'store'
+  }
 }
 
 export interface Hierarchy extends Identifiable, HierarchyBase {
