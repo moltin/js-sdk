@@ -23,7 +23,9 @@ export interface CreateChildrenSortOrderBody extends Identifiable {
 }
 
 export interface NodeProduct extends PcmProduct {
-  curated_product?: boolean
+  attributes: PcmProduct['attributes'] & {
+    curated_product?: boolean
+  }
 }
 
 export interface NodeRelationshipsEndpoint {
