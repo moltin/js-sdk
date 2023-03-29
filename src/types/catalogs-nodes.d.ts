@@ -11,6 +11,7 @@ export interface NodeBaseResponse extends Identifiable {
     slug: string
     status: string
     updated_at: string
+    curated_products?: string[]
   }
   relationships: {
     children: {
@@ -52,7 +53,7 @@ export interface CatalogsNodesEndpoint {
   Get(options: {
     nodeId: string
     token?: string
-  }): Promise<Resource<NodeBaseResponse>>
+  }): Promise<Resource<NodesResponse>>
 
   GetNodeChildren(options: {
     nodeId: string

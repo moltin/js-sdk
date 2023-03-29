@@ -1,9 +1,5 @@
-import {
-  ResourcePage,
-  Resource,
-  Identifiable
-} from "./core";
-import { PcmProduct } from "./pcm";
+import { ResourcePage, Resource, Identifiable } from './core'
+import { PcmProduct } from './pcm'
 
 export interface NodeRelationshipBase {
   type: 'product'
@@ -20,10 +16,16 @@ export interface NodeRelationshipParent {
 }
 
 export interface CreateChildrenSortOrderBody extends Identifiable {
-      "type": "node",
-      "meta": {
-        "sort_order": number
-      }
+  type: 'node'
+  meta: {
+    sort_order: number
+  }
+}
+
+export interface NodeProduct extends PcmProduct {
+  attributes: PcmProduct['attributes'] & {
+    curated_product?: boolean
+  }
 }
 
 export interface NodeRelationshipsEndpoint {
@@ -54,7 +56,7 @@ export interface NodeRelationshipsEndpoint {
     hierarchyId: string
     nodeId: string
     token?: string
-  }): Promise<ResourcePage<PcmProduct>>
+  }): Promise<ResourcePage<NodeProduct>>
 
   ChangeParent(options: {
     hierarchyId: string
