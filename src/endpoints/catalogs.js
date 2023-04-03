@@ -104,16 +104,24 @@ class Products extends CRUDExtend {
       `catalogs/${this.endpoint}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
-  Get({ productId, token = null }) {
+  Get({ productId, token = null, additionalHeaders = {} }) {
     return this.request.send(
       `catalogs/${this.endpoint}/${productId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
@@ -122,7 +130,11 @@ class Products extends CRUDExtend {
       `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
@@ -152,7 +164,11 @@ class Products extends CRUDExtend {
       `catalogs/nodes/${nodeId}/relationships/${this.endpoint}`,
       'GET',
       undefined,
-      token
+      token,
+      undefined,
+      true,
+      null,
+      additionalHeaders
     )
   }
 

@@ -79,6 +79,8 @@ type ShopperCatalogProductsInclude =
 interface ShopperCatalogAdditionalHeaders {
   'EP-Context-Tag'?: string
   'EP-Channel'?: string
+  'X-MOLTIN-LANGUAGE'?: string
+  'X-MOLTIN-CURRENCY'?: string
 }
 
 interface ShopperCatalogProductsQueryableResource<
