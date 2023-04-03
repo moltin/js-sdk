@@ -211,7 +211,12 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  Checkout(customer, billing_address, shipping_address = billing_address) {
+  Checkout(
+    customer,
+    billing_address,
+    shipping_address = billing_address,
+    additionalHeaders = {}
+  ) {
     const body = buildCartCheckoutData(
       customer,
       billing_address,
@@ -221,7 +226,12 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/checkout`,
       'POST',
-      body
+      body,
+      null,
+      null,
+      true,
+      null,
+      additionalHeaders
     )
   }
 

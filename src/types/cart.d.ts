@@ -490,7 +490,8 @@ export interface CartEndpoint
   Checkout(
     customer: string | CheckoutCustomer | CheckoutCustomerObject,
     billingAddress: Partial<Address>,
-    shippingAddress?: Partial<Address>
+    shippingAddress?: Partial<Address>,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<Resource<Order>>
 
   /**
