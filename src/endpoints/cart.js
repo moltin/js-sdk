@@ -240,6 +240,23 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  Merge(cartId, token, options = {}) {
+    const body = {
+      type: 'cart_items',
+      cart_id: `${cartId}`
+    }
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'POST',
+      {
+        data: body,
+        ...(options && { options })
+      },
+      token
+    )
+  }
+
   Delete() {
     return this.request.send(`${this.endpoint}/${this.cartId}`, 'DELETE')
   }
