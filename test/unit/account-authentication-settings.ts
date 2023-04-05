@@ -43,10 +43,7 @@ describe('Moltin Account Authentication Settings', () => {
               authentication_realm: {
                 data: {
                   id: "775c934a-b54b-4846-9a7e-21844f4700a5",
-                  type: "authentication_realm",
-                  links: {
-                    self: "http://external-authentication.default.svc.cluster.local:8000/v2/authentication-realms/775c934a-b54b-4846-9a7e-21844f4700a5"
-                  }
+                  type: "authentication_realm"
                 }
               }
             },
@@ -73,10 +70,7 @@ describe('Moltin Account Authentication Settings', () => {
             authentication_realm: {
               data: {
                 id: "775c934a-b54b-4846-9a7e-21844f4700a5",
-                type: "authentication_realm",
-                links: {
-                  self: "http://external-authentication.default.svc.cluster.local:8000/v2/authentication-realms/775c934a-b54b-4846-9a7e-21844f4700a5"
-                }
+                type: "authentication_realm"
               }
             }
           },
