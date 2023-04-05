@@ -35,6 +35,7 @@ describe('Moltin Account Authentication Settings', () => {
         })
         .reply(200, {
           data: {
+            id: '775c934a-b54b-4846-9a7e-21844f4700a4',
             type: 'account_authentication_settings',
             enable_self_signup: true,
             auto_create_account_for_account_members: true,
@@ -62,6 +63,7 @@ describe('Moltin Account Authentication Settings', () => {
     return Moltin.AccountAuthenticationSettings.Update(body).then(response => {
       assert.deepEqual(response, {
         data: {
+          id: '775c934a-b54b-4846-9a7e-21844f4700a4',
           type: 'account_authentication_settings',
           enable_self_signup: true,
           auto_create_account_for_account_members: true,
