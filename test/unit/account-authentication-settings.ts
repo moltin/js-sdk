@@ -38,7 +38,21 @@ describe('Moltin Account Authentication Settings', () => {
             type: 'account_authentication_settings',
             enable_self_signup: true,
             auto_create_account_for_account_members: true,
-            account_member_self_management: 'update_only'
+            account_member_self_management: 'update_only',
+            relationships: {
+              authentication_realm: {
+                data: {
+                  id: "775c934a-b54b-4846-9a7e-21844f4700a5",
+                  type: "authentication_realm",
+                  links: {
+                    self: "http://external-authentication.default.svc.cluster.local:8000/v2/authentication-realms/775c934a-b54b-4846-9a7e-21844f4700a5"
+                  }
+                }
+              }
+            },
+            meta: {
+              client_id: "account-management"
+            }
           }
         })
     const body = {
@@ -54,7 +68,21 @@ describe('Moltin Account Authentication Settings', () => {
           type: 'account_authentication_settings',
           enable_self_signup: true,
           auto_create_account_for_account_members: true,
-          account_member_self_management: 'update_only'
+          account_member_self_management: 'update_only',
+          relationships: {
+            authentication_realm: {
+              data: {
+                id: "775c934a-b54b-4846-9a7e-21844f4700a5",
+                type: "authentication_realm",
+                links: {
+                  self: "http://external-authentication.default.svc.cluster.local:8000/v2/authentication-realms/775c934a-b54b-4846-9a7e-21844f4700a5"
+                }
+              }
+            }
+          },
+          meta: {
+            client_id: "account-management"
+          }
         }
       })
     })

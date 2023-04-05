@@ -5,7 +5,6 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/account-authentication-settings/index.html
  */
 import { Resource, RelationshipToOne, Identifiable } from './core'
-import {Settings} from "./settings";
 
 /**
  * The Account Authentication Settings Interface
