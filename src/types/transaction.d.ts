@@ -45,11 +45,11 @@ export interface TransactionsResponse {
           formatted: string
         }
       }
-      payment_details: {
-        detailed_status: string
-      }
     }
     next_actions?: string[]
+    payment_details?: {
+      detailed_status?: string
+    }
   }
 }
 
@@ -85,9 +85,9 @@ export interface TransactionBase {
         formatted: string
       }
     }
-    payment_details: {
-      detailed_status: string
-    }
+  }
+  payment_details?: {
+    detailed_status?: string
   }
   timestamps: any
   next_actions?: string[]
