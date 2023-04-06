@@ -115,4 +115,18 @@ describe('Moltin settings', () => {
       })
     })
   })
+
+  it('should delete store settings', () => {
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'
+      }
+    })
+        .delete('/settings')
+        .reply(204, {})
+
+    return Moltin.Settings.Delete().then(response => {
+      assert.deepEqual(response, {})
+    })
+  })
 })

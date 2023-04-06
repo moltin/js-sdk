@@ -18,6 +18,10 @@ class Settings {
     })
   }
 
+  Delete() {
+    return this.request.send(this.endpoint, 'DELETE')
+  }
+
   GetLogsTtl() {
     return this.request.send(`${this.endpoint}/logs-ttl`, 'GET')
   }
