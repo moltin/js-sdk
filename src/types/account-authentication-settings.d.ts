@@ -12,6 +12,9 @@ import { Resource, RelationshipToOne, Identifiable } from './core'
  */
 export interface AccountAuthenticationSettingsBase {
   type: string
+  enable_self_signup: boolean,
+  auto_create_account_for_account_members: boolean,
+  account_member_self_management: string
   meta: object
   relationships: {
     'authentication_realm': RelationshipToOne<'authentication_realm'>
@@ -29,4 +32,6 @@ export interface AccountAuthenticationSettingsEndpoint {
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/account-authentication-settings/get-account-authentication-settings.html
    */
   Get(): Promise<Resource<AccountAuthenticationSettings>>
+
+  Update(body: Partial<AccountAuthenticationSettings>): Promise<Resource<AccountAuthenticationSettings>>
 }
