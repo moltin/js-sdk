@@ -141,13 +141,18 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'DELETE')
   }
 
-  UpdateItem(itemId, quantity, data = {}) {
+  UpdateItem(itemId, quantity, data = {}, additionalHeaders = {}) {
     const body = buildCartItemData(itemId, quantity)
 
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
       'PUT',
-      { ...body, ...data }
+      { ...body, ...data },
+      null,
+      null,
+      true,
+      null,
+      additionalHeaders
     )
   }
 
@@ -185,6 +190,13 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  BulkAddItemTax(body, options) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/taxes`, 'POST', {
+      data: body,
+      ...(options && { options })
+    })
+  }
+
   UpdateItemTax(itemId, taxItemId, taxData) {
     const body = Object.assign(taxData, {
       type: 'tax_item'
@@ -204,7 +216,12 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  Checkout(customer, billing_address, shipping_address = billing_address) {
+  Checkout(
+    customer,
+    billing_address,
+    shipping_address = billing_address,
+    additionalHeaders = {}
+  ) {
     const body = buildCartCheckoutData(
       customer,
       billing_address,
@@ -214,7 +231,29 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/checkout`,
       'POST',
-      body
+      body,
+      null,
+      null,
+      true,
+      null,
+      additionalHeaders
+    )
+  }
+
+  Merge(cartId, token, options = {}) {
+    const body = {
+      type: 'cart_items',
+      cart_id: `${cartId}`
+    }
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items`,
+      'POST',
+      {
+        data: body,
+        ...(options && { options })
+      },
+      token
     )
   }
 

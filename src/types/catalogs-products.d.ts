@@ -134,11 +134,15 @@ export interface CatalogsProductsEndpoint {
 
   Filter(filter: ProductFilter): CatalogsProductsEndpoint
 
-  All(options: { token?: string }): Promise<ResourceList<ProductResponse>>
+  All(options: {
+    token?: string
+    additionalHeaders?: any
+  }): Promise<ResourceList<ProductResponse>>
 
   Get(options: {
     productId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<Resource<ProductResponse>>
 
   GetProduct(options: {
@@ -146,6 +150,7 @@ export interface CatalogsProductsEndpoint {
     releaseId: string
     productId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<Resource<ProductResponse>>
 
   GetCatalogNodeProducts(options: {
@@ -159,6 +164,7 @@ export interface CatalogsProductsEndpoint {
   GetProductsByNode(options: {
     nodeId: string
     token?: string
+    additionalHeaders?: any
   }): Promise<ResourceList<ProductResponse>>
 
   GetCatalogProducts(options: {

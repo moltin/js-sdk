@@ -8,6 +8,7 @@ import { Resource, QueryableResource } from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
+import { PcmProductResponse } from './pcm'
 
 export interface CheckoutCustomer {
   id: string
@@ -143,6 +144,9 @@ export interface BulkAddOptions {
   add_all_or_nothing: boolean
 }
 
+export interface MergeCartOptions {
+  add_all_or_nothing: boolean
+}
 export interface CartItemObject {
   type: string
   name?: string
@@ -152,6 +156,22 @@ export interface CartItemObject {
   price?: any
   id?: string
   code?: string
+}
+
+export interface CartTaxItemObject {
+  type: string
+  name: string
+  jurisdiction: string
+  code: string
+  rate: number
+  relationships: {
+    item: {
+      data: {
+        type: string
+        id: string
+      }
+    }
+  }
 }
 
 export type CartInclude = 'items' | 'tax_items'
@@ -282,7 +302,8 @@ export interface CartEndpoint
   UpdateItem(
     itemId: string,
     quantity: number,
-    customData?: any
+    customData?: any,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<CartItemsResponse>
 
   /**
@@ -430,6 +451,17 @@ export interface CartEndpoint
   ): Promise<Resource<ItemTaxObjectResponse>>
 
   /**
+   * Bulk Add Items tax to Cart
+   * Description: When you enable the bulk add feature, a shopper can add an array of items to their cart in one action, rather than adding each item one at a time.
+   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/bulk-add-to-cart.html
+   * @param data Cart items or custom items
+   * @param options Optional config object for add to cart behaviour
+   */
+  BulkAddItemTax(
+    data: CartTaxItemObject[],
+    options?: BulkAddOptions
+  ): Promise<CartTaxItemObject[]>
+  /**
    * Update a Tax Item
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/cart-items/tax-items/update-a-tax-item.html
    * @param itemId the unique identifier for this cart item.
@@ -463,9 +495,25 @@ export interface CartEndpoint
   Checkout(
     customer: string | CheckoutCustomer | CheckoutCustomerObject,
     billingAddress: Partial<Address>,
-    shippingAddress?: Partial<Address>
+    shippingAddress?: Partial<Address>,
+    additionalHeaders?: CartAdditionalHeaders
   ): Promise<Resource<Order>>
 
+  /**
+   * Merge
+   * Description: Allows to merge two carts. Moves the cart items from one cart to another.
+   * If both the cart items are same, the cart items quantity will be increased
+   * DOCS: https://elasticpath.dev/docs/carts/cart-items/merging-carts.html
+   * @param cartId the cart Id of the cart to be merged.
+   * @param token the customer token of the cart to whom it is associated or to be associated with
+   * @param options When true, if an error occurs for any item, no items are added to the cart. When false, valid items are added to the cart and the items with errors are reported in the response. Default is true
+   */
+
+  Merge(
+    cartId: string,
+    token?: string,
+    options?: MergeCartOptions
+  ): Promise<PcmProductResponse[]>
   /**
    * Delete a Cart
    * Description: You can easily remove all items from a cart.
