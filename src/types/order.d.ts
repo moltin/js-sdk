@@ -196,6 +196,13 @@ export interface OrderItem extends Identifiable, OrderItemBase {
     }
   ]
   components?: ProductComponents
+  bundle_configuration?: {
+    selected_options: {
+      [key: string]: {
+        [key: string]: number
+      }
+    }
+  }
   catalog_source?: 'pim'
   custom_inputs?: Record<string, any>
 }
