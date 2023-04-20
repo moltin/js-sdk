@@ -10,12 +10,22 @@ import {
   QueryableResource,
   Resource,
   RelationshipToMany,
+  ResourceIncluded,
   Subset
 } from './core'
 import { FormattedPrice, Price } from './price'
 import { ProductComponents } from './pcm'
 import { XOR } from './util'
 
+export interface OrderIncluded {
+    items?: OrderItem[]
+    custom_discounts?: CustomDiscount[]
+}
+
+export interface OrderResponse {
+  data: Order
+  included?: OrderIncluded
+}
 export interface OrderAddressBase {
   first_name: string
   last_name: string
@@ -147,6 +157,19 @@ export interface OrderItemBase {
   quantity: number
   unit_price: Price
   value: Price
+}
+
+export interface CustomDiscount {
+  amount: {
+    amount: number
+    currency: string
+  }
+  type: string
+  id: string
+  external_id: string
+  discount_engine: string
+  description: string
+  discount_code: string
 }
 
 export interface OrderItem extends Identifiable, OrderItemBase {
@@ -433,6 +456,7 @@ export type OrderInclude =
   | 'items'
   | 'account'
   | 'account_member'
+  | 'custom_discounts'
 
 /**
  * Orders Endpoints
@@ -442,7 +466,7 @@ export type OrderInclude =
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
  */
 export interface OrdersEndpoint
-  extends QueryableResource<Order, OrderFilter, OrderSort, OrderInclude> {
+  extends QueryableResource<Order, OrderFilter, OrderSort, OrderInclude>{
   endpoint: 'orders'
 
   /**
@@ -489,4 +513,8 @@ export interface OrdersEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api
    */
   anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
+
+  With(included: OrderInclude | OrderInclude[]): OrdersEndpoint
+
+  Get(id: string): Promise<ResourceIncluded<Order, OrderIncluded>>
 }
