@@ -90,6 +90,7 @@ export interface Order extends Identifiable, OrderBase {
     customer?: Relationship<'customer'>
     account?: Relationship<'account'>
     account_member?: Relationship<'account_member'>
+    custom_discounts?: Relationship<'custom_discounts'>
   }
 }
 
@@ -206,6 +207,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
   relationships?: {
     cart_item: Relationship<'cart_item'>
     taxes: Relationship<'taxes'>[]
+    custom_discounts?: Relationship<'custom_discounts'>
   }
   discounts?: [
     {
