@@ -518,5 +518,5 @@ export interface OrdersEndpoint
 
   With(included: OrderInclude | OrderInclude[]): OrdersEndpoint
 
-  Get(id: string): Promise<ResourceIncluded<Order, OrderIncluded>>
+  Get(id: string, token?: string): Promise<ResourceIncluded<Order, OrderIncluded>>
 }
