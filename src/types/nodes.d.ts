@@ -50,6 +50,11 @@ export interface Node extends Identifiable, NodeBase {
   }
 }
 
+export type UpdateNodeBody = Omit<NodeBase, 'relationships' | 'attributes'> &
+  Identifiable & {
+    attributes: Partial<NodeBase['attributes']>
+  }
+
 export interface NodeFilter {
   // TODO
 }
@@ -87,7 +92,7 @@ export interface NodesEndpoint {
   Update(options: {
     hierarchyId: string
     nodeId: string
-    body: Identifiable & NodeBase
+    body: UpdateNodeBody
     token?: string
   }): Promise<Resource<Node>>
 

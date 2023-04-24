@@ -30,6 +30,7 @@ export interface Currency extends Identifiable, CurrencyBase {
       created_at: string
       updated_at: string
     }
+    owner?: 'organization' | 'store'
   }
 }
 
