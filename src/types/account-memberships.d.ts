@@ -8,6 +8,7 @@ import {
   ResourcePage
 } from './core'
 import { AccountMemberBase } from './account-members'
+import {AccountBase} from "./accounts";
 
 /**
  * The Account Membership object Interface
@@ -30,6 +31,24 @@ export interface AccountMembership extends Identifiable {
   }
 }
 
+export interface AccountMembershipOnAccountMember extends Identifiable {
+  type: string
+  meta: {
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
+  relationships: {
+    account: {
+      data: {
+        id: string
+        type: string
+      }
+    }
+  }
+}
+
 export interface AccountMembershipCreateBody {
   type: string
   account_member_id: string
@@ -38,13 +57,19 @@ export interface AccountMembershipCreateBody {
 export interface AccountMembershipsIncluded {
   account_members: AccountMemberBase[]
 }
+export interface AccountMembershipsIncludedAccounts{
+  accounts: AccountBase[]
+}
 
 export type AccountMembershipsInclude = 'account_members'
+export type AccountMembershipsIncludeAccounts = 'accounts'
 
 export type AccountMembershipsResponse = ResourcePage<
   AccountMembership,
   AccountMembershipsIncluded
 >
+
+export type AccountMembershipsOnAccountMember = ResourcePage<AccountMembershipOnAccountMember, AccountMembershipsIncludedAccounts>
 
 /**
  * filter for account memberships
@@ -122,4 +147,11 @@ export interface AccountMembershipsEndpoint
    * @param filter the filter object
    */
   Filter(filter: AccountMembershipsFilter): AccountMembershipsEndpoint
+
+  /**
+   * Get all Account Memberships for an account members
+   * @param accountMemberId
+   * @param token
+   */
+  AllOnAccountMember(accountMemberId: string, token: null): Promise<AccountMembershipsOnAccountMember>
 }

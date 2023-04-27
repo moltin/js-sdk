@@ -48,6 +48,25 @@ class AccountMembershipsEndpoint extends BaseExtend {
       token
     )
   }
+
+  AllOnAccountMember(accountMemberId, token = null) {
+    const { limit, offset, filter, includes } = this
+
+    this.call = this.request.send(
+        buildURL(`account-members/${accountMemberId}/account-memberships`, {
+          limit,
+          offset,
+          filter,
+          includes
+        }),
+        'GET',
+        undefined,
+        token,
+        this
+    )
+
+    return this.call
+  }
 }
 
 export default AccountMembershipsEndpoint
