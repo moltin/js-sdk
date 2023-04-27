@@ -52,6 +52,7 @@ export interface ProductComponents {
     name: string
     min?: number
     max?: number
+    sort_order?: number | null
     options: ProductComponentOption[]
   }
 }
@@ -60,6 +61,7 @@ export interface ProductComponentOption {
   id: string
   quantity: number
   type: string
+  sort_order?: number | null
   meta: {
     name: string
     sku: string
