@@ -61,6 +61,9 @@ export interface Cart {
       expires_at: string
     }
   }
+  discount_settings: {
+    custom_discounts_enabled: boolean
+  }
 }
 
 export interface CartItemBase {
