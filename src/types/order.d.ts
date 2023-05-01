@@ -10,12 +10,22 @@ import {
   QueryableResource,
   Resource,
   RelationshipToMany,
+  ResourceIncluded,
   Subset
 } from './core'
 import { FormattedPrice, Price } from './price'
 import { ProductComponents } from './pcm'
 import { XOR } from './util'
 
+export interface OrderIncluded {
+    items?: OrderItem[]
+    custom_discounts?: CustomDiscount[]
+}
+
+export interface OrderResponse {
+  data: Order
+  included?: OrderIncluded
+}
 export interface OrderAddressBase {
   first_name: string
   last_name: string
@@ -80,6 +90,7 @@ export interface Order extends Identifiable, OrderBase {
     customer?: Relationship<'customer'>
     account?: Relationship<'account'>
     account_member?: Relationship<'account_member'>
+    custom_discounts?: RelationshipToMany<'custom_discounts'>
   }
 }
 
@@ -149,6 +160,19 @@ export interface OrderItemBase {
   value: Price
 }
 
+export interface CustomDiscount {
+  amount: {
+    amount: number
+    currency: string
+  }
+  type: string
+  id: string
+  external_id: string
+  discount_engine: string
+  description: string
+  discount_code: string
+}
+
 export interface OrderItem extends Identifiable, OrderItemBase {
   links: any
   meta?: {
@@ -183,6 +207,7 @@ export interface OrderItem extends Identifiable, OrderItemBase {
   relationships?: {
     cart_item: Relationship<'cart_item'>
     taxes: Relationship<'taxes'>[]
+    custom_discounts?: RelationshipToMany<'custom_discounts'>
   }
   discounts?: [
     {
@@ -433,6 +458,7 @@ export type OrderInclude =
   | 'items'
   | 'account'
   | 'account_member'
+  | 'custom_discounts'
 
 /**
  * Orders Endpoints
@@ -442,7 +468,7 @@ export type OrderInclude =
  * Update DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/orders-and-customers/orders/update-an-order.html
  */
 export interface OrdersEndpoint
-  extends QueryableResource<Order, OrderFilter, OrderSort, OrderInclude> {
+  extends QueryableResource<Order, OrderFilter, OrderSort, OrderInclude>{
   endpoint: 'orders'
 
   /**
@@ -489,4 +515,8 @@ export interface OrdersEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api
    */
   anonymize(ids: AnonymizeOrder): Promise<AnonymizeOrderResponse>
+
+  With(included: OrderInclude | OrderInclude[]): OrdersEndpoint
+
+  Get(id: string, token?: string): Promise<ResourceIncluded<Order, OrderIncluded>>
 }

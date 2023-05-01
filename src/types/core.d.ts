@@ -18,6 +18,10 @@ export interface ResourceList<R> {
   data: R[]
 }
 
+export interface ResourceIncluded<R, I = never> extends Resource<R> {
+  included?: I
+}
+
 export interface Attribute {
   label: string
   value: string
