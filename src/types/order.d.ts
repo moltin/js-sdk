@@ -161,10 +161,7 @@ export interface OrderItemBase {
 }
 
 export interface CustomDiscount {
-  amount: {
-    amount: number
-    currency: string
-  }
+  amount: FormattedPrice
   type: string
   id: string
   external_id: string
