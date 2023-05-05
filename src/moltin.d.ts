@@ -54,6 +54,7 @@ import { ErasureRequestsEndpoint } from './types/erasure-requests'
 import { PriceBookPriceModifierEndpoint } from './types/price-book-price-modifiers'
 import { AccountMembershipSettingsEndpoint } from './types/account-membership-settings'
 import { ApplicationKeysEndpoint } from './types/application-keys'
+import { SubscriptionProductsEndpoint } from './types/subscription-product'
 
 export * from './types/config'
 export * from './types/storage'
@@ -118,6 +119,7 @@ export * from './types/user-authentication-password-profile'
 export * from './types/locales'
 export * from './types/extensions'
 export * from './types/application-keys'
+export * from './types/subscription-product'
 
 // UMD
 export as namespace moltin
@@ -174,6 +176,7 @@ export class Moltin {
   ErasureRequests: ErasureRequestsEndpoint
   PriceBookPriceModifier: PriceBookPriceModifierEndpoint
   ApplicationKeys: ApplicationKeysEndpoint
+  SubscriptionProducts: SubscriptionProductsEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
