@@ -37,6 +37,8 @@ export interface Settings {
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/settings/index.html#address-mandatory-fields
    */
   address_mandatory_fields: string[]
+
+  include_organization_resources: boolean
 }
 
 export interface TtlSettings {
