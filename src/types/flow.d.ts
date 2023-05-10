@@ -18,7 +18,18 @@ export interface FlowBase {
   enabled: boolean
 }
 
-export interface Flow extends Identifiable, FlowBase { }
+export interface Flow extends Identifiable, FlowBase {
+  links: {
+    self: string
+  }
+  meta: {
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+    owner?: 'organization' | 'store'
+  }
+}
 
 export interface FlowFilter {
   eq?: {
