@@ -33,7 +33,8 @@ describe('Moltin settings', () => {
             'postcode',
             'country',
             'instructions'
-          ]
+          ],
+          include_organization_resources: false
         }
       })
 
@@ -54,7 +55,8 @@ describe('Moltin settings', () => {
             'postcode',
             'country',
             'instructions'
-          ]
+          ],
+          include_organization_resources: false
         }
       })
     })
@@ -89,7 +91,8 @@ describe('Moltin settings', () => {
             'postcode',
             'country',
             'instructions'
-          ]
+          ],
+          include_organization_resources: false
         }
       })
 
@@ -110,7 +113,8 @@ describe('Moltin settings', () => {
             'postcode',
             'country',
             'instructions'
-          ]
+          ],
+          include_organization_resources: false
         }
       })
     })
