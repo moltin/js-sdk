@@ -37,6 +37,41 @@ class GatewaysEndpoint extends BaseExtend {
       }
     )
   }
+
+  StripeCustomers(slug, stripe_account) {
+    return this.request.send(
+      `${this.endpoint}/${slug}/stripe_customers`,
+      'POST',
+      {
+        data: {
+          options: {
+            stripe_account
+          }
+        }
+      },
+      undefined,
+      this,
+      false,
+    )
+  }
+
+  StripeInvoices(slug, stripe_account, customer_id) {
+    return this.request.send(
+      `${this.endpoint}/${slug}/stripe_invoices`,
+      'POST',
+      {
+        data: {
+          customer_id,
+          options: {
+            stripe_account,
+          }
+        }
+      },
+      undefined,
+      this,
+      false,
+    )
+  }
 }
 
 export default GatewaysEndpoint

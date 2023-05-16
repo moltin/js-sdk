@@ -37,6 +37,14 @@ export interface OnboardingLinkResponse {
   onboarding_link: string
 }
 
+export interface InvoicingResult {
+  id: string
+  created: string
+  name: string
+  email: string
+  object: string
+}
+
 /**
  * Gateway Endpoints
  */
@@ -68,5 +76,28 @@ export interface GatewaysEndpoint
     slug: 'paypal_express_checkout',
     returnUrl: string,
     test?: boolean
+  ): Promise<T>
+
+  /**
+   * StripeCustomers
+   * Description: This endpoint allows you to retrieve all customers of a connected Stripe Account
+   * @param slug [string] The slug of supported gateway (currently only elastic_path_payments_stripe).
+   * @param stripe_account [string] The id of the connected Stripe Account
+   */
+  StripeCustomers<T = Resource<InvoicingResult>>(
+    slug: 'elastic_path_payments_stripe',
+    stripe_account: string
+  ): Promise<T>
+
+  /**
+   * StripeInvoices
+   * Description: This endpoint allows you to send a Stripe Invoice to a connected Customer
+   * @param slug [string] The slug of supported gateway (currently only elastic_path_payments_stripe).
+   * @param stripe_account [string] The id of the connected Stripe Account
+   */
+  StripeInvoices<T = Resource<InvoicingResult>>(
+    slug: 'elastic_path_payments_stripe',
+    stripe_account: string,
+    customer_id: string
   ): Promise<T>
 }
