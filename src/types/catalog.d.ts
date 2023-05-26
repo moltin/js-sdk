@@ -117,6 +117,17 @@ export interface ShopperCatalogProductsEndpoint
     additionalHeaders?: ShopperCatalogAdditionalHeaders
   }): Promise<ShopperCatalogResourcePage<ProductResponse>>
 
+  Configure(options: {
+    token?: string
+    additionalHeaders?: ShopperCatalogAdditionalHeaders
+    productId: string
+    selectedOptions: {
+      [key: string]: {
+        [key: string]: number
+      }
+    }
+  })
+
   Get(options: {
     productId: string
     token?: string
