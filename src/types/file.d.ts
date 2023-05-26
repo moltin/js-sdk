@@ -70,6 +70,9 @@ export interface FileFilter {
     height?: number
     file_size?: number
   }
+  in?: {
+    id?: string[]
+  }
 }
 
 /**
@@ -81,12 +84,12 @@ export interface FileFilter {
  */
 export interface FileEndpoint
   extends CrudQueryableResource<
-      File,
-      FileBase,
-      never,
-      FileFilter,
-      never,
-      never
-    > {
+    File,
+    FileBase,
+    never,
+    FileFilter,
+    never,
+    never
+  > {
   endpoint: 'file'
 }

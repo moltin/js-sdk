@@ -207,6 +207,25 @@ class Products extends ShopperCatalogProductsQuery {
     )
   }
 
+  Configure({
+    productId,
+    selectedOptions,
+    token = null,
+    additionalHeaders = null
+  }) {
+    return this.request.send(
+      `catalog/${this.endpoint}/${productId}/configure`,
+      'POST',
+      {
+        selected_options: selectedOptions
+      },
+      token,
+      undefined,
+      true,
+      additionalHeaders
+    )
+  }
+
   Get({ productId, token = null, additionalHeaders = null }) {
     const { includes } = this
 
