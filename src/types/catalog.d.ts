@@ -126,7 +126,7 @@ export interface ShopperCatalogProductsEndpoint
         [key: string]: number
       }
     }
-  })
+  }): Promise<ShopperCatalogResource<ProductResponse>>
 
   Get(options: {
     productId: string
