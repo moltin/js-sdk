@@ -16,6 +16,7 @@ export interface ApplicationKey extends ApplicationKeyBase, Identifiable {
       }
     }
 }
+
 export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
   links: {
     self: string
@@ -25,7 +26,7 @@ export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
 export interface ApplicationKeysEndpoint extends CrudQueryableResource<
   ApplicationKey,
   ApplicationKeyBase,
-  Partial<ApplicationKeyBase>,
+  Partial<ApplicationKey>,
   never,
   never,
   never
