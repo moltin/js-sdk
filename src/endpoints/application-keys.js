@@ -11,6 +11,15 @@ class ApplicationKeysEndpoint extends CRUDExtend {
       return this.request.send(this.endpoint, 'POST', body)
   }
 
+  Update(applicationKeyId, body, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${applicationKeyId}`,
+      `PUT`,
+      body,
+      token
+    )
+  }
+
   All(token = null, headers = {}) {
     const { limit, offset, filter } = this
 
@@ -32,7 +41,7 @@ class ApplicationKeysEndpoint extends CRUDExtend {
 
   Delete(id) {
     return this.request.send(`${this.endpoint}/${id}`, 'DELETE')
-  }  
+  }
 }
 
 export default ApplicationKeysEndpoint
