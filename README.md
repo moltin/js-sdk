@@ -44,7 +44,7 @@ const Moltin = MoltinGateway({
 
 Alternatively you can include the `UMD` bundle via [UNPKG](https://unpkg.com) like so:
 
-```js
+``` html
 <script src="https://unpkg.com/@moltin/sdk"></script>
 
 <script>
@@ -126,7 +126,7 @@ const gatewayTwo = EPCCGateway({
 })
 ```
 
-Storage keys used for storage solutions are prefixed with the name provided and end with the relevent feature e.g.
+Storage keys used for storage solutions are prefixed with the name provided and end with the relevant feature e.g.
 `my-first-gateway_ep_cart`, `my-first-gateway_ep_credentials` and `my-first-gateway_ep_currency`.
 
 If no name property is provided to the EPCCGateway function, the legacy naming is maintained:
@@ -138,7 +138,7 @@ There are currently several optional headers you can pass into the configuration
 
 You can pass them into the config used by the gateway like this:
 
-```
+``` TypeScript
 // JavaScript
 import { gateway as MoltinGateway } from '@moltin/sdk'
 // const MoltinGateway = require('@moltin/sdk').gateway -> for Node
@@ -152,13 +152,56 @@ const Moltin = MoltinGateway({
 })
 ```
 
+### Retries
+
+In case the server responds with status 429 - "Too Many Requests" SDK will wait for some time and retry the same API request up to a given number of times.
+You can fine tune this logic through following config parameters:
+
+``` TypeScript
+const Moltin = MoltinGateway({
+    client_id: 'XXX',
+    client_secret: 'XXX',
+    retryDelay: 1000,
+    retryJitter: 500,
+    fetchMaxAttempts: 4
+})
+
+```
+
+In case of a 429 response SDK will wait for `retryDelay` milliseconds (default 1000) before attempting to make the same call.
+If the server responds with 429 again it will wait for 2 * `retryDelay` ms, then 3 * `retryDelay` ms and so on.
+On top of that the random value between 0 and `retryJitter` (default 500) will be added to each wait.
+This would repeat up to `fetchMaxAttempts` (default 4) times.
+
+### Throttling (Rate Limiting)
+
+SDK supports throttling through use of `throttled-queue` library.
+Unlike the throttle functions of popular libraries, `throttled-queue` will not prevent any executions.
+Instead, every execution is placed into a queue, which will be drained at the desired rate limit.
+You can control throttling through following parameters:
+
+``` TypeScript
+const Moltin = MoltinGateway({
+    client_id: 'XXX',
+    client_secret: 'XXX',
+    throttleEnabled: true,
+    throttleLimit: 3,
+    throttleInterval: 125
+})
+
+```
+
+This feature is disabled by default and to enable it you need to set `throttleEnabled` to true.
+Once enabled you can use `throttleLimit` (default 3) and `throttleInterval` (default 125) to define what is the maximum number of calls per interval.
+For example setting `throttleLimit = 5, throttleInterval = 1000` means maximum of 5 calls per second.
+
 ### Handling File Upload
 
 Files can be uploaded to the EPCC file service with the `Moltin.Files.Create` method. You should pass a `FormData` object as described in the [documentation](https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html#post-create-a-file 'documentation').
 
 In a Node.js environment, where you may be using an alternative `FormData` implementation, you can include a second parameter to represent the `Content-Type` header for the request. This must be `multipart/form-data` and must include a `boundary`. For example, using the `form-data` [package](https://www.npmjs.com/package/form-data 'package'):
 
-```
+``` TypeScript
 const FormData = require('form-data')
 const formData = new FormData()
 formData.append('file', buffer)
@@ -172,7 +215,7 @@ Moltin.Files.Create(formData, contentType)
 
 If you want to create a file by simply [referencing](https://documentation.elasticpath.com/commerce-cloud/docs/api/advanced/files/create-a-file.html#post-create-a-file 'referencing') a file stored elsewhere, you can use this helper method:
 
-```
+``` TypeScript
 Moltin.Files.Link('https://cdn.external-host.com/files/filename.png')
 ```
 
