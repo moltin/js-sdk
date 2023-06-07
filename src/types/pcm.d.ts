@@ -122,6 +122,15 @@ export interface PcmProductAttachmentBody {
   node_ids: string[]
 }
 /**
+ * PCM Product nodes attachment response
+ */
+export interface PcmProductAttachmentResponse {
+  meta: {
+    nodes_attached: number
+    nodes_not_found: string[]
+  }
+}
+/**
  * PCM Product Endpoints
  */
 export interface PcmProductsEndpoint
@@ -187,14 +196,14 @@ export interface PcmProductsEndpoint
    * @param body - filter and node id's
    * @constructor
    */
-  AttachNodes(body: PcmProductAttachmentBody): Promise<{}>
+  AttachNodes(body: PcmProductAttachmentBody): Promise<PcmProductAttachmentResponse>
 
   /**
    * Detach Nodes
    * @param body - filter and node id's
    * @constructor
    */
-  DetachNodes(body: PcmProductAttachmentBody): Promise<{}>
+  DetachNodes(body: PcmProductAttachmentBody): Promise<PcmProductAttachmentResponse>
 
   /**
    * Export products
