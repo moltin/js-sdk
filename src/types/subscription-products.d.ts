@@ -18,10 +18,15 @@ export interface SubscriptionProductBase {
   attributes: {
     created_at: string
     description: string
-    main_image: string
+    main_image: string | null
     name: string
     sku: string
     updated_at: string
+    price: {
+      [key: string]: {
+        amount: number
+      }
+    }
   },
 }
 
