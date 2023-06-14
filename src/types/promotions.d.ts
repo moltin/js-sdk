@@ -189,6 +189,9 @@ export interface PromotionCode {
   code: string
   uses?: number
   user?: string
+  created_by ?: string
+  max_uses ?: number
+  meta ?: PromotionMeta
 }
 
 export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
