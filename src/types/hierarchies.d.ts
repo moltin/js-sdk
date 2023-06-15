@@ -41,6 +41,7 @@ export interface DuplicateHierarchyBody {
   attributes: {
     name?: string
     description?: string
+    include_products?: boolean
   }
 }
 
