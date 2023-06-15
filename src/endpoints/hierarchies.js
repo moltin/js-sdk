@@ -31,7 +31,7 @@ class HierarchiesEndpoint extends CRUDExtend {
 
   Duplicate(hierarchyId, body, token = null) {
     return this.request.send(
-      `${this.endpoint}/${hierarchyId}/duplicate`,
+      `${this.endpoint}/${hierarchyId}/duplicate_job`,
       'POST',
       body,
       token
