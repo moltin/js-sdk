@@ -6,6 +6,7 @@ import { Identifiable, CrudQueryableResource, ResourcePage } from './core'
 import { NodesEndpoint, Node } from './nodes'
 import { NodeRelationshipsEndpoint } from './node-relationships'
 import { Resource } from './core'
+import { PcmJobBase } from './pcm-jobs'
 
 /**
  * Core PCM Product Base Interface
@@ -46,14 +47,8 @@ export interface DuplicateHierarchyBody {
   }
 }
 
-export interface DuplicateHierarchyJob extends Identifiable {
+export interface DuplicateHierarchyJob extends Identifiable, PcmJobBase {
   type: 'pim-job'
-  attributes: {
-    created_at: string
-    updated_at: string
-    status: string
-    type: string
-  }
 }
 
 export interface HierarchyFilter {
