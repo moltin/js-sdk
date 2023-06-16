@@ -5,6 +5,7 @@
 import { Identifiable, CrudQueryableResource, ResourcePage } from './core'
 import { NodesEndpoint, Node } from './nodes'
 import { NodeRelationshipsEndpoint } from './node-relationships'
+import { Resource } from './core'
 
 /**
  * Core PCM Product Base Interface
@@ -45,6 +46,16 @@ export interface DuplicateHierarchyBody {
   }
 }
 
+export interface DuplicateHierarchyJob extends Identifiable {
+  type: 'pim-job'
+  attributes: {
+    created_at: string
+    updated_at: string
+    status: string
+    type: string
+  }
+}
+
 export interface HierarchyFilter {
   // TODO
 }
@@ -75,7 +86,7 @@ export interface HierarchiesEndpoint
     hierarchyId: string,
     body: DuplicateHierarchyBody,
     token?: string
-  ): Promise<Hierarchy>
+  ): Promise<Resource<DuplicateHierarchyJob>>
   Limit(value: number): HierarchiesEndpoint
   Offset(value: number): HierarchiesEndpoint
 }
