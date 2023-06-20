@@ -35,7 +35,7 @@ class Config {
     this.client_id = client_id
     this.client_secret = client_secret
     this.store_id = store_id
-    this.host = host || 'api.moltin.com'
+    this.host = host || 'euwest.api.elasticpath.com'
     this.protocol = protocol || 'https'
     this.version = 'v2'
     this.currency = currency

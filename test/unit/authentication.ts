@@ -3,7 +3,7 @@ import nock from 'nock'
 import fetch from 'cross-fetch'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-const apiUrl = 'https://api.moltin.com'
+const apiUrl = 'https://euwest.api.elasticpath.com'
 const authExpire = 9999999999
 
 describe('Moltin authentication', () => {
@@ -84,7 +84,7 @@ describe('Moltin authentication', () => {
       host: undefined
     })
 
-    assert.equal(Moltin.config.host, 'api.moltin.com')
+    assert.equal(Moltin.config.host, 'euwest.api.elasticpath.com')
   })
 
   it('should use a custom API host', () => {

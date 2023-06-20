@@ -6,7 +6,7 @@ import {
   orderItemsArray as orderItems
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin orders', () => {
   it('should return an array of orders', () => {

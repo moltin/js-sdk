@@ -10,7 +10,7 @@ import {
   customCartData as customData
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin cart', () => {
   const Moltin = MoltinGateway({
@@ -114,7 +114,7 @@ describe('Moltin cart', () => {
           },
           links: {
             product:
-              'https://api.moltin.com/v2/products/8361826f-84c2-4e90-9dca-f9f2ea325de3'
+              'https://euwest.api.elasticpath.com/v2/products/8361826f-84c2-4e90-9dca-f9f2ea325de3'
           },
           meta: {
             display_price: {

@@ -7,7 +7,7 @@ import {
   integrationsArray as integrations
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin integrations', () => {
   const Moltin = MoltinGateway({

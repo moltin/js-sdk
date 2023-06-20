@@ -6,7 +6,7 @@ import {
 } from '../../src/moltin'
 import { accountMembershipsArray } from '../factories'
 
-const apiUrl = 'https://api.moltin.com'
+const apiUrl = 'https://euwest.api.elasticpath.com'
 
 describe('Moltin Account Memberships', () => {
   const Moltin = MoltinGateway({

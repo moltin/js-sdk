@@ -8,7 +8,7 @@ import {
   attributeResponse
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 const authHeaders = {
   reqheaders: {
     Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a'

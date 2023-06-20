@@ -3,7 +3,7 @@ import '../../src/utils/fetch-polyfill'
 import throttleMod from '../../src/utils/throttle.js'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Build throttle mechanism', () => {
   const Moltin = MoltinGateway({

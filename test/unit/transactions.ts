@@ -3,7 +3,7 @@ import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 import { orderTransactionsArray as transactions } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin order transactions', () => {
   const Moltin = MoltinGateway({
