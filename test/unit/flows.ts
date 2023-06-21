@@ -7,7 +7,7 @@ import {
   attributeResponse
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin flows', () => {
   it('should create a flow', () => {

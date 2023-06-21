@@ -2,7 +2,7 @@ import { assert } from 'chai'
 import nock from 'nock'
 import { gateway as MoltinGateway } from '../../src/moltin'
 
-const apiUrl = 'https://api.moltin.com'
+const apiUrl = 'https://euwest.api.elasticpath.com'
 
 describe('Moltin Account Members', () => {
   const Moltin = MoltinGateway({

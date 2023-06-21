@@ -11,7 +11,7 @@ import {
   auth
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 const accessToken = 'testaccesstoken'
 
 describe('Moltin variations', () => {

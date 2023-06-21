@@ -6,7 +6,7 @@ import {
   stockTransactionsArray as transactions
 } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Moltin inventories', () => {
   it('should return an array of inventories', () => {

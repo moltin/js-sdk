@@ -3,7 +3,7 @@ import nock from 'nock'
 import { ApplicationKeyBase, gateway as MoltinGateway } from '../../src/moltin'
 import { applicationKeysArray as applicationKeys } from '../factories'
 
-const apiUrl = 'https://api.moltin.com/v2'
+const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
 describe('Store Application Keys', () => {
   it('should return an array of application keys', () => {
