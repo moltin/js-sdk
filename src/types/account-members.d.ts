@@ -14,6 +14,10 @@ export interface AccountMemberBase extends Identifiable {
     email?: string
 }
 
+export interface AccountMemberCustom extends AccountMemberBase {
+    [key: string]: any
+}
+
 export interface AccountMember extends AccountMemberBase, Identifiable {
     meta: {
         timestamps: {
@@ -71,6 +75,12 @@ export interface AccountMembersEndpoint
      */
     Get(accountMemberId: string, token?: string): Promise<Resource<AccountMember>>
 
+    /**
+    * Update an Account Member by reference
+    * @param accountMemberId - The ID of the account member to update.
+    * @param body - The partial Account Member object containing the fields to update.
+    */
+    Update(accountMemberId: string, body: Partial<AccountMemberCustom>): Promise<Resource<AccountMember>>
 
     /**
      * Get Unassigned Account Members for an account

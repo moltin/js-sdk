@@ -16,6 +16,14 @@ class AccountMembersEndpoint extends BaseExtend {
     )
   }
 
+  Update(accountMemberId, body ) {
+    return this.request.send(
+      `${this.endpoint}/${accountMemberId}`,
+      'PUT',
+      body
+    )
+  }
+
   All(token = null, headers = {}) {
     const { limit, offset, filter } = this
 
