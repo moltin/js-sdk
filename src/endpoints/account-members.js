@@ -55,6 +55,16 @@ class AccountMembersEndpoint extends BaseExtend {
 
     return this.call
   }
+
+
+    GenerateAccountToken(body, token = null) {
+        return this.request.send(
+            this.endpoint,
+            'POST',
+            body.data,
+            token
+        )
+    }
 }
 
 export default AccountMembersEndpoint

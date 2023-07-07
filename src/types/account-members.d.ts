@@ -1,8 +1,9 @@
 /**
  * Account Members
  */
-import {CrudQueryableResource, Identifiable, Resource, ResourceList} from './core'
+import {CrudQueryableResource, Identifiable, Resource, ResourceList, ResourcePage} from './core'
 import {FlowFilter} from './flow';
+import {AccountAddressBase} from "./account-address";
 
 /**
  * The Account Member object Interface
@@ -12,6 +13,26 @@ export interface AccountMemberBase extends Identifiable {
     type: string
     name?: string
     email?: string
+}
+
+export interface AccountTokenBase extends Identifiable {
+    account_name: string
+    account_id: string
+    token: string
+    type: string
+    expires: string
+}
+
+export interface AccountManagementAuthenticationTokenBody {
+    authentication_mechanism: string,
+    password_profile_id: string,
+    type: string
+    onetime_password_token?: string
+    username?: string,
+    password?: string,
+    oauth_authorization_code?: string,
+    oauth_redirect_uri?: string,
+    oauth_code_verifier?: string
 }
 
 export interface AccountMember extends AccountMemberBase, Identifiable {
@@ -80,6 +101,14 @@ export interface AccountMembersEndpoint
         accountId: string,
         token?: string
     ): Promise<ResourceList<AccountMember>>
+
+    /**
+     * Generate Account Token
+     */
+    GenerateAccountToken(
+        body: AccountManagementAuthenticationTokenBody,
+        token?: string,
+    ): Promise<ResourcePage<AccountTokenBase>>
 
     Filter(filter: AccountMemberFilter): AccountMembersEndpoint
 }
