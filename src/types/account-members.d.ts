@@ -15,7 +15,7 @@ export interface AccountMemberBase extends Identifiable {
 }
 
 export interface AccountMemberCustom extends AccountMemberBase {
-    [key: string]: any
+    [key: string]: string | undefined | number | boolean | object
 }
 
 export interface AccountMember extends AccountMemberBase, Identifiable {
