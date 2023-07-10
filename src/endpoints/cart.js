@@ -47,8 +47,8 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/shipping-groups`, 'GET')
   }
 
-  CartGetShippingGroup(orderId, shippingGroupId) {
-    return this.request.send(`${this.endpoint}/${orderId}/shipping-groups/${shippingGroupId}`, 'GET')
+  GetCartShippingGroup(shippingGroupId) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/shipping-groups/${shippingGroupId}`, 'GET')
   }
 
   CreateShippingGroup(body){
