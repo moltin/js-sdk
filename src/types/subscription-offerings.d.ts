@@ -5,8 +5,10 @@
  */
 import {
   Identifiable,
-  CrudQueryableResource
+  CrudQueryableResource, Resource
 } from './core'
+import { SubscriptionProduct } from './subscription-products'
+import { SubscriptionPlan } from './subscription-plans'
 
 /**
  * Core Subscription Offering Base Interface
@@ -35,6 +37,13 @@ export interface SubscriptionOfferingBase {
   }
 }
 
+export interface SubscriptionOfferingBuildBody {
+  name: string
+  description: string
+  products: string[]
+  plans: string[]
+}
+
 export interface SubscriptionOffering extends Identifiable, SubscriptionOfferingBase {
 
 }
@@ -55,4 +64,10 @@ export interface SubscriptionOfferingsEndpoint
     never
     > {
   endpoint: 'offerings'
+
+  Build(body: SubscriptionOfferingBuildBody): Promise<Resource<SubscriptionOffering>>
+
+  GetAttachedProducts(id: string) : Promise<Resource<SubscriptionProduct[]>>
+
+  GetAttachedPlans(id: string) : Promise<Resource<SubscriptionPlan[]>>
 }
