@@ -25,6 +25,7 @@ export interface SubscriptionProductBase {
     price: {
       [key: string]: {
         amount: number
+        includes_tax?: boolean
       }
     }
   },

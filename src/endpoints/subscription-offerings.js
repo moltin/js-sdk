@@ -24,6 +24,20 @@ class SubscriptionOfferingsEndpoint extends CRUDExtend {
     )
   }
 
+  Build(body) {
+    return this.request.send(`${this.endpoint}/build`, 'POST', {
+      ...body
+    })
+  }
+
+  GetAttachedProducts(id) {
+    return this.request.send(`${this.endpoint}/${id}/products`, 'GET')
+  }
+
+  GetAttachedPlans(id) {
+    return this.request.send(`${this.endpoint}/${id}/products`, 'GET')
+  }
+
 }
 
 export default SubscriptionOfferingsEndpoint
