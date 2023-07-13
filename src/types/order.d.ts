@@ -85,6 +85,7 @@ export interface Order extends Identifiable, OrderBase {
       without_tax: FormattedPrice
       tax: FormattedPrice
       discount: FormattedPrice
+      shipping: FormattedPrice
     }
     timestamps: {
       created_at: string
