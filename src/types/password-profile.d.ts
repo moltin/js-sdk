@@ -25,11 +25,11 @@ export interface PasswordProfile extends PasswordProfileBody, Identifiable {
     }
 }
 
-interface PasswordProfileListItem extends PasswordProfile {
+export interface PasswordProfileListItem extends PasswordProfile {
     links: {
         self: string
     }
-  }
+}
 
 export interface PasswordProfileResponse extends Resource<PasswordProfile> {
     links: {
