@@ -89,6 +89,7 @@ export interface CartItem extends CartItemBase {
   manage_stock: boolean
   unit_price: Price
   value: Price
+  shipping_group_id?: string
   links: {
     product: string
   }
@@ -143,6 +144,7 @@ export interface CartItemsResponse {
   }
 }
 
+
 export interface BulkAddOptions {
   add_all_or_nothing: boolean
 }
@@ -194,6 +196,68 @@ export interface CartAdditionalHeaders {
   'X-MOLTIN-CURRENCY'?: string
 }
 
+export interface CartShippingGroupBase {
+ type: string
+ include_tax: boolean
+  shipping_type: string
+  tracking_reference?: string
+  address: Address
+  delivery_estimate: {
+    start: string
+    end: string
+  }
+}
+
+export interface ShippingGroupResponse {
+  type: string
+  relation: string
+  order_id?: string
+  cart_id?: string
+  shipping_type?: string
+  tracking_reference?: string
+  address?: Partial<Address>
+  payment_status?: string
+  shipping_status?: string
+  delivery_estimate: {
+    start: string
+    end: string
+  }
+  created_at: string
+  updated_at: string
+  relationships: {
+    cart: {
+      data: {
+        type: string
+        id: string
+      }
+    }
+  }
+  meta: {
+    display_price: {
+      tota: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      base: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      tax: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      fees: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+  }
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -236,6 +300,8 @@ export interface CartEndpoint
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
+
+  CreateShippingGroup(ShippingGroup: CartShippingGroupBase): Promise<ShippingGroupResponse>
 
   /**
    * Add Promotion to Cart
