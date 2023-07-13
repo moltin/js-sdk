@@ -1,5 +1,9 @@
 import BaseExtend from '../extends/base'
 
+import {
+  buildURL
+} from '../utils/helpers'
+
 class OrdersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)

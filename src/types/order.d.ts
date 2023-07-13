@@ -125,27 +125,22 @@ export interface ShippingGroupBase extends Identifiable {
     }
   }
   meta: {
-    display_price: {
-      total: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      base: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      tax: {
-        amount: number
-        currency: string
-        formatted: string
-      }
-      fees: {
-        amount: number
-        currency: string
-        formatted: string
-      }
+    shipping_display_price: {
+      total: FormattedPrice
+      base: FormattedPrice
+      tax: FormattedPrice
+      fees: FormattedPrice
+    }
+    total_display_price: {
+      with_tax: FormattedPrice
+      without_tax: FormattedPrice
+      tax: FormattedPrice
+      discount: FormattedPrice
+      balance_owing: FormattedPrice
+      paid: FormattedPrice
+      authorized: FormattedPrice
+      without_discount: FormattedPrice
+      shipping: FormattedPrice
     }
   }
 }
