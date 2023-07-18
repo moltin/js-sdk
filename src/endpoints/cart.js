@@ -100,6 +100,14 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  AddCustomDiscount() {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/custom-discounts`,
+      'POST',
+      body
+    )
+  }
+
   AddPromotion(code, token = null) {
     const body = buildCartItemData(code, null, 'promotion_item')
 

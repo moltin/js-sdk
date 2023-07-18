@@ -9,6 +9,7 @@ import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
 import { PcmProductResponse } from './pcm'
+import { Identifiable } from '../../dist/moltin'
 
 export interface CheckoutCustomer {
   id: string
@@ -258,6 +259,28 @@ export interface ShippingGroupResponse {
   }
 }
 
+export interface CustomDiscountObject {
+  type: 'custom_discount'
+  external_id: string
+  discount_engine: string
+  amount: number	
+  description: string
+  discount_code: string
+}
+
+export interface CustomDiscount extends Identifiable {
+  type: 'custom_discount'
+  external_id: string
+  discount_engine: string
+  amount: FormattedPrice	
+  description: string
+  discount_code: string
+}
+
+export interface CustomDiscountResponse {
+  data: CustomDiscount
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -300,6 +323,8 @@ export interface CartEndpoint
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
+
+  AddCustomDiscount(discount:CustomDiscountObject): Promise<CustomDiscountResponse>
 
   CreateShippingGroup(ShippingGroup: CartShippingGroupBase): Promise<ShippingGroupResponse>
 
