@@ -129,7 +129,7 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
-  AddItemCustomDiscount(itemId,body) {
+  AddItemCustomDiscount(itemId, body) {
     const bodyObject = Object.assign(body, {
       type: 'custom_discount'
     })
