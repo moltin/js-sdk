@@ -49,8 +49,8 @@ export interface TtlSettings {
 export interface CartSettings {
   type: 'settings'
   cart_expiry_days: number
-  discounts: {
-    custom_discounts_enabled: boolean
+  discounts?: {
+    custom_discounts_enabled?: boolean
   }
 }
 
