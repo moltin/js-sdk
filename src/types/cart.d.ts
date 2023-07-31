@@ -145,7 +145,6 @@ export interface CartItemsResponse {
   }
 }
 
-
 export interface BulkAddOptions {
   add_all_or_nothing: boolean
 }
@@ -202,8 +201,8 @@ export interface CartAdditionalHeaders {
 }
 
 export interface CartShippingGroupBase {
- type: string
- include_tax: boolean
+  type: string
+  include_tax: boolean
   shipping_type: string
   tracking_reference?: string
   address: Address
@@ -266,17 +265,17 @@ export interface ShippingGroupResponse {
 /**
  * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
  */
-export interface CustomDiscount extends Identifiable {
+export interface CartCustomDiscount extends Identifiable {
   type: 'custom_discount'
   external_id: string
   discount_engine: string
-  amount: FormattedPrice	
+  amount: FormattedPrice
   description: string
   discount_code: string
 }
 
 export interface CustomDiscountResponse {
-  data: CustomDiscount
+  data: CartCustomDiscount
 }
 
 export interface CartEndpoint
@@ -322,7 +321,9 @@ export interface CartEndpoint
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
 
-  CreateShippingGroup(ShippingGroup: CartShippingGroupBase): Promise<ShippingGroupResponse>
+  CreateShippingGroup(
+    ShippingGroup: CartShippingGroupBase
+  ): Promise<ShippingGroupResponse>
 
   /**
    * Add Promotion to Cart
@@ -612,32 +613,35 @@ export interface CartEndpoint
    * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
    * @param data the custom Discount object
    */
-  AddCartCustomDiscount(data: CustomDiscount
+  AddCartCustomDiscount(
+    data: CartCustomDiscount
   ): Promise<Resource<CustomDiscountResponse>>
- 
+
   UpdateCartCustomDiscount(
     customDiscountId: string,
-    body: CustomDiscount
+    body: CartCustomDiscount
   ): Promise<Resource<CustomDiscountResponse>>
 
   RemoveCartCustomDiscount(customDiscountId: string): Promise<{}>
-  
-  AddItemCustomDiscount(itemId: string, data: CustomDiscount
+
+  AddItemCustomDiscount(
+    itemId: string,
+    data: CartCustomDiscount
   ): Promise<Resource<CustomDiscountResponse>>
 
   UpdateItemCustomDiscount(
     itemId: string,
     customDiscountId: string,
-    body: CustomDiscount
+    body: CartCustomDiscount
   ): Promise<Resource<CustomDiscountResponse>>
 
-  RemoveItemCustomDiscount(itemId: string, customDiscountId: string): Promise<{}>
+  RemoveItemCustomDiscount(
+    itemId: string,
+    customDiscountId: string
+  ): Promise<{}>
 
   BulkAddCartCustomDiscount(
-    data: CustomDiscount[],
+    data: CartCustomDiscount[],
     options?: BulkCustomDiscountOptions
   ): Promise<CustomDiscountResponse[]>
-
-
-
 }
