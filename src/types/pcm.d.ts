@@ -189,7 +189,7 @@ export interface PcmProductsEndpoint
    * @param file - The file you want to upload. The file type is `.csv`.
    * @constructor
    */
-  ImportProducts(file: FormData): Promise<{}>
+  ImportProducts(file: FormData): Promise<Resource<PcmJob>>
 
   /**
    * Attach Nodes
