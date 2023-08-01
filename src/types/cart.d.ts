@@ -4,12 +4,16 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/index.html
  */
-import { Resource, QueryableResource, ResourceIncluded } from './core'
+import {
+  Resource,
+  QueryableResource,
+  ResourceIncluded,
+  Identifiable
+} from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
 import { PcmProductResponse } from './pcm'
-import { Identifiable } from '../../dist/moltin'
 
 export interface CheckoutCustomer {
   id: string
