@@ -30,12 +30,32 @@ class SubscriptionOfferingsEndpoint extends CRUDExtend {
     })
   }
 
+  AttachProducts(offeringId, body) {
+    return this.request.send(`${this.endpoint}/${offeringId}/products/attach`, 'POST', {
+      ...body
+    })
+  }
+
+  RemoveProduct(offeringId, productId) {
+    return this.request.send(`${this.endpoint}/${offeringId}/products/${productId}`, 'DELETE')
+  }
+
+  AttachPlans(offeringId, body) {
+    return this.request.send(`${this.endpoint}/${offeringId}/plans/attach`, 'POST', {
+      ...body
+    })
+  }
+
+  RemovePlan(offeringId, planId) {
+    return this.request.send(`${this.endpoint}/${offeringId}/plans/${planId}`, 'DELETE')
+  }
+
   GetAttachedProducts(id) {
     return this.request.send(`${this.endpoint}/${id}/products`, 'GET')
   }
 
   GetAttachedPlans(id) {
-    return this.request.send(`${this.endpoint}/${id}/products`, 'GET')
+    return this.request.send(`${this.endpoint}/${id}/plans`, 'GET')
   }
 
 }

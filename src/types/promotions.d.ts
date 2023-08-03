@@ -192,6 +192,7 @@ export interface PromotionCode {
   created_by ?: string
   max_uses ?: number
   meta ?: PromotionMeta
+  consume_unit?: 'per_cart' | 'per_item'
 }
 
 export interface DeletePromotionCodesBodyItem extends ResourceList<any> {

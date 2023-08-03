@@ -47,7 +47,7 @@ export interface AccountMembersEndpoint
         CrudQueryableResource<
             AccountMember,
             never,
-            never,
+            Partial<AccountMemberBase>,
             AccountMemberFilter,
             never,
             never

@@ -17,13 +17,13 @@ export interface SubscriptionPlanBase {
   type: string
   attributes: {
     name: string,
-    description: string,
+    description?: string,
     status: string,
     billing_interval_type: string,
     billing_frequency: number,
-    billing_day: number,
-    billing_month_day: number,
-    trial_period: number,
+    billing_day?: number,
+    billing_month_day?: number,
+    trial_period?: number,
     plan_length: number,
     end_behavior: string,
     can_pause: boolean,

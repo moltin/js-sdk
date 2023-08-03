@@ -25,6 +25,12 @@ export interface PasswordProfile extends PasswordProfileBody, Identifiable {
     }
 }
 
+export interface PasswordProfileListItem extends PasswordProfile {
+    links: {
+        self: string
+    }
+}
+
 export interface PasswordProfileResponse extends Resource<PasswordProfile> {
     links: {
         self: string
@@ -41,7 +47,7 @@ export interface PasswordProfileEndpoint {
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/get-all-password-profiles.html
      * * @param realmId - The ID for the authentication-realm.
      */
-    All(realmId: string, token?: string, headers?): Promise<ResourceList<PasswordProfileResponse>>
+    All(realmId: string, token?: string, headers?): Promise<ResourceList<PasswordProfileListItem>>
     /**
      * Get a Password Profile
      * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/single-sign-on/password-profiles/get-a-password-profile.html
