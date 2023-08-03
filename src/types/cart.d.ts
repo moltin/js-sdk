@@ -4,7 +4,12 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/index.html
  */
-import { Resource, QueryableResource, ResourceIncluded } from './core'
+import {
+  Resource,
+  QueryableResource,
+  ResourceIncluded,
+  Identifiable
+} from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
@@ -144,8 +149,11 @@ export interface CartItemsResponse {
   }
 }
 
-
 export interface BulkAddOptions {
+  add_all_or_nothing: boolean
+}
+
+export interface BulkCustomDiscountOptions {
   add_all_or_nothing: boolean
 }
 
@@ -197,8 +205,8 @@ export interface CartAdditionalHeaders {
 }
 
 export interface CartShippingGroupBase {
- type: string
- include_tax: boolean
+  type: string
+  include_tax: boolean
   shipping_type: string
   tracking_reference?: string
   address: Address
@@ -258,6 +266,22 @@ export interface ShippingGroupResponse {
   }
 }
 
+/**
+ * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
+ */
+export interface CartCustomDiscount extends Identifiable {
+  type: 'custom_discount'
+  external_id: string
+  discount_engine: string
+  amount: FormattedPrice
+  description: string
+  discount_code: string
+}
+
+export interface CustomDiscountResponse {
+  data: CartCustomDiscount
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -301,7 +325,9 @@ export interface CartEndpoint
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
 
-  CreateShippingGroup(ShippingGroup: CartShippingGroupBase): Promise<ShippingGroupResponse>
+  CreateShippingGroup(
+    ShippingGroup: CartShippingGroupBase
+  ): Promise<ShippingGroupResponse>
 
   /**
    * Add Promotion to Cart
@@ -585,4 +611,41 @@ export interface CartEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/delete-a-cart.html
    */
   Delete(): Promise<{}>
+
+  /**
+   * Create a Cart Custom Discount
+   * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
+   * @param data the custom Discount object
+   */
+  AddCartCustomDiscount(
+    data: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  UpdateCartCustomDiscount(
+    customDiscountId: string,
+    body: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  RemoveCartCustomDiscount(customDiscountId: string): Promise<{}>
+
+  AddItemCustomDiscount(
+    itemId: string,
+    data: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  UpdateItemCustomDiscount(
+    itemId: string,
+    customDiscountId: string,
+    body: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  RemoveItemCustomDiscount(
+    itemId: string,
+    customDiscountId: string
+  ): Promise<{}>
+
+  BulkAddCartCustomDiscount(
+    data: CartCustomDiscount[],
+    options?: BulkCustomDiscountOptions
+  ): Promise<CustomDiscountResponse[]>
 }
