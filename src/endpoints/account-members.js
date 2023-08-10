@@ -5,17 +5,6 @@ class AccountMembersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
     this.endpoint = 'account-members'
-
-    this.sendToken = (tokenRequestBody, headers = {}) =>
-    this.request.send(
-      `${this.endpoint}/tokens`,
-      'POST',
-      tokenRequestBody,
-      null,
-      {
-        ...headers
-      }
-    )
   }
 
   Get(accountMemberId, token = null) {
@@ -76,7 +65,15 @@ class AccountMembersEndpoint extends BaseExtend {
       password_profile_id
     }
 
-    return this.sendToken(body, headers)
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
   }
 
   TokenViaSelfSignup(username, password, password_profile_id, name, email, headers) {
@@ -90,7 +87,15 @@ class AccountMembersEndpoint extends BaseExtend {
       password_profile_id
     }
 
-    return this.sendToken(body, headers)
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
   }
 
   TokenViaOIDC(code, redirectUri, codeVerifier, headers) {
@@ -102,7 +107,15 @@ class AccountMembersEndpoint extends BaseExtend {
       oauth_code_verifier: codeVerifier
     }
 
-    return this.sendToken(body, headers)
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
   }
 
   SwitchAccountToken(headers) {
@@ -127,22 +140,6 @@ class AccountMembersEndpoint extends BaseExtend {
       newHeader
     )
   }
-
-  // SwitchAccountToken(headers) {
-  //   const body = {
-  //       type: "account_management_authentication_token",
-  //       authentication_mechanism: "account_management_authentication_token"
-  //   }
-
-  //   const newHeaders = {
-  //     ...headers,
-  //     'EP-Account-Management-Authentication-Token': headers
-  //   }
-
-  //   return this.sendToken(body, newHeaders)
-  // }
-
-
 }
 
 export default AccountMembersEndpoint

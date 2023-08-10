@@ -95,7 +95,7 @@ export interface AccountMembersEndpoint
         username: string,
         password: string,
         password_profile_id: string,
-        headers?: object
+        headers?: Record<string, string>
       ): Promise<Resource<AccountMemberToken>>
 
     TokenViaSelfSignup(
@@ -104,17 +104,17 @@ export interface AccountMembersEndpoint
       password_profile_id: string,
       name: string, 
       email: string,
-      headers?: object
+      headers?: Record<string, string>
     ): Promise<Resource<AccountMemberToken>>
 
     TokenViaOIDC(
       code: string,
       redirectUri: string,
       codeVerifier: string,
-      headers?: object
+      headers?: Record<string, string>
     ): Promise<Resource<AccountMemberToken>>
 
     SwitchAccountToken(
-      headers?: object
+      headers?: Record<string, string>
     ): Promise<Resource<AccountMemberToken>>
 }
