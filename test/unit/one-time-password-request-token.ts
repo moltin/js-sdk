@@ -4,7 +4,7 @@ import { gateway as MoltinGateway } from '../../src/moltin'
 
 const apiUrl = 'https://euwest.api.elasticpath.com/v2'
 
-describe('User Authentication Password Profile Info', () => {
+describe('One Time Password Token Request', () => {
     const Moltin = MoltinGateway({
         client_id: 'XXX'
     })
@@ -12,18 +12,18 @@ describe('User Authentication Password Profile Info', () => {
     const realmId = '96764ca9-af12-4355-acce-37fa2ef4728a'
     const passwordProfileId = '4da65e78-7f9b-4248-b498-823d43120da9'
 
-    it('Create a Onetime Password Token Info', () => {
+    it('Create a One Time Password Token Info', () => {
         nock(apiUrl, {})
-            .post(/\/authentication-realms\/(.*)\/password-profiles\/(.*)\/onetime-password-request-token/)
-            .reply(201, {})
+            .post(/\/authentication-realms\/(.*)\/password-profiles\/(.*)\/one-time-password-token-request/)
+            .reply(202, {})
 
         const body = {
-            type: "onetime_password_request_token",
+            type: "one_time_password_token_request",
             username: "john.doe",
             purpose : "reset_password"
         }
 
-        return Moltin.OnetimePasswordTokenRequest.Create(realmId,passwordProfileId, { data: body }).then(res => {
+        return Moltin.OneTimePasswordTokenRequest.Create(realmId,passwordProfileId, { data: body }).then(res => {
             assert.isObject(res)
         })
     })
