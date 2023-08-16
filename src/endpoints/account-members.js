@@ -55,6 +55,91 @@ class AccountMembersEndpoint extends BaseExtend {
 
     return this.call
   }
+
+  TokenViaPassword(username, password, password_profile_id, headers) {
+    const body = {
+      type: 'account_management_authentication_token',
+      authentication_mechanism: 'password',
+      username,
+      password,
+      password_profile_id
+    }
+
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
+  }
+
+  TokenViaSelfSignup(username, password, password_profile_id, name, email, headers) {
+    const body = {
+      type: 'account_management_authentication_token',
+      authentication_mechanism: 'self_signup',
+      username,
+      password,
+      name,
+      email,
+      password_profile_id
+    }
+
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
+  }
+
+  TokenViaOIDC(code, redirectUri, codeVerifier, headers) {
+    const body = {
+      type: 'account_management_authentication_token',
+      authentication_mechanism: 'oidc',
+      oauth_authorization_code: code,
+      oauth_redirect_uri: redirectUri,
+      oauth_code_verifier: codeVerifier
+    }
+
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      {
+        ...headers
+      }
+    )
+  }
+
+  SwitchAccountToken(headers) {
+    const body = {
+        data: {
+          type: "account_management_authentication_token",
+          authentication_mechanism: "account_management_authentication_token"
+      }
+    }
+    const newHeader = {
+      'EP-Account-Management-Authentication-Token': headers
+    }
+
+    return this.request.send(
+      `${this.endpoint}/tokens`,
+      'POST',
+      body,
+      null,
+      null,
+      null,
+      null,
+      newHeader
+    )
+  }
 }
 
 export default AccountMembersEndpoint

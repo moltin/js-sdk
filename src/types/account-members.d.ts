@@ -25,6 +25,14 @@ export interface AccountMember extends AccountMemberBase, Identifiable {
     relationships: {}
 }
 
+export interface AccountMemberToken {
+    account_name: string
+    account_id: string
+    token: string
+    type: string
+    expires: number
+}
+
 /**
  * filter for account members
  */
@@ -82,4 +90,31 @@ export interface AccountMembersEndpoint
     ): Promise<ResourceList<AccountMember>>
 
     Filter(filter: AccountMemberFilter): AccountMembersEndpoint
+
+    TokenViaPassword(
+        username: string,
+        password: string,
+        password_profile_id: string,
+        headers?: Record<string, string>
+      ): Promise<Resource<AccountMemberToken>>
+
+    TokenViaSelfSignup(
+      username: string,
+      password: string,
+      password_profile_id: string,
+      name: string, 
+      email: string,
+      headers?: Record<string, string>
+    ): Promise<Resource<AccountMemberToken>>
+
+    TokenViaOIDC(
+      code: string,
+      redirectUri: string,
+      codeVerifier: string,
+      headers?: Record<string, string>
+    ): Promise<Resource<AccountMemberToken>>
+
+    SwitchAccountToken(
+      headers?: Record<string, string>
+    ): Promise<Resource<AccountMemberToken>>
 }
