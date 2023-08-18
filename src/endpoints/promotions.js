@@ -14,9 +14,33 @@ class PromotionsEndpoint extends CRUDExtend {
 
   Codes(promotionId) {
     const { limit, offset } = this
-
+     console.log(promotionId)
     return this.request.send(
       buildURL(`${this.endpoint}/${promotionId}/codes`, {
+        limit,
+        offset
+      }),
+      'GET'
+    )
+  }
+
+  Codes(promotionId) {
+    const { limit, offset } = this
+     console.log(promotionId)
+    return this.request.send(
+      buildURL(`${this.endpoint}/${promotionId}/codes`, {
+        limit,
+        offset
+      }),
+      'GET'
+    )
+  }
+
+  PromotionJobs(promotionId) {
+    const { limit, offset } = this
+     console.log(promotionId)
+    return this.request.send(
+      buildURL(`${this.endpoint}/${promotionId}/jobs`, {
         limit,
         offset
       }),
@@ -29,6 +53,10 @@ class PromotionsEndpoint extends CRUDExtend {
       type: 'promotion_codes',
       codes
     })
+  }
+
+  AddCodesJob(promotionId, body) {
+    return this.request.send(`${this.endpoint}/${promotionId}/jobs`, 'POST', body)
   }
 
   DeleteCode(promotionId, codeId) {

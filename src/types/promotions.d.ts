@@ -199,6 +199,41 @@ export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
   code: string
 }
 
+export interface CodeGenerateJob {
+  type: "promotion_job"
+  job_type: "code_generate"
+  name?: string
+  parameters: {
+    number_of_codes: number
+    consume_unit?: 'per_cart' | 'per_item'
+    code_prefix?: string
+    max_uses_per_code?: number
+    code_length: number
+  }
+}
+
+export interface PromotionJob extends Identifiable {
+  type: string
+  job_type: string
+  promotion_id: string
+  name?: string
+  parameters?: {
+    number_of_codes: number
+    consume_unit?: 'per_cart' | 'per_item'
+    code_prefix?: string
+    max_uses_per_code?: number
+    code_length: number
+  }
+  status: 'pending' | 'processing' | 'complete' | 'failed'
+  meta: {
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
+}
+
+
 /**
  * Promotion Endpoints
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html
@@ -226,6 +261,8 @@ export interface PromotionsEndpoint
    */
   Codes(promotionId: string): Promise<ResourcePage<PromotionCode>>
 
+  PromotionJobs(promotionId: string): Promise<ResourcePage<PromotionJob>>
+
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/create-promotion-codes.html
    */
@@ -233,6 +270,8 @@ export interface PromotionsEndpoint
     promotionId: string,
     codes: PromotionCode[]
   ): Promise<Resource<PromotionBase>>
+
+  AddCodesJob(promotionId: string, body:CodeGenerateJob): Promise<Resource<PromotionJob>>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/delete-promotion-codes.html#delete-delete-a-promotion-code
