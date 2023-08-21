@@ -14,19 +14,6 @@ class PromotionsEndpoint extends CRUDExtend {
 
   Codes(promotionId) {
     const { limit, offset } = this
-     console.log(promotionId)
-    return this.request.send(
-      buildURL(`${this.endpoint}/${promotionId}/codes`, {
-        limit,
-        offset
-      }),
-      'GET'
-    )
-  }
-
-  Codes(promotionId) {
-    const { limit, offset } = this
-     console.log(promotionId)
     return this.request.send(
       buildURL(`${this.endpoint}/${promotionId}/codes`, {
         limit,
