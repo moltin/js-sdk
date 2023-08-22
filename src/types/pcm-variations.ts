@@ -24,8 +24,8 @@ export interface PCMVariationBase {
 export interface PCMVariation extends Identifiable, PCMVariationBase {
   type: 'product-variation'
   meta: {
-    options: VariationsOptionResponse[]
-    owner?: 'organization' | 'store'
+    options?: VariationsOptionResponse[]
+    owner: 'organization' | 'store'
   }
 }
 
