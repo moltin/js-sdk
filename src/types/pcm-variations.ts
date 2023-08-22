@@ -23,9 +23,9 @@ import {
 
   export interface PCMVariation extends Identifiable, PCMVariationBase {
     type: 'product-variation'
-    options: VariationsOption[]
-    relationships: {
-      options: RelationshipToMany<'option'>
+    meta: {
+      options?: VariationsOptionResponse[]
+      owner: 'organization' | 'store'
     }
   }
 
