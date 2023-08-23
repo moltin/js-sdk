@@ -57,7 +57,7 @@ import { ApplicationKeysEndpoint } from './types/application-keys'
 import { SubscriptionProductsEndpoint } from './types/subscription-products'
 import { SubscriptionPlansEndpoint } from './types/subscription-plans'
 import { SubscriptionOfferingsEndpoint } from './types/subscription-offerings'
-import {OneTimePasswordTokenRequestEndpoint} from "./types/one-time-password-token-request";
+import { OneTimePasswordTokenRequestEndpoint } from "./types/one-time-password-token-request";
 
 export * from './types/config'
 export * from './types/storage'
@@ -185,7 +185,7 @@ export class Moltin {
   SubscriptionProducts: SubscriptionProductsEndpoint
   SubscriptionPlans: SubscriptionPlansEndpoint
   SubscriptionOfferings: SubscriptionOfferingsEndpoint
-  OnetimePasswordTokenRequest: OnetimePasswordTokenRequestEndpoint
+  OneTimePasswordTokenRequest: OneTimePasswordTokenRequestEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

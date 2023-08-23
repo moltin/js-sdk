@@ -13,7 +13,7 @@ class OneTimePasswordTokenRequestEndpoint extends CRUDExtend {
         .replace('{{realmId}}', realmId)
         .replace('{{passwordProfileId}}', passwordProfileId),
       'POST',
-      body.data,
+      body,
       token
     )
   }

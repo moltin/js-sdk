@@ -36,6 +36,7 @@ require('./unit/account-authentication-settings')
 require('./unit/account-membership-settings')
 require('./unit/account-memberships')
 require('./unit/application-keys')
+require('./unit/one-time-password-token-request')
 
 // Utilities
 require('./utils/helpers')
