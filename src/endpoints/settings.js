@@ -40,6 +40,10 @@ class Settings {
       ...body
     })
   }
+
+  Subscriptions() {
+    return this.request.send(`${this.endpoint}/subscriptions`, 'GET')
+  }
 }
 
 export default Settings

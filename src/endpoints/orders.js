@@ -1,5 +1,9 @@
 import BaseExtend from '../extends/base'
 
+import {
+  buildURL
+} from '../utils/helpers'
+
 class OrdersEndpoint extends BaseExtend {
   constructor(endpoint) {
     super(endpoint)
@@ -7,12 +11,26 @@ class OrdersEndpoint extends BaseExtend {
     this.endpoint = 'orders'
   }
 
-  Items(id) {
-    return this.request.send(`${this.endpoint}/${id}/items`, 'GET')
+  Items(orderId) {
+    return this.request.send(`${this.endpoint}/${orderId}/items`, 'GET')
   }
 
-  Payment(id, body) {
-    return this.request.send(`${this.endpoint}/${id}/payments`, 'POST', {
+  AllShippingGroups(orderId) {
+    return this.request.send(`${this.endpoint}/${orderId}/shipping-groups`, 'GET')
+  }
+
+  GetShippingGroup(orderId, shippingGroupId) {
+    const { includes } = this
+    return this.request.send(
+      buildURL(`${this.endpoint}/${orderId}/shipping-groups/${shippingGroupId}`, {
+        includes
+      }),
+      'GET'
+    )
+  }
+
+  Payment(orderId, body) {
+    return this.request.send(`${this.endpoint}/${orderId}/payments`, 'POST', {
       data: body,
     }, null, null, false)
   }
@@ -25,16 +43,16 @@ class OrdersEndpoint extends BaseExtend {
     )
   }
 
-  Transactions(id) {
+  Transactions(orderId) {
     /* eslint-disable no-console */
     console.warn(
       `DeprecationWarning: 'Order.Transactions(id)' will soon be deprecated. It's recommended you use Transactions class directly to get all, capture and refund transactions.`
     )
-    return this.request.send(`${this.endpoint}/${id}/transactions`, 'GET')
+    return this.request.send(`${this.endpoint}/${orderId}/transactions`, 'GET')
   }
 
-  Update(id, body) {
-    return this.request.send(`${this.endpoint}/${id}`, 'PUT', {
+  Update(orderId, body) {
+    return this.request.send(`${this.endpoint}/${orderId}`, 'PUT', {
       ...body,
       type: 'order'
     })

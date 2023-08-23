@@ -4,7 +4,12 @@
  * for Checkout, you can use the Checkout endpoint to convert the cart to an order.
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/index.html
  */
-import { Resource, QueryableResource, ResourceIncluded } from './core'
+import {
+  Resource,
+  QueryableResource,
+  ResourceIncluded,
+  Identifiable
+} from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
 import { Order } from './order'
@@ -89,6 +94,7 @@ export interface CartItem extends CartItemBase {
   manage_stock: boolean
   unit_price: Price
   value: Price
+  shipping_group_id?: string
   links: {
     product: string
   }
@@ -147,6 +153,10 @@ export interface BulkAddOptions {
   add_all_or_nothing: boolean
 }
 
+export interface BulkCustomDiscountOptions {
+  add_all_or_nothing: boolean
+}
+
 export interface MergeCartOptions {
   add_all_or_nothing: boolean
 }
@@ -194,6 +204,84 @@ export interface CartAdditionalHeaders {
   'X-MOLTIN-CURRENCY'?: string
 }
 
+export interface CartShippingGroupBase {
+  type: string
+  include_tax: boolean
+  shipping_type: string
+  tracking_reference?: string
+  address: Address
+  delivery_estimate: {
+    start: string
+    end: string
+  }
+}
+
+export interface ShippingGroupResponse {
+  type: string
+  relation: string
+  order_id?: string
+  cart_id?: string
+  shipping_type?: string
+  tracking_reference?: string
+  address?: Partial<Address>
+  payment_status?: string
+  shipping_status?: string
+  delivery_estimate: {
+    start: string
+    end: string
+  }
+  created_at: string
+  updated_at: string
+  relationships: {
+    cart: {
+      data: {
+        type: string
+        id: string
+      }
+    }
+  }
+  meta: {
+    display_price: {
+      tota: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      base: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      tax: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+      fees: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    }
+  }
+}
+
+/**
+ * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
+ */
+export interface CartCustomDiscount extends Identifiable {
+  type: 'custom_discount'
+  external_id: string
+  discount_engine: string
+  amount: FormattedPrice
+  description: string
+  discount_code: string
+}
+
+export interface CustomDiscountResponse {
+  data: CartCustomDiscount
+}
+
 export interface CartEndpoint
   extends CartQueryableResource<Cart, never, never> {
   endpoint: 'carts'
@@ -236,6 +324,10 @@ export interface CartEndpoint
    * @param item An custom item you want to add to the cart
    */
   AddCustomItem(item: any): Promise<CartItemsResponse>
+
+  CreateShippingGroup(
+    ShippingGroup: CartShippingGroupBase
+  ): Promise<ShippingGroupResponse>
 
   /**
    * Add Promotion to Cart
@@ -519,4 +611,41 @@ export interface CartEndpoint
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/delete-a-cart.html
    */
   Delete(): Promise<{}>
+
+  /**
+   * Create a Cart Custom Discount
+   * DOCS: https://elasticpath.dev/docs/commerce-cloud/carts/custom-discounts/add-custom-discount-to-cart
+   * @param data the custom Discount object
+   */
+  AddCartCustomDiscount(
+    data: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  UpdateCartCustomDiscount(
+    customDiscountId: string,
+    body: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  RemoveCartCustomDiscount(customDiscountId: string): Promise<{}>
+
+  AddItemCustomDiscount(
+    itemId: string,
+    data: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  UpdateItemCustomDiscount(
+    itemId: string,
+    customDiscountId: string,
+    body: CartCustomDiscount
+  ): Promise<Resource<CustomDiscountResponse>>
+
+  RemoveItemCustomDiscount(
+    itemId: string,
+    customDiscountId: string
+  ): Promise<{}>
+
+  BulkAddCartCustomDiscount(
+    data: CartCustomDiscount[],
+    options?: BulkCustomDiscountOptions
+  ): Promise<CustomDiscountResponse[]>
 }

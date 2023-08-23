@@ -49,6 +49,14 @@ export interface TtlSettings {
 export interface CartSettings {
   type: 'settings'
   cart_expiry_days: number
+  discounts?: {
+    custom_discounts_enabled?: boolean
+  }
+}
+
+export interface SubscriptionSettings {
+  type: 'settings'
+  subscription_preview_enabled: boolean
 }
 
 /**
@@ -95,4 +103,10 @@ export interface SettingsEndpoint {
    * @param body.cart_expiry_days - The number of days in which the cart will expire.
    */
   UpdateCart(body: CartSettings): Promise<Resource<CartSettings>>
+
+  /**
+   * Get Subscriptions Settings
+   * Description: You can get the Subscriptions Settings using this endpoint
+   */
+  Subscriptions(): Promise<Resource<SubscriptionSettings>>
 }

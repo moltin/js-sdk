@@ -4,6 +4,7 @@
  */
 
 import { Identifiable, Resource, ResourceList, ResourcePage } from './core'
+import { Locales } from './locales'
 
 /**
  * Core PCM Product Base Interface
@@ -16,6 +17,7 @@ export interface NodeBase {
     description?: string
     slug?: string
     curated_products?: string[]
+    locales?: { [key in Locales]?: { name?: string; description?: string } }
   }
   relationships?: {
     parent: {
@@ -24,6 +26,9 @@ export interface NodeBase {
         id: string
       }
     }
+  },
+  meta?: {
+    sort_order: number
   }
 }
 

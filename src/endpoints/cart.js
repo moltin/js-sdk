@@ -43,6 +43,26 @@ class CartEndpoint extends BaseExtend {
     return this.call
   }
 
+  AllShippingGroupsCart() {
+    return this.request.send(`${this.endpoint}/${this.cartId}/shipping-groups`, 'GET')
+  }
+
+  GetCartShippingGroup(shippingGroupId) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/shipping-groups/${shippingGroupId}`, 'GET')
+  }
+
+  CreateShippingGroup(body){
+    const shippingObject = Object.assign(body, {
+      type: 'shipping-type'
+    })
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/shipping-groups`,
+      'POST',
+      shippingObject
+    )
+  }
+
   AddProduct(
     productId,
     quantity = 1,
@@ -78,6 +98,71 @@ class CartEndpoint extends BaseExtend {
       'POST',
       itemObject
     )
+  }
+
+  AddCartCustomDiscount(body) {
+    const bodyObject = Object.assign(body, {
+      type: 'custom_discount'
+    })
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/custom-discounts`,
+      'POST',
+      bodyObject
+    )
+  }
+
+  UpdateCartCustomDiscount(customDiscountId, body) {
+    const bodyObject = Object.assign(body, {
+      type: 'custom_discount'
+    })
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/custom-discounts/${customDiscountId}`,
+      'PUT',
+      bodyObject
+    )
+  }
+
+  RemoveCartCustomDiscount(customDiscountId) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/custom-discounts/${customDiscountId}`,
+      'DELETE'
+    )
+  }
+
+  AddItemCustomDiscount(itemId, body) {
+    const bodyObject = Object.assign(body, {
+      type: 'custom_discount'
+    })
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}//custom-discounts`,
+      'POST',
+      bodyObject
+    )
+  }
+
+  UpdateItemCustomDiscount(itemId, customDiscountId, body) {
+    const bodyObject = Object.assign(body, {
+      type: 'custom_discount'
+    })
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/custom-discounts/${customDiscountId}`,
+      'PUT',
+      bodyObject
+    )
+  }
+
+  RemoveItemCustomDiscount(itemId, customDiscountId) {
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/items/${itemId}/custom-discounts/${customDiscountId}`,
+      'DELETE'
+    )
+  }
+
+  BulkAddCartCustomDiscount(body, options) {
+    return this.request.send(`${this.endpoint}/${this.cartId}/custom-discounts`, 'POST', {
+      data: body,
+      ...(options && { options })
+    })
   }
 
   AddPromotion(code, token = null) {
