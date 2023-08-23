@@ -27,7 +27,7 @@ export interface AccountManagementAuthenticationTokenBody {
     authentication_mechanism: string,
     password_profile_id: string,
     type: string
-    onetime_password_token?: string
+    one_time_password_token?: string
     username?: string,
     password?: string,
     oauth_authorization_code?: string,

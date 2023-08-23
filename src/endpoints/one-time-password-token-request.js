@@ -1,10 +1,10 @@
 import CRUDExtend from '../extends/crud'
 
-class OnetimePasswordTokenRequestEndpoint extends CRUDExtend {
+class OneTimePasswordTokenRequestEndpoint extends CRUDExtend {
   constructor(config) {
     super(config)
     this.endpoint =
-      'authentication-realms/{{realmId}}/password-profiles/{{passwordProfileId}}/onetime-password-token-request'
+      'authentication-realms/{{realmId}}/password-profiles/{{passwordProfileId}}/one-time-password-token-request'
   }
 
   Create(realmId, passwordProfileId, body, token = null) {
@@ -19,4 +19,4 @@ class OnetimePasswordTokenRequestEndpoint extends CRUDExtend {
   }
 }
 
-export default OnetimePasswordTokenRequestEndpoint
+export default OneTimePasswordTokenRequestEndpoint
