@@ -70,7 +70,7 @@ Moltin.Authenticate().then(response => {
 })
 ```
 
-Check out the [API reference](https://documentation.elasticpath.com/commerce-cloud/docs/api/index.html) to learn more about authenticating and the available endpoints.
+Check out the [API reference](https://elasticpath.dev/docs/commerce-cloud) to learn more about authenticating and the available endpoints.
 
 ### Custom Host
 
