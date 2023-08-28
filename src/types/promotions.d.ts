@@ -232,6 +232,7 @@ export interface PromotionJob extends Identifiable {
     }
   }
 }
+
  
 /** BE Doesnt support commented filter now, TO DO**/
 

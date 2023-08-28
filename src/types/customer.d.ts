@@ -39,10 +39,28 @@ export interface CustomerFilter {
   eq?: {
     name?: string
     email?: string
+    created_at?: string
+    updated_at?: string
   }
   like?: {
     name?: string
     email?: string
+  }
+  ge?: {
+    created_at?: string
+    updated_at?: string
+  }
+  gt?: {
+    created_at?: string
+    updated_at?: string
+  }
+  le?: {
+    created_at?: string
+    updated_at?: string
+  }
+  lt?: {
+    created_at?: string
+    updated_at?: string
   }
 }
 

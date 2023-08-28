@@ -6,19 +6,20 @@ import {
   Identifiable,
   CrudQueryableResource,
   ResourcePage,
-  ResourceList, Resource
+  ResourceList,
+  Resource
 } from './core'
 import { PcmFileRelationshipEndpoint } from './pcm-file-relationship'
 import { PcmTemplateRelationshipEndpoint } from './pcm-template-relationship'
 import { PcmVariationsRelationshipsEndpoint } from './pcm-variations-relationships'
 import { PcmMainImageRelationshipEndpoint } from './pcm-main-image-relationship'
-import { PcmJobBase, PcmJobsEndpoint} from './pcm-jobs'
+import { PcmJobBase, PcmJobsEndpoint } from './pcm-jobs'
 import { File } from './file'
 import { Locales } from './locales'
 import { Node } from './nodes'
 
 /**
- * Core PCM Product Base Interface
+§ * Core PCM Product Base Interface
  * For custom flows, extend this interface
  */
 export interface PcmProductBase extends PcmProductRelationships {
@@ -33,6 +34,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     upc_ean?: string | null
     mpn?: string | null
     external_ref?: string | null
+    build_rules?: BuildRules
     extensions?: Object
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
@@ -55,6 +57,12 @@ export interface ProductComponents {
     sort_order?: number | null
     options: ProductComponentOption[]
   }
+}
+
+export interface BuildRules {
+  default: 'include' | 'exclude'
+  include?: string[][]
+  exclude?: string[][]
 }
 
 export interface ProductComponentOption {
@@ -196,14 +204,18 @@ export interface PcmProductsEndpoint
    * @param body - filter and node id's
    * @constructor
    */
-  AttachNodes(body: PcmProductAttachmentBody): Promise<PcmProductAttachmentResponse>
+  AttachNodes(
+    body: PcmProductAttachmentBody
+  ): Promise<PcmProductAttachmentResponse>
 
   /**
    * Detach Nodes
    * @param body - filter and node id's
    * @constructor
    */
-  DetachNodes(body: PcmProductAttachmentBody): Promise<PcmProductAttachmentResponse>
+  DetachNodes(
+    body: PcmProductAttachmentBody
+  ): Promise<PcmProductAttachmentResponse>
 
   /**
    * Export products
