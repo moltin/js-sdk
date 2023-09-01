@@ -233,6 +233,30 @@ export interface PromotionJob extends Identifiable {
   }
 }
 
+ 
+/** BE Doesnt support commented filter now, TO DO**/
+
+export interface PromotionJobsFilter {
+  eq?: {
+    job_type?: string
+    status?: string
+    // name?: string
+    // created_by?: string
+  }
+  // lt?: {
+  //   created_at?: string
+  //   updated_at?: string
+  // }
+  // gt?: {
+  //   created_at?: string
+  //   updated_at?: string
+  // }
+  // like?: {
+  //   created_at?: string
+  //   updated_at?: string
+  // }
+}
+
 
 /**
  * Promotion Endpoints
@@ -248,11 +272,13 @@ export interface PromotionsEndpoint
     Promotion,
     PromotionBase,
     Identifiable & Partial<PromotionBase>,
-    never,
+    PromotionJobsFilter,
     never,
     never
   > {
   endpoint: 'promotions'
+
+  Filter(filter: PromotionJobsFilter): PromotionsEndpoint
 
   Attributes(): Promise<Attributes>
 
