@@ -329,12 +329,14 @@ class CartEndpoint extends BaseExtend {
     contact,
     billing_address,
     shipping_address = billing_address,
-    headers
+    token = "",
+    additionalHeaders = {}
   ) {
     const body = buildCartCheckoutData(contact, billing_address, shipping_address, true)
 
     const newHeader = {
-      'EP-Account-Management-Authentication-Token': headers
+      'EP-Account-Management-Authentication-Token': token,
+      ...additionalHeaders
     }
 
     return this.request.send(
