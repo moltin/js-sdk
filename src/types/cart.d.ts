@@ -202,6 +202,7 @@ export interface CartAdditionalHeaders {
   'EP-Context-Tag'?: string
   'EP-Channel'?: string
   'X-MOLTIN-CURRENCY'?: string
+  'EP-Account-Management-Authentication-Token'?: string
 }
 
 export interface CartShippingGroupBase {
@@ -588,6 +589,13 @@ export interface CartEndpoint
     billingAddress: Partial<Address>,
     shippingAddress?: Partial<Address>,
     additionalHeaders?: CartAdditionalHeaders
+  ): Promise<Resource<Order>>
+
+  CheckoutWithAccountManagementToken(
+    contact: string | CheckoutCustomer | CheckoutCustomerObject,
+    billingAddress: Partial<Address>,
+    shippingAddress?: Partial<Address>,
+    headers?: CartAdditionalHeaders
   ): Promise<Resource<Order>>
 
   /**

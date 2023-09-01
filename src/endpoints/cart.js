@@ -325,6 +325,30 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  CheckoutWithAccountManagementToken(
+    contact,
+    billing_address,
+    shipping_address = billing_address,
+    headers
+  ) {
+    const body = buildCartCheckoutData(contact, billing_address, shipping_address, true)
+
+    const newHeader = {
+      'EP-Account-Management-Authentication-Token': headers
+    }
+
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/checkout`,
+      'POST',
+      body,
+      null,
+      null,
+      true,
+      null,
+      newHeader
+    )
+  }
+
   Merge(cartId, token, options = {}) {
     const body = {
       type: 'cart_items',
