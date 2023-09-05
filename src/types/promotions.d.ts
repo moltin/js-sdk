@@ -200,11 +200,11 @@ export interface DeletePromotionCodesBodyItem extends ResourceList<any> {
   code: string
 }
 
-export interface CodeGenerateJob {
+export interface PromotionCodesJob {
   type: "promotion_job"
-  job_type: "code_generate"
+  job_type: "code_generate" | "code_export"
   name?: string
-  parameters: {
+  parameters?: {
     number_of_codes: number
     consume_unit?: 'per_cart' | 'per_item'
     code_prefix?: string
@@ -258,6 +258,10 @@ export interface PromotionJobsFilter {
   // }
 }
 
+export interface CodeFileHref {
+  href: string
+}
+
 
 /**
  * Promotion Endpoints
@@ -298,7 +302,7 @@ export interface PromotionsEndpoint
     codes: PromotionCode[]
   ): Promise<Resource<PromotionBase>>
 
-  AddCodesJob(promotionId: string, body:CodeGenerateJob): Promise<Resource<PromotionJob>>
+  AddCodesJob(promotionId: string, body:PromotionCodesJob): Promise<Resource<PromotionJob>>
 
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/delete-promotion-codes.html#delete-delete-a-promotion-code
@@ -314,4 +318,6 @@ export interface PromotionsEndpoint
   ): Promise<{}>
 
   History(promotionId: string): Promise<ResourcePage<Promotion>>
+
+  GetCodeExportFile(id: string): Promise<CodeFileHref>
 }

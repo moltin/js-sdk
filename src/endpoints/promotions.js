@@ -75,6 +75,10 @@ class PromotionsEndpoint extends CRUDExtend {
       'GET'
     )
   }
+
+  GetCodeExportFile(jobId) {
+    return this.request.send(`${this.endpoint}/jobs/${jobId}/file`, 'Get')
+  }
 }
 
 export default PromotionsEndpoint
