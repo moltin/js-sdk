@@ -102,6 +102,7 @@ export interface BundleDiscountSchema {
 export interface BundleGiftSchema {
   requirements: Requirements[]
   gifts: string[]
+  auto_add_free_gift?: boolean
 }
 
 /**
