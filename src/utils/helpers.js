@@ -228,17 +228,25 @@ export function buildCartItemData(
 export function buildCartCheckoutData(
   customer,
   billing_address,
-  shipping_address
+  shipping_address,
+  isAccountMemberCheckout = false
 ) {
   let parsedCustomer = customer
 
   if (typeof customer === 'string') parsedCustomer = { id: customer }
 
-  return {
-    customer: parsedCustomer,
+  const data = {
     billing_address,
-    shipping_address
+    shipping_address,
   }
+
+  if (isAccountMemberCheckout) {
+    data.contact = parsedCustomer
+  } else {
+    data.customer = parsedCustomer
+  }
+
+  return data
 }
 
 export function resetProps(instance) {
