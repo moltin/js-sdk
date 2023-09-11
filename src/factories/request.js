@@ -76,7 +76,10 @@ const fetchRetry = (
           resolve(response.json)
         }
         if (attempt < config.fetchMaxAttempts && (response.status === 429 || response.status === 401)) {
-          this.authenticate()
+
+          response.status === 401 ?
+            this.authenticate().then(() => req(getCredentials(storage, storageKey))) : null
+
           setTimeout(
             () =>
               fetchRetry(
