@@ -225,7 +225,7 @@ export interface PromotionJob extends Identifiable {
     max_uses_per_code?: number
     code_length: number
   }
-  status: 'pending' | 'processing' | 'complete' | 'failed'
+  status: 'pending' | 'processing' | 'completed' | 'failed'
   meta: {
     timestamps: {
       created_at: string
