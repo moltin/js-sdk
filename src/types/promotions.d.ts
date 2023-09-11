@@ -319,5 +319,5 @@ export interface PromotionsEndpoint
 
   History(promotionId: string): Promise<ResourcePage<Promotion>>
 
-  GetCodeExportFile(id: string): Promise<CodeFileHref>
+  GetCodeExportFile(promotionId:string, jobId: string): Promise<CodeFileHref>
 }
