@@ -75,27 +75,43 @@ const fetchRetry = (
         if (response.ok) {
           resolve(response.json)
         }
-        if (attempt < config.fetchMaxAttempts && (response.status === 429 || response.status === 401)) {
+        if (attempt < config.fetchMaxAttempts) {
 
-          response.status === 401 ?
-            this.authenticate().then(() => req(getCredentials(storage, storageKey))) : null
-
-          setTimeout(
-            () =>
-              fetchRetry(
-                config,
-                uri,
-                method,
-                version,
-                headers,
-                requestBody,
-                attempt + 1
-              )
-                .then(result => resolve(result))
-                .catch(error => reject(error)),
-            attempt * config.retryDelay +
-              Math.floor(Math.random() * config.retryJitter)
-          )
+          if (response.status === 401) {
+            this.authenticate().then(setTimeout(
+              () =>
+                fetchRetry(
+                  config,
+                  uri,
+                  method,
+                  version,
+                  headers,
+                  requestBody,
+                  attempt + 1
+                )
+                  .then(result => resolve(result))
+                  .catch(error => reject(error)),
+              attempt * config.retryDelay +
+                Math.floor(Math.random() * config.retryJitter)
+            ))
+          } else if (response.status === 429) {
+            setTimeout(
+              () =>
+                fetchRetry(
+                  config,
+                  uri,
+                  method,
+                  version,
+                  headers,
+                  requestBody,
+                  attempt + 1
+                )
+                  .then(result => resolve(result))
+                  .catch(error => reject(error)),
+              attempt * config.retryDelay +
+                Math.floor(Math.random() * config.retryJitter)
+            )
+          }
         } else {
           reject(response.json)
         }
