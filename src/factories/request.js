@@ -61,6 +61,15 @@ const fetchRetry = (
 ) =>
   new Promise((resolve, reject) => {
     const ver = version || config.version
+
+    function retryTimeout(timeoutFunction) {
+      setTimeout(() =>
+        timeoutFunction()
+      ),
+      attempt * config.retryDelay +
+        Math.floor(Math.random() * config.retryJitter)
+    }
+
     config.auth.fetch
       .bind()(
         `${config.protocol}://${config.host}${ver ? `/${ver}` : ''}/${uri}`,
@@ -78,8 +87,7 @@ const fetchRetry = (
         if (attempt < config.fetchMaxAttempts) {
 
           if (response.status === 401) {
-            this.authenticate().then(setTimeout(
-              () =>
+            this.authenticate().then(retryTimeout(
                 fetchRetry(
                   config,
                   uri,
@@ -90,13 +98,9 @@ const fetchRetry = (
                   attempt + 1
                 )
                   .then(result => resolve(result))
-                  .catch(error => reject(error)),
-              attempt * config.retryDelay +
-                Math.floor(Math.random() * config.retryJitter)
-            ))
+                  .catch(error => reject(error))))
           } else if (response.status === 429) {
-            setTimeout(
-              () =>
+              retryTimeout(
                 fetchRetry(
                   config,
                   uri,
@@ -105,12 +109,9 @@ const fetchRetry = (
                   headers,
                   requestBody,
                   attempt + 1
-                )
-                  .then(result => resolve(result))
-                  .catch(error => reject(error)),
-              attempt * config.retryDelay +
-                Math.floor(Math.random() * config.retryJitter)
-            )
+              )
+                .then(result => resolve(result))
+                .catch(error => reject(error)))
           }
         } else {
           reject(response.json)
