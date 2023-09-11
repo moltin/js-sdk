@@ -75,20 +75,8 @@ const fetchRetry = (
         if (response.ok) {
           resolve(response.json)
         }
-        if (response.status === 401 && attempt <= 2) {
-          const storageKey = resolveCredentialsStorageKey(config.name);
-
-          // update access token
-          const credentials = this.authenticate().then(() => req(getCredentials(config.storage, storageKey)))
-
-          headers.Authorization = `Bearer ${credentials.access_token}`
-
-          // fetch retry 1 more time
-          return fetchRetry(config, uri, method, version, headers, requestBody, attempt = 2)
-        } else {
-          reject(response.json)
-        }
-        if (attempt < config.fetchMaxAttempts && response.status === 429) {
+        if (attempt < config.fetchMaxAttempts && (response.status === 429 || response.status === 401)) {
+          this.authenticate()
           setTimeout(
             () =>
               fetchRetry(
