@@ -62,9 +62,19 @@ const fetchRetry = (
   new Promise((resolve, reject) => {
     const ver = version || config.version
 
-    function retryTimeout(timeoutFunction) {
+    function retryTimeout() {
       setTimeout(() =>
-        timeoutFunction()
+        fetchRetry(
+          config,
+          uri,
+          method,
+          version,
+          headers,
+          requestBody,
+          attempt + 1
+        )
+          .then(result => resolve(result))
+          .catch(error => reject(error))
       ),
       attempt * config.retryDelay +
         Math.floor(Math.random() * config.retryJitter)
@@ -87,31 +97,9 @@ const fetchRetry = (
         if (attempt < config.fetchMaxAttempts) {
 
           if (response.status === 401) {
-            this.authenticate().then(retryTimeout(
-                fetchRetry(
-                  config,
-                  uri,
-                  method,
-                  version,
-                  headers,
-                  requestBody,
-                  attempt + 1
-                )
-                  .then(result => resolve(result))
-                  .catch(error => reject(error))))
+            this.authenticate().then(retryTimeout())
           } else if (response.status === 429) {
-              retryTimeout(
-                fetchRetry(
-                  config,
-                  uri,
-                  method,
-                  version,
-                  headers,
-                  requestBody,
-                  attempt + 1
-              )
-                .then(result => resolve(result))
-                .catch(error => reject(error)))
+              retryTimeout()
           }
         } else {
           reject(response.json)
