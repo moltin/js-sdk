@@ -63,7 +63,6 @@ const fetchRetry = (
 ) =>
   new Promise((resolve, reject) => {
     const ver = version || config.version
-    const request = new RequestFactory(config)
 
     function retryTimeout() {
       setTimeout(() =>
@@ -99,8 +98,7 @@ const fetchRetry = (
         }
         if (attempt < config.fetchMaxAttempts) {
           if (response.status === 401) {
-            console.log('retry')
-            this.authenticate().then(retryTimeout())
+            authenticate().then(retryTimeout())
           } else if (response.status === 429) {
             retryTimeout()
           }
@@ -119,8 +117,6 @@ class RequestFactory {
 
   authenticate() {
     const { config, storage } = this
-
-    console.log('auth')
 
     const promise = config.custom_authenticator
       ? config.custom_authenticator()
@@ -231,7 +227,6 @@ class RequestFactory {
         return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
       }
 
-      console.log('oops')
       return fetchRetry(
         config,
         uri,
@@ -239,6 +234,7 @@ class RequestFactory {
         version,
         headers,
         requestBody,
+        1,
         this.authenticate.bind(this)
       )
     }
