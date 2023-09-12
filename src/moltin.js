@@ -40,6 +40,7 @@ import Accounts from './endpoints/accounts'
 import AccountMembersEndpoint from './endpoints/account-members'
 import AccountAuthenticationSettingsEndpoint from './endpoints/account-authentication-settings'
 import AccountMembershipsEndpoint from './endpoints/account-memberships'
+import OneTimePasswordTokenRequestEndpoint from './endpoints/one-time-password-token-request'
 import PCMVariationsEndpoint from './endpoints/pcm-variations'
 import MetricsEndpoint from './endpoints/metrics'
 import PersonalDataEndpoint from './endpoints/personal-data'
@@ -119,6 +120,7 @@ export default class Moltin {
     this.SubscriptionProducts = new SubscriptionProductsEndpoint(config)
     this.SubscriptionPlans = new SubscriptionPlansEndpoint(config)
     this.SubscriptionOfferings = new SubscriptionOfferingsEndpoint(config)
+    this.OneTimePasswordTokenRequest = new OneTimePasswordTokenRequestEndpoint(config)
     this.Subscriptions = new SubscriptionsEndpoint(config)
   }
 
