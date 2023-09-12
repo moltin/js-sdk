@@ -105,6 +105,8 @@ const fetchRetry = (
             authenticate().then(data => retryTimeout(data.access_token))
           } else if (response.status === 429) {
             retryTimeout()
+          } else {
+            reject(response.json)
           }
         } else {
           reject(response.json)
