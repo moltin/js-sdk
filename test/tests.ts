@@ -41,3 +41,5 @@ require('./unit/application-keys')
 require('./utils/helpers')
 require('./utils/throttle')
 require('./utils/configFetch')
+
+require('./factories/request')
