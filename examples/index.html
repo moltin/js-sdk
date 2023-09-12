@@ -18,14 +18,5 @@
       Moltin.Authenticate().then(res => console.log(res))
       Moltin.Products.All().then(({ data }) => console.log(data))
     </script>
-    <button onclick="callSomethingMoltin()">Break!</button>
   </body>
 </html>
-
-<script>
-  function callSomethingMoltin() {
-    for (i = 0; i < 300; i++) {
-      Moltin.Products.All().then(({ data }) => console.log(data))
-    }
-  }
-</script>
