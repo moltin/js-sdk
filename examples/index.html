@@ -24,6 +24,8 @@
 
 <script>
   function callSomethingMoltin() {
-    Moltin.Products.All().then(({ data }) => console.log(data))
+    for (i = 0; i < 300; i++) {
+      Moltin.Products.All().then(({ data }) => console.log(data))
+    }
   }
 </script>

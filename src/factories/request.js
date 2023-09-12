@@ -101,7 +101,7 @@ const fetchRetry = (
           resolve(response.json)
         }
         if (attempt < config.fetchMaxAttempts) {
-          if (response.status === 401) {
+          if (response.status === 401 && config.reauth) {
             authenticate().then(data => retryTimeout(data.access_token))
           } else if (response.status === 429) {
             retryTimeout()
