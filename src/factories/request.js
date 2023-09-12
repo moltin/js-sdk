@@ -58,33 +58,32 @@ const fetchRetry = (
   version,
   headers,
   requestBody,
-  attempt = 1,
-  authenticate
+  authenticate,
+  attempt = 1
 ) =>
   new Promise((resolve, reject) => {
     const ver = version || config.version
+    const updatedHeaders = headers
 
     function retryTimeout(access_token) {
       if (access_token) {
-        headers.Authorization = `Bearer ${access_token}`
+        updatedHeaders.Authorization = `Bearer ${access_token}`
       }
 
-      setTimeout(() =>
+      setTimeout(() => {
         fetchRetry(
           config,
           uri,
           method,
           version,
-          headers,
+          updatedHeaders,
           requestBody,
-          attempt + 1,
-          authenticate
+          authenticate,
+          attempt + 1
         )
           .then(result => resolve(result))
           .catch(error => reject(error))
-      ),
-        attempt * config.retryDelay +
-          Math.floor(Math.random() * config.retryJitter)
+      }, attempt * config.retryDelay + Math.floor(Math.random() * config.retryJitter))
     }
 
     config.auth.fetch
@@ -239,8 +238,8 @@ class RequestFactory {
         version,
         headers,
         requestBody,
-        1,
-        this.authenticate.bind(this)
+        this.authenticate.bind(this),
+        1
       )
     }
 
