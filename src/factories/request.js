@@ -47,10 +47,7 @@ const createAuthRequest = config => {
 
         reject(response.json)
       })
-      .catch(error => {
-        reject(error)
-        throw new Error(error.stack)
-      })
+      .catch(error => reject(error))
   })
 }
 
@@ -85,10 +82,7 @@ const fetchRetry = (
           attempt + 1
         )
           .then(result => resolve(result))
-          .catch(error => {
-            reject(error)
-            throw new Error(error.stack)
-          })
+          .catch(error => reject(error))
       }, attempt * config.retryDelay + Math.floor(Math.random() * config.retryJitter))
     }
 
@@ -108,7 +102,9 @@ const fetchRetry = (
         }
         if (attempt < config.fetchMaxAttempts) {
           if (response.status === 401 && config.reauth) {
-            authenticate().then(data => retryTimeout(data.access_token))
+            authenticate()
+              .then(data => retryTimeout(data.access_token))
+              .catch(error => reject(error))
           } else if (response.status === 429) {
             retryTimeout()
           } else {
@@ -118,10 +114,7 @@ const fetchRetry = (
           reject(response.json)
         }
       })
-      .catch(error => {
-        reject(error)
-        throw new Error(error.stack)
-      })
+      .catch(error => reject(error))
   })
 
 class RequestFactory {
