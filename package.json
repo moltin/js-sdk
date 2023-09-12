@@ -44,7 +44,6 @@
     "url": "https://github.com/moltin/js-sdk/issues"
   },
   "devDependencies": {
-    "babel-plugin-rewire": "^1.2.0",
     "@babel/core": "7.21.3",
     "@babel/eslint-parser": "7.21.3",
     "@babel/preset-env": "7.20.2",
@@ -54,9 +53,12 @@
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-node-resolve": "13.3.0",
     "@semantic-release/exec": "^6.0.3",
+    "@sinonjs/fake-timers": "^11.1.0",
     "@types/chai": "4.3.4",
     "@types/mocha": "9.1.1",
     "@types/node": "18.0.6",
+    "@types/sinonjs__fake-timers": "^8.1.2",
+    "babel-plugin-rewire": "^1.2.0",
     "chai": "4.3.7",
     "commitizen": "4.2.5",
     "core-js": "3.29.1",
