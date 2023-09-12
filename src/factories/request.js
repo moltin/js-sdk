@@ -47,7 +47,10 @@ const createAuthRequest = config => {
 
         reject(response.json)
       })
-      .catch(error => reject(error))
+      .catch(error => {
+        reject(error)
+        throw new Error(error.stack)
+      })
   })
 }
 
@@ -82,7 +85,10 @@ const fetchRetry = (
           attempt + 1
         )
           .then(result => resolve(result))
-          .catch(error => reject(error))
+          .catch(error => {
+            reject(error)
+            throw new Error(error.stack)
+          })
       }, attempt * config.retryDelay + Math.floor(Math.random() * config.retryJitter))
     }
 
@@ -112,7 +118,10 @@ const fetchRetry = (
           reject(response.json)
         }
       })
-      .catch(error => reject(error))
+      .catch(error => {
+        reject(error)
+        throw new Error(error.stack)
+      })
   })
 
 class RequestFactory {
