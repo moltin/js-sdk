@@ -42,3 +42,5 @@ require('./unit/one-time-password-token-request')
 require('./utils/helpers')
 require('./utils/throttle')
 require('./utils/configFetch')
+
+require('./factories/request')
