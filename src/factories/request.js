@@ -64,7 +64,11 @@ const fetchRetry = (
   new Promise((resolve, reject) => {
     const ver = version || config.version
 
-    function retryTimeout() {
+    function retryTimeout(access_token) {
+      if (access_token) {
+        headers.Authorization = `Bearer ${access_token}`
+      }
+
       setTimeout(() =>
         fetchRetry(
           config,
@@ -73,7 +77,8 @@ const fetchRetry = (
           version,
           headers,
           requestBody,
-          attempt + 1
+          attempt + 1,
+          authenticate
         )
           .then(result => resolve(result))
           .catch(error => reject(error))
@@ -98,7 +103,7 @@ const fetchRetry = (
         }
         if (attempt < config.fetchMaxAttempts) {
           if (response.status === 401) {
-            authenticate().then(retryTimeout())
+            authenticate().then(data => retryTimeout(data.access_token))
           } else if (response.status === 429) {
             retryTimeout()
           }
