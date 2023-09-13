@@ -40,6 +40,7 @@ export interface PriceBookPriceBase {
         }
       }
     }
+    external_ref?: string | null
     sku: string
   }
 }

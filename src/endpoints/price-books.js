@@ -12,6 +12,11 @@ class PriceBooksEndpoint extends CRUDExtend {
 
     this.endpoint = 'pricebooks'
   }
+
+  ImportProductPrices(file) {
+    return this.request.send(`${this.endpoint}/import`, 'POST', file)
+  }
+
 }
 
 export default PriceBooksEndpoint
