@@ -28,6 +28,7 @@ export interface CreateCartObject {
   id?: string
   name: string
   description?: string
+  snapshot_date?: string
 }
 
 /**
@@ -147,6 +148,7 @@ export interface CartItemsResponse {
   included?: {
     tax_items?: ItemTaxObjectResponse[]
   }
+  snapshot_date?: string
 }
 
 export interface BulkAddOptions {
