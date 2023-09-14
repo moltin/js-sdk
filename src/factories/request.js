@@ -4,7 +4,8 @@ import {
   resetProps,
   tokenInvalid,
   getCredentials,
-  isNode, resolveCredentialsStorageKey
+  isNode,
+  resolveCredentialsStorageKey
 } from '../utils/helpers'
 
 const createAuthRequest = config => {
@@ -57,10 +58,34 @@ const fetchRetry = (
   version,
   headers,
   requestBody,
+  authenticate,
   attempt = 1
 ) =>
   new Promise((resolve, reject) => {
     const ver = version || config.version
+    const updatedHeaders = headers
+
+    function retryTimeout(access_token) {
+      if (access_token) {
+        updatedHeaders.Authorization = `Bearer ${access_token}`
+      }
+
+      setTimeout(() => {
+        fetchRetry(
+          config,
+          uri,
+          method,
+          version,
+          updatedHeaders,
+          requestBody,
+          authenticate,
+          attempt + 1
+        )
+          .then(result => resolve(result))
+          .catch(error => reject(error))
+      }, attempt * config.retryDelay + Math.floor(Math.random() * config.retryJitter))
+    }
+
     config.auth.fetch
       .bind()(
         `${config.protocol}://${config.host}${ver ? `/${ver}` : ''}/${uri}`,
@@ -75,23 +100,16 @@ const fetchRetry = (
         if (response.ok) {
           resolve(response.json)
         }
-        if (attempt < config.fetchMaxAttempts && response.status === 429) {
-          setTimeout(
-            () =>
-              fetchRetry(
-                config,
-                uri,
-                method,
-                version,
-                headers,
-                requestBody,
-                attempt + 1
-              )
-                .then(result => resolve(result))
-                .catch(error => reject(error)),
-            attempt * config.retryDelay +
-              Math.floor(Math.random() * config.retryJitter)
-          )
+        if (attempt < config.fetchMaxAttempts) {
+          if (response.status === 401 && config.reauth) {
+            authenticate()
+              .then(data => retryTimeout(data.access_token))
+              .catch(error => reject(error))
+          } else if (response.status === 429) {
+            retryTimeout()
+          } else {
+            reject(response.json)
+          }
         } else {
           reject(response.json)
         }
@@ -133,7 +151,10 @@ class RequestFactory {
               ...(refresh_token && { refresh_token })
             }
 
-            storage.set(resolveCredentialsStorageKey(config.name), JSON.stringify(credentials))
+            storage.set(
+              resolveCredentialsStorageKey(config.name),
+              JSON.stringify(credentials)
+            )
           }
         }
       )
@@ -154,7 +175,7 @@ class RequestFactory {
   ) {
     const { config, storage } = this
 
-    const storageKey = resolveCredentialsStorageKey(config.name);
+    const storageKey = resolveCredentialsStorageKey(config.name)
     const credentials = getCredentials(storage, storageKey)
 
     const req = cred => {
@@ -214,11 +235,22 @@ class RequestFactory {
         return wrapBody ? buildRequestBody(body) : JSON.stringify(body)
       }
 
-      return fetchRetry(config, uri, method, version, headers, requestBody)
+      return fetchRetry(
+        config,
+        uri,
+        method,
+        version,
+        headers,
+        requestBody,
+        this.authenticate.bind(this),
+        1
+      )
     }
 
     if (tokenInvalid(config) && config.reauth && !config.store_id) {
-      return this.authenticate().then(() => req(getCredentials(storage, storageKey)))
+      return this.authenticate().then(() =>
+        req(getCredentials(storage, storageKey))
+      )
     }
 
     if (instance) resetProps(instance)

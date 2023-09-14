@@ -5,6 +5,7 @@ export interface PriceBookPriceModifierBase {
   attributes: {
     modifier_type: string
     name: string
+    external_ref?: string | null
     currencies: {
       [key: string]: {
         includes_tax: boolean

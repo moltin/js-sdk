@@ -1067,3 +1067,49 @@ export const applicationKeysArray = [
     }
   }
 ]
+
+export const shopperCatalogProductResponse = {
+  data: {
+    id: '072541c8-1558-440b-979e-05b7880128fa',
+    type: 'product',
+    attributes: {
+      base_product: false,
+      commodity_type: 'physical',
+      created_at: '2023-05-17T11:21:02.014Z',
+      manage_stock: false,
+      name: 'Playstation 5 Controller',
+      price: {
+        USD: {
+          amount: 5000,
+          includes_tax: false
+        }
+      },
+      sku: 'ps5-controller',
+      slug: 'playstation-5-controller',
+      status: 'live',
+      updated_at: '2023-05-30T17:00:04.994Z',
+      published_at: '2023-05-31T10:21:28.184Z'
+    },
+    meta: {
+      catalog_id: 'bb06b811-95db-420d-a7ef-810eee1bb343',
+      catalog_source: 'pim',
+      pricebook_id: 'fe4a40ab-4bd1-4678-b94c-be799cbd58ac',
+      bread_crumb_nodes: ['50059701-ec6d-4829-b6d4-65831b98855e'],
+      bread_crumbs: {
+        '50059701-ec6d-4829-b6d4-65831b98855e': [
+          '06d5d325-487d-411d-9504-4bc8ca3b677b'
+        ]
+      },
+      display_price: {
+        without_tax: {
+          amount: 5000,
+          currency: 'USD',
+          formatted: '$50.00'
+        }
+      }
+    }
+  },
+  links: {
+    self: '/catalog/products/072541c8-1558-440b-979e-05b7880128fa'
+  }
+}
