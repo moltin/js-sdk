@@ -77,11 +77,13 @@ export interface ProductComponentOption {
   }
 }
 
+type productType = 'standard' | 'parent' | 'child'| 'bundle'
+
 export interface PcmProduct extends Identifiable, PcmProductBase {
   meta: {
     variation_matrix: { [key: string]: string } | {}
     owner?: 'organization' | 'store'
-    product_types?: string[]
+    product_types?: productType[]
   }
 }
 
