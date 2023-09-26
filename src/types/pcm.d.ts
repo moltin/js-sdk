@@ -87,6 +87,8 @@ export interface PcmProduct extends Identifiable, PcmProductBase {
   }
 }
 
+export type PartialPcmProductBase = Omit<PcmProductBase, 'attributes'> & {attributes: Partial<PcmProductBase['attributes']>}
+
 export interface PcmProductRelationships {
   relationships?: {
     base_product?: {
@@ -123,8 +125,7 @@ export interface PcmProductResponse {
 }
 
 export type PcmProductsResponse = ResourcePage<PcmProduct, PcmProductsIncluded>
-export type PcmProductUpdateBody = Partial<PcmProductBase> & Identifiable
-
+export type PcmProductUpdateBody = PartialPcmProductBase & Identifiable
 /**
  * PCM Product nodes attachment body
  */
