@@ -24,7 +24,7 @@ import {
   export interface PCMVariation extends Identifiable, PCMVariationBase {
     type: 'product-variation'
     meta: {
-      options?: PCMVariationMetaOption[]
+      options?: VariationsOptionResponse[]
       owner: 'organization' | 'store'
     }
   }
@@ -39,8 +39,6 @@ import {
         description: string
     }
   }
-
-  export type PCMVariationMetaOption = Identifiable & VariationsOption['attributes']
 
   export interface VariationsOptionResponse extends Identifiable {
     type: 'product-variation-option'
