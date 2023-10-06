@@ -9,7 +9,6 @@ import {
   RelationshipToMany,
   CrudQueryableResource
 } from './core'
-import { PcmJob } from './pcm'
 import { PcmJobBase } from './pcm-jobs'
 import { Price, FormattedPrice } from './price'
 
