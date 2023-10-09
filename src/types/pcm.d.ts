@@ -42,7 +42,6 @@ export interface PcmProductBase extends PcmProductRelationships {
 }
 
 export interface PcmJob extends Identifiable, PcmJobBase {
-  type: 'pim-job'
   meta: {
     file_locations: string[]
     filter: string
@@ -142,6 +141,8 @@ export interface PcmProductAttachmentResponse {
     nodes_not_found: string[]
   }
 }
+export type BuildChildProductsJobResponse = Identifiable & PcmJobBase
+
 /**
  * PCM Product Endpoints
  */
@@ -178,7 +179,7 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to build the child products for.
    * @constructor
    */
-  BuildChildProducts(productId: string): Promise<{}>
+  BuildChildProducts(productId: string): Promise<BuildChildProductsJobResponse>
 
   /**
    * Get Child Products
