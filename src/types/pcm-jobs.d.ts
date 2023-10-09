@@ -8,7 +8,6 @@ import { PcmJob } from './pcm';
  * PCM Job Base Interface
  */
 export interface PcmJobBase {
-  type: 'pim-job',
   attributes: {
     created_at: string
     status: string

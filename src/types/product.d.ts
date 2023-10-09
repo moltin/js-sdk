@@ -9,7 +9,6 @@ import {
   RelationshipToMany,
   CrudQueryableResource
 } from './core'
-import { PcmJobBase } from './pcm-jobs'
 import { Price, FormattedPrice } from './price'
 
 /**
@@ -54,8 +53,6 @@ export interface Product extends Identifiable, ProductBase {
     children?: RelationshipToMany<'product'>
   }
 }
-
-export type BuildChildProductsJob = Identifiable & PcmJobBase
 
 /**
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/catalog/products/filtering.html
@@ -200,5 +197,5 @@ export interface ProductsEndpoint
    * @param id productId
    * @constructor
    */
-  BuildChildProducts(id: string): Promise<BuildChildProductsJob>
+  BuildChildProducts<T = any>(id: string): Promise<T>
 }
