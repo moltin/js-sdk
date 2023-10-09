@@ -19,6 +19,7 @@ import { GatewaysEndpoint } from './types/gateway'
 import { CustomersEndpoint } from './types/customer'
 import { InventoryEndpoint } from './types/inventory'
 import { JobEndpoint } from './types/job'
+import { PcmJobsEndpoint } from './types/pcm-jobs'
 import { FileEndpoint } from './types/file'
 import { FlowEndpoint } from './types/flow'
 import { FieldsEndpoint } from './types/field'
@@ -82,6 +83,7 @@ export * from './types/pcm'
 export * from './types/integrations'
 export * from './types/hierarchies'
 export * from './types/job'
+export * from './types/pcm-jobs'
 export * from './types/file'
 export * from './types/flow'
 export * from './types/transaction'
@@ -155,6 +157,7 @@ export class Moltin {
   Customers: CustomersEndpoint
   Inventories: InventoryEndpoint
   Jobs: JobEndpoint
+  PcmJobs: PcmJobsEndpoint
   Files: FileEndpoint
   Flows: FlowEndpoint
   Fields: FieldsEndpoint
