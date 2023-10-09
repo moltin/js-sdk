@@ -47,7 +47,9 @@ export interface DuplicateHierarchyBody {
   }
 }
 
-export type DuplicateHierarchyJob  = Identifiable & PcmJobBase
+export interface DuplicateHierarchyJob extends Identifiable, PcmJobBase {
+  type: 'pim-job'
+}
 
 export interface HierarchyFilter {
   // TODO

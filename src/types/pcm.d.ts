@@ -42,6 +42,7 @@ export interface PcmProductBase extends PcmProductRelationships {
 }
 
 export interface PcmJob extends Identifiable, PcmJobBase {
+  type: 'pim-job'
   meta: {
     file_locations: string[]
     filter: string
