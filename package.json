@@ -29,7 +29,8 @@
   },
   "release": {
     "branches": [
-      "main"
+      "main",
+      "beta"
     ],
     "prepare": [
       "@semantic-release/npm",
