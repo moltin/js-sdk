@@ -28,10 +28,6 @@ export interface SubscriptionProductBase {
         includes_tax?: boolean
       }
     }
-    price_units?: {
-      unit: 'day' | 'month'
-      amount: number
-    }
   },
 }
 
