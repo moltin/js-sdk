@@ -157,7 +157,6 @@ export class Moltin {
   Customers: CustomersEndpoint
   Inventories: InventoryEndpoint
   Jobs: JobEndpoint
-  PcmJobs: PcmJobsEndpoint
   Files: FileEndpoint
   Flows: FlowEndpoint
   Fields: FieldsEndpoint
