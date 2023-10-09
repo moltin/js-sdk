@@ -141,7 +141,7 @@ export interface PcmProductAttachmentResponse {
     nodes_not_found: string[]
   }
 }
-export type BuildChildProductsJobResponse = Identifiable & PcmJobBase
+export type BuildChildProductsJob = Identifiable & PcmJobBase
 
 /**
  * PCM Product Endpoints
@@ -179,7 +179,7 @@ export interface PcmProductsEndpoint
    * @param productId - The ID of the base product to build the child products for.
    * @constructor
    */
-  BuildChildProducts(productId: string): Promise<BuildChildProductsJobResponse>
+  BuildChildProducts(productId: string): Promise<Resource<BuildChildProductsJob>>
 
   /**
    * Get Child Products
