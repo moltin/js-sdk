@@ -197,5 +197,5 @@ export interface ProductsEndpoint
    * @param id productId
    * @constructor
    */
-  BuildChildProducts<T=any>(id: string): Promise<T>
+  BuildChildProducts<T = any>(id: string): Promise<T>
 }
