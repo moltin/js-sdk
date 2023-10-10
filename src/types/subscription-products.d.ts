@@ -31,7 +31,7 @@ export interface SubscriptionProductBase {
     price_units?: {
       unit: 'day' | 'month'
       amount: number
-    }
+    } | null
   },
 }
 
