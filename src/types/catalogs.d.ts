@@ -29,6 +29,14 @@ export interface CatalogBase {
 
 export interface Catalog extends Identifiable, CatalogBase {
   relationships?: {
+    releases?: {
+      links: {
+        related: string
+      }
+      meta: {
+        count?: number
+      }
+    }
     children?: {
       data: {
         type: 'node'
