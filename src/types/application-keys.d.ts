@@ -3,13 +3,13 @@ import { Identifiable, Resource, ResourcePage, CrudQueryableResource } from './c
 export interface ApplicationKeyBase {
   name: string
   type: 'application_key'
+  reserved_rate_limit?: number
 }
 
 export interface ApplicationKey extends ApplicationKeyBase, Identifiable {
     id: string
     client_id: string
     client_secret?: string
-    reserved_rate_limit: number | null
     meta: {
       timestamps: {
         created_at: string
