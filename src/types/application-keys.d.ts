@@ -3,6 +3,7 @@ import { Identifiable, Resource, ResourcePage, CrudQueryableResource } from './c
 export interface ApplicationKeyBase {
   name: string
   type: 'application_key'
+  reserved_rate_limit?: number
 }
 
 export interface ApplicationKey extends ApplicationKeyBase, Identifiable {
@@ -15,6 +16,12 @@ export interface ApplicationKey extends ApplicationKeyBase, Identifiable {
         updated_at: string
       }
     }
+}
+
+interface MetaReservedRps {
+  meta: {
+    total_reserved_rate_limit: number
+  }
 }
 
 export interface ApplicationKeyResponse extends Resource<ApplicationKey> {
@@ -31,7 +38,7 @@ export interface ApplicationKeysEndpoint extends CrudQueryableResource<
   never,
   never
 > {
-  All(): Promise<ResourcePage<ApplicationKey>>
+  All(): Promise<ResourcePage<ApplicationKey> & MetaReservedRps>
   Create(body: ApplicationKeyBase): Promise<ApplicationKeyResponse>
   Delete(id: string): Promise<{}>
 }
