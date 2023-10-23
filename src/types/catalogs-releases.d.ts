@@ -19,7 +19,7 @@ export interface ReleaseResponse extends Identifiable {
 }
 
 export interface ReleaseBodyBase {
-  include_organization_resources: boolean
+  export_full_delta?: boolean
 }
 
 export interface CatalogsReleasesEndpoint {
