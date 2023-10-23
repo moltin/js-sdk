@@ -1,18 +1,12 @@
 import RequestFactory from '../factories/request'
+import CRUDExtend from "../extends/crud";
 
-class PCMJobs {
+class PCMJobs extends CRUDExtend {
   constructor(endpoint) {
+    super(endpoint)
     const config = { ...endpoint, version: 'pcm' }
     this.request = new RequestFactory(config)
     this.endpoint = 'jobs'
-  }
-
-  All() {
-    return this.request.send(`${this.endpoint}`, 'GET')
-  }
-
-  Get(jobId) {
-    return this.request.send(`${this.endpoint}/${jobId}`, 'GET')
   }
 
   GetJobErrors(jobId) {

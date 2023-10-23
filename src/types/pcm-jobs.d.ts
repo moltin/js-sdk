@@ -1,13 +1,14 @@
 /**
  * PCM Jobs
  */
-import { Identifiable, Resource, ResourceList } from './core'
+import { Identifiable, ResourceList, CrudQueryableResource } from './core'
 import { PcmJob } from './pcm';
 
 /**
  * PCM Job Base Interface
  */
 export interface PcmJobBase {
+  type: 'pim-job',
   attributes: {
     created_at: string
     status: string
@@ -23,22 +24,19 @@ export interface PcmJobError extends Identifiable {
   }
 }
 
-export interface PcmJobsEndpoint {
+export interface PcmJobsEndpoint
+  extends CrudQueryableResource<
+      PcmJob,
+      PcmJobBase,
+      Partial<PcmJobBase>,
+      undefined,
+      undefined,
+      undefined
+      > {
   endpoint: 'jobs'
 
   /**
-   * Get all PCM Jobs
-   */
-  All(): Promise<ResourceList<PcmJob>>
-
-  /**
-   * Get a PCM job by ID
-   * @param jobId
-   */
-  Get(jobId: string): Promise<Resource<PcmJob>>
-
-  /**
-   * Gets all job errors for a PCM Job
-   */
-  GetJobErrors(jobId: string): Promise<ResourceList<PcmJobError>>
+     * Gets all job errors for a PCM Job
+     */
+    GetJobErrors(jobId: string): Promise<ResourceList<PcmJobError>>
 }
