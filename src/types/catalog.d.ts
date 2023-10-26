@@ -54,7 +54,12 @@ export interface ShopperCatalogReleaseBase extends Identifiable {
   }
   meta: {
     created_at: string
+    is_full_delta: boolean
     is_full_publish: boolean
+    owner: "store" | "organization"
+    percent_completed: number
+    total_nodes: number
+    total_products: number
     release_status: 'PENDING' | 'IN_PROGRESS' | 'FAILED' | 'PUBLISHED'
     started_at: string
   }
