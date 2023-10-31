@@ -1,5 +1,6 @@
 import RequestFactory from '../factories/request'
 import CRUDExtend from "../extends/crud";
+import { buildURL } from "../utils/helpers";
 
 class PCMJobs extends CRUDExtend {
   constructor(endpoint) {
@@ -10,7 +11,13 @@ class PCMJobs extends CRUDExtend {
   }
 
   GetJobErrors(jobId) {
-    return this.request.send(`${this.endpoint}/${jobId}/errors`, 'GET')
+    const { limit, offset } = this
+    return this.request.send(
+        buildURL(`${this.endpoint}/${jobId}/errors`, {
+      limit,
+      offset
+    }),'GET'
+    )
   }
 }
 
