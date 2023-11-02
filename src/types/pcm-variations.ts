@@ -23,7 +23,7 @@ import {
 
   export interface PCMVariation extends Identifiable, PCMVariationBase {
     type: 'product-variation'
-    meta: {
+    meta?: {
       options?: PCMVariationMetaOption[]
       owner: 'organization' | 'store'
     }
