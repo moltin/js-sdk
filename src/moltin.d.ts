@@ -60,6 +60,7 @@ import { SubscriptionPlansEndpoint } from './types/subscription-plans'
 import { SubscriptionOfferingsEndpoint } from './types/subscription-offerings'
 import { OneTimePasswordTokenRequestEndpoint } from "./types/one-time-password-token-request";
 import { SubscriptionsEndpoint } from './types/subscriptions'
+import { RulePromotionsEndpoint } from './types/rule-promotions'
 
 export * from './types/config'
 export * from './types/storage'
@@ -130,6 +131,7 @@ export * from './types/subscription-plans'
 export * from './types/subscription-offerings'
 export * from './types/one-time-password-token-request'
 export * from './types/subscriptions'
+export * from './types/rule-promotions'
 
 // UMD
 export as namespace moltin
@@ -191,6 +193,7 @@ export class Moltin {
   SubscriptionOfferings: SubscriptionOfferingsEndpoint
   OneTimePasswordTokenRequest: OneTimePasswordTokenRequestEndpoint
   Subscriptions: SubscriptionsEndpoint
+  RulePromotions : RulePromotionsEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

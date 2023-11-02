@@ -43,7 +43,7 @@ import {
   }
   
  
-  export interface PromotionsEndpoint
+  export interface RulePromotionsEndpoint
     extends CrudQueryableResource<
     RulePromotion,
       RulePromotionBase,
