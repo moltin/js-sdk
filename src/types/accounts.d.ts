@@ -43,6 +43,7 @@ export interface AccountBase {
   legal_name: string
   registration_id?: string
   parent_id?: string
+  external_ref?: string
 }
 
 
@@ -54,11 +55,13 @@ export interface AccountFilter {
     name?: string
     legal_name?: string
     registration_id?: string
+    external_ref?: string
   }
   like?: {
     name?: string
     legal_name?: string
     registration_id?: string
+    external_ref?: string
   }
 }
 export interface AccountUpdateBody extends Partial<AccountBase> {}
