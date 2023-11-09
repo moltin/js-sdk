@@ -31,7 +31,7 @@ import {
     }
   }
   
-  export interface PromotionMeta {
+  export interface RulePromotionMeta {
     timestamps: {
       created_at: string
       updated_at: string
@@ -39,15 +39,15 @@ import {
   }
   
   export interface RulePromotion extends Identifiable, RulePromotionBase {
-    meta: PromotionMeta
+    meta: RulePromotionMeta
   }
   
  
   export interface RulePromotionsEndpoint
     extends CrudQueryableResource<
-    RulePromotion,
+      RulePromotion,
       RulePromotionBase,
-      Identifiable & Partial<RulePromotionBase>,
+      Partial<RulePromotionBase>,
       never,
       never,
       never

@@ -123,7 +123,7 @@ export default class Moltin {
     this.SubscriptionOfferings = new SubscriptionOfferingsEndpoint(config)
     this.OneTimePasswordTokenRequest = new OneTimePasswordTokenRequestEndpoint(config)
     this.Subscriptions = new SubscriptionsEndpoint(config)
-    this.RulePromotion = new RulePromotionsEndpoint(config)
+    this.RulePromotions = new RulePromotionsEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
