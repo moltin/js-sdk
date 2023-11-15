@@ -132,6 +132,7 @@ export interface CatalogReleaseProductFilterAttributes {
   manufacturer_part_num?: string
   upc_ean?: string
 }
+
 export interface CatalogReleaseProductFilter {
   eq?: CatalogReleaseProductFilterAttributes
   in?: CatalogReleaseProductFilterAttributes
@@ -146,51 +147,40 @@ export interface CatalogsProductsEndpoint {
 
   Filter(filter: CatalogReleaseProductFilter): CatalogsProductsEndpoint
 
-  All(options: {
-    token?: string
-    additionalHeaders?: any
-  }): Promise<ResourceList<ProductResponse>>
-
-  Get(options: {
-    productId: string
-    token?: string
-    additionalHeaders?: any
-  }): Promise<Resource<ProductResponse>>
-
-  GetProduct(options: {
+  GetCatalogReleaseProduct(options: {
     catalogId: string
     releaseId: string
     productId: string
     token?: string
-    additionalHeaders?: any
-  }): Promise<Resource<ProductResponse>>
+  }): Promise<Resource<PcmProduct>>
 
-  GetCatalogNodeProducts(options: {
+  GetAllCatalogReleaseProducts(options: {
+    catalogId: string
+    releaseId: string
+    token?: string
+  }): Promise<ResourcePage<PcmProduct>>
+
+  GetCatalogReleaseProductChildren(options: {
+    catalogId: string
+    releaseId: string
+    productId: string
+    token?: string
+  }): Promise<ResourcePage<PcmProduct>>
+
+  GetCatalogReleaseNodeProducts(options: {
     catalogId: string
     releaseId: string
     nodeId: string
     token?: string
   }): Promise<ResourceList<NodeProductResponse>>
 
-  // TODO: Endpoint doesn't exist - replace / remove
-  GetProductsByNode(options: {
-    nodeId: string
-    token?: string
-    additionalHeaders?: any
-  }): Promise<ResourceList<ProductResponse>>
-
-  GetCatalogProducts(options: {
+  GetCatalogReleaseHierarchyProducts(options: {
     catalogId: string
     releaseId: string
+    hierarchyId: string
     token?: string
-  }): Promise<ResourcePage<PcmProduct>>
+  }): Promise<ResourceList<PcmProduct>>
 
-  GetCatalogProductChildren(options: {
-    catalogId: string
-    releaseId: string
-    productId: string
-    token?: string
-  }): Promise<ResourcePage<PcmProduct>>
   /**
    * @deprecated The method should not be used. Instead, use
    * @function GetCatalogProducts

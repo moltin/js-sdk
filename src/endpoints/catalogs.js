@@ -99,33 +99,8 @@ class Products extends CRUDExtend {
     this.endpoint = 'products'
   }
 
-  All({ token = null }) {
-    return this.request.send(
-      `catalogs/${this.endpoint}`,
-      'GET',
-      undefined,
-      token,
-      undefined,
-      true,
-      null,
-      additionalHeaders
-    )
-  }
 
-  Get({ productId, token = null, additionalHeaders = {} }) {
-    return this.request.send(
-      `catalogs/${this.endpoint}/${productId}`,
-      'GET',
-      undefined,
-      token,
-      undefined,
-      true,
-      null,
-      additionalHeaders
-    )
-  }
-
-  GetProduct({ catalogId, releaseId, productId, token = null }) {
+  GetCatalogReleaseProduct({ catalogId, releaseId, productId, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}`,
       'GET',
@@ -133,48 +108,12 @@ class Products extends CRUDExtend {
       token,
       undefined,
       true,
-      null,
-      additionalHeaders
+      null
     )
   }
 
-  GetCatalogNodeProducts({ catalogId, releaseId, nodeId, token = null }) {
+  GetAllCatalogReleaseProducts({ catalogId, releaseId, token = null }) {
     const { limit, offset, includes, sort, filter } = this
-    return this.request.send(
-      buildURL(
-        `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${this.endpoint}`,
-        {
-          includes,
-          sort,
-          limit,
-          offset,
-          filter
-        }
-      ),
-      'GET',
-      undefined,
-      token
-    )
-  }
-
-  // TODO: Endpoint doesn't exist - replace / remove
-
-  GetProductsByNode({ nodeId, token = null }) {
-    return this.request.send(
-      `catalogs/nodes/${nodeId}/relationships/${this.endpoint}`,
-      'GET',
-      undefined,
-      token,
-      undefined,
-      true,
-      null,
-      additionalHeaders
-    )
-  }
-
-  GetCatalogProducts({ catalogId, releaseId, token = null }) {
-    const { limit, offset, includes, sort, filter } = this
-
     return this.request.send(
       buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}`, {
         includes,
@@ -190,12 +129,70 @@ class Products extends CRUDExtend {
     )
   }
 
-  GetCatalogProductChildren({ catalogId, releaseId, productId, token = null }) {
+  GetCatalogReleaseProductChildren({ catalogId, releaseId, productId, token = null }) {
+    const { limit, offset, includes, sort, filter } = this
     return this.request.send(
-      `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}/relationships/children`,
+      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}/relationships/children`, {
+        includes,
+        sort,
+        limit,
+        offset,
+        filter
+      }),
       'GET',
       undefined,
-      token
+      token,
+      this
+    )
+  }
+
+  GetCatalogReleaseNodeProducts({
+    catalogId,
+    releaseId,
+    nodeId,
+    token = null
+  }) {
+    const { limit, offset, includes, sort, filter } = this
+    return this.request.send(
+      buildURL(
+        `catalogs/${catalogId}/releases/${releaseId}/nodes/${nodeId}/relationships/${this.endpoint}`,
+        {
+          includes,
+          sort,
+          limit,
+          offset,
+          filter
+        }
+      ),
+      'GET',
+      undefined,
+      token,
+      this
+    )
+  }
+
+  GetCatalogReleaseHierarchyProducts({
+    catalogId,
+    releaseId,
+    hierarchyId,
+    token = null
+  }) {
+    const { limit, offset, includes, sort, filter } = this
+    return this.request.send(
+      buildURL(
+        `catalogs/${catalogId}/releases/${releaseId}/hierarchies/${hierarchyId}/relationships/${this.endpoint}`,
+        {
+          includes,
+          sort,
+          limit,
+          offset,
+          filter
+        }
+      ),
+      'GET',
+      undefined,
+      token,
+      this
     )
   }
 
