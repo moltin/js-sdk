@@ -185,7 +185,8 @@ class Products extends CRUDExtend {
       }),
       'GET',
       undefined,
-      token
+      token,
+      this
     )
   }
 
@@ -198,6 +199,10 @@ class Products extends CRUDExtend {
     )
   }
 
+  /**
+   * @deprecated The method should not be used. Instead, use
+   * @function GetCatalogProducts
+   */
   GetProductsInCatalogRelease({ catalogId, releaseId, token = null }) {
     const { limit, offset, includes, sort, filter } = this
 

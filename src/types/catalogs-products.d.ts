@@ -1,5 +1,4 @@
 import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
-import type { ProductFilter } from './product'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
 import type { Extensions } from './extensions'
@@ -37,6 +36,7 @@ export interface ProductResponse extends Identifiable {
     translations: string[]
     updated_at: string
     weight: string
+    manufacturer_part_num?: string
     extensions?: Extensions
   }
   meta: {
@@ -125,6 +125,18 @@ export interface NodeProductResponse extends ProductResponse {
   }
 }
 
+export interface CatalogReleaseProductFilterAttributes {
+  name?: string
+  slug?: string
+  sku?: string
+  manufacturer_part_num?: string
+  upc_ean?: string
+}
+export interface CatalogReleaseProductFilter {
+  eq?: CatalogReleaseProductFilterAttributes
+  in?: CatalogReleaseProductFilterAttributes
+}
+
 export interface CatalogsProductsEndpoint {
   endpoint: 'products'
 
@@ -132,7 +144,7 @@ export interface CatalogsProductsEndpoint {
 
   Offset(value: number): CatalogsProductsEndpoint
 
-  Filter(filter: ProductFilter): CatalogsProductsEndpoint
+  Filter(filter: CatalogReleaseProductFilter): CatalogsProductsEndpoint
 
   All(options: {
     token?: string
@@ -179,7 +191,10 @@ export interface CatalogsProductsEndpoint {
     productId: string
     token?: string
   }): Promise<ResourcePage<PcmProduct>>
-
+  /**
+   * @deprecated The method should not be used. Instead, use
+   * @function GetCatalogProducts
+   */
   GetProductsInCatalogRelease(options: {
     catalogId: string
     releaseId: string
