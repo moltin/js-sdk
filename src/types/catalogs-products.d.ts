@@ -1,4 +1,4 @@
-import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
+import type { Identifiable, Resource, ResourcePage } from './core'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
 import type { Extensions } from './extensions'
@@ -172,14 +172,14 @@ export interface CatalogsProductsEndpoint {
     releaseId: string
     nodeId: string
     token?: string
-  }): Promise<ResourceList<NodeProductResponse>>
+  }): Promise<ResourcePage<NodeProductResponse>>
 
   GetCatalogReleaseHierarchyProducts(options: {
     catalogId: string
     releaseId: string
     hierarchyId: string
     token?: string
-  }): Promise<ResourceList<PcmProduct>>
+  }): Promise<ResourcePage<PcmProduct>>
 
   /**
    * @deprecated The method should not be used. Instead, use
