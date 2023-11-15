@@ -56,7 +56,7 @@ export interface ShopperCatalogReleaseBase extends Identifiable {
     created_at: string
     is_full_delta: boolean
     is_full_publish: boolean
-    owner: "store" | "organization"
+    owner: 'store' | 'organization'
     percent_completed: number
     total_nodes: number
     total_products: number
@@ -81,6 +81,8 @@ type ShopperCatalogProductsInclude =
   | 'files'
   | 'component_products'
 
+type ShopperCatalogNodesInclude = 'main_image' | 'files' | 'component_products'
+
 interface ShopperCatalogAdditionalHeaders {
   'EP-Context-Tag'?: string
   'EP-Channel'?: string
@@ -89,6 +91,15 @@ interface ShopperCatalogAdditionalHeaders {
 }
 
 interface ShopperCatalogProductsQueryableResource<
+  Endpoints,
+  DataType,
+  Filter,
+  Include
+> extends ShopperCatalogQueryableResource<Endpoints, DataType, Filter> {
+  With(includes: Include | Include[]): Endpoints
+}
+
+interface ShopperCatalogNodesQueryableResource<
   Endpoints,
   DataType,
   Filter,
@@ -159,10 +170,11 @@ export interface ShopperCatalogProductsEndpoint
 }
 
 export interface NodesShopperCatalogEndpoint
-  extends ShopperCatalogQueryableResource<
+  extends ShopperCatalogNodesQueryableResource<
     NodesShopperCatalogEndpoint,
     Catalog,
-    CatalogFilter
+    CatalogFilter,
+    ShopperCatalogNodesInclude
   > {
   endpoint: 'nodes'
 
