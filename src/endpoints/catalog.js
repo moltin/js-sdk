@@ -29,7 +29,15 @@ class ShopperCatalogProductsQuery extends ShopperCatalogQuery {
   }
 }
 
-class Nodes extends ShopperCatalogQuery {
+class ShopperCatalogNodesQuery extends ShopperCatalogQuery {
+  With(includes) {
+    if (includes) this.includes = includes.toString().toLowerCase()
+
+    return this
+  }
+}
+
+class Nodes extends ShopperCatalogNodesQuery {
   constructor(endpoint) {
     super()
     this.config = { ...endpoint } // Need to clone config so it is only updated in PCM
@@ -90,13 +98,14 @@ class Nodes extends ShopperCatalogQuery {
   }
 
   GetNodeProducts({ nodeId, token = null, additionalHeaders = null }) {
-    const { limit, offset, filter } = this
+    const { limit, offset, filter, includes } = this
 
     return this.request.send(
       buildURL(`catalog/${this.endpoint}/${nodeId}/relationships/products`, {
         limit,
         offset,
-        filter
+        filter,
+        includes
       }),
       'GET',
       undefined,
