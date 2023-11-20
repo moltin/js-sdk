@@ -73,6 +73,7 @@ export interface OrderBase {
   }
   shipping_address: OrderShippingAddress
   billing_address: OrderBillingAddress
+  external_ref?: string
 }
 
 export interface Order extends Identifiable, OrderBase {
@@ -169,6 +170,7 @@ export interface OrderFilter {
     product_sku?: string
     created_at?: number | string
     updated_at?: number | string
+    external_ref?: string
   }
   like?: {
     name?: string
@@ -180,6 +182,7 @@ export interface OrderFilter {
     billing_postcode?: string
     account_id?: string
     account_member_id?: string
+    external_ref?: string
   }
   ge?: {
     with_tax?: number
