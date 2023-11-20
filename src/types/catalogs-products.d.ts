@@ -1,5 +1,4 @@
-import type { Identifiable, Resource, ResourceList, ResourcePage } from './core'
-import type { ProductFilter } from './product'
+import type { Identifiable, Resource, ResourcePage } from './core'
 import type { PcmProduct, ProductComponents } from './pcm'
 import type { MatrixObject, Option, Variation } from './variations'
 import type { Extensions } from './extensions'
@@ -37,6 +36,7 @@ export interface ProductResponse extends Identifiable {
     translations: string[]
     updated_at: string
     weight: string
+    manufacturer_part_num?: string
     extensions?: Extensions
   }
   meta: {
@@ -125,6 +125,19 @@ export interface NodeProductResponse extends ProductResponse {
   }
 }
 
+export interface CatalogReleaseProductFilterAttributes {
+  name?: string
+  slug?: string
+  sku?: string
+  manufacturer_part_num?: string
+  upc_ean?: string
+}
+
+export interface CatalogReleaseProductFilter {
+  eq?: CatalogReleaseProductFilterAttributes
+  in?: CatalogReleaseProductFilterAttributes
+}
+
 export interface CatalogsProductsEndpoint {
   endpoint: 'products'
 
@@ -132,54 +145,46 @@ export interface CatalogsProductsEndpoint {
 
   Offset(value: number): CatalogsProductsEndpoint
 
-  Filter(filter: ProductFilter): CatalogsProductsEndpoint
+  Filter(filter: CatalogReleaseProductFilter): CatalogsProductsEndpoint
 
-  All(options: {
-    token?: string
-    additionalHeaders?: any
-  }): Promise<ResourceList<ProductResponse>>
-
-  Get(options: {
-    productId: string
-    token?: string
-    additionalHeaders?: any
-  }): Promise<Resource<ProductResponse>>
-
-  GetProduct(options: {
+  GetCatalogReleaseProduct(options: {
     catalogId: string
     releaseId: string
     productId: string
     token?: string
-    additionalHeaders?: any
-  }): Promise<Resource<ProductResponse>>
+  }): Promise<Resource<PcmProduct>>
 
-  GetCatalogNodeProducts(options: {
-    catalogId: string
-    releaseId: string
-    nodeId: string
-    token?: string
-  }): Promise<ResourceList<NodeProductResponse>>
-
-  // TODO: Endpoint doesn't exist - replace / remove
-  GetProductsByNode(options: {
-    nodeId: string
-    token?: string
-    additionalHeaders?: any
-  }): Promise<ResourceList<ProductResponse>>
-
-  GetCatalogProducts(options: {
+  GetAllCatalogReleaseProducts(options: {
     catalogId: string
     releaseId: string
     token?: string
   }): Promise<ResourcePage<PcmProduct>>
 
-  GetCatalogProductChildren(options: {
+  GetCatalogReleaseProductChildren(options: {
     catalogId: string
     releaseId: string
     productId: string
     token?: string
   }): Promise<ResourcePage<PcmProduct>>
 
+  GetCatalogReleaseNodeProducts(options: {
+    catalogId: string
+    releaseId: string
+    nodeId: string
+    token?: string
+  }): Promise<ResourcePage<NodeProductResponse>>
+
+  GetCatalogReleaseHierarchyProducts(options: {
+    catalogId: string
+    releaseId: string
+    hierarchyId: string
+    token?: string
+  }): Promise<ResourcePage<PcmProduct>>
+
+  /**
+   * @deprecated The method should not be used. Instead, use
+   * @function GetCatalogProducts
+   */
   GetProductsInCatalogRelease(options: {
     catalogId: string
     releaseId: string
