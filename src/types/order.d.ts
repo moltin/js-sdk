@@ -404,8 +404,8 @@ export interface ElasticPathStripePayment extends StripePaymentBase {
   gateway: 'elastic_path_payments_stripe'
   payment_method_types?: string[]
   payment?: string
-  automatic_payment_methods: {
-    enabled: boolean
+  automatic_payment_methods?: {
+    enabled?: boolean
   }
 }
 
