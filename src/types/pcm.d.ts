@@ -38,6 +38,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     extensions?: Object
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
+    custom_inputs?: CustomInputs
   }
 }
 
@@ -55,6 +56,21 @@ export interface ProductComponents {
     max?: number
     sort_order?: number | null
     options: ProductComponentOption[]
+  }
+}
+
+export interface CustomInputsValidationRules {
+  type: string,
+  options: {
+    max_length?: number
+  }
+}
+
+export interface CustomInputs {
+  [key: string]: {
+    name?: string
+    required?: boolean
+    validation_rules?: CustomInputsValidationRules[]
   }
 }
 
