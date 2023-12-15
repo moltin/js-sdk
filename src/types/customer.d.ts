@@ -20,6 +20,7 @@ export interface CustomerBase {
   name: string
   email: string
   password: string
+  external_ref?: string
 }
 
 export interface Customer extends Identifiable, CustomerBase {}
