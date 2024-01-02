@@ -8,7 +8,8 @@ import {
   Resource,
   QueryableResource,
   ResourceIncluded,
-  Identifiable
+  Identifiable,
+  ResourceList
 } from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
@@ -150,6 +151,14 @@ export interface CartItemsResponse {
   }
   snapshot_date?: string
 }
+
+export interface AccountAssociationData{
+  type: string
+  id: string
+}
+
+export interface AccountAssociationResponse extends ResourceList<AccountAssociationData> {}
+
 
 export interface BulkAddOptions {
   add_all_or_nothing: boolean
@@ -522,7 +531,7 @@ export interface CartEndpoint
   AddAccountAssociation(
     accountId: string,
     token: string
-  ): Promise<CartItemsResponse>
+  ): Promise<AccountAssociationResponse>
 
   /**
    * Remove an Account Cart Associations
@@ -534,7 +543,7 @@ export interface CartEndpoint
   RemoveAccountAssociation(
     accountId: string,
     token: string
-  ): Promise<CartItemsResponse>
+  ): Promise<{}>
 
 
   /**
