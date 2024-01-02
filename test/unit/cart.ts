@@ -1291,4 +1291,55 @@ describe('Moltin cart', () => {
         assert.isObject(response)
       })
   })
+
+  it('should add an account id association to the cart using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
+      }
+    })
+      .post('/carts/5/relationships/accounts', {
+        data: [
+          {
+            type: 'account',
+            id: 'account-1'
+          }
+        ]
+      })
+      .reply(200, {})
+
+    return Moltin.Cart('5')
+      .AddAccountAssociation('account-1', 'testtoken')
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
+
+
+  it('should remove an account id association from the cart using a JWT', () => {
+    // Intercept the API request
+    nock(apiUrl, {
+      reqheaders: {
+        Authorization: 'Bearer a550d8cbd4a4627013452359ab69694cd446615a',
+        'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': 'testtoken'
+      }
+    })
+      .delete('/carts/5/relationships/accounts', {
+        data: [
+          {
+            type: 'account',
+            id: 'account-1'
+          }
+        ]
+      })
+      .reply(204, {})
+
+    return Moltin.Cart('5')
+      .RemoveAccountAssociation('account-1', 'testtoken')
+      .then(response => {
+        assert.isObject(response)
+      })
+  })
 })
