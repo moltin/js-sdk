@@ -282,6 +282,7 @@ export interface PromotionsEndpoint
     never,
     never
   > {
+    
   endpoint: 'promotions'
 
   Filter(filter: PromotionFilter): PromotionsEndpoint
@@ -298,6 +299,7 @@ export interface PromotionsEndpoint
   /**
    * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/create-promotion-codes.html
    */
+
   AddCodes(
     promotionId: string,
     codes: PromotionCode[]
