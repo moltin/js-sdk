@@ -16,7 +16,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   Get() {
-    const { includes } = this
+    const {includes} = this
 
     return this.request.send(
       buildURL(`${this.endpoint}/${this.cartId}`, {
@@ -27,7 +27,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   Items() {
-    const { includes, sort, limit, offset, filter } = this
+    const {includes, sort, limit, offset, filter} = this
 
     this.call = this.request.send(
       buildURL(`${this.endpoint}/${this.cartId}/items`, {
@@ -51,7 +51,7 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(`${this.endpoint}/${this.cartId}/shipping-groups/${shippingGroupId}`, 'GET')
   }
 
-  CreateShippingGroup(body){
+  CreateShippingGroup(body) {
     const shippingObject = Object.assign(body, {
       type: 'shipping-type'
     })
@@ -161,7 +161,7 @@ class CartEndpoint extends BaseExtend {
   BulkAddCartCustomDiscount(body, options) {
     return this.request.send(`${this.endpoint}/${this.cartId}/custom-discounts`, 'POST', {
       data: body,
-      ...(options && { options })
+      ...(options && {options})
     })
   }
 
@@ -179,7 +179,7 @@ class CartEndpoint extends BaseExtend {
   BulkAdd(body, options) {
     return this.request.send(`${this.endpoint}/${this.cartId}/items`, 'POST', {
       data: body,
-      ...(options && { options })
+      ...(options && {options})
     })
   }
 
@@ -215,6 +215,48 @@ class CartEndpoint extends BaseExtend {
     )
   }
 
+  AddAccountAssociation(accountId, token) {
+    const body = [
+      {
+        type: 'account',
+        id: accountId
+      }
+    ]
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/relationships/accounts`,
+      'POST',
+      body,
+      undefined,
+      this,
+      true,
+      null,
+      token
+        ? { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
+        : undefined
+    )
+  }
+
+  RemoveAccountAssociation(accountId, token) {
+    const body = [
+      {
+        type: 'account',
+        id: accountId
+      }
+    ]
+    return this.request.send(
+      `${this.endpoint}/${this.cartId}/relationships/accounts`,
+      'DELETE',
+      body,
+      undefined,
+      this,
+      true,
+      null,
+      token
+        ? { 'EP-ACCOUNT-MANAGEMENT-AUTHENTICATION-TOKEN': token }
+        : undefined
+    )
+  }
+
   RemoveItem(itemId) {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
@@ -232,7 +274,7 @@ class CartEndpoint extends BaseExtend {
     return this.request.send(
       `${this.endpoint}/${this.cartId}/items/${itemId}`,
       'PUT',
-      { ...body, ...data },
+      {...body, ...data},
       null,
       null,
       true,
@@ -242,7 +284,7 @@ class CartEndpoint extends BaseExtend {
   }
 
   UpdateItems(items) {
-    const body = items.map(({ id, quantity, type, ...rest }) =>
+    const body = items.map(({id, quantity, type, ...rest}) =>
       buildCartItemData(id, quantity, type, rest)
     )
 
@@ -278,7 +320,7 @@ class CartEndpoint extends BaseExtend {
   BulkAddItemTax(body, options) {
     return this.request.send(`${this.endpoint}/${this.cartId}/taxes`, 'POST', {
       data: body,
-      ...(options && { options })
+      ...(options && {options})
     })
   }
 
@@ -362,7 +404,7 @@ class CartEndpoint extends BaseExtend {
       'POST',
       {
         data: body,
-        ...(options && { options })
+        ...(options && {options})
       },
       token
     )
