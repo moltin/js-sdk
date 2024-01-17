@@ -16,22 +16,28 @@ import {
 export interface SubscriptionPlanBase {
   type: string
   attributes: {
-    name: string,
-    description?: string,
-    status: string,
-    billing_interval_type: string,
-    billing_frequency: number,
-    billing_day?: number,
-    billing_month_day?: number,
-    trial_period?: number,
-    plan_length: number,
-    end_behavior: string,
-    can_pause: boolean,
-    can_resume: boolean,
-    can_cancel: boolean,
-    base_price_percentage: number,
-    updated_at: string,
+    name: string
+    description?: string
+    status: string
+    billing_interval_type: string
+    billing_frequency: number
+    billing_day?: number
+    billing_month_day?: number
+    trial_period?: number
+    plan_length: number
+    end_behavior: string
+    can_pause: boolean
+    can_resume: boolean
+    can_cancel: boolean
+    base_price_percentage: number | null | undefined
+    updated_at: string
     created_at: string
+    fixed_price: {
+      [key: string]: {
+        amount: number
+        includes_tax?: boolean
+      }
+    } | null | undefined
   },
 }
 

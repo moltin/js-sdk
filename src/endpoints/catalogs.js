@@ -99,7 +99,6 @@ class Products extends CRUDExtend {
     this.endpoint = 'products'
   }
 
-
   GetCatalogReleaseProduct({ catalogId, releaseId, productId, token = null }) {
     return this.request.send(
       `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}`,
@@ -129,16 +128,24 @@ class Products extends CRUDExtend {
     )
   }
 
-  GetCatalogReleaseProductChildren({ catalogId, releaseId, productId, token = null }) {
+  GetCatalogReleaseProductChildren({
+    catalogId,
+    releaseId,
+    productId,
+    token = null
+  }) {
     const { limit, offset, includes, sort, filter } = this
     return this.request.send(
-      buildURL(`catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}/relationships/children`, {
-        includes,
-        sort,
-        limit,
-        offset,
-        filter
-      }),
+      buildURL(
+        `catalogs/${catalogId}/releases/${releaseId}/${this.endpoint}/${productId}/relationships/children`,
+        {
+          includes,
+          sort,
+          limit,
+          offset,
+          filter
+        }
+      ),
       'GET',
       undefined,
       token,
@@ -196,10 +203,6 @@ class Products extends CRUDExtend {
     )
   }
 
-  /**
-   * @deprecated The method should not be used. Instead, use
-   * @function GetCatalogProducts
-   */
   GetProductsInCatalogRelease({ catalogId, releaseId, token = null }) {
     const { limit, offset, includes, sort, filter } = this
 

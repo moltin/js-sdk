@@ -8,7 +8,8 @@ import {
   Resource,
   QueryableResource,
   ResourceIncluded,
-  Identifiable
+  Identifiable,
+  ResourceList
 } from './core'
 import { Address } from './address'
 import { Price, FormattedPrice } from './price'
@@ -150,6 +151,14 @@ export interface CartItemsResponse {
   }
   snapshot_date?: string
 }
+
+export interface AccountAssociationData{
+  type: string
+  id: string
+}
+
+export interface AccountAssociationResponse extends ResourceList<AccountAssociationData> {}
+
 
 export interface BulkAddOptions {
   add_all_or_nothing: boolean
@@ -504,7 +513,6 @@ export interface CartEndpoint
   /**
    * Customer Cart Associations
    * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/customer-cart-associations.html
    * @param customerId the id of the customer.
    * @param token a customer token to access specific customer orders.
    */
@@ -514,16 +522,29 @@ export interface CartEndpoint
   ): Promise<CartItemsResponse>
 
   /**
-   * Customer Cart Associations
+   * Add an Account Cart Associations
    * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
-   * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-orders/carts/customer-cart-associations.html
-   * @param customerId the id of the customer.
+   *
+   * @param accountId the id of the account.
    * @param token a customer token to access specific customer orders.
    */
-  AddCustomerAssociation(
-    customerId: string,
+  AddAccountAssociation(
+    accountId: string,
     token: string
-  ): Promise<CartItemsResponse>
+  ): Promise<AccountAssociationResponse>
+
+  /**
+   * Remove an Account Cart Associations
+   * Description: You can create an association between a customer and a cart with the capability to delete any associations as required.
+   *
+   * @param accountId the id of the account.
+   * @param token a customer token to access specific customer orders.
+   */
+  RemoveAccountAssociation(
+    accountId: string,
+    token: string
+  ): Promise<{}>
+
 
   /**
    * @deprecated Use UpdateItem method

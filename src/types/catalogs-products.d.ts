@@ -60,6 +60,10 @@ export interface ProductResponse extends Identifiable {
         }
       }
     }
+    bread_crumbs?: {
+      [key: string]: string[]
+    }
+    bread_crumb_nodes?: string[]
     component_products?: {
       [key: string]: {
         display_price: {
