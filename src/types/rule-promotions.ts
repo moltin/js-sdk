@@ -14,8 +14,8 @@ import {
     max_discount?: number
     max_quantity?: number
     items?: {
-        max_items: number
-        price_strategy: string
+        max_items?: number
+        price_strategy?: string
     }
   }
 
@@ -37,16 +37,11 @@ import {
     conditions?: actionCondition
   }
 
-  export interface conditionChildren {
-    strategy: string
-    operator: string
-    args: any[]
-    children: condition[]
-  }
-
   export interface condition {
     strategy: string
-    children: conditionChildren
+    operator?: string
+    args?: any[]
+    children?: condition[]
   }
 
   export interface RulePromotionBase {
