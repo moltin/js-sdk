@@ -6,12 +6,8 @@
  * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html
  */
 import {
-    Attributes,
     CrudQueryableResource,
     Identifiable,
-    Resource,
-    ResourceList,
-    ResourcePage
   } from './core'
 
   export interface actionLimitation {
@@ -42,10 +38,10 @@ import {
   }
 
   export interface conditionChildren {
-      strategy: string
-      operator: string
-      args: any[]
-      children: condition[]
+    strategy: string
+    operator: string
+    args: any[]
+    children: condition[]
   }
 
   export interface condition {
@@ -62,10 +58,10 @@ import {
     start: string
     end: string
     rule_set: {
-        currencies: string[]
-        catalog_ids: string[]
-        rules: condition
-        actions: action[]
+      currencies: string[]
+      catalog_ids: string[]
+      rules: condition
+      actions: action[]
     }
   }
   
