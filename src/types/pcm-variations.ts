@@ -18,7 +18,7 @@ import {
   export interface PCMVariationBase {
       attributes: {
         name: string
-        sort_order?: number
+        sort_order?: number | null
       }
   }
 
@@ -38,7 +38,7 @@ import {
     attributes: {
         name: string
         description: string
-        sort_order?: number
+        sort_order?: number | null
     }
   }
 
