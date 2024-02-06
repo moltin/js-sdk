@@ -44,6 +44,10 @@ class Settings {
   Subscriptions() {
     return this.request.send(`${this.endpoint}/subscriptions`, 'GET')
   }
+
+  Promotions() {
+    return this.request.send(`${this.endpoint}/promotions`, 'GET')
+  }
 }
 
 export default Settings

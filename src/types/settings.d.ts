@@ -59,6 +59,11 @@ export interface SubscriptionSettings {
   subscription_preview_enabled: boolean
 }
 
+export interface PromotionSettings {
+  type: 'promotion_settings'
+  rule_promotions_preview_enabled: boolean
+}
+
 /**
  * Settings Endpoints
  */
@@ -109,4 +114,11 @@ export interface SettingsEndpoint {
    * Description: You can get the Subscriptions Settings using this endpoint
    */
   Subscriptions(): Promise<Resource<SubscriptionSettings>>
+
+    /**
+   * Get Promotions Settings
+   * Description: You can get the Promotions Settings using this endpoint
+   */
+  Promotions(): Promise<Resource<PromotionSettings>>
+
 }

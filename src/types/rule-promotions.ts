@@ -14,6 +14,31 @@ import {
     ResourcePage
   } from './core'
 
+  export interface action {
+    strategy: string
+    args?: any[]
+    children?: any
+  }
+
+  export interface conditionChildren {
+      strategy: string
+      operator: string
+      args: any[]
+      children: {
+        strategy: 'and' | 'or'
+        children: {
+          strategy: string
+          operator: string
+          args: any[]
+        }[]
+      }[]
+  }
+
+  export interface condition {
+    strategy: 'and' | 'or'
+    children: conditionChildren
+  }
+
   export interface RulePromotionBase {
     type: 'rule_promotion'
     name: string
@@ -22,12 +47,9 @@ import {
     automatic?: boolean
     start: string
     end: string
-    rule: {
-        name: string
-        description: string
-        salience: number
-        when: Object
-        then: any[]
+    rule_set: {
+        rules: condition
+        actions: action[]
     }
   }
   
