@@ -14,10 +14,31 @@ import {
     ResourcePage
   } from './core'
 
+  export interface actionLimitation {
+    max_discount?: number
+    max_quantity?: number
+    items?: {
+        max_items: number
+        price_strategy: string
+    }
+  }
+
+  export interface actionCondition {
+    strategy: string
+    operator: string
+    args: any[]
+    children: {
+        strategy: string
+        operator: string
+        args: any[]
+    }[]
+  }
+
   export interface action {
     strategy: string
-    args?: any[]
-    children?: any
+    args: any[]
+    limitations?: actionLimitation
+    conditions?: actionCondition
   }
 
   export interface conditionChildren {
@@ -77,4 +98,3 @@ import {
     endpoint: 'rule-promotions'
 
   }
-  
