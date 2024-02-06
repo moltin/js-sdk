@@ -25,12 +25,12 @@ import {
 
   export interface actionCondition {
     strategy: string
-    operator: string
-    args: any[]
-    children: {
-        strategy: string
-        operator: string
-        args: any[]
+    operator?: string
+    args?: any[]
+    children?: {
+        strategy?: string
+        operator?: string
+        args?: any[]
     }[]
   }
 
@@ -45,18 +45,11 @@ import {
       strategy: string
       operator: string
       args: any[]
-      children: {
-        strategy: 'and' | 'or'
-        children: {
-          strategy: string
-          operator: string
-          args: any[]
-        }[]
-      }[]
+      children: condition[]
   }
 
   export interface condition {
-    strategy: 'and' | 'or'
+    strategy: string
     children: conditionChildren
   }
 
@@ -69,6 +62,8 @@ import {
     start: string
     end: string
     rule_set: {
+        currencies: string[]
+        catalog_ids: string[]
         rules: condition
         actions: action[]
     }
