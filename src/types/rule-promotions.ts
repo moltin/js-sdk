@@ -9,7 +9,7 @@ import {
     Identifiable,
   } from './core'
 
-  export interface actionLimitation {
+  export interface ActionLimitation {
     max_discount?: number
     max_quantity?: number
     items?: {
@@ -18,7 +18,7 @@ import {
     }
   }
 
-  export interface actionCondition {
+  export interface ActionCondition {
     strategy: string
     operator?: string
     args?: any[]
@@ -29,18 +29,18 @@ import {
     }[]
   }
 
-  export interface action {
+  export interface Action {
     strategy: string
     args: any[]
-    limitations?: actionLimitation
-    conditions?: actionCondition
+    limitations?: ActionLimitation
+    conditions?: ActionCondition
   }
 
-  export interface condition {
+  export interface Condition {
     strategy: string
     operator?: string
     args?: any[]
-    children?: condition[]
+    children?: Condition[]
   }
 
   /**
@@ -58,8 +58,8 @@ import {
     rule_set: {
       currencies: string[]
       catalog_ids: string[]
-      rules: condition
-      actions: action[]
+      rules: Condition
+      actions: Action[]
     }
   }
   
