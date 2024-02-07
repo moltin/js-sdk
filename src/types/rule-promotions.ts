@@ -1,9 +1,8 @@
 /**
- * Promotions
+ * Promotions Builder
  * Description:Promotions allow you to provide discounts to customers.
  * A Promotion can be automatic which is applied provided any criteria are satisfied,
  * or require codes, which are then used by the end user to get a discount.
- * DOCS: https://documentation.elasticpath.com/commerce-cloud/docs/api/carts-and-checkout/promotions/index.html
  */
 import {
     CrudQueryableResource,
@@ -44,6 +43,10 @@ import {
     children?: condition[]
   }
 
+  /**
+   * Promotions Builder
+   * Description:Base Promotion Type
+   */
   export interface RulePromotionBase {
     type: 'rule_promotion'
     name: string
@@ -71,7 +74,6 @@ import {
     meta: RulePromotionMeta
   }
   
- 
   export interface RulePromotionsEndpoint
     extends CrudQueryableResource<
       RulePromotion,
@@ -82,5 +84,4 @@ import {
       never
     > {
     endpoint: 'rule-promotions'
-
   }
