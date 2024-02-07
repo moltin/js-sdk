@@ -115,10 +115,9 @@ export interface SettingsEndpoint {
    */
   Subscriptions(): Promise<Resource<SubscriptionSettings>>
 
-    /**
+  /**
    * Get Promotions Settings
    * Description: You can get the Promotions Settings using this endpoint
    */
   Promotions(): Promise<Resource<PromotionSettings>>
-
 }
