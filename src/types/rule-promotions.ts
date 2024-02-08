@@ -33,7 +33,7 @@ import {
     strategy: string
     args: any[]
     limitations?: ActionLimitation
-    conditions?: ActionCondition
+    condition?: ActionCondition
   }
 
   export interface Condition {
