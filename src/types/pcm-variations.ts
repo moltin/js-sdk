@@ -29,6 +29,12 @@ export interface PCMVariation extends Identifiable, PCMVariationBase {
   }
 }
 
+export interface UpdateVariationBody extends PCMVariationBase, Identifiable {
+  attributes: PCMVariationBase['attributes'] & {
+    sort_order?: number | null
+  }
+}
+
 /**
  * Product variation option base interface
  */
@@ -42,21 +48,12 @@ export interface PCMVariationOptionBase {
   }
 }
 
-export type PCMVariationMetaOption = Identifiable &
-  PCMVariationOptionBase['attributes']
-
-export interface VariationsOptionResponse
+export interface PCMVariationOption
   extends Identifiable,
     PCMVariationOptionBase {
   meta: {
     owner?: 'organization' | 'store'
     modifiers?: VariationsModifierTypeObj[]
-  }
-}
-
-export interface UpdateVariationBody extends PCMVariationBase, Identifiable {
-  attributes: PCMVariationBase['attributes'] & {
-    sort_order?: number | null
   }
 }
 
@@ -68,6 +65,9 @@ export interface UpdateVariationOptionBody
     sort_order?: number | null
   }
 }
+
+export type PCMVariationMetaOption = Identifiable &
+  PCMVariationOptionBase['attributes']
 
 /**
  * Modifiers object
@@ -141,7 +141,7 @@ export interface PCMVariationsEndpoint
   extends CrudQueryableResource<
     PCMVariation,
     PCMVariationBase,
-    VariationsOptionResponse,
+    PCMVariationOption,
     never,
     never,
     never
@@ -183,7 +183,7 @@ export interface PCMVariationsEndpoint
   VariationsOption(
     variationId: string,
     optionId: string
-  ): Promise<Resource<VariationsOptionResponse>>
+  ): Promise<Resource<PCMVariationOption>>
 
   /**
    * Get all product variation options
@@ -192,7 +192,7 @@ export interface PCMVariationsEndpoint
    */
   VariationsOptions(
     variationId: string
-  ): Promise<ResourcePage<VariationsOptionResponse>>
+  ): Promise<ResourcePage<PCMVariationOption>>
 
   /**
    * Create a product variation option
@@ -203,7 +203,7 @@ export interface PCMVariationsEndpoint
   CreateVariationsOption(
     variationId: string,
     body: PCMVariationOptionBase
-  ): Promise<Resource<VariationsOptionResponse>>
+  ): Promise<Resource<PCMVariationOption>>
 
   /**
    * Update product variation option
@@ -216,7 +216,7 @@ export interface PCMVariationsEndpoint
     variationId: string,
     optionId: string,
     body: UpdateVariationOptionBody
-  ): Promise<Resource<VariationsOptionResponse>>
+  ): Promise<Resource<PCMVariationOption>>
 
   /**
    * Delete product variation option
