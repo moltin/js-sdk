@@ -38,7 +38,6 @@ export interface UpdateVariationBody extends PCMVariationBase, Identifiable {
 /**
  * Product variation option base interface
  */
-
 export interface PCMVariationOptionBase {
   type: 'product-variation-option'
   attributes: {
@@ -66,6 +65,9 @@ export interface UpdateVariationOptionBody
   }
 }
 
+/**
+ * Interface for options that are in a PCM Variation's meta.options field
+ */
 export type PCMVariationMetaOption = Identifiable &
   PCMVariationOptionBase['attributes']
 
