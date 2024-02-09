@@ -11,15 +11,6 @@ import {
   ResourcePage
 } from './core'
 
-
-// UpdateBody helper types
-type MapToNull<PropType> = PropType extends number | undefined
-  ? number | undefined | null
-  : PropType
-type MappedType<T> = {
-  [PropertyKey in keyof T]: MapToNull<T[PropertyKey]>
-}
-
 /**
  * Product Variations Base Interface
  */
@@ -37,8 +28,18 @@ export interface PCMVariation extends Identifiable, PCMVariationBase {
     owner: 'organization' | 'store'
   }
 }
-export interface UpdateVariationBody extends Omit<PCMVariationBase, 'attributes'>, Identifiable {
-  attributes: MappedType<PCMVariationBase['attributes']>
+
+type PartialVariationBodyAttributes = Omit<
+  PCMVariationBase['attributes'],
+  'sort_order'
+>
+
+export interface UpdateVariationBody
+  extends Omit<PCMVariationBase, 'attributes'>,
+    Identifiable {
+  attributes: PartialVariationBodyAttributes & {
+    sort_order?: number | null
+  }
 }
 
 /**
@@ -62,10 +63,17 @@ export interface PCMVariationOption
   }
 }
 
+type PartialVariationOptionBodyAttributes = Omit<
+  PCMVariationOptionBase['attributes'],
+  'sort_order'
+>
+
 export interface UpdateVariationOptionBody
   extends Omit<PCMVariationOptionBase, 'attributes'>,
     Identifiable {
-  attributes: MappedType<PCMVariationOptionBase['attributes']>
+  attributes: PartialVariationOptionBodyAttributes & {
+    sort_order?: number | null
+  }
 }
 
 /**
