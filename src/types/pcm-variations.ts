@@ -29,15 +29,11 @@ export interface PCMVariation extends Identifiable, PCMVariationBase {
   }
 }
 
-type PartialVariationBodyAttributes = Omit<
-  PCMVariationBase['attributes'],
-  'sort_order'
->
-
 export interface UpdateVariationBody
   extends Omit<PCMVariationBase, 'attributes'>,
     Identifiable {
-  attributes: PartialVariationBodyAttributes & {
+  attributes: {
+    name: string
     sort_order?: number | null
   }
 }
@@ -63,15 +59,12 @@ export interface PCMVariationOption
   }
 }
 
-type PartialVariationOptionBodyAttributes = Omit<
-  PCMVariationOptionBase['attributes'],
-  'sort_order'
->
-
 export interface UpdateVariationOptionBody
   extends Omit<PCMVariationOptionBase, 'attributes'>,
     Identifiable {
-  attributes: PartialVariationOptionBodyAttributes & {
+  attributes:  {
+    name: string
+    description: string
     sort_order?: number | null
   }
 }
