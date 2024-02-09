@@ -29,11 +29,8 @@ export interface PCMVariation extends Identifiable, PCMVariationBase {
   }
 }
 
-export interface UpdateVariationBody
-  extends Omit<PCMVariationBase, 'attributes'>,
-    Identifiable {
-  attributes: {
-    name: string
+export interface UpdateVariationBody extends PCMVariationBase, Identifiable {
+  attributes: PCMVariationBase['attributes'] & {
     sort_order?: number | null
   }
 }
@@ -42,6 +39,7 @@ export interface UpdateVariationBody
  * Product variation option base interface
  */
 export interface PCMVariationOptionBase {
+  type: 'product-variation-option'
   attributes: {
     name: string
     description: string
@@ -52,7 +50,6 @@ export interface PCMVariationOptionBase {
 export interface PCMVariationOption
   extends Identifiable,
     PCMVariationOptionBase {
-  type: 'product-variation-option'
   meta: {
     owner?: 'organization' | 'store'
     modifiers?: VariationsModifierTypeObj[]
@@ -60,11 +57,10 @@ export interface PCMVariationOption
 }
 
 export interface UpdateVariationOptionBody
-  extends Omit<PCMVariationOptionBase, 'attributes'>,
+  extends PCMVariationOptionBase,
     Identifiable {
-  attributes:  {
-    name: string
-    description: string
+  type: 'product-variation-option'
+  attributes: PCMVariationOptionBase['attributes'] & {
     sort_order?: number | null
   }
 }
