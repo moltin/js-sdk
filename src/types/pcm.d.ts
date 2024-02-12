@@ -243,5 +243,5 @@ export interface PcmProductsEndpoint
    * @param filter - products filters
    * @constructor
    */
-  ExportProducts(filter?: PcmProductFilter): Promise<Resource<PcmJob>>
+  ExportProducts(filter?: PcmProductFilter, useTemplateSlugs?: boolean): Promise<Resource<PcmJob>>
 }
