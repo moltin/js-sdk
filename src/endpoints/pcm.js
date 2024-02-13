@@ -62,10 +62,11 @@ class PCMEndpoint extends CRUDExtend {
     return this.request.send(`${this.endpoint}/detach_nodes`, 'POST', body)
   }
 
-  ExportProducts(filter) {
+  ExportProducts(filter, useTemplateSlugs) {
     return this.request.send(
         buildURL(`${this.endpoint}/export`, {
-          filter
+          filter,
+          useTemplateSlugs
         }),
         'POST'
     )
