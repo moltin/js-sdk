@@ -17,39 +17,42 @@ import {
 export interface SubscriptionBase {
   type: "subscription",
   attributes: {
-    account_id: string,
+    external_ref?: string,
+    account_id: string
     offering: {
       id: string
-      type: "subscription-offering",
+      type: "subscription_offering"
       attributes: {
-        name: string,
-        description: string,
-        updated_at: string,
+        external_ref?: string
+        name: string
+        description: string
+        updated_at: string
         created_at: string
-      },
-      relationships: {
-        plans: {
-          links: {
-            related: string,
-            self: string
-          },
-          data: {
-            type: "offering-plan",
-            id: string
-          }
-        }
+        canceled_at: string | null
       },
       meta: {
-        owner: string
+        owner: string,
+        timestamps: {
+          updated_at: string
+          created_at: string
+          canceled_at: string | null
+        }
       }
     },
     plan_id: string,
     currency: string,
-    updated_at: string,
+    updated_at: string
     created_at: string
   },
   meta: {
-    owner: string
+    owner: string,
+    status: 'active' | 'inactive'
+    canceled: boolean
+    timestamps: {
+      updated_at: string
+      created_at: string
+      canceled_at: string | null
+    }
   }
 }
 
@@ -93,6 +96,12 @@ export interface SubscriptionInvoice extends Identifiable {
   }
 }
 
+export interface SubscriptionFilter {
+  eq?: {
+    account_id?: string
+  }
+}
+
 
 export interface Subscription extends Identifiable, SubscriptionBase {
 
@@ -107,10 +116,10 @@ export interface SubscriptionsEndpoint
     Subscription,
     SubscriptionCreate,
     never,
-    never,
+    SubscriptionFilter,
     never,
     never
-    >, "Filter" | "Limit" | "Offset" | "Sort" | "With" | "Attributes" | "Update" | "Link" > {
+    >, "Limit" | "Offset" | "Sort" | "With" | "Attributes" | "Update" | "Link" > {
   endpoint: 'subscriptions'
 
   GetInvoices(id: string): Promise<Resource<SubscriptionInvoice[]>>
