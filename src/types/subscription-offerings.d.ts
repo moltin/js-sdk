@@ -37,10 +37,27 @@ export interface SubscriptionOfferingBase {
   }
 }
 
+export interface SubscriptionOfferingBuildProduct {
+  external_ref?: string
+  name: string
+  description?: string
+  sku?: string
+  main_image?: string
+  price?: {
+    [key: string]: {
+      amount: number
+      includes_tax?: boolean
+    }
+  }
+  price_units?: {
+    unit: "day" | "month"
+    amount: number
+  }
+}
 export interface SubscriptionOfferingBuildBody {
   name: string
   description: string
-  products: string[]
+  products: string[] | SubscriptionOfferingBuildProduct[]
   plans: string[]
 }
 
@@ -69,6 +86,12 @@ type SubscriptionOfferingAttachmentsRelationships = {
   }
 }
 
+export interface SubscriptionOfferingFilter {
+  eq?: {
+    "products.external_ref": string
+  }
+}
+
 export type SubscriptionOfferingPlan = SubscriptionPlan & SubscriptionOfferingAttachmentsRelationships
 export type SubscriptionOfferingProduct = SubscriptionProduct & SubscriptionOfferingAttachmentsRelationships
 /**
@@ -80,7 +103,7 @@ export interface SubscriptionOfferingsEndpoint
     SubscriptionOffering,
     SubscriptionOfferingCreate,
     SubscriptionOfferingUpdate,
-    never,
+    SubscriptionOfferingFilter,
     never,
     never
     > {
