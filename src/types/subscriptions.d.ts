@@ -44,6 +44,14 @@ export interface SubscriptionBase {
     updated_at: string
     created_at: string
   },
+  relationships: {
+    subscriber: {
+      data: {
+        id: string,
+        type: 'subscription_subscriber'
+      }
+    }
+  }
   meta: {
     owner: string,
     status: 'active' | 'inactive'
