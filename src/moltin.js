@@ -54,6 +54,8 @@ import SubscriptionOfferingsEndpoint from './endpoints/subscription-offerings'
 import SubscriptionsEndpoint from './endpoints/subscriptions'
 import RulePromotionsEndpoint from './endpoints/rule-promotions'
 import SubscriptionSubscribersEndpoint from './endpoints/subscription-subscribers'
+import SubscriptionJobsEndpoint  from './endpoints/subscription-jobs'
+import SubscriptionSchedulesEndpoint from './endpoints/subscription-schedules'
 
 import {cartIdentifier, tokenInvalid, getCredentials, resolveCredentialsStorageKey} from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -126,6 +128,8 @@ export default class Moltin {
     this.Subscriptions = new SubscriptionsEndpoint(config)
     this.RulePromotions = new RulePromotionsEndpoint(config)
     this.SubscriptionSubscribers = new SubscriptionSubscribersEndpoint(config)
+    this.SubscriptionJobs = new SubscriptionJobsEndpoint(config)
+    this.SubscriptionSchedules = new SubscriptionSchedulesEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
