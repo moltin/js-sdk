@@ -39,6 +39,7 @@ export interface PcmProductBase extends PcmProductRelationships {
     locales?: { [key in Locales]?: { name?: string; description?: string } }
     components?: ProductComponents
     custom_inputs?: CustomInputs
+    tags?: string[]
   }
 }
 
