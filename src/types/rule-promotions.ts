@@ -7,6 +7,9 @@
 import {
     CrudQueryableResource,
     Identifiable,
+    ResourceList,
+    ResourcePage,
+    Resource
   } from './core'
 
   export interface ActionLimitation {
@@ -73,6 +76,20 @@ import {
   export interface RulePromotion extends Identifiable, RulePromotionBase {
     meta: RulePromotionMeta
   }
+
+  export interface RulePromotionCode {
+    code: string
+    uses?: number
+    user?: string
+    created_by?: string
+    max_uses?: number
+    meta?: RulePromotionMeta
+    consume_unit?: 'per_application' | 'per_checkout'
+  }
+
+  export interface DeleteRulePromotionCodes extends ResourceList<any> {
+    code: string
+  }
   
   export interface RulePromotionsEndpoint
     extends CrudQueryableResource<
@@ -84,4 +101,18 @@ import {
       never
     > {
     endpoint: 'rule-promotions'
+
+    Codes(promotionId: string): Promise<ResourcePage<RulePromotionCode>>
+
+    AddCodes(
+      promotionId: string,
+      codes: RulePromotionCode[]
+    ): Promise<Resource<RulePromotionBase>>
+
+    DeleteCode(promotionId: string, codeId: string): Promise<{}>
+
+    DeleteCodes(
+      promotionId: string,
+      codes: DeleteRulePromotionCodes[]
+    ): Promise<{}>
   }

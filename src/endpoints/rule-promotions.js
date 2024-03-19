@@ -1,4 +1,5 @@
 import CRUDExtend from '../extends/crud'
+import { buildURL } from '../utils/helpers'
 
 class RulePromotionsEndpoint extends CRUDExtend {
   constructor(endpoint) {
@@ -23,6 +24,47 @@ class RulePromotionsEndpoint extends CRUDExtend {
         type: 'rule_promotion'
       },
       token
+    )
+  }
+
+  Codes(promotionId, token = null) {
+    const { limit, offset, filter } = this
+      return this.request.send(
+        buildURL(`${this.endpoint}/${promotionId}/codes`, {
+          limit,
+          offset,
+          filter
+        }),
+        'GET',
+          undefined,
+          token,
+          this
+    )
+  }
+
+  AddCodes(promotionId, codes) {
+    return this.request.send(`${this.endpoint}/${promotionId}/codes`, 'POST', {
+      type: 'promotion_codes',
+      codes
+    })
+  }
+  
+  DeleteCode(promotionId, codeId) {
+    return this.request.send(
+      `${this.endpoint}/${promotionId}/codes/${codeId}`,
+      'DELETE'
+    )
+  }
+
+
+  DeleteCodes(promotionId, codes) {
+    return this.request.send(
+      `${this.endpoint}/${promotionId}/codes`,
+      'DELETE',
+      {
+        type: 'promotion_codes',
+        codes
+      }
     )
   }
 }
