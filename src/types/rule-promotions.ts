@@ -81,9 +81,9 @@ import {
     code: string
     uses?: number
     user?: string
-    created_by ?: string
-    max_uses ?: number
-    meta ?: RulePromotionMeta
+    created_by?: string
+    max_uses?: number
+    meta?: RulePromotionMeta
     consume_unit?: 'per_application' | 'per_checkout'
   }
 

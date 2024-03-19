@@ -190,9 +190,9 @@ export interface PromotionCode {
   code: string
   uses?: number
   user?: string
-  created_by ?: string
-  max_uses ?: number
-  meta ?: PromotionMeta
+  created_by?: string
+  max_uses?: number
+  meta?: PromotionMeta
   consume_unit?: 'per_cart' | 'per_item'
 }
 
