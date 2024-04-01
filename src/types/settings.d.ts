@@ -116,6 +116,12 @@ export interface SettingsEndpoint {
   Subscriptions(): Promise<Resource<SubscriptionSettings>>
 
   /**
+   * Update Subscriptions Settings
+   * Description: You can update the Subscriptions Settings using this endpoint
+   */
+  UpdateSubscriptions(body: SubscriptionSettings): Promise<Resource<SubscriptionSettings>>
+
+  /**
    * Get Promotions Settings
    * Description: You can get the Promotions Settings using this endpoint
    */

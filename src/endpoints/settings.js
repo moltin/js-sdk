@@ -45,6 +45,10 @@ class Settings {
     return this.request.send(`${this.endpoint}/subscriptions`, 'GET')
   }
 
+  UpdateSubscriptions(body) {
+    return this.request.send(`${this.endpoint}/subscriptions`, 'PUT', body)
+  }
+
   Promotions() {
     return this.request.send(`${this.endpoint}/promotions`, 'GET')
   }
