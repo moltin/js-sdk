@@ -16,12 +16,10 @@ import {
 export interface SubscriptionProductBase {
   type: string
   attributes: {
-    created_at: string
     description: string
     main_image?: string | null
     name: string
     sku: string
-    updated_at: string
     price: {
       [key: string]: {
         amount: number
@@ -36,10 +34,23 @@ export interface SubscriptionProductBase {
 }
 
 export interface SubscriptionProduct extends Identifiable, SubscriptionProductBase {
-
+  meta: {
+    display_price: {
+      without_tax: {
+        amount: number
+        currency: string
+        formatted: string
+      }
+    },
+    owner: string
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
 }
 export type SubscriptionProductCreate = Omit<SubscriptionProductBase, 'attributes'> & {attributes: Partial<SubscriptionProductBase['attributes']>}
-export type SubscriptionProductUpdate = Omit<SubscriptionProduct, 'attributes'> & {attributes: Partial<SubscriptionProductBase['attributes']>}
+export type SubscriptionProductUpdate = Identifiable & Omit<SubscriptionProductBase, 'attributes'> & {attributes: Partial<SubscriptionProductBase['attributes']>}
 
 /**
  * Subscription Product Endpoints

@@ -28,10 +28,6 @@ export interface SubscriptionScheduleBase {
 }
 
 export interface SubscriptionSchedule extends Identifiable, SubscriptionScheduleBase {
-  attributes: SubscriptionScheduleBase['attributes'] & {
-    updated_at: string
-    created_at: string
-  }
   meta: {
     scheduled_for: string,
     owner: 'store' | 'organization',
@@ -43,7 +39,7 @@ export interface SubscriptionSchedule extends Identifiable, SubscriptionSchedule
 }
 
 export type SubscriptionScheduleCreate = SubscriptionScheduleBase
-export type SubscriptionScheduleUpdate = Omit<SubscriptionSchedule, 'attributes'> & {attributes: Partial<SubscriptionSchedule['attributes']>}
+export type SubscriptionScheduleUpdate = Identifiable & Omit<SubscriptionScheduleBase, 'attributes'> & {attributes: Partial<SubscriptionSchedule['attributes']>}
 
 /**
  * Subscription Schedule Endpoints

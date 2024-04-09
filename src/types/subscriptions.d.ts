@@ -15,9 +15,9 @@ import {
  * DOCS: TODO: add docs when ready
  */
 export interface SubscriptionBase {
-  type: "subscription",
+  type: "subscription"
   attributes: {
-    external_ref?: string,
+    external_ref?: string
     account_id: string
     offering: {
       id: string
@@ -26,41 +26,18 @@ export interface SubscriptionBase {
         external_ref?: string
         name: string
         description: string
-        updated_at: string
-        created_at: string
-        canceled_at: string | null
-      },
+      }
       meta: {
-        owner: string,
+        owner: string
         timestamps: {
           updated_at: string
           created_at: string
           canceled_at: string | null
         }
       }
-    },
-    plan_id: string,
-    currency: string,
-    updated_at: string
-    created_at: string
-  },
-  relationships: {
-    subscriber: {
-      data: {
-        id: string,
-        type: 'subscription_subscriber'
-      }
     }
-  }
-  meta: {
-    owner: string,
-    status: 'active' | 'inactive'
-    canceled: boolean
-    timestamps: {
-      updated_at: string
-      created_at: string
-      canceled_at: string | null
-    }
+    plan_id: string
+    currency: string
   }
 }
 
@@ -112,7 +89,24 @@ export interface SubscriptionFilter {
 
 
 export interface Subscription extends Identifiable, SubscriptionBase {
-
+  relationships: {
+    subscriber: {
+      data: {
+        id: string
+        type: 'subscription_subscriber'
+      }
+    }
+  }
+  meta: {
+    owner: string
+    status: 'active' | 'inactive'
+    canceled: boolean
+    timestamps: {
+      updated_at: string
+      created_at: string
+      canceled_at: string | null
+    }
+  }
 }
 
 /**
