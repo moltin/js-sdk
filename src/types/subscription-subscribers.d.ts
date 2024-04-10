@@ -8,15 +8,6 @@ import {
   CrudQueryableResource
 } from './core'
 
-interface SubscriptionSubscriberMeta {
-  owner: string,
-  timestamps: {
-    canceled_at: string | null,
-    created_at: string,
-    updated_at: string
-  }
-}
-
 /**
  * Core Subscription Subscriber Base Interface
  * For custom flows, extend this interface
@@ -29,13 +20,18 @@ export interface SubscriptionSubscriberBase {
     name: string
     email: string
   }
-  meta: SubscriptionSubscriberMeta
 }
 export interface SubscriptionSubscriber extends Identifiable, SubscriptionSubscriberBase {
-
+  meta: {
+    owner: string
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
 }
 export type SubscriptionSubscriberCreate = SubscriptionSubscriberBase
-export type SubscriptionSubscriberUpdate = Omit<SubscriptionSubscriber, 'attributes'> & {attributes: Partial<SubscriptionSubscriberBase['attributes']> & Identifiable}
+export type SubscriptionSubscriberUpdate = Identifiable & Omit<SubscriptionSubscriberBase, 'attributes'> & {attributes: Partial<SubscriptionSubscriberBase['attributes']>}
 
 /**
  * Subscription Subscriber Endpoints

@@ -20,8 +20,6 @@ export interface SubscriptionOfferingBase {
   attributes: {
     name: string
     description: string
-    created_at: string
-    updated_at: string
   },
   relationships?: {
     [key: string]: {
@@ -70,10 +68,17 @@ export interface SubscriptionOfferingAttachPlanBody {
 }
 
 export interface SubscriptionOffering extends Identifiable, SubscriptionOfferingBase {
-
+  meta: {
+    external_product_refs: string[]
+    owner: string
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
 }
 export type SubscriptionOfferingCreate = Omit<SubscriptionOfferingBase, 'attributes'> & {attributes: Partial<SubscriptionOfferingBase['attributes']>}
-export type SubscriptionOfferingUpdate = Omit<SubscriptionOffering, 'attributes'> & {attributes: Partial<SubscriptionOfferingBase['attributes']>}
+export type SubscriptionOfferingUpdate = Identifiable & Omit<SubscriptionOfferingBase, 'attributes'> & {attributes: Partial<SubscriptionOfferingBase['attributes']>}
 
 type SubscriptionOfferingAttachmentsRelationships = {
   relationships: {

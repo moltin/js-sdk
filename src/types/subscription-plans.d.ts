@@ -27,8 +27,6 @@ export interface SubscriptionPlanBase {
     can_resume: boolean
     can_cancel: boolean
     base_price_percentage: number | null | undefined
-    updated_at: string
-    created_at: string
     fixed_price: {
       [key: string]: {
         amount: number
@@ -39,10 +37,16 @@ export interface SubscriptionPlanBase {
 }
 
 export interface SubscriptionPlan extends Identifiable, SubscriptionPlanBase {
-
+  meta: {
+    owner: string
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
 }
 export type SubscriptionPlanCreate = Omit<SubscriptionPlanBase, 'attributes'> & {attributes: Partial<SubscriptionPlanBase['attributes']>}
-export type SubscriptionPlanUpdate = Omit<SubscriptionPlan, 'attributes'> & {attributes: Partial<SubscriptionPlanBase['attributes']>}
+export type SubscriptionPlanUpdate = Identifiable & Omit<SubscriptionPlanBase, 'attributes'> & {attributes: Partial<SubscriptionPlanBase['attributes']>}
 
 /**
  * Subscription Plan Endpoints
