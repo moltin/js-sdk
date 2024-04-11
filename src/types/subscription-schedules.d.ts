@@ -15,12 +15,12 @@ import { SubscriptionJob } from './subscription-jobs'
  * DOCS: TODO: add docs when ready
  */
 export interface SubscriptionScheduleBase {
-  type: 'subscription_schedule',
+  type: 'subscription_schedule'
   attributes: {
-    external_ref?: string,
-    name?: string,
-    specification: string,
-    location: string,
+    external_ref?: string | null
+    name?: string
+    specification: string
+    location: string
     job: {
       job_type: SubscriptionJob['attributes']['job_type']
     }
@@ -29,11 +29,11 @@ export interface SubscriptionScheduleBase {
 
 export interface SubscriptionSchedule extends Identifiable, SubscriptionScheduleBase {
   meta: {
-    scheduled_for: string,
-    owner: 'store' | 'organization',
+    scheduled_for: string
+    owner: 'store' | 'organization'
     timestamps: {
-      updated_at: string,
-      created_at: string,
+      updated_at: string
+      created_at: string
     }
   }
 }
