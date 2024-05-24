@@ -97,7 +97,18 @@ export interface SubscriptionOfferingFilter {
   }
 }
 
-export type SubscriptionOfferingPlan = SubscriptionPlan & SubscriptionOfferingAttachmentsRelationships
+type SubscriptionOfferingPlanMeta = {
+  meta: {
+    active_plan?: boolean
+    owner: string
+    timestamps: {
+      created_at: string
+      updated_at: string
+    }
+  }
+}
+
+export type SubscriptionOfferingPlan = Omit<SubscriptionPlan, 'meta'> & SubscriptionOfferingAttachmentsRelationships & SubscriptionOfferingPlanMeta
 export type SubscriptionOfferingProduct = SubscriptionProduct & SubscriptionOfferingAttachmentsRelationships
 /**
  * Subscription Offering Endpoints
