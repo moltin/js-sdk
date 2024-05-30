@@ -6,8 +6,10 @@
 import {
   Identifiable,
   CrudQueryableResource,
-  Resource
+  Resource,
+  ResourcePage
 } from './core'
+import { SubscriptionOfferingPlan, SubscriptionOfferingProduct } from './subscription-offerings'
 
 /**
  * Core Subscription Base Interface
@@ -109,6 +111,12 @@ export interface Subscription extends Identifiable, SubscriptionBase {
   }
 }
 
+export type SubscriptionsInclude = 'plans'
+
+export interface SubscriptionsIncluded {
+  plans: SubscriptionOfferingPlan[]
+}
+
 /**
  * Subscription Endpoints
  * DOCS: TODO: add docs when ready
@@ -120,9 +128,15 @@ export interface SubscriptionsEndpoint
     never,
     SubscriptionFilter,
     never,
-    never
-    >, "Limit" | "Offset" | "Sort" | "With" | "Attributes" | "Update" | "Link" > {
+    SubscriptionsInclude
+    >, "All" | "Limit" | "Offset" | "Sort" | "Attributes" | "Update" | "Link" > {
   endpoint: 'subscriptions'
 
+  All(token?: string): Promise<ResourcePage<Subscription, SubscriptionsIncluded>>
+
   GetInvoices(id: string): Promise<Resource<SubscriptionInvoice[]>>
+
+  GetAttachedProducts(id: string) : Promise<Resource<SubscriptionOfferingProduct[]>>
+
+  GetAttachedPlans(id: string) : Promise<Resource<SubscriptionOfferingPlan[]>>
 }
