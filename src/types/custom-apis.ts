@@ -13,7 +13,6 @@ export interface CustomApiBase {
   api_type: string
   type: string
   slug: string
-  external_reference?: string
 }
 
 export interface CustomApi extends Identifiable, CustomApiBase {
@@ -29,10 +28,10 @@ export interface CustomApi extends Identifiable, CustomApiBase {
 }
 
 export type Validation = 
-  | { string: { min_length: number, max_length: number, regex: string, allow_null_values: boolean } }
-  | { integer: { min_value: number, max_value: number, allow_null_values: boolean } }
-  | { float: { min_value: number, max_value: number, allow_null_values: boolean } }
-  | { boolean: { allow_null_values: boolean } }
+  | { string: { min_length?: number, max_length?: number, regex?: string, allow_null_values?: boolean } }
+  | { integer: { min_value?: number, max_value?: number, allow_null_values?: boolean } }
+  | { float: { min_value?: number, max_value?: number, allow_null_values?: boolean } }
+  | { boolean: { allow_null_values?: boolean } }
 
 export interface CustomApiFieldBase {
   name: string
@@ -40,7 +39,7 @@ export interface CustomApiFieldBase {
   field_type: string
   type: string
   slug: string
-  validation: Validation
+  validation?: Validation
 }
 
 export interface CustomApiField extends Identifiable, CustomApiFieldBase {
