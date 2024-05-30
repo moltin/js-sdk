@@ -64,6 +64,7 @@ import { RulePromotionsEndpoint } from './types/rule-promotions'
 import { SubscriptionSubscribersEndpoint } from './types/subscription-subscribers'
 import { SubscriptionJobsEndpoint } from './types/subscription-jobs'
 import { SubscriptionSchedulesEndpoint } from './types/subscription-schedules'
+import { CustomApisEndpoint } from './types/custom-apis'
 
 export * from './types/config'
 export * from './types/storage'
@@ -203,6 +204,7 @@ export class Moltin {
   SubscriptionSubscribers : SubscriptionSubscribersEndpoint
   SubscriptionJobs : SubscriptionJobsEndpoint
   SubscriptionSchedules: SubscriptionSchedulesEndpoint
+  CustomApis: CustomApisEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)
