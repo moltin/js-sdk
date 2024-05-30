@@ -27,7 +27,7 @@ export interface CustomApi extends Identifiable, CustomApiBase {
   }
 }
 
-export type Validation = 
+export type CustomFieldValidation = 
   | { string: { min_length?: number, max_length?: number, regex?: string, allow_null_values?: boolean } }
   | { integer: { min_value?: number, max_value?: number, allow_null_values?: boolean } }
   | { float: { min_value?: number, max_value?: number, allow_null_values?: boolean } }
@@ -39,7 +39,7 @@ export interface CustomApiFieldBase {
   field_type: string
   type: string
   slug: string
-  validation?: Validation
+  validation?: CustomFieldValidation
 }
 
 export interface CustomApiField extends Identifiable, CustomApiFieldBase {
