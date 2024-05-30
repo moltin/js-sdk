@@ -139,6 +139,7 @@ export * from './types/rule-promotions'
 export * from './types/subscription-subscribers'
 export * from './types/subscription-jobs'
 export * from './types/subscription-schedules'
+export * from './types/custom-apis'
 
 // UMD
 export as namespace moltin

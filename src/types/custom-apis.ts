@@ -56,6 +56,8 @@ export interface CustomApisEndpoint {
 
   Get(id: string, token?: string): Promise<Resource<CustomApi>>
 
+  Filter(filter: any): CustomApisEndpoint
+
   Limit(value: number): CustomApisEndpoint
 
   Offset(value: number): CustomApisEndpoint
