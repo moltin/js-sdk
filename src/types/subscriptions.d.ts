@@ -103,6 +103,8 @@ export interface Subscription extends Identifiable, SubscriptionBase {
     owner: string
     status: 'active' | 'inactive'
     canceled: boolean
+    paused: boolean
+    closed: boolean
     timestamps: {
       updated_at: string
       created_at: string
@@ -112,6 +114,8 @@ export interface Subscription extends Identifiable, SubscriptionBase {
 }
 
 export type SubscriptionsInclude = 'plans'
+
+export type SubscriptionsStateAction = 'cancel'| 'pause'| 'resume'
 
 export interface SubscriptionsIncluded {
   plans: SubscriptionOfferingPlan[]
@@ -139,4 +143,6 @@ export interface SubscriptionsEndpoint
   GetAttachedProducts(id: string) : Promise<Resource<SubscriptionOfferingProduct[]>>
 
   GetAttachedPlans(id: string) : Promise<Resource<SubscriptionOfferingPlan[]>>
+
+  CreateState(id: string, action: SubscriptionsStateAction) : Promise<void>
 }
