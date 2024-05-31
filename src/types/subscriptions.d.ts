@@ -144,5 +144,5 @@ export interface SubscriptionsEndpoint
 
   GetAttachedPlans(id: string) : Promise<Resource<SubscriptionOfferingPlan[]>>
 
-  CreateState(id: string, action: SubscriptionsStateAction) : Promise<never>
+  CreateState(id: string, action: SubscriptionsStateAction) : Promise<void>
 }
