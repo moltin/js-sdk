@@ -53,8 +53,8 @@ export interface PcmJob extends Identifiable, PcmJobBase {
 export interface ProductComponents {
   [key: string]: {
     name: string
-    min?: number
-    max?: number
+    min?: number | null
+    max?: number | null
     sort_order?: number | null
     options: ProductComponentOption[]
   }
