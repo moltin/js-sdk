@@ -7,6 +7,7 @@ class CustomApisEndpoint extends CRUDExtend {
     super(endpoint)
 
     this.endpoint = 'settings/extensions/custom-apis'
+    this.entriesEndpoint = 'extensions'
   }
 
   Create(body) {
@@ -67,46 +68,47 @@ class CustomApisEndpoint extends CRUDExtend {
       'DELETE'
     )
   }
-  
-  GetEntries(customApiId) {
-    const { limit, offset, sort } = this
+
+  GetEntries(customApiSlug) {
+    const { limit, offset, sort, filter } = this
 
     return this.request.send(
-      buildURL(`${this.endpoint}/${customApiId}/entries`, {
+      buildURL(`${this.entriesEndpoint}/${customApiSlug}`, {
         limit,
         offset,
-        sort
+        sort,
+        filter
       }),
       'GET'
     )
   }
 
-  GetEntry(customApiId, customApiEntryId) {
+  GetEntry(customApiSlug, customApiEntryId) {
     return this.request.send(
-      `${this.endpoint}/${customApiId}/entries/${customApiEntryId}`,
+      `${this.entriesEndpoint}/${customApiSlug}/${customApiEntryId}`,
       'GET'
     )
   }
-  
-  CreateEntry(customApiId, body) {
+
+  CreateEntry(customApiSlug, body) {
     return this.request.send(
-      `${this.endpoint}/${customApiId}/entries`,
+      `${this.entriesEndpoint}/${customApiSlug}`,
       'POST',
       body
     )
   }
-  
-  UpdateEntry(customApiId, customApiEntryId, body) {
+
+  UpdateEntry(customApiSlug, customApiEntryId, body) {
     return this.request.send(
-      `${this.endpoint}/${customApiId}/entries/${customApiEntryId}`,
+      `${this.entriesEndpoint}/${customApiSlug}/${customApiEntryId}`,
       'PUT',
       body
     )
   }
-  
-  DeleteEntry(customApiId, customApiEntryId) {
+
+  DeleteEntry(customApiSlug, customApiEntryId) {
     return this.request.send(
-      `${this.endpoint}/${customApiId}/entries/${customApiEntryId}`,
+      `${this.entriesEndpoint}/${customApiSlug}/${customApiEntryId}`,
       'DELETE'
     )
   }
