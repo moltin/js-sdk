@@ -53,6 +53,13 @@ export interface SubscriptionCreate {
   }
 }
 
+export interface SubscriptionUpdate extends Identifiable {
+  type: 'subscription'
+  attributes: {
+    plan_id: string
+  }
+}
+
 export interface SubscriptionInvoice extends Identifiable {
   type: "subscription-invoice",
   attributes: {
@@ -129,11 +136,11 @@ export interface SubscriptionsEndpoint
   extends Omit<CrudQueryableResource<
     Subscription,
     SubscriptionCreate,
-    never,
+    SubscriptionUpdate,
     SubscriptionFilter,
     never,
     SubscriptionsInclude
-    >, "All" | "Limit" | "Offset" | "Sort" | "Attributes" | "Update" | "Link" > {
+    >, "All" | "Attributes" | "Link" > {
   endpoint: 'subscriptions'
 
   All(token?: string): Promise<ResourcePage<Subscription, SubscriptionsIncluded>>
