@@ -97,21 +97,21 @@ export interface CustomApisEndpoint {
 
   DeleteField<T = any>(customApiId: string, customApiFieldId: string): Promise<T>
   
-  GetEntries<T = any>(customApiSlug: string): Promise<T>
+  GetEntries<T = any>(customApiId: string): Promise<T>
 
-  GetEntry<T = any>(customApiSlug: string, customApiEntryId: string): Promise<T>
+  GetEntry<T = any>(customApiId: string, customApiEntryId: string): Promise<T>
 
   CreateEntry<RequestBody = any, ResponseBody = any>(
-    customApiSlug: string,
+    customApiId: string,
     body: RequestBody
   ): Promise<ResponseBody>
 
   UpdateEntry<RequestBody = any, ResponseBody = any>(
-    customApiSlug: string,
+    customApiId: string,
     customApiEntryId: string,
     body: RequestBody
   ): Promise<ResponseBody>
 
-  DeleteEntry<T = any>(customApiSlug: string, customApiEntryId: string): Promise<T>
+  DeleteEntry<T = any>(customApiId: string, customApiEntryId: string): Promise<T>
 
 }
