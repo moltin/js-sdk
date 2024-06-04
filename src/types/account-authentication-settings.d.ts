@@ -14,6 +14,7 @@ export interface AccountAuthenticationSettingsBase {
   type: string
   enable_self_signup: boolean,
   auto_create_account_for_account_members: boolean,
+  account_management_authentication_token_timeout_secs?: number,
   account_member_self_management: string
   meta: object
   relationships: {
