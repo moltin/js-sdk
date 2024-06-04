@@ -60,6 +60,7 @@ import SubscriptionSchedulesEndpoint from './endpoints/subscription-schedules'
 import {cartIdentifier, tokenInvalid, getCredentials, resolveCredentialsStorageKey} from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
 import ShopperCatalogEndpoint from './endpoints/catalog'
+import CustomApisEndpoint from './endpoints/custom-apis'
 
 export default class Moltin {
   constructor(config) {
@@ -130,6 +131,7 @@ export default class Moltin {
     this.SubscriptionSubscribers = new SubscriptionSubscribersEndpoint(config)
     this.SubscriptionJobs = new SubscriptionJobsEndpoint(config)
     this.SubscriptionSchedules = new SubscriptionSchedulesEndpoint(config)
+    this.CustomApis = new CustomApisEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class

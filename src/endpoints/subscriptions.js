@@ -13,6 +13,15 @@ class SubscriptionsEndpoint extends CRUDExtend {
     })
   }
 
+  Update(id, body, token = null) {
+    return this.request.send(
+      `${this.endpoint}/${id}`,
+      'PUT',
+      body,
+      token
+    )
+  }
+
   GetInvoices(id) {
     return this.request.send(`${this.endpoint}/${id}/invoices`, 'GET')
   }
