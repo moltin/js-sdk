@@ -86,6 +86,7 @@ export interface ProductComponentOption {
   quantity: number
   type: string
   sort_order?: number | null
+  default?: boolean
   meta: {
     name: string
     sku: string
