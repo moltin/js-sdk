@@ -65,6 +65,7 @@ import { SubscriptionSubscribersEndpoint } from './types/subscription-subscriber
 import { SubscriptionJobsEndpoint } from './types/subscription-jobs'
 import { SubscriptionSchedulesEndpoint } from './types/subscription-schedules'
 import { CustomApisEndpoint } from './types/custom-apis'
+import { SubscriptionDunningRulesEndpoint } from './types/subscription-dunning-rules'
 
 export * from './types/config'
 export * from './types/storage'
@@ -140,6 +141,7 @@ export * from './types/subscription-subscribers'
 export * from './types/subscription-jobs'
 export * from './types/subscription-schedules'
 export * from './types/custom-apis'
+export * from './types/subscription-dunning-rules'
 
 // UMD
 export as namespace moltin
@@ -206,6 +208,7 @@ export class Moltin {
   SubscriptionJobs : SubscriptionJobsEndpoint
   SubscriptionSchedules: SubscriptionSchedulesEndpoint
   CustomApis: CustomApisEndpoint
+  SubscriptionDunningRules: SubscriptionDunningRulesEndpoint
 
   Cart(id?: string): CartEndpoint // This optional cart id is super worrying when using the SDK in a node server :/
   constructor(config: Config)

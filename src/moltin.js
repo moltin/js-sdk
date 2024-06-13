@@ -56,6 +56,7 @@ import RulePromotionsEndpoint from './endpoints/rule-promotions'
 import SubscriptionSubscribersEndpoint from './endpoints/subscription-subscribers'
 import SubscriptionJobsEndpoint  from './endpoints/subscription-jobs'
 import SubscriptionSchedulesEndpoint from './endpoints/subscription-schedules'
+import SubscriptionDunningRulesEndpoint from './endpoints/subscription-dunning-rules'
 
 import {cartIdentifier, tokenInvalid, getCredentials, resolveCredentialsStorageKey} from './utils/helpers'
 import CatalogsEndpoint from './endpoints/catalogs'
@@ -132,6 +133,7 @@ export default class Moltin {
     this.SubscriptionJobs = new SubscriptionJobsEndpoint(config)
     this.SubscriptionSchedules = new SubscriptionSchedulesEndpoint(config)
     this.CustomApis = new CustomApisEndpoint(config)
+    this.SubscriptionDunningRules = new SubscriptionDunningRulesEndpoint(config)
   }
 
   // Expose `Cart` class on Moltin class
