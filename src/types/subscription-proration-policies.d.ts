@@ -18,8 +18,6 @@ export interface SubscriptionProrationPolicyBase {
   attributes: {
     name: string
     rounding: 'up' | 'down' | 'nearest'
-    unit: 'day' | 'month' | 'year'
-    behaviour: 'immediately' | 'next_invoice'
     external_ref?: string
   }
 }
