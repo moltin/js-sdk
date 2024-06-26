@@ -20,19 +20,37 @@ export interface SubscriptionOfferingBase {
   attributes: {
     name: string
     description: string
-  },
+  }
+}
+
+export interface SubscriptionOfferingRelationships {
   relationships?: {
-    [key: string]: {
-      links?: {
-        related?: string
-        self?: string
-      },
-      data?: {
-        type?: string
-        id?: string
+    plans?: {
+      data: {
+        id: string
+        type: 'subscription_offering_plan'
+      }[]
+      links: {
+        related: string
+      }
+    }
+    products?: {
+      data: {
+        id: string
+        type: 'subscription_offering_product'
+      }[]
+      links: {
+        related: string
+      }
+    }
+    proration_policy?: {
+      data: {
+        id: string
+        type: 'proration_policy'
       }
     }
   }
+
 }
 
 export interface SubscriptionOfferingBuildProduct {
@@ -67,7 +85,12 @@ export interface SubscriptionOfferingAttachPlanBody {
   plans: string[]
 }
 
-export interface SubscriptionOffering extends Identifiable, SubscriptionOfferingBase {
+export interface SubscriptionOfferingAttachProrationPolicyBody {
+  type: 'proration_policy'
+  id: string
+}
+
+export interface SubscriptionOffering extends Identifiable, SubscriptionOfferingBase, SubscriptionOfferingRelationships {
   meta: {
     external_product_refs: string[]
     owner: string
@@ -138,4 +161,6 @@ export interface SubscriptionOfferingsEndpoint
   AttachPlans(offeringId: string, body: SubscriptionOfferingAttachPlanBody): Promise<Resource<SubscriptionPlan[]>>
 
   RemovePlan(offeringId: string, planId: string): Promise<void>
+
+  AttachProrationPolicy(offeringId: string, body: SubscriptionOfferingAttachProrationPolicyBody): Promise<Resource<SubscriptionOfferingAttachProrationPolicyBody>>
 }
