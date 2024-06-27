@@ -60,8 +60,8 @@ class SubscriptionOfferingsEndpoint extends CRUDExtend {
 
   AttachProrationPolicy(offeringId, body) {
     return this.request.send(`${this.endpoint}/${offeringId}/relationships/proration-policies`, 'PUT', {
-      ...body
-    })
+      data: body
+    }, undefined, undefined, false)
   }
 
 }

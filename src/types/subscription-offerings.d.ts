@@ -162,5 +162,5 @@ export interface SubscriptionOfferingsEndpoint
 
   RemovePlan(offeringId: string, planId: string): Promise<void>
 
-  AttachProrationPolicy(offeringId: string, body: SubscriptionOfferingAttachProrationPolicyBody): Promise<Resource<SubscriptionOfferingAttachProrationPolicyBody>>
+  AttachProrationPolicy(offeringId: string, body: SubscriptionOfferingAttachProrationPolicyBody | null): Promise<Resource<SubscriptionOfferingAttachProrationPolicyBody>>
 }
