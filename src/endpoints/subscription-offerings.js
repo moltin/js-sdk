@@ -30,16 +30,6 @@ class SubscriptionOfferingsEndpoint extends CRUDExtend {
     })
   }
 
-  AttachProducts(offeringId, body) {
-    return this.request.send(`${this.endpoint}/${offeringId}/products/attach`, 'POST', {
-      ...body
-    })
-  }
-
-  RemoveProduct(offeringId, productId) {
-    return this.request.send(`${this.endpoint}/${offeringId}/products/${productId}`, 'DELETE')
-  }
-
   AttachPlans(offeringId, body) {
     return this.request.send(`${this.endpoint}/${offeringId}/plans/attach`, 'POST', {
       ...body
@@ -64,6 +54,11 @@ class SubscriptionOfferingsEndpoint extends CRUDExtend {
     }, undefined, undefined, false)
   }
 
+  ReplaceProducts(offeringId, productIds) {
+    return this.request.send(`${this.endpoint}/${offeringId}/products/replace`, 'PUT', {
+      products: productIds
+    })
+  }
 }
 
 export default SubscriptionOfferingsEndpoint

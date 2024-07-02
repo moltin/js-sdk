@@ -154,13 +154,11 @@ export interface SubscriptionOfferingsEndpoint
 
   GetAttachedPlans(id: string) : Promise<Resource<SubscriptionOfferingPlan[]>>
 
-  AttachProducts(offeringId: string, body: SubscriptionOfferingAttachProductBody): Promise<Resource<SubscriptionProduct[]>>
-
-  RemoveProduct(offeringId: string, productId: string): Promise<void>
-
   AttachPlans(offeringId: string, body: SubscriptionOfferingAttachPlanBody): Promise<Resource<SubscriptionPlan[]>>
 
   RemovePlan(offeringId: string, planId: string): Promise<void>
 
   AttachProrationPolicy(offeringId: string, body: SubscriptionOfferingAttachProrationPolicyBody | null): Promise<Resource<SubscriptionOfferingAttachProrationPolicyBody>>
+
+  ReplaceProducts(offeringId: string, productIds: string[]): Promise<Resource<SubscriptionProduct[]>>
 }
