@@ -46,7 +46,7 @@ export interface SubscriptionOfferingRelationships {
     proration_policy?: {
       data: {
         id: string
-        type: 'proration_policy'
+        type: 'subscription_proration_policy'
       }
     }
   }
@@ -86,7 +86,7 @@ export interface SubscriptionOfferingAttachPlanBody {
 }
 
 export interface SubscriptionOfferingAttachProrationPolicyBody {
-  type: 'proration_policy'
+  type: 'subscription_proration_policy'
   id: string
 }
 
@@ -153,6 +153,10 @@ export interface SubscriptionOfferingsEndpoint
   GetAttachedProducts(id: string) : Promise<Resource<SubscriptionOfferingProduct[]>>
 
   GetAttachedPlans(id: string) : Promise<Resource<SubscriptionOfferingPlan[]>>
+
+  AttachProducts(offeringId: string, body: SubscriptionOfferingAttachProductBody): Promise<Resource<SubscriptionProduct[]>>
+
+  RemoveProduct(offeringId: string, productId: string): Promise<void>
 
   AttachPlans(offeringId: string, body: SubscriptionOfferingAttachPlanBody): Promise<Resource<SubscriptionPlan[]>>
 

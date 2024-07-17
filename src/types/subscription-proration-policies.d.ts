@@ -14,7 +14,7 @@ import {
  * DOCS: TODO: add docs when ready
  */
 export interface SubscriptionProrationPolicyBase {
-  type: 'proration_policy'
+  type: 'subscription_proration_policy'
   attributes: {
     name: string
     rounding: 'up' | 'down' | 'nearest'
