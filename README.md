@@ -1,3 +1,9 @@
+# No longer maintained
+
+> [!WARNING]
+> This SDK repository and associated NPM package has been deprecated. Although still available, it will no longer be updated with new features. The SDK has been migrated to https://github.com/elasticpath/js-sdk. This is the same codebase, under a new namespace. A migration guide is available [here](https://github.com/elasticpath/js-sdk/blob/main/MIGRATION_GUIDE.md)
+___
+
 <img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
 
 # Elastic Path Commerce Cloud JavaScript SDK
