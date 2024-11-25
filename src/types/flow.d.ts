@@ -109,4 +109,11 @@ export interface FlowEndpoint {
   Attributes(token?: string): Promise<Attributes>
 
   GetFlowTypeAttributes(flowType: string, token?: string): Promise<Attributes>
+
+
+  CreateFlowRelationship(endpoint: string, srcId: string, flowSlug: string, targetType: string, targetId: string)
+
+  DeleteFlowRelationship(endpoint: string, srcId: string, flowSlug: string)
+
+  UpdateFlowRelationship(endpoint: string, srcId: string, flowSlug: string, targetType: string, targetId: string)
 }

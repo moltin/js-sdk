@@ -121,6 +121,35 @@ class FlowsEndpoint extends CRUDExtend {
       token
     )
   }
+
+  CreateFlowRelationship(endpoint, srcId, flowSlug, targetType, targetId) {
+    return this.request.send(
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
+      'POST',
+      {
+          type: targetType,
+          id: targetId
+      }
+    )
+  }
+
+  DeleteFlowRelationship(endpoint, srcId, flowSlug) {
+    return this.request.send(
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
+      'DELETE'
+    )
+  }
+
+  UpdateFlowRelationship(endpoint, srcId, flowSlug, targetType, targetId) {
+    return this.request.send(
+      `${endpoint}/${srcId}/relationships/${flowSlug}`,
+      'PUT',
+      {
+          type: targetType,
+          id: targetId
+      }
+    )
+  }
 }
 
 export default FlowsEndpoint
